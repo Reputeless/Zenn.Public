@@ -3,14 +3,14 @@ title: "動作環境"
 free: true
 ---
 
-# OpenSiv3D v0.6 のビルドに必要な環境
+# OpenSiv3D v0.6 を使う開発に必要な環境
 
 OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通りです。
 
 ## Windows
 |  |  |
 |--|--|
-| OS | Windows 7 SP1 / Windows 8.1 / Windows 10 (いずれも 64-bit) |
+| OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit) |
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
@@ -21,7 +21,7 @@ Windows 7 SP1, 8.1 では一部の機能が利用できません。
 ## macOS
 |  |  |
 |--|--|
-| OS | macOS Mojave v10.14 / macOS Catalina v10.15 |
+| OS | macOS Mojave v10.14<br>macOS Catalina v10.15 |
 | CPU | Intel 製の CPU |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
@@ -44,13 +44,14 @@ Web 版は現在非公式の実験的実装が提供されています。
 将来的には公式サポート対象に含まれる予定です。
 
 
-# OpenSiv3D v0.6 の実行に必要な環境
+# OpenSiv3D v0.6 で開発したアプリの実行に必要な環境
 
 ## Windows
 |  |  |
 |--|--|
-| OS | Windows 7 SP1 / Windows 8.1 / Windows 10 (いずれも 64-bit) |
+| OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit) |
 | CPU | Intel もしくは AMD 製の CPU |
+| 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
 
 Windows 7 SP1, 8.1 では一部の機能が利用できません。
@@ -58,7 +59,7 @@ Windows 7 SP1, 8.1 では一部の機能が利用できません。
 ## macOS
 |  |  |
 |--|--|
-| OS | macOS Mojave v10.14 / macOS Catalina v10.15 |
+| OS | macOS Mojave v10.14<br>macOS Catalina v10.15 |
 | CPU | Intel 製の CPU |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
