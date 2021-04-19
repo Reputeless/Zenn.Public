@@ -6,4 +6,5 @@ price: 0
 chapters:
   - introduction
   - requirements
+  - setup
   - build
