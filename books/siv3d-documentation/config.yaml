@@ -1,5 +1,5 @@
 title: "Siv3D リファレンス（執筆中）"
-summary: "◆ 内容\nC++ で楽しく簡単に音や画像、インタラクションをプログラムできるライブラリ「OpenSiv3D」のリファレンスです。\n対応バージョン: OpenSiv3D v0.6"
+summary: "◆ 内容\nC++ で楽しく簡単に音・画像・インタラクションをプログラムできるライブラリ「OpenSiv3D」のリファレンス。\n◆ 対応バージョン\nOpenSiv3D v0.6"
 topics: ["cpp", "siv3d"] # トピック（5つまで）
 published: false # falseだと下書き
 price: 0
