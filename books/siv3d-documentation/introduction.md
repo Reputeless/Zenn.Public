@@ -1,5 +1,5 @@
 ---
-title: "OpenSiv3D の紹介"
+title: "Siv3D でできること"
 free: true
 ---
 
