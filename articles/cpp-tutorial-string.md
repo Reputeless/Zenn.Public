@@ -172,7 +172,7 @@ blue ocean
 
 # 3. 要素数
 
-## 3.1  要素数を調べる
+## 3.1	要素数を調べる
 `.size()` は要素数を符号無し整数型の値で返します。
 ```cpp
 #include <iostream>
@@ -186,8 +186,8 @@ int main()
 	s = "apple";
 	std::cout << s.size() << '\n';
 
-    size_t len = s.size();
-    std::cout << len << '\n';
+	size_t len = s.size();
+	std::cout << len << '\n';
 }
 ```
 ```txt:出力
@@ -196,7 +196,7 @@ int main()
 5
 ```
 
-## 3.2  空の文字列であるかを調べる
+## 3.2	空の文字列であるかを調べる
 `.empty()` は、要素数が 0 の文字列（= 空の文字列）であるかを `bool` 型の値で返します。
 ```cpp
 #include <iostream>
@@ -408,10 +408,10 @@ int main()
 {
 	std::string s = "apple";
 
-    for (const auto& ch : s)
-    {
-        std::cout << ch << '\n';
-    }
+	for (const auto& ch : s)
+	{
+		std::cout << ch << '\n';
+	}
 }
 ```
 ```txt:出力
@@ -431,10 +431,10 @@ int main()
 {
 	std::string s = "apple";
 
-    for (auto& ch : s)
-    {
-        ch += 1;
-    }
+	for (auto& ch : s)
+	{
+		ch += 1;
+	}
 
 	std::cout << s << '\n';
 }
