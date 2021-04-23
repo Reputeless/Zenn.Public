@@ -85,7 +85,7 @@ int main()
 
 ## 2.1 標準入力
 1 回の `std::cin` で、改行もしくは空白文字が出現するまでの入力をすべて読み取ります。  
-改行文字や空白文字は読み込むときに除去されます。
+改行文字や空白文字は除去されます。
 ```cpp
 #include <iostream>
 #include <string>
@@ -126,15 +126,15 @@ cat
 
 int main()
 {
-	std::string s;
+	std::string s, t;
  
 	std::cin >> s;
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	std::cin >> s;
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
+	std::cin >> t;
+	std::cout << t << '\n';
+	std::cout << t.size() << '\n';
 }
 ```
 ```txt:入力
@@ -172,7 +172,7 @@ blue ocean
 
 # 3. 要素数
 
-## 要素数を調べる
+## 3.1  要素数を調べる
 `.size()` は要素数を符号無し整数型の値で返します。
 ```cpp
 #include <iostream>
@@ -196,7 +196,7 @@ int main()
 5
 ```
 
-## 空の文字列であるかを調べる
+## 3.2  空の文字列であるかを調べる
 `.empty()` は、要素数が 0 の文字列（= 空の文字列）であるかを `bool` 型の値で返します。
 ```cpp
 #include <iostream>
