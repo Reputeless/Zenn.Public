@@ -66,7 +66,7 @@ abc
 
 ## 1.4 空の文字列
 - `std::string` 型のデフォルトコンストラクタは要素数が 0 の空の文字列を構築します  
-- 空の文字列は何の問題もなくプログラムで使うことができます
+- 空の文字列も、何の問題もなくプログラムで使うことができます
 ```cpp
 #include <iostream>
 #include <string>
@@ -86,7 +86,7 @@ int main()
 # 2. `std::string` の入力
 
 ## 2.1 標準入力
-- 1 回の `std::cin` で、改行もしくは空白文字が出現するまでの入力をすべて読み取ります 
+- 1 回の `std::cin` で、改行もしくは空白文字が出現するまでの入力（単語）を読み取ります 
 - 改行文字や空白文字は除去されます
 ```cpp
 #include <iostream>
@@ -171,11 +171,84 @@ blue ocean
 10
 ```
 
+## 2.4 たくさんの単語を読み込む
+- 最初に単語の個数 `N`, 続いて N 個の単語が入力される問題において、入力されるすべての単語を `std::vector<std::string>` に読み込んで保存するサンプルです
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	size_t n;
+	std::cin >> n; // 単語の個数
+	std::vector<std::string> ss(n);
+	for (auto& s : ss) // n 回繰り返す
+	{
+		std::cin >> s;
+	}
+
+	for (const auto& s : ss) // 読み込めていることを確認
+	{
+		std::cout << '>' << s << '\n';
+	}
+}
+```
+```txt:入力
+4
+red
+green
+blue
+yellow
+```
+```txt:出力
+>red
+>green
+>blue
+>yellow
+```
+
+
+## 2.5 たくさんの単語を読み込む（入力個数が与えられない場合）
+- 入力される単語数が最初に与えられない場合、`std::cin >> s;` をループします。入力がこれ以上存在しなくなると `if (std::cin >> s)` は `false` になるので、それを検知してループを終了します
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	std::vector<std::string> ss;
+	std::string in;
+	while(std::cin >> in) // 入力がこれ以上存在しなくなるまで繰り返す
+	{
+		ss.push_back(in);
+	}
+
+	for (const auto& s : ss) // 読み込めていることを確認
+	{
+		std::cout << '>' << s << '\n';
+	}
+}
+```
+```txt:入力
+red
+green
+blue
+yellow
+```
+```txt:出力
+>red
+>green
+>blue
+>yellow
+```
+
 
 # 3. `std::string` の要素数
 
 ## 3.1 要素数を調べる
-- `.size()` は要素数を符号無し整数型の値で返します
+- `.size()` は文字列が持つ要素数を符号無し整数型の値で返します
 - 同じ効果を持つメンバ関数 `.length()` もあります
 ```cpp
 #include <iostream>
@@ -188,13 +261,15 @@ int main()
 
 	s = "apple";
 	std::cout << s.size() << '\n';
+	std::cout << s.length() << '\n'; // .size() と同じ
 
-	size_t n = s.size();
+	std::size_t n = s.size();
 	std::cout << n << '\n';
 }
 ```
 ```txt:出力
 3
+5
 5
 5
 ```
