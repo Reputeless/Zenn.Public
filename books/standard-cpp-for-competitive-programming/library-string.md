@@ -11,6 +11,7 @@ C++ 標準ライブラリヘッダ `<string>` の主要な機能を紹介しま�
 # 1. `std::string` の構築
 
 ## 1.1 文字列リテラルから構築する
+- 文字列リテラル (`""` で囲んでプログラム中に用意された文字列) を使って初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -28,6 +29,7 @@ abc
 ```
 
 ## 1.2 (個数) × (文字) で構築する
+- `std::string(n, ch)` は、`n` 回繰り返す文字 `ch` によって作られる文字列で `std::string` 型の値を初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -45,6 +47,7 @@ aaaaa
 ```
 
 ## 1.3 別の `std::string` から構築する
+- 別の `std::string` 型の値をコピーして `std::string` 型の値を初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -64,7 +67,7 @@ abc
 
 ## 1.4 空の文字列
 - `std::string` 型のデフォルトコンストラクタは要素数が 0 の空の文字列を構築します  
-- 空の文字列は、とくに何の問題もなくプログラムで使うことができます
+- 空の文字列は何の問題もなくプログラムで使うことができます
 ```cpp
 #include <iostream>
 #include <string>
@@ -148,7 +151,7 @@ ocean
 ```
 
 ## 2.3 丸ごと 1 行を入力
-- 空白文字を含む 1 行を丸ごと読み込みたい場合は `std::getline` を使います
+- 空白文字を含む 1 行を丸ごと読み込みたい場合は `std::getline()` を使います
 ```cpp
 #include <iostream>
 #include <string>
@@ -227,6 +230,7 @@ t is empty.
 # 4. `std::string` の代入
 
 ## 4.1 別の文字列を代入する
+- `=` を使って別の文字列リテラルや `std::string` 型の値を代入します
 ```cpp
 #include <iostream>
 #include <string>
@@ -259,6 +263,7 @@ bird
 # 5. `std::string` の比較
 
 ## 5.1 同じ文字列であるかを調べる
+- `a == b` の少なくとも一方が `std::string` 型の場合、2 つの文字列 `a`, `b` が一致するかを `bool` 型の値で返します
 ```cpp
 #include <iostream>
 #include <string>
@@ -283,6 +288,7 @@ false
 ```
 
 ## 5.2 違う文字列であるかを調べる
+- `a != b` の少なくとも一方が `std::string` 型の場合、2 つの文字列 `a`, `b` が異なるかを `bool` 型の値で返します
 ```cpp
 #include <iostream>
 #include <string>
@@ -307,6 +313,7 @@ true
 ```
 
 ## 5.3 文字列の順序比較
+- `<`, `<=`, `>`, `>=` 演算子は 2 つの文字列の順序関係を `bool` 型の値で返します
 - 基本の順序: `0 < 9 < A < Z < a < z`  
 - 参考: [ASCII コード表](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)  
 - 順序の例: `A < AA < AB < ABC < Aa < Ab < B < BA < Z < ZZ < a < aA < aa < b < zzz`  
@@ -338,7 +345,7 @@ true
 # 6. `std::string` の要素にアクセス
 
 ## 6.1 指定した位置の要素にアクセス
-- `s[index]` で指定した位置の要素 (`char` 型) にアクセスできます 
+- `s[index]` で、指定した位置の要素 (`char` 型) にアクセスします 
 - インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
 - 範囲外にアクセスしてはいけません
 ```cpp
@@ -406,7 +413,7 @@ car
 ```
 
 ## 6.4 指定した位置の要素にアクセス（範囲外アクセスを例外で検出）
-- `.at(index)` で指定した位置の要素 (`char` 型) にアクセスできます
+- `.at(index)` で、指定した位置の要素 (`char` 型) にアクセスします
 - インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
 - `s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。そのチェックのための追加のコストがあります
 ```cpp
@@ -432,6 +439,7 @@ can
 ```
 
 ## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
+- ループ内で要素を書き換えない場合、`const` 参照を使います
 ```cpp
 #include <iostream>
 #include <string>
@@ -455,7 +463,7 @@ e
 ```
 
 ## 6.6 range-based for を使い、各要素に参照でアクセス
-- 参照でアクセスすると、その要素を書き換えることができます
+- ループ内で要素を書き換える場合、参照を使います
 ```cpp
 #include <iostream>
 #include <string>
@@ -480,7 +488,7 @@ bqqmf
 # 7. `std::string` の追加
 
 ## 7.1 前後に別の文字列を足した、新しい `std::string` を作成する
-- `+` 演算子を使うと、前後に別の文字列を追加した新しい文字列を作成できます
+- `+` 演算子を使うと、前後に別の文字列を追加した新しい `std::string` を作成できます
 - 元の文字列は変更されません
 ```cpp
 #include <iostream>
@@ -604,7 +612,7 @@ app
 ```
 
 ## 8.2 先頭の文字を削除
-- `.erase(it)` は、イテレータ `it` により指定した位置の要素を削除します
+- `.erase(it)` は、イテレータ `it` が指す位置の要素を削除します
 - 先頭位置のイテレータを返す `.begin()` と組み合わせることで先頭の文字を削除できます
 ```cpp
 #include <iostream>
@@ -733,17 +741,18 @@ apple
 削除や挿入、アルゴリズム関数で使うためのイテレータを以下の関数で取得できます。
 
 ## 11.1 先頭位置のイテレータを取得
-- `.begin()` は文字列の先頭位置のイテレータを返します 
+- `.begin()` は文字列の先頭位置を指すイテレータを返します 
 - 空の文字列の場合 `.begin() == .end()` です
 
 ## 11.2 終端位置のイテレータを取得
-- `.end()` は文字列の終端位置のイテレータを返します
+- `.end()` は文字列の終端位置を指すイテレータを返します
 - 空の文字列の場合 `.begin() == .end()` です
 
 
 # 12. 数値から `std::string` への変換
 
 ## 12.1 数値を `std::string` に変換
+- `std::to_string(n)` は数 `n` を `std::string` に変換します
 ```cpp
 #include <iostream>
 #include <string>
