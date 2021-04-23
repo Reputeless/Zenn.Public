@@ -411,7 +411,7 @@ car
 ## 6.4 指定した位置の要素にアクセス（範囲外アクセスを例外で検出）
 `.at(index)` で指定した位置の要素にアクセスできます。  
 インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)` です。  
-`s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。
+`s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外が送出されます。
 ```cpp
 #include <iostream>
 #include <string>
@@ -746,7 +746,7 @@ apple
 
 # 12. 数値から `std::string` への変換
 
-## 12.1 数値を `std::string` に変換する
+## 12.1 数値を `std::string` に変換
 ```cpp
 #include <iostream>
 #include <string>
@@ -767,4 +767,58 @@ int main()
 ```txt:出力
 1100
 4
+```
+
+
+# 13. 文字列から数値への変換
+
+## 13.1 数が書かれた文字列をパースして整数に変換
+書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます。
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "1200";
+
+	int n = std::stoi(s);
+
+	std::cout << (n * 2) << '\n';
+}
+```
+```txt:出力
+2400
+```
+
+## 13.2 二進数が書かれた文字列パースして整数に変換
+`std::stoi(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `int` 型に変換します。`idx` は今回は使いません。  
+`std::stoull(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `unsigned long long` 型に変換します。`idx` は今回は使いません。  
+`base` を `2` に、`idx` を `nullptr` にすることで、二進数が記述された文字列 `s` から数値を得ることができます。  
+文字列で表現されている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます。
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "0111";
+	std::string t = "1000";
+
+	// 1 が 64 個
+	std::string u = "1111111111111111111111111111111111111111111111111111111111111111";
+
+	int ss = std::stoi(s, nullptr, 2); // int 型に変換
+	int tt = std::stoi(t, nullptr, 2); // int 型に変換
+	std::uint64_t uu = std::stoull(u, nullptr, 2); // unsigned long long 型に変換
+
+	std::cout << ss << '\n';
+	std::cout << tt << '\n';
+	std::cout << uu << '\n';
+}
+```
+```txt:出力
+7
+8
+18446744073709551615
 ```
