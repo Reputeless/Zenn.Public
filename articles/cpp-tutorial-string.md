@@ -482,7 +482,6 @@ my school
 int main()
 {
 	std::string s = "t";
-
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
@@ -512,7 +511,6 @@ top
 int main()
 {
 	std::string s = "t";
-
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
@@ -546,7 +544,6 @@ teacher
 int main()
 {
 	std::string s = "apple";
-
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
@@ -576,7 +573,6 @@ app
 int main()
 {
 	std::string s = "apple";
-
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
@@ -606,7 +602,6 @@ ple
 int main()
 {
 	std::string s = "apple";
-
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
@@ -634,7 +629,6 @@ apple
 int main()
 {
 	std::string s = "computer";
-
 	std::cout << s.substr(1) << '\n';
 	std::cout << s.substr(2) << '\n';
 	std::cout << s.substr(5) << '\n';
@@ -647,7 +641,8 @@ ter
 ```
 
 ## 9.2 指定した位置以降、指定した文字数分の文字列を取得
-第 1 引数は範囲外アクセスに注意が必要です。第 2 引数は実際の文字数を超えた分は無視されます。
+第 1 引数は範囲外アクセスに注意が必要です。  
+第 2 引数は実際の文字数を超えた分は無視されます。
 ```cpp
 #include <iostream>
 #include <string>
@@ -655,7 +650,6 @@ ter
 int main()
 {
 	std::string s = "computer";
-
 	std::cout << s.substr(1, 3) << '\n';
 	std::cout << s.substr(2, 2) << '\n';
 	std::cout << s.substr(5, 100) << '\n';
