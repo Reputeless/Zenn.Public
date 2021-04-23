@@ -2,7 +2,7 @@
 title: "【C++17】競技プログラミングのための <string>"
 emoji: "💬"
 type: "tech"
-topics: ["cpp"]
+topics: ["cpp", "競プロ"]
 published: false
 ---
 
