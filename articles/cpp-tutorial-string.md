@@ -1,15 +1,18 @@
 ---
-title: "【C++17】競技プログラミングのための std::string"
+title: "【C++17】競技プログラミングのための `<string>`"
 emoji: "💬"
 type: "tech"
 topics: ["cpp"]
 published: false
 ---
 
-C++ 標準の文字列クラス `std::string` の基本機能をサンプルで説明します。  
-`std::string` を使うには `#include <string>` が必要です。
+C++ 標準ライブラリ `<string>` の機能を紹介します。
+- 1.～10.: 文字列クラス `std::string`
+- 11\.: 数値を文字列に変換する関数
+- 12\.: 文字列を数値に変換する関数
 
 # 1. 構築
+
 ## 1.1 文字列リテラルから構築する
 ```cpp
 #include <iostream>
@@ -63,7 +66,7 @@ abc
 ```
 
 ## 1.4 空の文字列
-デフォルトコンストラクタは要素数が 0 の空の文字列を構築します。  
+`std::string` 型のデフォルトコンストラクタは要素数が 0 の空の文字列を構築します。  
 空の文字列は、とくに何の問題もなくプログラムで使うことができます。
 ```cpp
 #include <iostream>
@@ -173,7 +176,8 @@ blue ocean
 # 3. 要素数
 
 ## 3.1 要素数を調べる
-`.size()` は要素数を符号無し整数型の値で返します。
+`.size()` は要素数を符号無し整数型の値で返します。  
+まったく同じ効果を持つメンバ関数 `.length()` もあります。
 ```cpp
 #include <iostream>
 #include <string>
@@ -186,8 +190,8 @@ int main()
 	s = "apple";
 	std::cout << s.size() << '\n';
 
-	size_t len = s.size();
-	std::cout << len << '\n';
+	size_t n = s.size();
+	std::cout << n << '\n';
 }
 ```
 ```txt:出力
@@ -197,7 +201,7 @@ int main()
 ```
 
 ## 3.2 空の文字列であるかを調べる
-`.empty()` は、要素数が 0 の文字列（= 空の文字列）であるかを `bool` 型の値で返します。
+`.empty()` は、要素数が 0 の文字列（空の文字列）であるかを `bool` 型の値で返します。
 ```cpp
 #include <iostream>
 #include <string>
@@ -233,7 +237,6 @@ t is empty.
 int main()
 {
 	std::string s = "abc";
-
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
@@ -307,7 +310,10 @@ true
 ```
 
 ## 5.3 文字列の順序比較
-参考: [ASCII コード表](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)
+基本の順序: `0 < 9 < A < Z < a < z`  
+参考: [ASCII コード表](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)  
+順序の例: `A < AA < AB < ABC < Aa < Ab < B < BA < Z < ZZ < a < aA < aa < b < zzz`  
+大文字と小文字が混在する場合は単純な辞書順にならないことに注意が必要です。
 ```cpp
 #include <iostream>
 #include <string>
@@ -321,7 +327,7 @@ int main()
 	std::cout << (s < t) << '\n';
 	std::cout << (s < "dog") << '\n';
 	std::cout << ("caa" < s) << '\n';
-	std::cout << ("Dog" < t) << '\n'; // A < Z < a < z であることに注意
+	std::cout << ("Dog" < t) << '\n';-
 }
 ```
 ```txt:出力
@@ -335,6 +341,7 @@ true
 # 6. 要素にアクセス
 
 ## 6.1 指定した位置の要素にアクセス
+`s[index]` で指定した位置の要素にアクセスできます。  
 インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)`。  
 範囲外アクセスに注意が必要です。
 ```cpp
@@ -360,6 +367,7 @@ can
 ```
 
 ## 6.2 先頭の要素にアクセス
+`s[0]` と同等です。  
 空の文字列で使うと範囲外アクセスになるので注意が必要です。
 ```cpp
 #include <iostream>
@@ -380,6 +388,7 @@ hat
 ```
 
 ## 6.3 末尾の要素にアクセス
+`s[(s.size() - 1)]` と同等です（ただし `0 < s.size()`）。  
 空の文字列で使うと範囲外アクセスになるので注意が必要です。
 ```cpp
 #include <iostream>
@@ -423,6 +432,7 @@ e
 ```
 
 ## 6.5 range-based for を使い、各要素に参照でアクセス
+参照でアクセスすると、その要素を書き換えることができます。
 ```cpp
 #include <iostream>
 #include <string>
@@ -447,6 +457,8 @@ bqqmf
 # 7. 追加
 
 ## 7.1 前後に別の文字列を追加した、新しい `std::string` を作成する
+`+` 演算子を使うと、前後に別の文字列を追加した新しい文字列を作成できます。  
+元の文字列は変更されません。
 ```cpp
 #include <iostream>
 #include <string>
@@ -475,6 +487,7 @@ my school
 ```
 
 ## 7.2 末尾に 1 文字追加する
+`.push_back(ch)` で、現在の文字列の末尾に文字 `ch` を追加します。
 ```cpp
 #include <iostream>
 #include <string>
@@ -504,6 +517,7 @@ top
 ```
 
 ## 7.3 末尾に文字列を追加する
+`+= other;` で、現在の文字列の末尾に文字列 `other` を追加します。
 ```cpp
 #include <iostream>
 #include <string>
@@ -536,6 +550,7 @@ teacher
 # 8. 削除
 
 ## 8.1 末尾の文字を削除
+`.pop_back()` は末尾の要素を 1 つ削除します。  
 空の文字列で使うと範囲外アクセスになるので注意が必要です。
 ```cpp
 #include <iostream>
@@ -566,6 +581,8 @@ app
 ```
 
 ## 8.2 先頭の文字を削除
+`.erase(it)` は、イテレータ `it` により指定した位置の要素を削除します。  
+先頭位置のイテレータを返す `.begin()` と組み合わせることで先頭の文字を削除できます。
 ```cpp
 #include <iostream>
 #include <string>
@@ -595,6 +612,7 @@ ple
 ```
 
 ## 8.3 文字列を消去
+`.clear()` を使うと、全要素を削除して空の文字列になります。
 ```cpp
 #include <iostream>
 #include <string>
@@ -621,6 +639,7 @@ apple
 # 9. 部分の取得
 
 ## 9.1 指定した位置以降の文字列を取得
+`.substr(pos)` は、`pos` 番目以降の文字列を新しい `std::string` として返します。
 範囲外アクセスに注意が必要です。
 ```cpp
 #include <iostream>
@@ -641,8 +660,9 @@ ter
 ```
 
 ## 9.2 指定した位置以降、指定した文字数分の文字列を取得
-第 1 引数は範囲外アクセスに注意が必要です。  
-第 2 引数は実際の文字数を超えた分は無視されます。
+`.substr(pos, count)` は、`pos` 番目以降 `count` 文字の文字列を新しい `std::string` として返します。  
+第 1 引数 `pos` は範囲外アクセスに注意が必要です。  
+第 2 引数 `count` は実際の文字数を超えた分は無視されます。
 ```cpp
 #include <iostream>
 #include <string>
@@ -674,3 +694,5 @@ ter
 `.end()` は文字列の終端位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
 
+
+# 11. 数値への変換
