@@ -773,22 +773,29 @@ int main()
 # 13. 文字列から数値への変換
 
 ## 13.1 数が書かれた文字列をパースして整数に変換
+`std::stoi(s, idx, base)` は、文字列 `s` をパースし `int` 型に変換します。  
+`std::stoull(s, idx, base)` は、文字列 `s` をパースし `unsigned long long` 型に変換します。  
 書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます。
 ```cpp
 #include <iostream>
 #include <string>
+#include <cstdint> // std::uint64_t のため
 
 int main()
 {
 	std::string s = "1200";
+	std::string t = "9876543210";
 
-	int n = std::stoi(s);
+	int ss = std::stoi(s); // int 型に変換
+	std::uint64_t tt = std::stoull(t); // unsigned long long 型に変換
 
-	std::cout << (n * 2) << '\n';
+	std::cout << ss << '\n';
+	std::cout << tt << '\n';
 }
 ```
 ```txt:出力
-2400
+1200
+9876543210
 ```
 
 ## 13.2 二進数が書かれた文字列パースして整数に変換
@@ -799,12 +806,12 @@ int main()
 ```cpp
 #include <iostream>
 #include <string>
+#include <cstdint> // std::uint64_t のため
 
 int main()
 {
 	std::string s = "0111";
 	std::string t = "1000";
-
 	// 1 が 64 個
 	std::string u = "1111111111111111111111111111111111111111111111111111111111111111";
 
