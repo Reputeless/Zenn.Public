@@ -28,7 +28,7 @@ abc
 ```
 
 ## 1.2 (個数) × (文字) で構築する
-- `n` 回繰り返す文字 `ch` で `std::string` 型の値を初期化します
+- `std::string s(n, ch);` は、`n` 回繰り返す文字 `ch` で初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -54,12 +54,16 @@ aaaaa
 int main()
 {
 	std::string s = "abc";
-	std::string t = s;
+	std::string t = s; // s の値をコピー
 	std::cout << t << '\n';
 	std::cout << t.size() << '\n';
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
 }
 ```
 ```txt:出力
+abc
+3
 abc
 3
 ```
@@ -95,7 +99,7 @@ int main()
 int main()
 {
 	std::string s;
-	std::cin >> s;
+	std::cin >> s; // 標準入力から単語を読み込む
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 }
@@ -116,7 +120,7 @@ apple
 int main()
 {
 	std::string s, t, u;
-	std::cin >> s >> t >> u;
+	std::cin >> s >> t >> u; // 標準入力から 3 つの単語を読み込む
 
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
@@ -150,7 +154,7 @@ cat
 int main()
 {
 	std::string s, t;
-	std::cin >> s >> t; // 入力が半角スペースで 2 つに区切られているので 2 回必要
+	std::cin >> s >> t; // 標準入力から 2 つの単語を読み込む
 
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
@@ -179,7 +183,7 @@ ocean
 int main()
 {
 	std::string s;
-	std::getline(std::cin, s);
+	std::getline(std::cin, s); // 標準入力から 1 行を読み込む
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 }
@@ -202,7 +206,7 @@ blue ocean
 int main()
 {
 	size_t n;
-	std::cin >> n; // 単語の個数
+	std::cin >> n; // 単語の個数を読み込む
 	std::vector<std::string> ss(n);
 	for (auto& s : ss) // n 回繰り返す
 	{
@@ -278,7 +282,7 @@ yellow
 int main()
 {
 	std::string s = "abc";
-	std::cout << s.size() << '\n';
+	std::cout << s.size() << '\n'; // 要素数を出力
 
 	s = "apple";
 	std::cout << s.size() << '\n';
@@ -303,22 +307,22 @@ int main()
 
 int main()
 {
-	std::string s = "abc";
-	std::string t;
+	std::string s;
+	std::string t = "abc";
 
-	if (s.empty())
+	if (s.empty()) // 空の文字列なので true
 	{
 		std::cout << "s is empty.\n";
 	}
 
-	if (t.empty())
+	if (t.empty()) // 空の文字列でないので false
 	{
 		std::cout << "t is empty.\n";
 	}
 }
 ```
 ```txt:出力
-t is empty.
+s is empty.
 ```
 
 
@@ -336,12 +340,12 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s = "apple";
+	s = "apple"; // 代入
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
 	std::string t = "bird";
-	s = t;
+	s = t; // 代入
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 }
@@ -368,7 +372,7 @@ int main()
 	std::string s = "cat";
 	std::string t = "dog";
 
-	std::cout << std::boolalpha; // bool 型の値を true / false で表示させる
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
 	std::cout << (s == "cat") << '\n';
 	std::cout << (t == "cat") << '\n';
 	std::cout << (s == s) << '\n';
@@ -393,7 +397,7 @@ int main()
 	std::string s = "cat";
 	std::string t = "dog";
 
-	std::cout << std::boolalpha;
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
 	std::cout << (s != "cat") << '\n';
 	std::cout << (t != "cat") << '\n';
 	std::cout << (s != s) << '\n';
@@ -422,7 +426,7 @@ int main()
 	std::string s = "cat";
 	std::string t = "dog";
 
-	std::cout << std::boolalpha;
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
 	std::cout << (s < t) << '\n';
 	std::cout << (s < "dog") << '\n';
 	std::cout << ("caa" < s) << '\n';
@@ -450,11 +454,11 @@ true
 int main()
 {
 	std::string s = "cat";
-	std::cout << s[0] << '\n';
-	std::cout << s[1] << '\n';
-	std::cout << s[2] << '\n';
+	std::cout << s[0] << '\n'; // 0 番目の要素を出力
+	std::cout << s[1] << '\n'; // 1 番目の要素を出力
+	std::cout << s[2] << '\n'; // 2 番目の要素を出力
 
-	s[2] = 'n';
+	s[2] = 'n'; // 2 番目の要素を書き換え
 	std::cout << s << '\n';
 }
 ```
@@ -475,9 +479,9 @@ can
 int main()
 {
 	std::string s = "cat";
-	std::cout << s.front() << '\n';
+	std::cout << s.front() << '\n'; // 先頭の要素を出力
 
-	s.front() = 'h';
+	s.front() = 'h'; // 先頭の要素を書き換え
 	std::cout << s << '\n';
 }
 ```
@@ -496,9 +500,9 @@ hat
 int main()
 {
 	std::string s = "cat";
-	std::cout << s.back() << '\n';
+	std::cout << s.back() << '\n'; // 末尾の要素を出力
 
-	s.back() = 'r';
+	s.back() = 'r'; // 末尾の要素を書き換え
 	std::cout << s << '\n';
 }
 ```
@@ -518,11 +522,11 @@ car
 int main()
 {
 	std::string s = "cat";
-	std::cout << s.at(0) << '\n';
-	std::cout << s.at(1) << '\n';
-	std::cout << s.at(2) << '\n';
+	std::cout << s.at(0) << '\n'; // 0 番目の要素を出力
+	std::cout << s.at(1) << '\n'; // 1 番目の要素を出力
+	std::cout << s.at(2) << '\n'; // 2 番目の要素を出力
 
-	s.at(2) = 'n';
+	s.at(2) = 'n'; // 2 番目の要素を書き換え
 	std::cout << s << '\n';
 }
 ```
@@ -543,7 +547,7 @@ int main()
 {
 	std::string s = "apple";
 
-	for (const auto& ch : s)
+	for (const auto& ch : s) // 要素の個数だけ繰り返すループ、ch は毎回各要素への const 参照（先頭から順に）
 	{
 		std::cout << ch << '\n';
 	}
@@ -567,7 +571,7 @@ int main()
 {
 	std::string s = "apple";
 
-	for (auto& ch : s)
+	for (auto& ch : s) // 要素の個数だけ繰り返すループ、ch は毎回各要素への参照（先頭から順に）
 	{
 		ch += 1;
 	}
@@ -593,15 +597,15 @@ int main()
 {
 	std::string s = "school";
 
-	std::string t = ("high " + s);
+	std::string t = ("high " + s); // 前に足した
 	std::cout << t << '\n';
 	std::cout << t.size() << '\n';
 
-	std::string u = (s + " bus");
+	std::string u = (s + " bus"); // うしろに足した
 	std::cout << u << '\n';
 	std::cout << u.size() << '\n';
 
-	std::cout << ("my " + s) << '\n';
+	std::cout << ("my " + s) << '\n'; // 前に足した
 }
 ```
 ```txt:出力
@@ -624,11 +628,11 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s.push_back('o');
+	s.push_back('o'); // 末尾に `o` を追加
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';	
 
-	s.push_back('p');
+	s.push_back('p'); // 末尾に `p` を追加
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';	
 }
@@ -654,11 +658,12 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s += "ea";
+	s += "ea"; // 末尾に "ea" を追加
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n'; 
 
-	s += "cher";
+	std::string t = "cher"
+	s += t; // 末尾に "cher" を追加
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n'; 
 }
@@ -675,7 +680,7 @@ teacher
 
 # 8. `std::string` の削除
 
-## 8.1 末尾の文字を削除
+## 8.1 末尾の要素を削除
 - `.pop_back()` は末尾の要素を 1 つ削除します
 - 空の文字列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
@@ -688,11 +693,11 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s.pop_back();
+	s.pop_back(); // 末尾の要素を削除
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s.pop_back();
+	s.pop_back(); // 末尾の要素を削除
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 }
@@ -706,7 +711,7 @@ app
 3
 ```
 
-## 8.2 先頭の文字を削除
+## 8.2 先頭の要素を削除
 - `.erase(it)` は、イテレータ `it` が指す位置の要素を削除します
 - 先頭位置のイテレータを返す `.begin()` と組み合わせることで先頭の文字を削除できます
 ```cpp
@@ -719,11 +724,11 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s.erase(s.begin());
+	s.erase(s.begin()); // 先頭の要素を削除
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s.erase(s.begin());
+	s.erase(s.begin()); // 先頭の要素を削除
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 }
@@ -749,7 +754,7 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	s.clear();
+	s.clear(); // 要素を全消去
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 }
@@ -766,6 +771,7 @@ apple
 
 ## 9.1 指定した位置以降の文字列を取得
 - `.substr(pos)` は、`pos` 番目以降の文字列を新しい `std::string` として返します
+- インデックスは 0 から数えます
 - 範囲外アクセスに注意が必要です
 ```cpp
 #include <iostream>
@@ -774,9 +780,9 @@ apple
 int main()
 {
 	std::string s = "computer";
-	std::cout << s.substr(1) << '\n';
-	std::cout << s.substr(2) << '\n';
-	std::cout << s.substr(5) << '\n';
+	std::cout << s.substr(1) << '\n'; // 1 番目の文字以降
+	std::cout << s.substr(2) << '\n'; // 2 番目の文字以降
+	std::cout << s.substr(5) << '\n'; // 5 番目の文字以降
 }
 ```
 ```txt:出力
@@ -786,7 +792,7 @@ ter
 ```
 
 ## 9.2 指定した位置以降、指定した文字数分の文字列を取得
-- `.substr(pos, count)` は、`pos` 番目以降 `count` 文字の文字列を新しい `std::string` として返します
+- `.substr(pos, count)` は、`pos` 番目以降最大 `count` 文字の文字列を新しい `std::string` として返します
 - 第 1 引数 `pos` は範囲外アクセスに注意が必要です
 - 第 2 引数 `count` は実際の文字数を超えた分は無視されます
 ```cpp
@@ -796,9 +802,9 @@ ter
 int main()
 {
 	std::string s = "computer";
-	std::cout << s.substr(1, 3) << '\n';
-	std::cout << s.substr(2, 2) << '\n';
-	std::cout << s.substr(5, 100) << '\n';
+	std::cout << s.substr(1, 3) << '\n'; // 1 番目以降最大 3 文字
+	std::cout << s.substr(2, 2) << '\n'; // 2 番目以降最大 2 文字
+	std::cout << s.substr(5, 100) << '\n'; // 5 番目以降最大 100 文字
 }
 ```
 ```txt:出力
@@ -811,6 +817,7 @@ ter
 # 10. `std::string` の入れ替え
 
 ## 10.1 二つの `std::string` を交換
+- `std::string` 型の変数 `a`, `b` の中身を入れ替えるには `std::swap(a, b)` を使います
 ```cpp
 #include <iostream>
 #include <string>
@@ -833,7 +840,7 @@ apple
 
 # 11. `std::string` のイテレータ
 
-削除や挿入、アルゴリズム関数で使うためのイテレータを以下の関数で取得できます。
+削除や挿入、アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。
 
 ## 11.1 先頭位置のイテレータを取得
 - `.begin()` は文字列の先頭位置を指すイテレータを返します 
@@ -847,7 +854,7 @@ apple
 # 12. 数値から `std::string` への変換
 
 ## 12.1 数値を `std::string` に変換
-- `std::to_string(n)` は数 `n` を `std::string` に変換します
+- `std::to_string(n)` は、数 `n` を文字列に変換し、`std::string` 型で返します
 ```cpp
 #include <iostream>
 #include <string>
@@ -874,8 +881,8 @@ int main()
 # 13. 文字列から数値への変換
 
 ## 13.1 数が書かれた文字列をパースして整数に変換
-- `std::stoi(s, idx, base)` は、文字列 `s` をパースし `int` 型に変換します
-- `std::stoull(s, idx, base)` は、文字列 `s` をパースし `unsigned long long` 型に変換します
+- `std::stoi(s, idx, base)` は、文字列 `s` をパースし `int` 型で返します
+- `std::stoull(s, idx, base)` は、文字列 `s` をパースし `unsigned long long` 型で返します
 - 書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
 ```cpp
 #include <iostream>
@@ -900,8 +907,8 @@ int main()
 ```
 
 ## 13.2 二進数が書かれた文字列パースして整数に変換
-- `std::stoi(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `int` 型に変換します。`idx` は今回は使いません
-- `std::stoull(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `unsigned long long` 型に変換します。`idx` は今回は使いません
+- `std::stoi(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `int` 型で返します。`idx` は今回は使いません
+- `std::stoull(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `unsigned long long` 型で返します。`idx` は今回は使いません
 - `base` を `2` に、`idx` を `nullptr` にすることで、二進数が記述された文字列 `s` から数値を得ることができます
 - 文字列で表現されている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
 ```cpp
