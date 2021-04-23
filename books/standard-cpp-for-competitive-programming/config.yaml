@@ -1,0 +1,7 @@
+title: "競技プログラミングのための標準 C++"
+summary: "◆ 内容\n"
+topics: ["cpp", "競プロ"] # トピック（5つまで）
+published: false # falseだと下書き
+price: 1800
+chapters:
+  - library-string

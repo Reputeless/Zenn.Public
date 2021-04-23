@@ -1,9 +1,6 @@
 ---
-title: "【C++17】競技プログラミングのための <string>"
-emoji: "💬"
-type: "tech"
-topics: ["cpp", "競プロ"]
-published: false
+title: "<string>"
+free: true
 ---
 
 C++ 標準ライブラリヘッダ `<string>` の主要な機能を紹介します。
