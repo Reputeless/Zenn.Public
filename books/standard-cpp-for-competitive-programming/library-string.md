@@ -791,10 +791,10 @@ mputer
 ter
 ```
 
-## 9.2 指定した位置以降、指定した文字数分の文字列を取得
-- `.substr(pos, count)` は、`pos` 番目以降最大 `count` 文字の文字列を新しい `std::string` として返します
+## 9.2 指定した位置以降、指定した個数文の文字列を取得
+- `.substr(pos, count)` は、`pos` 番目以降最大 `count` 個の文字列を新しい `std::string` として返します
 - 第 1 引数 `pos` は範囲外アクセスに注意が必要です
-- 第 2 引数 `count` は実際の文字数を超えた分は無視されます
+- 第 2 引数 `count` は実際の要素数を超えた分は無視されます
 ```cpp
 #include <iostream>
 #include <string>
@@ -802,9 +802,9 @@ ter
 int main()
 {
 	std::string s = "computer";
-	std::cout << s.substr(1, 3) << '\n'; // 1 番目以降最大 3 文字
-	std::cout << s.substr(2, 2) << '\n'; // 2 番目以降最大 2 文字
-	std::cout << s.substr(5, 100) << '\n'; // 5 番目以降最大 100 文字
+	std::cout << s.substr(1, 3) << '\n'; // 1 番目以降最大 3 個
+	std::cout << s.substr(2, 2) << '\n'; // 2 番目以降最大 2 個
+	std::cout << s.substr(5, 100) << '\n'; // 5 番目以降最大 100 個
 }
 ```
 ```txt:出力
