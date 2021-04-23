@@ -23,8 +23,7 @@ int main()
 	std::cout << s.size() << '\n'; // 要素数を出力
 }
 ```
-出力
-```
+```txt:出力
 abc
 3
 ```
@@ -41,8 +40,7 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-出力
-```
+```txt:出力
 aaaaa
 5
 ```
