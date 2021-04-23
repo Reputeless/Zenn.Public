@@ -7,9 +7,9 @@ published: false
 ---
 
 C++ 標準ライブラリヘッダ `<string>` の主要な機能を紹介します。
-- 1～10: 文字列クラス `std::string`
-- 11: 数値を文字列に変換する関数
-- 12: 文字列を数値に変換する関数
+- 1～11: 文字列クラス `std::string` の機能
+- 12: 数値を文字列に変換する関数
+- 13: 文字列を数値に変換する関数
 
 # 1. `std::string` の構築
 
@@ -342,8 +342,8 @@ true
 
 ## 6.1 指定した位置の要素にアクセス
 `s[index]` で指定した位置の要素にアクセスできます。  
-インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)`。  
-範囲外アクセスに注意が必要です。
+インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)` です。  
+範囲外にアクセスしてはいけません。
 ```cpp
 #include <iostream>
 #include <string>
@@ -408,7 +408,33 @@ t
 car
 ```
 
-## 6.4 range-based for を使い、各要素に const 参照でアクセス
+## 6.4 指定した位置の要素にアクセス（範囲外アクセスを例外で検出）
+`.at(index)` で指定した位置の要素にアクセスできます。  
+インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)` です。  
+`s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "cat";
+	std::cout << s.at(0) << '\n';
+	std::cout << s.at(1) << '\n';
+	std::cout << s.at(2) << '\n';
+
+	s.at(2) = 'n';
+	std::cout << s << '\n';
+}
+```
+```txt:出力
+c
+a
+t
+can
+```
+
+## 6.5 range-based for を使い、各要素に const 参照でアクセス
 ```cpp
 #include <iostream>
 #include <string>
@@ -431,7 +457,7 @@ l
 e
 ```
 
-## 6.5 range-based for を使い、各要素に参照でアクセス
+## 6.6 range-based for を使い、各要素に参照でアクセス
 参照でアクセスすると、その要素を書き換えることができます。
 ```cpp
 #include <iostream>
@@ -456,7 +482,7 @@ bqqmf
 
 # 7. `std::string` の追加
 
-## 7.1 前後に別の文字列を追加した、新しい `std::string` を作成する
+## 7.1 前後に別の文字列を足した、新しい `std::string` を作成する
 `+` 演算子を使うと、前後に別の文字列を追加した新しい文字列を作成できます。  
 元の文字列は変更されません。
 ```cpp
@@ -636,7 +662,7 @@ apple
 ```
 
 
-# 9. `std::string` の部分の取得
+# 9. `std::string` の一部の取得
 
 ## 9.1 指定した位置以降の文字列を取得
 `.substr(pos)` は、`pos` 番目以降の文字列を新しい `std::string` として返します。
@@ -682,17 +708,63 @@ ter
 ```
 
 
-# 10. `std::string` のイテレータ
+# 10. `std::string` の入れ替え
 
-削除や挿入、アルゴリズム関数で使うためのイテレータは以下の 2 つの関数で取得できます。
+## 10.1 二つの `std::string` を交換
+```cpp
+#include <iostream>
+#include <string>
 
-## 10.1 先頭位置のイテレータを取得
+int main()
+{
+	std::string s = "apple";
+	std::string t = "bird";
+
+	std::swap(s, t);
+	std::cout << s << '\n';
+	std::cout << t << '\n';
+}
+```
+```txt:出力
+bird
+apple
+```
+
+
+# 11. `std::string` のイテレータ
+
+削除や挿入、アルゴリズム関数で使うためのイテレータを以下の関数で取得できます。
+
+## 11.1 先頭位置のイテレータを取得
 `.begin()` は文字列の先頭位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
 
-## 10.2 終端位置のイテレータを取得
+## 11.2 終端位置のイテレータを取得
 `.end()` は文字列の終端位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
 
 
-# 11. 数値への変換
+# 12. 数値から `std::string` への変換
+
+## 12.1 数値を `std::string` に変換する
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int a, b;
+	std::cin >> a >> b;
+	
+	std::string s = std::to_string(a + b);
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
+}
+```
+```txt:入力
+300 800
+```
+```txt:出力
+1100
+4
+```
