@@ -5,3 +5,4 @@ published: false # falseだと下書き
 price: 800
 chapters:
   - library-string
+  - next
