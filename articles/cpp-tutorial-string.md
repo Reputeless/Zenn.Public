@@ -6,7 +6,8 @@ topics: ["cpp"]
 published: false
 ---
 
-C++ で文字列を表現する標準ライブラリ機能 `std::string` クラスについて、競技プログラミングのために覚えておきたい基本の機能とサンプルをまとめました。
+C++ 標準の文字列クラス `std::string` の基本機能をサンプルで説明します。  
+`std::string` を使うには `#include <string>` が必要です。
 
 # 1. 構築
 
@@ -28,7 +29,7 @@ abc
 3
 ```
 
-## 指定した個数の同じ文字から構築する
+## (個数) × (文字) で構築する
 ```cpp
 #include <iostream>
 #include <string>
@@ -53,10 +54,10 @@ aaaaa
 
 int main()
 {
-	std::string a = "abc";
-	std::string s = a;
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
+	std::string s = "abc";
+	std::string t = a;
+	std::cout << t << '\n';
+	std::cout << t.size() << '\n';
 }
 ```
 出力
@@ -66,17 +67,17 @@ abc
 ```
 
 ## 空の文字列
-デフォルトコンストラクタでは要素数が 0 の空の文字列を構築します。  
-問題なくプログラムで使うことができます。
+デフォルトコンストラクタは要素数が 0 の空の文字列を構築します。  
+空の文字列は、とくに何の問題もなくプログラムで使うことができます。
 ```cpp
 #include <iostream>
 #include <string>
 
 int main()
 {
-	std::string s;
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
+	std::string s; // 空の文字列を構築
+	std::cout << s << '\n'; // 出力しても何も表示されない
+	std::cout << s.size() << '\n'; // 要素数は 0
 }
 ```
 出力
@@ -124,7 +125,7 @@ cat
 ```
 
 ## 半角スペースによって入力が区切られる
-1 行の入力の途中に空白文字が含まれていると、区切りと見なされます。  
+1 行の入力の途中に空白文字が含まれていると、入力の区切りと見なされます。  
 空白文字は除去されます。
 ```cpp
 #include <iostream>
@@ -183,7 +184,7 @@ blue ocean
 # 3. 要素数
 
 ## 要素数を調べる
-`.size()` は要素数を符号無し整数型で返します。
+`.size()` は要素数を符号無し整数型の値で返します。
 ```cpp
 #include <iostream>
 #include <string>
@@ -195,11 +196,15 @@ int main()
 
 	s = "apple";
 	std::cout << s.size() << '\n';
+
+    size_t len = s.size();
+    std::cout << len << '\n';
 }
 ```
 出力
 ```
 3
+5
 5
 ```
 
@@ -412,6 +417,52 @@ int main()
 ```
 t
 car
+```
+
+## range-based for を使い、各要素に const 参照でアクセス
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "apple";
+
+    for (const auto& ch : s)
+    {
+        std::cout << ch << '\n';
+    }
+}
+```
+出力
+```
+a
+p
+p
+l
+e
+```
+
+## range-based for を使い、各要素に参照でアクセス
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "apple";
+
+    for (auto& ch : s)
+    {
+        ch += 1;
+    }
+
+	std::cout << s << '\n';
+}
+```
+出力
+```
+bqqmf
 ```
 
 
