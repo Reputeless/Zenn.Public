@@ -883,7 +883,7 @@ int main()
 ## 13.1 数が書かれた文字列をパースして整数に変換
 - `std::stoi(s, idx, base)` は、文字列 `s` をパースし `int` 型で返します
 - `std::stoull(s, idx, base)` は、文字列 `s` をパースし `unsigned long long` 型で返します
-- 書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
+- `s` に書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
 ```cpp
 #include <iostream>
 #include <string>
@@ -906,11 +906,11 @@ int main()
 9876543210
 ```
 
-## 13.2 二進数が書かれた文字列パースして整数に変換
+## 13.2 二進数が書かれた文字列をパースして整数に変換
 - `std::stoi(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `int` 型で返します。`idx` は今回は使いません
 - `std::stoull(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `unsigned long long` 型で返します。`idx` は今回は使いません
-- `base` を `2` に、`idx` を `nullptr` にすることで、二進数が記述された文字列 `s` から数値を得ることができます
-- 文字列で表現されている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
+- `base` を `2` に、`idx` を `nullptr` にすることで、二進数 01 で書かれた文字列 `s` を十進数の数値に変換できます
+- `s` に書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
 ```cpp
 #include <iostream>
 #include <string>
