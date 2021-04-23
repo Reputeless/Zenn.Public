@@ -3,7 +3,6 @@ title: "<string>"
 free: true
 ---
 
-C++ 標準ライブラリヘッダ `<string>` の主要な機能を紹介します。
 - 1～11: 文字列クラス `std::string` の機能
 - 12: 数値を文字列に変換する関数
 - 13: 文字列を数値に変換する関数
@@ -11,7 +10,7 @@ C++ 標準ライブラリヘッダ `<string>` の主要な機能を紹介しま�
 # 1. `std::string` の構築
 
 ## 1.1 文字列リテラルから構築する
-- 文字列リテラル (`""` で囲んでプログラム中に用意された文字列) を使って初期化します
+- 文字列リテラル (`""` で囲んでプログラム中に用意した文字列) を使って初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -29,7 +28,7 @@ abc
 ```
 
 ## 1.2 (個数) × (文字) で構築する
-- `std::string(n, ch)` は、`n` 回繰り返す文字 `ch` によって作られる文字列で `std::string` 型の値を初期化します
+- `n` 回繰り返す文字 `ch` で `std::string` 型の値を初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -47,7 +46,7 @@ aaaaa
 ```
 
 ## 1.3 別の `std::string` から構築する
-- 別の `std::string` 型の値をコピーして `std::string` 型の値を初期化します
+- 別の `std::string` 型の値をコピーして初期化します
 ```cpp
 #include <iostream>
 #include <string>
