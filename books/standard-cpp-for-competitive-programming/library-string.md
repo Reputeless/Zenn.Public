@@ -85,9 +85,30 @@ int main()
 
 # 2. `std::string` の入力
 
-## 2.1 標準入力
+## 2.1 標準入力の基本
 - 1 回の `std::cin` で、改行もしくは空白文字が出現するまでの入力（単語）を読み取ります 
 - 改行文字や空白文字は除去されます
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s;
+	std::cin >> s;
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
+}
+```
+```txt:入力
+apple
+```
+```txt:出力
+apple
+5
+```
+## 2.2 複数個の入力
+- 複数の入力は、連続する `>>` で読み込めます
 ```cpp
 #include <iostream>
 #include <string>
@@ -119,7 +140,7 @@ cat
 3
 ```
 
-## 2.2 半角スペースによって入力が区切られる
+## 2.3 半角スペースによって入力が区切られる
 - 1 行の入力の途中に空白文字が含まれていると、入力の区切りと見なされます
 - 空白文字は除去されます
 ```cpp
@@ -129,12 +150,11 @@ cat
 int main()
 {
 	std::string s, t;
- 
-	std::cin >> s;
+	std::cin >> s >> t; // 入力が半角スペースで 2 つに区切られているので 2 回必要
+
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 
-	std::cin >> t;
 	std::cout << t << '\n';
 	std::cout << t.size() << '\n';
 }
@@ -149,8 +169,9 @@ ocean
 5
 ```
 
-## 2.3 丸ごと 1 行を入力
+## 2.4 丸ごと 1 行を入力
 - 空白文字を含む 1 行を丸ごと読み込みたい場合は `std::getline()` を使います
+- 改行文字は除去されます
 ```cpp
 #include <iostream>
 #include <string>
@@ -171,8 +192,8 @@ blue ocean
 10
 ```
 
-## 2.4 たくさんの単語を読み込む
-- 最初に単語の個数 `N`, 続いて N 個の単語が入力される問題において、入力されるすべての単語を `std::vector<std::string>` に読み込んで保存するサンプルです
+## 2.5 【サンプル】たくさんの単語を読み込む
+- 最初に単語の個数 `N`, 続いて N 個の単語が入力される問題において、入力されるすべての単語を `std::vector<std::string>` に読み込んで保存します
 ```cpp
 #include <iostream>
 #include <string>
@@ -209,8 +230,8 @@ yellow
 ```
 
 
-## 2.5 たくさんの単語を読み込む（入力個数が与えられない場合）
-- 入力される単語数が最初に与えられない場合、`std::cin >> s;` をループします。入力がこれ以上存在しなくなると `if (std::cin >> s)` は `false` になるので、それを検知してループを終了します
+## 2.6 【サンプル】たくさんの単語を読み込む（入力個数が与えられない場合）
+- 入力される単語数が最初に与えられない場合、`std::cin >> s;` をループします。入力がこれ以上存在しなくなると `if (std::cin >> s)` が `false` になるので、それを検知したらループを終了します
 ```cpp
 #include <iostream>
 #include <string>
@@ -220,7 +241,7 @@ int main()
 {
 	std::vector<std::string> ss;
 	std::string in;
-	while(std::cin >> in) // 入力がこれ以上存在しなくなるまで繰り返す
+	while (std::cin >> in) // 入力がこれ以上存在しなくなるまで繰り返す
 	{
 		ss.push_back(in);
 	}
