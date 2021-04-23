@@ -172,7 +172,7 @@ blue ocean
 
 # 3. 要素数
 
-## 3.1	要素数を調べる
+## 3.1 要素数を調べる
 `.size()` は要素数を符号無し整数型の値で返します。
 ```cpp
 #include <iostream>
@@ -196,7 +196,7 @@ int main()
 5
 ```
 
-## 3.2	空の文字列であるかを調べる
+## 3.2 空の文字列であるかを調べる
 `.empty()` は、要素数が 0 の文字列（= 空の文字列）であるかを `bool` 型の値で返します。
 ```cpp
 #include <iostream>
@@ -225,7 +225,7 @@ t is empty.
 
 # 4. 代入
 
-## 別の文字列を代入する
+## 4.1 別の文字列を代入する
 ```cpp
 #include <iostream>
 #include <string>
@@ -258,7 +258,7 @@ bird
 
 # 5. 比較
 
-## 同じ文字列であるかを調べる
+## 5.1 同じ文字列であるかを調べる
 ```cpp
 #include <iostream>
 #include <string>
@@ -282,7 +282,7 @@ true
 false
 ```
 
-## 違う文字列であるかを調べる
+## 5.2 違う文字列であるかを調べる
 ```cpp
 #include <iostream>
 #include <string>
@@ -306,7 +306,7 @@ false
 true
 ```
 
-## 文字列の順序比較
+## 5.3 文字列の順序比較
 参考: [ASCII コード表](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)
 ```cpp
 #include <iostream>
@@ -334,7 +334,7 @@ true
 
 # 6. 要素にアクセス
 
-## 指定した位置の要素にアクセス
+## 6.1 指定した位置の要素にアクセス
 インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)`。  
 範囲外アクセスに注意が必要です。
 ```cpp
@@ -359,7 +359,7 @@ t
 can
 ```
 
-## 先頭の要素にアクセス
+## 6.2 先頭の要素にアクセス
 空の文字列で使うと範囲外アクセスになるので注意が必要です。
 ```cpp
 #include <iostream>
@@ -379,7 +379,7 @@ c
 hat
 ```
 
-## 末尾の要素にアクセス
+## 6.3 末尾の要素にアクセス
 空の文字列で使うと範囲外アクセスになるので注意が必要です。
 ```cpp
 #include <iostream>
@@ -399,7 +399,7 @@ t
 car
 ```
 
-## range-based for を使い、各要素に const 参照でアクセス
+## 6.4 range-based for を使い、各要素に const 参照でアクセス
 ```cpp
 #include <iostream>
 #include <string>
@@ -422,7 +422,7 @@ l
 e
 ```
 
-## range-based for を使い、各要素に参照でアクセス
+## 6.5 range-based for を使い、各要素に参照でアクセス
 ```cpp
 #include <iostream>
 #include <string>
@@ -446,7 +446,7 @@ bqqmf
 
 # 7. 追加
 
-## 文字列を追加した、新しい `std::string` を作成する
+## 7.1 前後に別の文字列を追加した、新しい `std::string` を作成する
 ```cpp
 #include <iostream>
 #include <string>
@@ -474,7 +474,7 @@ school bus
 my school
 ```
 
-## 末尾に 1 文字追加する
+## 7.2 末尾に 1 文字追加する
 ```cpp
 #include <iostream>
 #include <string>
@@ -504,7 +504,7 @@ top
 3
 ```
 
-## 末尾に文字列を追加する
+## 7.3 末尾に文字列を追加する
 ```cpp
 #include <iostream>
 #include <string>
@@ -537,7 +537,7 @@ teacher
 
 # 8. 削除
 
-## 末尾の文字を削除
+## 8.1 末尾の文字を削除
 空の文字列で使うと範囲外アクセスになるので注意が必要です。
 ```cpp
 #include <iostream>
@@ -568,7 +568,7 @@ app
 3
 ```
 
-## 	先頭の文字を削除
+## 8.2 先頭の文字を削除
 ```cpp
 #include <iostream>
 #include <string>
@@ -598,7 +598,7 @@ ple
 3
 ```
 
-## 文字列を消去
+## 8.3 文字列を消去
 ```cpp
 #include <iostream>
 #include <string>
@@ -625,7 +625,7 @@ apple
 
 # 9. 部分の取得
 
-## 指定した位置以降の文字列を取得
+## 9.1 指定した位置以降の文字列を取得
 範囲外アクセスに注意が必要です。
 ```cpp
 #include <iostream>
@@ -646,7 +646,7 @@ mputer
 ter
 ```
 
-## 指定した位置以降、指定した文字数分の文字列を取得
+## 9.2 指定した位置以降、指定した文字数分の文字列を取得
 第 1 引数は範囲外アクセスに注意が必要です。第 2 引数は実際の文字数を超えた分は無視されます。
 ```cpp
 #include <iostream>
@@ -672,11 +672,11 @@ ter
 
 削除や挿入、アルゴリズム関数で使うためのイテレータは以下の 2 つの関数で取得できます。
 
-## 先頭位置のイテレータを取得
+## 10.1 先頭位置のイテレータを取得
 `.begin()` は文字列の先頭位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
 
-## 終端位置のイテレータを取得
+## 10.2 終端位置のイテレータを取得
 `.end()` は文字列の終端位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
 
