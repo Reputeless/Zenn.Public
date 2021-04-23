@@ -55,7 +55,7 @@ aaaaa
 int main()
 {
 	std::string s = "abc";
-	std::string t = a;
+	std::string t = s;
 	std::cout << t << '\n';
 	std::cout << t.size() << '\n';
 }
@@ -177,7 +177,7 @@ blue ocean
 
 ## 3.1 要素数を調べる
 - `.size()` は要素数を符号無し整数型の値で返します
-- まったく同じ効果を持つメンバ関数 `.length()` もあります
+- 同じ効果を持つメンバ関数 `.length()` もあります
 ```cpp
 #include <iostream>
 #include <string>
@@ -313,7 +313,7 @@ true
 - 基本の順序: `0 < 9 < A < Z < a < z`  
 - 参考: [ASCII コード表](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)  
 - 順序の例: `A < AA < AB < ABC < Aa < Ab < B < BA < Z < ZZ < a < aA < aa < b < zzz`  
-- 大文字と小文字が混在する場合は単純な辞書順にならないことに注意が必要です
+- 大文字と小文字が混在する場合の順序には注意が必要です
 ```cpp
 #include <iostream>
 #include <string>
@@ -341,8 +341,8 @@ true
 # 6. `std::string` の要素にアクセス
 
 ## 6.1 指定した位置の要素にアクセス
-- `s[index]` で指定した位置の要素にアクセスできます 
-- インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)` です
+- `s[index]` で指定した位置の要素 (`char` 型) にアクセスできます 
+- インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
 - 範囲外にアクセスしてはいけません
 ```cpp
 #include <iostream>
@@ -368,7 +368,7 @@ can
 
 ## 6.2 先頭の要素にアクセス
 - `s[0]` と同等です
-- 空の文字列で使うと範囲外アクセスになるので注意が必要です
+- 空の文字列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
 #include <iostream>
 #include <string>
@@ -389,7 +389,7 @@ hat
 
 ## 6.3 末尾の要素にアクセス
 - `s[(s.size() - 1)]` と同等です（ただし `0 < s.size()`）
-- 空の文字列で使うと範囲外アクセスになるので注意が必要です
+- 空の文字列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
 #include <iostream>
 #include <string>
@@ -409,9 +409,9 @@ car
 ```
 
 ## 6.4 指定した位置の要素にアクセス（範囲外アクセスを例外で検出）
-- `.at(index)` で指定した位置の要素にアクセスできます
-- インデックスは最初の文字が `0`, その次が `1`, ... `(.size() - 1)` です
-- `s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外が送出されます
+- `.at(index)` で指定した位置の要素 (`char` 型) にアクセスできます
+- インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
+- `s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。そのチェックのための追加のコストがあります
 ```cpp
 #include <iostream>
 #include <string>
@@ -434,7 +434,7 @@ t
 can
 ```
 
-## 6.5 range-based for を使い、各要素に const 参照でアクセス
+## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
 ```cpp
 #include <iostream>
 #include <string>
@@ -577,7 +577,7 @@ teacher
 
 ## 8.1 末尾の文字を削除
 - `.pop_back()` は末尾の要素を 1 つ削除します
-- 空の文字列で使うと範囲外アクセスになるので注意が必要です
+- 空の文字列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
 #include <iostream>
 #include <string>
