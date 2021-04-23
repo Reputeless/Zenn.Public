@@ -57,8 +57,8 @@ int main()
 	std::string t = s; // s の値をコピー
 	std::cout << t << '\n';
 	std::cout << t.size() << '\n';
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
+	std::cout << s << '\n'; // コピーしたほうは変化なし
+	std::cout << s.size() << '\n'; // コピーしたほうは変化なし
 }
 ```
 ```txt:出力
@@ -430,7 +430,7 @@ int main()
 	std::cout << (s < t) << '\n';
 	std::cout << (s < "dog") << '\n';
 	std::cout << ("caa" < s) << '\n';
-	std::cout << ("Dog" < t) << '\n';-
+	std::cout << ("Dog" < t) << '\n';
 }
 ```
 ```txt:出力
@@ -547,7 +547,7 @@ int main()
 {
 	std::string s = "apple";
 
-	for (const auto& ch : s) // 要素の個数だけ繰り返すループ、ch は毎回各要素への const 参照（先頭から順に）
+	for (const auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への const 参照
 	{
 		std::cout << ch << '\n';
 	}
@@ -571,8 +571,7 @@ int main()
 {
 	std::string s = "apple";
 
-	for (auto& ch : s) // 要素の個数だけ繰り返すループ、ch は毎回各要素への参照（先頭から順に）
-	{
+	for (auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への参照
 		ch += 1;
 	}
 
@@ -662,7 +661,7 @@ int main()
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n'; 
 
-	std::string t = "cher"
+	std::string t = "cher";
 	s += t; // 末尾に "cher" を追加
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n'; 
