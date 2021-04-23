@@ -572,6 +572,7 @@ int main()
 	std::string s = "apple";
 
 	for (auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への参照
+	{
 		ch += 1;
 	}
 
