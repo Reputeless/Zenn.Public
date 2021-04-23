@@ -58,8 +58,7 @@ int main()
 	std::cout << t.size() << '\n';
 }
 ```
-出力
-```
+```txt:出力
 abc
 3
 ```
@@ -78,8 +77,7 @@ int main()
 	std::cout << s.size() << '\n'; // 要素数は 0
 }
 ```
-出力
-```
+```txt:出力
 
 0
 ```
@@ -106,14 +104,12 @@ int main()
 	std::cout << u.size() << '\n';
 }
 ```
-入力
-```
+```txt:入力
 apple
 bird
 cat
 ```
-出力
-```
+```txt:出力
 apple
 5
 bird
@@ -142,12 +138,10 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-入力
-```
+```txt:入力
 blue ocean
 ```
-出力
-```
+```txt:出力
 blue
 4
 ocean
@@ -168,12 +162,10 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-入力
-```
+```txt:入力
 blue ocean
 ```
-出力
-```
+```txt:出力
 blue ocean
 10
 ```
@@ -199,8 +191,7 @@ int main()
     std::cout << len << '\n';
 }
 ```
-出力
-```
+```txt:出力
 3
 5
 5
@@ -228,8 +219,7 @@ int main()
 	}
 }
 ```
-出力
-```
+```txt:出力
 t is empty.
 ```
 
@@ -258,8 +248,7 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-出力
-```
+```txt:出力
 abc
 3
 apple
@@ -287,8 +276,7 @@ int main()
 	std::cout << (s == t) << '\n';
 }
 ```
-出力
-```
+```txt:出力
 true
 false
 true
@@ -312,8 +300,7 @@ int main()
 	std::cout << (s != t) << '\n';
 }
 ```
-出力
-```
+```txt:出力
 false
 true
 false
@@ -338,8 +325,7 @@ int main()
 	std::cout << ("Dog" < t) << '\n'; // A < Z < a < z であることに注意
 }
 ```
-出力
-```
+```txt:出力
 true
 true
 true
@@ -367,8 +353,7 @@ int main()
 	std::cout << s << '\n';
 }
 ```
-出力
-```
+```txt:出力
 c
 a
 t
@@ -390,8 +375,7 @@ int main()
 	std::cout << s << '\n';
 }
 ```
-出力
-```
+```txt:出力
 c
 hat
 ```
@@ -411,8 +395,7 @@ int main()
 	std::cout << s << '\n';
 }
 ```
-出力
-```
+```txt:出力
 t
 car
 ```
@@ -432,8 +415,7 @@ int main()
     }
 }
 ```
-出力
-```
+```txt:出力
 a
 p
 p
@@ -458,8 +440,7 @@ int main()
 	std::cout << s << '\n';
 }
 ```
-出力
-```
+```txt:出力
 bqqmf
 ```
 
@@ -486,8 +467,7 @@ int main()
 	std::cout << ("my " + s) << '\n';
 }
 ```
-出力
-```
+```txt:出力
 high school
 11
 school bus
@@ -516,8 +496,7 @@ int main()
 	std::cout << s.size() << '\n';	
 }
 ```
-出力
-```
+```txt:出力
 t
 1
 to
@@ -547,8 +526,7 @@ int main()
 	std::cout << s.size() << '\n'; 
 }
 ```
-出力
-```
+```txt:出力
 t
 1
 tea
@@ -582,8 +560,7 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-出力
-```
+```txt:出力
 apple
 5
 appl
@@ -613,8 +590,7 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-出力
-```
+```txt:出力
 apple
 5
 pple
@@ -640,8 +616,7 @@ int main()
 	std::cout << s.size() << '\n';
 }
 ```
-出力
-```
+```txt:出力
 apple
 5
 
@@ -666,8 +641,7 @@ int main()
 	std::cout << s.substr(5) << '\n';
 }
 ```
-出力
-```
+```txt:出力
 omputer
 mputer
 ter
@@ -688,8 +662,7 @@ int main()
 	std::cout << s.substr(5, 100) << '\n';
 }
 ```
-出力
-```
+```txt:出力
 omp
 mp
 ter
@@ -698,6 +671,8 @@ ter
 
 # 10. イテレータ
 
+削除や挿入、アルゴリズム関数で使うためのイテレータは以下の 2 つの関数で取得できます。
+
 ## 先頭位置のイテレータを取得
 `.begin()` は文字列の先頭位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
@@ -705,9 +680,4 @@ ter
 ## 終端位置のイテレータを取得
 `.end()` は文字列の終端位置のイテレータを返します。  
 空の文字列の場合 `.begin() == .end()` です。
-
-
-# 11. ループ
-
-
 
