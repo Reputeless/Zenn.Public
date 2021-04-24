@@ -32,7 +32,7 @@ int main()
 
 ## 1.2 配列の要素の積を計算する
 - `std::accumulate(itFirst, itLast, init, binaryOp)` は、初期値 `init` にイテレータで指定した範囲 `[itFirst, itLast)` の値を先頭から順に `binaryOp` による計算を繰り返した結果を返します
-- `binaryOp` を `std::multiplies<>{}`, `init` を 1 にすることで、指定した範囲の要素を乗算していった結果を得られます
+- `binaryOp` を `std::multiplies<>{}`, `init` を 1 にすることで、指定した範囲の要素の積を得られます
 - この関数の戻り値の型は、配列の要素の型とは関係なく `init` の型で決まるため、`double` 型で積を求める場合は `init` を `double` 型である `1.0` にする必要があるので注意してください
 
 ```cpp
