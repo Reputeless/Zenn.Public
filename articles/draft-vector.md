@@ -43,7 +43,7 @@ int main()
 
 	std::cout << "---\n"; // 実行結果を見やすくするための区切り線
 
-	std::vector<Point> points = { Point{ 33, 44 }, Point{ 55, 66 } };
+	std::vector<Point> points = { { 33, 44 }, { 55, 66 } };
 	std::cout << points.size() << '\n'; // 要素数を出力
 	// 保持している要素を出力
 	for (const auto& point : points)
