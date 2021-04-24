@@ -6,4 +6,5 @@ price: 800
 chapters:
   - library-string
   - library-vector
+  - library-numeric
   - next

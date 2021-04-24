@@ -7,7 +7,6 @@ free: true
 
 - `<cmath>`
 - `<algorithm>`
-- `<numeric>`
 - `<unordered_set>`
 
 あたりを更新予定。
