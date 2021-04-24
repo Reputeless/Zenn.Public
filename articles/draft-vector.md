@@ -579,181 +579,157 @@ int main()
 
 # 5. `std::vector` の比較
 
-## 5.1 同じ中身であるかを調べる
-- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 'a', 'b' について、`a == b` は配列の中身が一致するかを `bool` 型の値で返します
-- 計算量: `==` は双方の要素数が同じかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
+## 5.1 同じ配列であるかを調べる
+- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 'a', 'b' について、`a == b` は配列の要素数と中身が一致するかを `bool` 型の値で返します
+- 計算量: `==` は最初に双方の要素数が同じかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	std::vector<int> va = { 10, 20, 50, 100 };
+	std::vector<int> vb = { 10, 20, 50, 100 };
+	std::vector<int> vc(100, 0); // 100 個の 0
+
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
+	std::cout << (va == va) << '\n';
+	std::cout << (va == vb) << '\n';
+	std::cout << (va == vc) << '\n';
+	std::cout << (vc == vc) << '\n';
+}
+```
+```txt:出力
+true
+true
+false
+true
+```
+
+## 5.2 違う配列であるかを調べる
+- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 'a', 'b' について、`a != b` は配列の要素数や中身が違うかを `bool` 型の値で返します
+- 計算量: `!=` は最初に双方の要素数が違うかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
 ```cpp
 #include <iostream>
 #include <string>
 
 int main()
 {
-	std::string s = "cat";
-	std::string t = "dog";
+	std::vector<int> va = { 10, 20, 50, 100 };
+	std::vector<int> vb = { 10, 20, 50, 100 };
+	std::vector<int> vc(100, 0); // 100 個の 0
 
 	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
-	std::cout << (s == "cat") << '\n';
-	std::cout << (t == "cat") << '\n';
-	std::cout << (s == s) << '\n';
-	std::cout << (s == t) << '\n';
-}
-```
-```txt:出力
-true
-false
-true
-false
-```
-
-## 5.2 違う文字列であるかを調べる
-- `a != b` の少なくとも一方が `std::string` 型の場合、2 つの文字列 `a`, `b` が異なるかを `bool` 型の値で返します
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s = "cat";
-	std::string t = "dog";
-
-	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
-	std::cout << (s != "cat") << '\n';
-	std::cout << (t != "cat") << '\n';
-	std::cout << (s != s) << '\n';
-	std::cout << (s != t) << '\n';
+	std::cout << (va != va) << '\n';
+	std::cout << (va != vb) << '\n';
+	std::cout << (va != vc) << '\n';
+	std::cout << (vc != vc) << '\n';
 }
 ```
 ```txt:出力
 false
-true
 false
 true
-```
-
-## 5.3 文字列の順序比較
-- `<`, `<=`, `>`, `>=` 演算子は 2 つの文字列の順序関係を `bool` 型の値で返します
-- 基本の順序: `0 < 9 < A < Z < a < z`  
-- 参考: [ASCII コード表](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)  
-- 順序の例: `A < AA < AB < ABC < Aa < Ab < B < BA < Z < ZZ < a < aA < aa < b < zzz`  
-- 大文字と小文字が混在する場合の順序には注意が必要です
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s = "cat";
-	std::string t = "dog";
-
-	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
-	std::cout << (s < t) << '\n';
-	std::cout << (s < "dog") << '\n';
-	std::cout << ("caa" < s) << '\n';
-	std::cout << ("Dog" < t) << '\n';
-}
-```
-```txt:出力
-true
-true
-true
-true
+false
 ```
 
 
-# 6. `std::string` の要素にアクセス
+# 6. `std::vector` の要素にアクセス
 
 ## 6.1 指定した位置の要素にアクセス
-- `s[index]` で、指定した位置の要素 (`char` 型) にアクセスします 
-- インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
+- `v[index]` で、指定した位置の要素 (`std::vectorr<Type>` で指定した `Type` 型) にアクセスします 
+- インデックスは先頭の要素が `0`, その次が `1`, ..., `(.size() - 1)` です
 - 範囲外にアクセスしてはいけません
 ```cpp
 #include <iostream>
-#include <string>
+#include <vector>
 
 int main()
 {
-	std::string s = "cat";
-	std::cout << s[0] << '\n'; // 0 番目の要素を出力
-	std::cout << s[1] << '\n'; // 1 番目の要素を出力
-	std::cout << s[2] << '\n'; // 2 番目の要素を出力
+	std::vector<int> numbers = { 10, 20, 50 };
+	std::cout << numbers[0] << '\n'; // 0 番目の要素を出力
+	std::cout << numbers[1] << '\n'; // 1 番目の要素を出力
+	std::cout << numbers[2] << '\n'; // 2 番目の要素を出力
 
-	s[2] = 'n'; // 2 番目の要素を書き換え
-	std::cout << s << '\n';
+	numbers[2] = -1; // 2 番目の要素を書き換え
+	std::cout << numbers[2] << '\n';
 }
 ```
 ```txt:出力
-c
-a
-t
-can
+10
+20
+50
+-1
 ```
 
 ## 6.2 先頭の要素にアクセス
-- `s[0]` と同等です
-- 空の文字列で使うと範囲外アクセスになるため注意が必要です
+- `.front()` で、配列の先頭の要素にアクセスします
+- `v[0]` と同等です
+- 空の配列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
 #include <iostream>
-#include <string>
+#include <vector>
 
 int main()
 {
-	std::string s = "cat";
-	std::cout << s.front() << '\n'; // 先頭の要素を出力
+	std::vector<int> numbers = { 10, 20, 50 };
+	std::cout << numbers.front() << '\n'; // 先頭の要素を出力
 
-	s.front() = 'h'; // 先頭の要素を書き換え
-	std::cout << s << '\n';
+	numbers.front() = 1; // 先頭の要素を書き換え
+	std::cout << numbers.front() << '\n';
 }
 ```
 ```txt:出力
-c
-hat
+10
+1
 ```
 
 ## 6.3 末尾の要素にアクセス
-- `s[(s.size() - 1)]` と同等です（ただし `0 < s.size()`）
-- 空の文字列で使うと範囲外アクセスになるため注意が必要です
+- `.back()` で、配列の末尾の要素にアクセスします
+- `v[(v.size() - 1)]` と同等です（ただし `0 < v.size()`）
+- 空の配列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
 #include <iostream>
-#include <string>
+#include <vector>
 
 int main()
 {
-	std::string s = "cat";
-	std::cout << s.back() << '\n'; // 末尾の要素を出力
+	std::vector<int> numbers = { 10, 20, 50 };
+	std::cout << numbers.back() << '\n'; // 末尾の要素を出力
 
-	s.back() = 'r'; // 末尾の要素を書き換え
-	std::cout << s << '\n';
+	numbers.back() = 500; // 末尾の要素を書き換え
+	std::cout << numbers.back() << '\n';
 }
 ```
 ```txt:出力
-t
-car
+50
+500
 ```
 
 ## 6.4 指定した位置の要素にアクセス（範囲外アクセスを例外で検出）
-- `.at(index)` で、指定した位置の要素 (`char` 型) にアクセスします
+- `.at(index)` で、指定した位置の要素にアクセスします
 - インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
-- `s[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。そのチェックのための追加のコストがあります
+- `v[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。そのチェックのための追加のコストがあります
 ```cpp
 #include <iostream>
-#include <string>
+#include <vector>
 
 int main()
 {
-	std::string s = "cat";
-	std::cout << s.at(0) << '\n'; // 0 番目の要素を出力
-	std::cout << s.at(1) << '\n'; // 1 番目の要素を出力
-	std::cout << s.at(2) << '\n'; // 2 番目の要素を出力
+	std::vector<int> numbers = { 10, 20, 50 };
+	std::cout << numbers.at(0) << '\n'; // 0 番目の要素を出力
+	std::cout << numbers.at(1) << '\n'; // 1 番目の要素を出力
+	std::cout << numbers.at(2) << '\n'; // 2 番目の要素を出力
 
-	s.at(2) = 'n'; // 2 番目の要素を書き換え
-	std::cout << s << '\n';
+	numbers.at(2) = -1; // 2 番目の要素を書き換え
+	std::cout << numbers.at(2) << '\n';
 }
 ```
 ```txt:出力
-c
-a
-t
-can
+10
+20
+50
+-1
 ```
 
 ## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
@@ -761,23 +737,22 @@ can
 ```cpp
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main()
 {
-	std::string s = "apple";
+	std::vector<std::string> texts = { "apple", "bird", "cat" };
 
-	for (const auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への const 参照
+	for (const auto& text : texts) // 要素の個数だけ繰り返すループ、text は順に各要素への const 参照
 	{
-		std::cout << ch << '\n';
+		std::cout << text << '\n';
 	}
 }
 ```
 ```txt:出力
-a
-p
-p
-l
-e
+apple
+bird
+cat
 ```
 
 ## 6.6 range-based for を使い、各要素に参照でアクセス
@@ -785,25 +760,31 @@ e
 ```cpp
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main()
 {
-	std::string s = "apple";
+	std::vector<std::string> texts = { "apple", "bird", "cat" };
 
-	for (auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への参照
+	for (auto& text : texts) // 要素の個数だけ繰り返すループ、text は順に各要素への参照
 	{
-		ch += 1;
+		text.push_back('!');
 	}
 
-	std::cout << s << '\n';
+	for (const auto& text : texts) // 変更しないので const 参照でよい
+	{
+		std::cout << text << '\n';
+	}
 }
 ```
 ```txt:出力
-bqqmf
+apple!
+bird!
+cat!
 ```
 
 
-# 7. `std::string` の追加
+# 7. 要素の追加
 
 ## 7.1 前後に別の文字列を足した、新しい `std::string` を作成する
 - `+` 演算子を使うと、前後に別の文字列を追加した新しい `std::string` を作成できます
