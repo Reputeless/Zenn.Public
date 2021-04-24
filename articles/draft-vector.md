@@ -196,7 +196,7 @@ int main()
 ```
 
 ## 1.4 別の `std::vector<Type>` から構築する
-- 別の `std::vector<Type>` 型の値をコピーして初期化します
+- 別の `std::vector<Type>` 型の中身をコピーして初期化します
 - コピー元とコピー先の要素の型 `Type` は一致している必要があります
 ```cpp
 #include <iostream>
@@ -205,7 +205,6 @@ int main()
 int main()
 {
 	std::vector<int> v = { 10, 20, 50, 100 };
-	
 	std::vector<int> numbers = v; // v の値をコピー 
 	std::cout << numbers.size() << '\n';
 	for (const auto& number : numbers)
@@ -237,7 +236,7 @@ int main()
 ```
 
 ## 1.5 空の配列
-- `std::string` 型のデフォルトコンストラクタは要素数が 0 の空の配列を構築します  
+- `std::vector` 型のデフォルトコンストラクタは要素数が 0 の空の配列を構築します  
 - 空の配列も、何の問題もなくプログラムで使うことができます
 ```cpp
 #include <iostream>
@@ -274,14 +273,14 @@ int main()
 # 2. `std::vector` の入力
 
 `std::vector<Type>` 型の変数をそのまま `std::cin` で使うことはできないため、以下のいずれかの方法を使います
-- A: `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加する
-- B: あらかじめ入力個数分用意した `std::vector<Type>` の各要素に `std::cin` を行う
+- 方式 A: `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加する
+- 方式 B: あらかじめ入力個数分用意した `std::vector<Type>` の各要素に `std::cin` を行う
 
 2.1 では A の方法を、2.2 では B の方法を使います。
 
-## 2.1 入力した値を `std::vector` に追加する (A 方式)
+## 2.1 入力された値を `std::vector` に追加する (方式 A)
 - `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加します
-- 入力される個数が少なく、プログラムを書く時点でわかっている場合はこの方法が使えます
+- 入力される個数がプログラムを書く時点でわかっていて、なおかつ少ない場合にこの方法が使えます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -291,8 +290,9 @@ int main()
 	// 3 個入力されることがわかっている場合
 	int a, b, c;
 	std::cin >> a >> b >> c;
-
 	std::vector<int> numbers = { a, b, c };
+
+	// 読み込めていることを確認
 	std::cout << numbers.size() << '\n';
 	for (const auto& number : numbers)
 	{
@@ -301,9 +301,7 @@ int main()
 }
 ```
 ```txt:入力
-10
-20
-50
+10 20 50
 ```
 ```txt:出力
 3
@@ -312,9 +310,9 @@ int main()
 50
 ```
 
-## 2.2 入力した値を `std::vector` に追加する (B 方式)
+## 2.2 入力された値を `std::vector` に追加する (方式 B)
 - あらかじめ入力個数分のサイズで用意した `std::vector<Type>` の各要素に `std::cin` を行います
-- 入力される個数がプログラムを書く時点でわかっている場合はこの方法が使えます
+- 入力される個数がプログラムを書く時点でわかっている場合にこの方法が使えます
 ```cpp
 #include <iostream>
 #include <string>
@@ -323,12 +321,12 @@ int main()
 {
 	// 3 個入力されることがわかっている場合
 	std::vector<int> numbers(3); // int(), つまり 0 が 3 個
-
 	for (auto& number : numbers)  // 3 回繰り返す
 	{
 		std::cin >> number; // 各要素に入力を読み込み
 	}
 
+	// 読み込めていることを確認
 	std::cout << numbers.size() << '\n';
 	for (const auto& number : numbers)
 	{
@@ -337,9 +335,7 @@ int main()
 }
 ```
 ```txt:入力
-10
-20
-50
+10 20 50
 ```
 ```txt:出力
 3
@@ -349,7 +345,7 @@ int main()
 ```
 
 ## 2.3 入力される個数が実行時に与えられる場合
-- 2.2 の方法を応用することで、入力される個数が実行時に与えられるケースにも対応できます
+- 方式 B を応用することで、入力される個数が実行時に与えられるケースにも対応できます
 - 最初に入力の個数 `N`, 続いて N 個の入力が与えられる問題において、入力されるすべての値を `std::vector` に読み込んで保存します
 ```cpp
 #include <iostream>
@@ -359,12 +355,14 @@ int main()
 {
 	size_t N;
 	std::cin >> N; // 入力の個数 N を読み込む
+
 	std::vector<int> numbers(N); // int(), つまり 0 が N 個
 	for (auto& number : nubers) // N 回繰り返す
 	{
 		std::cin >> number; // 各要素に入力を読み込み
 	}
 
+	// 読み込めていることを確認
 	std::cout << numbers.size() << '\n';
 	for (const auto& number : numbers)
 	{
@@ -372,20 +370,20 @@ int main()
 	}
 }
 ```
-```txt:入力
+```txt:入力 1
 2
 111 222
 ```
-```txt:出力
+```txt:出力 1
 2
 111
 222
 ```
-```txt:入力
+```txt:入力 2
 5
 11 22 33 44 55
 ```
-```txt:出力
+```txt:出力 2
 5
 11
 22
@@ -394,60 +392,64 @@ int main()
 55
 ```
 
-
-## 2.6 【サンプル】たくさんの単語を読み込む（入力個数が与えられない場合）
-- 入力される単語数が最初に与えられない場合、`std::cin >> s;` をループします。入力がこれ以上存在しなくなると `if (std::cin >> s)` が `false` になるので、それを検知したらループを終了します
+## 2.4 入力される個数が与えられない場合
+- 入力される個数が実行時に与えられない場合、`std::cin >> s` をループします。入力がこれ以上存在しなくなると `if (std::cin >> s)` が `false` になるので、それを検知したらループを終了します
+- 入力された値は `.push_back()` で配列の末尾に追加します
 ```cpp
 #include <iostream>
-#include <string>
 #include <vector>
 
 int main()
 {
-	std::vector<std::string> ss;
-	std::string in;
+	std::vector<int> numbers; // 個数が不明なので空の配列からスタート
+	int in;
 	while (std::cin >> in) // 入力がこれ以上存在しなくなるまで繰り返す
 	{
-		ss.push_back(in);
-	}
+		numbers.push_back(in); // 入力されるたびに、配列の末尾に追加
+	}	
 
-	for (const auto& s : ss) // 読み込めていることを確認
+	// 読み込めていることを確認
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
 	{
-		std::cout << '>' << s << '\n';
+		std::cout << number << '\n';
 	}
 }
 ```
-```txt:入力
-red
-green
-blue
-yellow
+```txt:入力 1
+111 222
 ```
-```txt:出力
->red
->green
->blue
->yellow
+```txt:出力 1
+111
+222
+```
+```txt:入力 2
+11 22 33 44 55
+```
+```txt:出力 2
+11
+22
+33
+44
+55
 ```
 
 
-# 3. `std::string` の要素数
+# 3. `std::vector` の要素数
 
 ## 3.1 要素数を調べる
-- `.size()` は文字列が持つ要素数を符号無し整数型の値で返します
-- 同じ効果を持つメンバ関数 `.length()` もあります
+- `.size()` は配列が持つ要素数を符号無し整数型の値で返します
 ```cpp
 #include <iostream>
 #include <string>
 
 int main()
 {
-	std::string s = "abc";
-	std::cout << s.size() << '\n'; // 要素数を出力
+	std::vector<int> numbers = { 10, 20, 50, 100 };
+	std::cout << numbers.size() << '\n'; // 要素数を出力
 
 	s = "apple";
 	std::cout << s.size() << '\n';
-	std::cout << s.length() << '\n'; // .size() と同じ
 
 	std::size_t n = s.size();
 	std::cout << n << '\n';
