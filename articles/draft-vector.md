@@ -1149,42 +1149,77 @@ cat
 
 # 11. `std::vector<bool>` の注意
 
-C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を最大 8 個分記録することで、単純な `bool` の配列よりもメモリ消費量が小さくなるような特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
+C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個分記録することで、単純な `bool` の配列よりもメモリ消費量が小さくなるような特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
 
 ## 11.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
+- `std::vector<bool>` において、`v[index]` や `.front()`, `.back()`, `.at(index)` は、`bool` 型の参照ではなく「プロキシ」と呼ばれる特殊なオブジェクトを返します。そのため、次のように `auto` と組み合わせたときに、変わった挙動をします
+- このほかにも、個別の要素へのポインタを取得できないなどの制約があります
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 0, 0, 0 };
+	auto n = numbers.front(); // n は int 型
+	n = 1; // numbers[0] は変更されない
+	std::cout << numbers.front() << '\n';
+
+	std::vector<bool> booleans = { false, false, false };	
+	auto b = booleans.front(); // b は bool 型ではない特殊な型
+	b = true; // booleans[0] を false から true に変更できてしまう
+	std::cout << std::boolalpha;
+	std::cout << booleans.front() << '\n';
+}
 ```
 ```txt:出力
-
+0
+true
 ```
 
-
 ## 11.2 `std::vector<bool>` 固有の機能
+- 一方で、`std::vector<bool>` にのみ提供される機能があります
 - `.flip()` は配列内の `false` / `true` をすべて反転します
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<bool> booleans = { false, false, true, true };
+	
+	booleans.flip(); // 全要素の bool 値を反転
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << boolean << '\n';
+	}
+}
 ```
 ```txt:出力
-
+true
+true
+false
+false
 ```
 
-## 11.3 `std::vector<bool>` の特殊な挙動を避ける方法
+## 11.3 `std::vector<bool>` の特殊な挙動を回避する方法
 
-通常の `std::vector` の挙動に近い `bool` 型の動的配列を実現するには、以下のような方法があります
+通常の `std::vector` の挙動に近い `bool` 型の動的配列を実現するには、以下のような方法があります。
 
 - 方式 A: `std::vector<char>` で代替する
 	- 利点: `std::vector` と同じ操作方法が使えます
 	- 欠点: `char` → `bool` への明示的な変換が必要です
 	- 欠点: 配列の要素に `A` や `z` など、`bool` 型以外の値を代入できてしまいます
-- 方式 B: `struct Boolean{ bool b; };` として `std::vector<Boolean>` を使う
+- 方式 B: `enum class Bool : bool { False, True };` を作り `std::vector<Boolean>` を使う
 	- 利点: `std::vector` と同じ操作方法が使えます
-	- 利点: 要素は常に `bool` 型の値しか格納しません
-	- 欠点: 値へのアクセスが少し不便になります
+	- 利点: 要素は常に `Bool::False` または `Bool::True` しか格納しません
+	- 欠点: `bool` 型を直接使うことができません
 - 方式 C: `std::basic_string<bool>` を使う
 	- 利点: `std::string` と同じ操作方法が使えます
 	- 利点: 要素は常に `bool` 型の値しか格納しません
 	- 欠点: `std::basic_string<bool> booleans(100);` のような、個数のみでの初期化ができません
-
