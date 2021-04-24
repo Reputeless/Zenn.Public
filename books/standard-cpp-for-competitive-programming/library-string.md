@@ -274,7 +274,7 @@ yellow
 # 3. `std::string` の要素数
 
 ## 3.1 要素数を調べる
-- `.size()` は文字列が持つ要素数を符号無し整数型の値で返します
+- `.size()` は、文字列が持つ要素数を符号無し整数型の値で返します
 - 同じ効果を持つメンバ関数 `.length()` もあります
 ```cpp
 #include <iostream>
@@ -542,7 +542,7 @@ can
 
 ## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
 - ループ内で要素を書き換えない場合、`const` 参照を使います
-- `std::string` に対する range-based for ループは、文字列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその文字列の要素数を変更する操作をしてはいけません
+- `std::string` に対する range-based for ループは、文字列の要素数がループ中に変更されないという前提で実行されるため、ループ内でその文字列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
@@ -567,7 +567,7 @@ e
 
 ## 6.6 range-based for を使い、各要素に参照でアクセス
 - ループ内で要素を書き換える場合、参照を使います
-- `std::string` に対する range-based for ループは、文字列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその文字列の要素数を変更する操作をしてはいけません
+- `std::string` に対する range-based for ループは、文字列の要素数がループ中に変更されないという前提で実行されるため、ループ内でその文字列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
@@ -622,7 +622,7 @@ my school
 ```
 
 ## 7.2 末尾に 1 文字追加する
-- `.push_back(ch)` で、現在の文字列の末尾に文字 `ch` を追加します
+- `.push_back(ch)` で、文字列の末尾に文字 `ch` を追加します
 ```cpp
 #include <iostream>
 #include <string>
@@ -683,7 +683,7 @@ top
 ```
 
 ## 7.4 末尾に文字列を追加する
-- `+= other;` で、現在の文字列の末尾に文字列 `other` を追加します
+- `+= other;` で、文字列の末尾に文字列 `other` を追加します
 ```cpp
 #include <iostream>
 #include <string>

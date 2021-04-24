@@ -440,7 +440,7 @@ int main()
 # 3. `std::vector` の要素数
 
 ## 3.1 要素数を調べる
-- `.size()` は配列が持つ要素数を符号無し整数型の値で返します
+- `.size()` は、配列が持つ要素数を符号無し整数型の値で返します
 ```cpp
 #include <iostream>
 #include <string>
@@ -638,7 +638,7 @@ false
 # 6. `std::vector` の要素にアクセス
 
 ## 6.1 指定した位置の要素にアクセス
-- `v[index]` で、指定した位置の要素 (`std::vectorr<Type>` で指定した `Type` 型) にアクセスします 
+- `v[index]` で、指定した位置の要素 (`std::vector<Type>` で指定した `Type` 型) にアクセスします 
 - インデックスは先頭の要素が `0`, その次が `1`, ..., `(.size() - 1)` です
 - 範囲外にアクセスしてはいけません
 ```cpp
@@ -735,7 +735,7 @@ int main()
 
 ## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
 - ループ内で要素を書き換えない場合、`const` 参照を使います
-- `std::vector` に対する range-based for ループは、配列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその配列の要素数を変更する操作をしてはいけません
+- `std::vector` に対する range-based for ループは、配列の要素数がループ中に変更されないという前提で実行されるため、ループ内でその配列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
@@ -759,7 +759,7 @@ cat
 
 ## 6.6 range-based for を使い、各要素に参照でアクセス
 - ループ内で要素を書き換える場合、参照を使います
-- `std::vector` に対する range-based for ループは、配列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその配列の要素数を変更する操作をしてはいけません
+- `std::vector` に対する range-based for ループは、配列の要素数がループ中に変更されないという前提で実行されるため、ループ内でその配列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
@@ -790,7 +790,7 @@ cat!
 # 7. 要素の追加
 
 ## 7.1 末尾に要素を 1 個追加する
-- `.push_back(value)` で、現在の配列の末尾に要素 `value` を追加します
+- `.push_back(value)` で、配列の末尾に要素 `value` を追加します
 ```cpp
 #include <iostream>
 #include <string>
@@ -924,7 +924,9 @@ int main()
 	std::cout << "---\n";
 
 	std::vector<std::string> newWords = { "dog", "egg", "five" };
-	words.insert(words.end(), newWords.begin(), newWords.end()); // 末尾に別の配列を追加
+
+	// words の末尾に別の配列を追加
+	words.insert(words.end(), newWords.begin(), newWords.end());
 
 	std::cout << words.size() << '\n';
 	for (const auto& word : words)
@@ -1190,12 +1192,10 @@ true
 
 int main()
 {
-	std::vector<bool> booleans = { false, false, true, true };
-	
+	std::vector<bool> booleans = { false, false, true, true };	
 	booleans.flip(); // 全要素の bool 値を反転
 
 	std::cout << std::boolalpha;
-
 	for (const auto& boolean : booleans)
 	{
 		std::cout << boolean << '\n';
@@ -1220,7 +1220,7 @@ false
 ### 方式 A: `std::vector<char>` で代替する
 - 利点: `std::vector` と同じ操作方法が使えます
 - 欠点: `char` → `bool` への明示的な変換が必要です
-- 欠点: 配列の要素に `A` や `z` など、`bool` 型以外の値を代入できてしまいます
+- 欠点: 配列の要素に `'A'` や `'z'` など、`bool` 型以外の値を代入できてしまいます
 
 ```cpp
 #include <iostream>
@@ -1254,9 +1254,9 @@ true
 ```
 
 ### 方式 B: `std::basic_string<bool>` で代替する
-- 利点: `std::string` と同じような操作方法が使えます
+- 利点: `std::vector` とほぼ同じ操作方法が使えます
 - 利点: 要素は常に `bool` 型の値しか格納しません
-- 欠点: `std::basic_string<bool> booleans(100);` のような、個数のみでの構築ができません。代わりに `std::basic_string<bool> booleans(100, false);` を使います
+- 欠点: `std::basic_string<bool> booleans(100);` のような、要素の個数のみでの構築ができません。代わりに `std::basic_string<bool> booleans(100, false);` を使います
 
 ```cpp
 #include <iostream>
@@ -1290,7 +1290,7 @@ true
 ```
 
 ## 方式 C: `std::deque<bool>` で代替する
-- 利点: `std::deque` と同じ操作方法が使えます
+- 利点: `std::vector` とほぼ同じ操作方法が使えます
 - 利点: 要素は常に `bool` 型の値しか格納しません
 - 欠点: `std::deque` の性質で、要素がメモリ連続で配置されないため、使い方によっては実行時性能が低下することがあります
 
