@@ -5,8 +5,9 @@ free: true
 
 次は
 
-- `<vector>`
 - `<cmath>`
 - `<algorithm>`
+- `<numeric>`
+- `<unordered_set>`
 
 あたりを更新予定。

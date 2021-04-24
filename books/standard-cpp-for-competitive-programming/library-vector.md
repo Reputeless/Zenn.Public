@@ -1,9 +1,6 @@
 ---
 title: "<vector>"
-emoji: "🌱"
-type: "tech"
-topics: ["cpp","競プロ"]
-published: false
+free: true
 ---
 
 - 1～10: 動的配列クラス `std::vector` の機能
