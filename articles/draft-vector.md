@@ -98,7 +98,7 @@ int main()
 
 	std::cout << "---\n";
 
-	std::vector<Point> points(2, { 33, 44 }); // 2 個の Point{ 33, 44 }
+	std::vector<Point> points(2, { 33, 44 }); // 2 個の Point({ 33, 44 })
 	std::cout << points.size() << '\n'; // 要素数を出力
 	// 保持している要素を出力
 	for (const auto& point : points)
