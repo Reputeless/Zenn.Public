@@ -91,7 +91,7 @@ int main()
 # 2. 数列の作成
 
 ## 2.1 配列の要素を 1 ずつ増えていく値で埋める
-- `std::iota(itFirst, itEnd, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` を `value` から 1 ずつ増えていく値で埋めます
+- `std::iota(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` を `value` から 1 ずつ増えていく値で埋めます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -140,7 +140,7 @@ int main()
 ```
 
 ## 2.2 配列 / 文字列を `'a'` ～ `'z'` で埋める
-- `std::iota(itFirst, itEnd, value)` において、範囲の要素数をアルファベットと同じ 26 個にして、`value` を `'a'` にすると、`'a'` ～ `'z'` で範囲を埋めることができます
+- `std::iota(itFirst, itLast, value)` において、範囲の要素数をアルファベットと同じ 26 個にして、`value` を `'a'` にすると、`'a'` ～ `'z'` で範囲を埋めることができます
 ```cpp
 #include <iostream>
 #include <vector>
