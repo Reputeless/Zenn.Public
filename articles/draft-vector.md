@@ -6,8 +6,8 @@ topics: ["cpp","競プロ"]
 published: false
 ---
 
-- 1～??: 動的配列クラス `std::vector` の機能
-- ??: `std::vector<bool>`
+- 1～10: 動的配列クラス `std::vector` の機能
+- 11: `std::vector<bool>` に関する注意
 
 # 1. `std::vector` の構築
 
@@ -786,354 +786,92 @@ cat!
 
 # 7. 要素の追加
 
-## 7.1 前後に別の文字列を足した、新しい `std::string` を作成する
-- `+` 演算子を使うと、前後に別の文字列を追加した新しい `std::string` を作成できます
-- 元の文字列は変更されません
+## 7.1 末尾に要素を 1 個追加する
+- `.push_back(ch)` で、現在の配列の末尾に文字 `ch` を追加します
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "school";
-
-	std::string t = ("high " + s); // 前に足した
-	std::cout << t << '\n';
-	std::cout << t.size() << '\n';
-
-	std::string u = (s + " bus"); // うしろに足した
-	std::cout << u << '\n';
-	std::cout << u.size() << '\n';
-
-	std::cout << ("my " + s) << '\n'; // 前に足した
-}
 ```
 ```txt:出力
-high school
-11
-school bus
-10
-my school
+
 ```
 
-## 7.2 末尾に 1 文字追加する
-- `.push_back(ch)` で、現在の文字列の末尾に文字 `ch` を追加します
+## 7.2 先頭に要素を 1 個追加する
+- `.insert(it, value)` は、イテレータ `it` が指す位置の前に要素 `value` を追加します
+- 先頭位置のイテレータを返す `.begin()` と組み合わせることで、配列の先頭に要素を追加できます
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "t";
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s.push_back('o'); // 末尾に `o` を追加
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';	
-
-	s.push_back('p'); // 末尾に `p` を追加
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';	
-}
 ```
 ```txt:出力
-t
-1
-to
-2
-top
-3
+
 ```
 
-## 7.3 末尾に文字列を追加する
-- `+= other;` で、現在の文字列の末尾に文字列 `other` を追加します
+## 7.3 末尾に別の配列を追加する
+- `.insert(it, itFirst, itLast)` は、イテレータ `it` が指す位置の前に範囲 `[itFirst, itLast)` の要素を追加します
+- 先頭位置のイテレータを返す `.begin()` と、追加したい配列の `.begin() / .end()` を組み合わせることで末尾に別の配列を追加できます
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "t";
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s += "ea"; // 末尾に "ea" を追加
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n'; 
-
-	std::string t = "cher";
-	s += t; // 末尾に "cher" を追加
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n'; 
-}
 ```
 ```txt:出力
-t
-1
-tea
-3
-teacher
-7
+
 ```
 
 
-# 8. `std::string` の削除
+# 8. `std::vector` の削除
 
 ## 8.1 末尾の要素を削除
 - `.pop_back()` は末尾の要素を 1 つ削除します
-- 空の文字列で使うと範囲外アクセスになるため注意が必要です
+- 空の配列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "apple";
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s.pop_back(); // 末尾の要素を削除
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s.pop_back(); // 末尾の要素を削除
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
 ```
 ```txt:出力
-apple
-5
-appl
-4
-app
-3
+
 ```
 
 ## 8.2 先頭の要素を削除
 - `.erase(it)` は、イテレータ `it` が指す位置の要素を削除します
-- 先頭位置のイテレータを返す `.begin()` と組み合わせることで先頭の文字を削除できます
+- 先頭位置のイテレータを返す `.begin()` と組み合わせることで先頭の要素を削除できます
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "apple";
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s.erase(s.begin()); // 先頭の要素を削除
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s.erase(s.begin()); // 先頭の要素を削除
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
 ```
 ```txt:出力
-apple
-5
-pple
-4
-ple
-3
+
 ```
 
-## 8.3 文字列を消去
-- `.clear()` を使うと、全要素を削除して空の文字列になります
+## 8.3 全要素を消去
+- `.clear()` を使うと、全要素を削除して空の配列になります
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "apple";
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s.clear(); // 要素を全消去
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
 ```
 ```txt:出力
-apple
-5
 
-0
 ```
 
 
-# 9. `std::string` の一部の取得
+# 9. `std::vector` の入れ替え
 
-## 9.1 指定した位置以降の文字列を取得
-- `.substr(pos)` は、`pos` 番目以降の文字列を新しい `std::string` として返します
-- インデックスは 0 から数えます
-- 範囲外アクセスに注意が必要です
+## 9.1 二つの `std::vector` を交換
+- `std::vector<Type>` 型の変数 `a`, `b` の中身を入れ替えるには `std::swap(a, b)` を使います
+- 双方とも要素の型 `Type` が一致している必要があります
 ```cpp
-#include <iostream>
-#include <string>
 
-int main()
-{
-	std::string s = "computer";
-	std::cout << s.substr(1) << '\n'; // 1 番目の文字以降
-	std::cout << s.substr(2) << '\n'; // 2 番目の文字以降
-	std::cout << s.substr(5) << '\n'; // 5 番目の文字以降
-}
 ```
 ```txt:出力
-omputer
-mputer
-ter
-```
 
-## 9.2 指定した位置以降、指定した個数文の文字列を取得
-- `.substr(pos, count)` は、`pos` 番目以降最大 `count` 個の文字列を新しい `std::string` として返します
-- 第 1 引数 `pos` は範囲外アクセスに注意が必要です
-- 第 2 引数 `count` は実際の要素数を超えた分は無視されます
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s = "computer";
-	std::cout << s.substr(1, 3) << '\n'; // 1 番目以降最大 3 個
-	std::cout << s.substr(2, 2) << '\n'; // 2 番目以降最大 2 個
-	std::cout << s.substr(5, 100) << '\n'; // 5 番目以降最大 100 個
-}
-```
-```txt:出力
-omp
-mp
-ter
 ```
 
 
-# 10. `std::string` の入れ替え
-
-## 10.1 二つの `std::string` を交換
-- `std::string` 型の変数 `a`, `b` の中身を入れ替えるには `std::swap(a, b)` を使います
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s = "apple";
-	std::string t = "bird";
-
-	std::swap(s, t);
-	std::cout << s << '\n';
-	std::cout << t << '\n';
-}
-```
-```txt:出力
-bird
-apple
-```
-
-
-# 11. `std::string` のイテレータ
+# 10. `std::vector` のイテレータ
 
 削除や挿入、アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。
 
-## 11.1 先頭位置のイテレータを取得
-- `.begin()` は文字列の先頭位置を指すイテレータを返します 
-- 空の文字列の場合 `.begin() == .end()` です
+## 10.1 先頭位置のイテレータを取得
+- `.begin()` は配列の先頭位置を指すイテレータを返します 
+- 空の配列の場合 `.begin() == .end()` です
 
-## 11.2 終端位置のイテレータを取得
-- `.end()` は文字列の終端位置を指すイテレータを返します
-- 空の文字列の場合 `.begin() == .end()` です
-
-
-# 12. 数値から `std::string` への変換
-
-## 12.1 数値を `std::string` に変換
-- `std::to_string(n)` は、数 `n` を文字列に変換し、`std::string` 型で返します
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	int a, b;
-	std::cin >> a >> b;
-	
-	std::string s = std::to_string(a + b);
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
-```
-```txt:入力
-300 800
-```
-```txt:出力
-1100
-4
-```
+## 10.2 終端位置のイテレータを取得
+- `.end()` は配列の終端位置を指すイテレータを返します
+- 空の配列の場合 `.begin() == .end()` です
 
 
-# 13. 文字列から数値への変換
-
-## 13.1 数が書かれた文字列をパースして整数に変換
-- `std::stoi(s, idx, base)` は、文字列 `s` をパースし `int` 型で返します
-- `std::stoull(s, idx, base)` は、文字列 `s` をパースし `unsigned long long` 型で返します
-- `s` に書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
-```cpp
-#include <iostream>
-#include <string>
-#include <cstdint> // std::uint64_t のため
-
-int main()
-{
-	std::string s = "1200";
-	std::string t = "9876543210";
-
-	int ss = std::stoi(s); // int 型に変換
-	std::uint64_t tt = std::stoull(t); // unsigned long long 型に変換
-
-	std::cout << ss << '\n';
-	std::cout << tt << '\n';
-}
-```
-```txt:出力
-1200
-9876543210
-```
-
-## 13.2 二進数が書かれた文字列をパースして整数に変換
-- `std::stoi(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `int` 型で返します。`idx` は今回は使いません
-- `std::stoull(s, idx, base)` は、文字列 `s` を `base` 進数とみなしてパースし `unsigned long long` 型で返します。`idx` は今回は使いません
-- `base` を `2` に、`idx` を `nullptr` にすることで、二進数 01 で書かれた文字列 `s` を十進数の数値に変換できます
-- `s` に書かれている数が、変換後の型で表現できる範囲外の場合、`std::out_of_range` 例外が送出されます
-```cpp
-#include <iostream>
-#include <string>
-#include <cstdint> // std::uint64_t のため
-
-int main()
-{
-	std::string s = "0111";
-	std::string t = "1000";
-	// 1 が 64 個
-	std::string u = "1111111111111111111111111111111111111111111111111111111111111111";
-
-	int ss = std::stoi(s, nullptr, 2); // int 型に変換
-	int tt = std::stoi(t, nullptr, 2); // int 型に変換
-	std::uint64_t uu = std::stoull(u, nullptr, 2); // unsigned long long 型に変換
-
-	std::cout << ss << '\n';
-	std::cout << tt << '\n';
-	std::cout << uu << '\n';
-}
-```
-```txt:出力
-7
-8
-18446744073709551615
-```
+# 11. `std::vector<bool>` の注意
