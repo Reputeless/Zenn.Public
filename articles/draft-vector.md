@@ -196,7 +196,7 @@ int main()
 (0, 0)
 ```
 
-## 1.4 別の `std::vector<Type>` から構築する
+## 1.4 別の `std::vector` から構築する
 - 別の `std::vector<Type>` 型の中身をコピーして初期化します
 - コピー元とコピー先の要素の型 `Type` は一致している必要があります
 ```cpp
@@ -273,15 +273,14 @@ int main()
 
 # 2. `std::vector` の入力
 
-`std::vector<Type>` 型の変数をそのまま `std::cin` で使うことはできないため、以下のいずれかの方法を使います
-- 方式 A: `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加する
-- 方式 B: あらかじめ入力個数分用意した `std::vector<Type>` の各要素に `std::cin` を行う
+`std::vector<Type>` 型の変数をそのまま `std::cin` で使うことはできないため、以下のいずれかの方法を使います。
 
-2.1 では A の方法を、2.2 では B の方法を使います。
+- 方式 A: `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector<Type>` に追加する
+- 方式 B: あらかじめ入力個数分用意した `std::vector<Type>` の各要素に `std::cin` を行う
 
 ## 2.1 入力された値を `std::vector` に追加する (方式 A)
 - `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加します
-- 入力される個数がプログラムを書く時点でわかっていて、なおかつ少ない場合にこの方法が使えます
+- プログラムを書く時点で入力される個数がわかっていて、なおかつ個数が少ない場合にこの方法が使えます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -313,7 +312,7 @@ int main()
 
 ## 2.2 入力された値を `std::vector` に追加する (方式 B)
 - あらかじめ入力個数分のサイズで用意した `std::vector<Type>` の各要素に `std::cin` を行います
-- 入力される個数がプログラムを書く時点でわかっている場合にこの方法が使えます
+- プログラムを書く時点で入力される個数がわかっている場合にこの方法が使えます
 ```cpp
 #include <iostream>
 #include <string>
@@ -533,7 +532,7 @@ int main()
 111
 ```
 
-## 4.2 別の配列を代入する
+## 4.2 別の `std::vector` を代入する
 - `=` を使って別の `std::string<Type>` 型の値を代入します
 - 代入元と代入先の要素の型 `Type` は一致している必要があります
 - 異なるサイズの配列を代入すると、それに合わせて自身の配列の要素数が変わります
@@ -580,7 +579,7 @@ int main()
 # 5. `std::vector` の比較
 
 ## 5.1 同じ配列であるかを調べる
-- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 'a', 'b' について、`a == b` は配列の要素数と中身が一致するかを `bool` 型の値で返します
+- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 `a`, `b` について、`a == b` は配列の要素数と中身が一致するかを `bool` 型の値で返します
 - 計算量: `==` は最初に双方の要素数が同じかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
 ```cpp
 #include <iostream>
@@ -607,7 +606,7 @@ true
 ```
 
 ## 5.2 違う配列であるかを調べる
-- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 'a', 'b' について、`a != b` は配列の要素数や中身が違うかを `bool` 型の値で返します
+- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 `a`, `b` について、`a != b` は配列の要素数や中身が違うかを `bool` 型の値で返します
 - 計算量: `!=` は最初に双方の要素数が違うかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
 ```cpp
 #include <iostream>
@@ -954,29 +953,140 @@ five
 - `.pop_back()` は末尾の要素を 1 つ削除します
 - 空の配列で使うと範囲外アクセスになるため注意が必要です
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.pop_back(); // 末尾の要素を削除
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.pop_back(); // 末尾の要素を削除
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+apple
+bird
+cat
+---
+2
+apple
+bird
+---
+1
+apple
 ```
 
 ## 8.2 先頭の要素を削除
 - `.erase(it)` は、イテレータ `it` が指す位置の要素を削除します
 - 先頭位置のイテレータを返す `.begin()` と組み合わせることで先頭の要素を削除できます
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.erase(words.begin()); // 先頭の要素を削除
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.erase(words.begin()); // 先頭の要素を削除
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+apple
+bird
+cat
+---
+2
+bird
+cat
+---
+1
+cat
 ```
 
 ## 8.3 全要素を消去
 - `.clear()` を使うと、全要素を削除して空の配列になります
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.clear(); // 要素を全消去
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+apple
+bird
+cat
+---
+0
 ```
 
 
@@ -986,16 +1096,47 @@ five
 - `std::vector<Type>` 型の変数 `a`, `b` の中身を入れ替えるには `std::swap(a, b)` を使います
 - 双方とも要素の型 `Type` が一致している必要があります
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> wordsA = { "apple", "bird", "cat" };
+	std::vector<std::string> wordsB = { "dog", "egg" };
+
+	std::swap(wordsA, wordsB); // 中身を交換
+
+	std::cout << wordsA.size() << '\n';
+	for (const auto& word : wordsA)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::cout << wordsB.size() << '\n';
+	for (const auto& word : wordsB)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+2
+dog
+egg
+---
+3
+apple
+bird
+cat
 ```
 
 
 # 10. `std::vector` のイテレータ
 
-削除や挿入、アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。
+削除や挿入、アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。イテレータを取得した時点から配列のサイズが変更されると、そのイテレータは無効になることがあるため、イテレータを変数に保存して長い期間保持するのは避けるべきです。
 
 ## 10.1 先頭位置のイテレータを取得
 - `.begin()` は配列の先頭位置を指すイテレータを返します 
@@ -1008,21 +1149,42 @@ five
 
 # 11. `std::vector<bool>` の注意
 
-C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値 8 個分の情報を記録することで、単純な `bool` の配列よりもメモリ消費量が 8 分の 1 になるような特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
+C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を最大 8 個分記録することで、単純な `bool` の配列よりもメモリ消費量が小さくなるような特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
 
 ## 11.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
 
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 ## 11.2 `std::vector<bool>` 固有の機能
+- `.flip()` は配列内の `false` / `true` をすべて反転します
 
+```cpp
 
+```
+```txt:出力
+
+```
 
 ## 11.3 `std::vector<bool>` の特殊な挙動を避ける方法
 
 通常の `std::vector` の挙動に近い `bool` 型の動的配列を実現するには、以下のような方法があります
 
 - 方式 A: `std::vector<char>` で代替する
+	- 利点: `std::vector` と同じ操作方法が使えます
+	- 欠点: `char` → `bool` への明示的な変換が必要です
+	- 欠点: 配列の要素に `A` や `z` など、`bool` 型以外の値を代入できてしまいます
 - 方式 B: `struct Boolean{ bool b; };` として `std::vector<Boolean>` を使う
+	- 利点: `std::vector` と同じ操作方法が使えます
+	- 利点: 要素は常に `bool` 型の値しか格納しません
+	- 欠点: 値へのアクセスが少し不便になります
 - 方式 C: `std::basic_string<bool>` を使う
+	- 利点: `std::string` と同じ操作方法が使えます
+	- 利点: 要素は常に `bool` 型の値しか格納しません
+	- 欠点: `std::basic_string<bool> booleans(100);` のような、個数のみでの初期化ができません
 
