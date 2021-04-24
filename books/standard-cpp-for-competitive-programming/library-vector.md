@@ -1154,7 +1154,7 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 
 ## 11.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
 - `std::vector<bool>` において、`v[index]` や `.front()`, `.back()`, `.at(index)` は、`bool` 型の参照ではなく「プロキシ」と呼ばれる特殊なオブジェクトを返します。そのため、次のように `auto` と組み合わせたときに、異なる挙動をします
-- このほかにも、個別の要素へのポインタを取得できないなどの制約があります
+- 個別の要素への参照やポインタを取得できないなどの制約があり、要素同士を `std::swap()` できないなど、通常の `std::vector` と同じコードを使えないことがしばしばあります
 
 ```cpp
 #include <iostream>
@@ -1162,16 +1162,18 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 
 int main()
 {
-	std::vector<int> numbers = { 0, 0, 0 };
+	std::vector<int> numbers = { 0, 0, 1 };
 	auto n = numbers.front(); // n は int 型
 	n = 1; // numbers[0] は変更されない
 	std::cout << numbers.front() << '\n';
+	std::swap(numbers[0], numbers[2]); // OK
 
-	std::vector<bool> booleans = { false, false, false };	
+	std::vector<bool> booleans = { false, false, true };	
 	auto b = booleans.front(); // b は bool 型ではない特殊な型
 	b = true; // booleans[0] を false から true に変更できてしまう
 	std::cout << std::boolalpha;
 	std::cout << booleans.front() << '\n';
+	// std::swap(booleans[0], booleans[2]); // コンパイルエラー
 }
 ```
 ```txt:出力
