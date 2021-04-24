@@ -734,6 +734,7 @@ int main()
 
 ## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
 - ループ内で要素を書き換えない場合、`const` 参照を使います
+- `std::vector` に対する range-based for ループは、配列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその配列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
@@ -757,6 +758,7 @@ cat
 
 ## 6.6 range-based for を使い、各要素に参照でアクセス
 - ループ内で要素を書き換える場合、参照を使います
+- `std::vector` に対する range-based for ループは、配列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその配列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>

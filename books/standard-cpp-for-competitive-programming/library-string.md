@@ -207,6 +207,7 @@ int main()
 {
 	size_t n;
 	std::cin >> n; // 単語の個数を読み込む
+
 	std::vector<std::string> ss(n);
 	for (auto& s : ss) // n 回繰り返す
 	{
@@ -541,6 +542,7 @@ can
 
 ## 6.5 range-based for を使い、各要素に `const` 参照でアクセス
 - ループ内で要素を書き換えない場合、`const` 参照を使います
+- `std::string` に対する range-based for ループは、文字列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその文字列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
@@ -565,6 +567,7 @@ e
 
 ## 6.6 range-based for を使い、各要素に参照でアクセス
 - ループ内で要素を書き換える場合、参照を使います
+- `std::string` に対する range-based for ループは、文字列の要素数がループ中に変更されないという前提で実行されるため、ループの内部でその文字列の要素数を変更する操作をしてはいけません
 ```cpp
 #include <iostream>
 #include <string>
