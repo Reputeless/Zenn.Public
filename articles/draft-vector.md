@@ -1209,17 +1209,128 @@ false
 
 ## 11.3 `std::vector<bool>` の特殊な挙動を回避する方法
 
-通常の `std::vector` の挙動に近い `bool` 型の動的配列を実現するには、以下のような方法があります。
+`std::vector<bool>` の特殊性を理解していれば、実用上大きく困ることはありません。しかし、通常の `std::vector` の挙動に近い `bool` 型の動的配列を使いたいという場合には、以下のような方法があります。
 
 - 方式 A: `std::vector<char>` で代替する
-	- 利点: `std::vector` と同じ操作方法が使えます
-	- 欠点: `char` → `bool` への明示的な変換が必要です
-	- 欠点: 配列の要素に `A` や `z` など、`bool` 型以外の値を代入できてしまいます
-- 方式 B: `enum class Bool : bool { False, True };` を作り `std::vector<Boolean>` を使う
-	- 利点: `std::vector` と同じ操作方法が使えます
-	- 利点: 要素は常に `Bool::False` または `Bool::True` しか格納しません
-	- 欠点: `bool` 型を直接使うことができません
-- 方式 C: `std::basic_string<bool>` を使う
-	- 利点: `std::string` と同じ操作方法が使えます
-	- 利点: 要素は常に `bool` 型の値しか格納しません
-	- 欠点: `std::basic_string<bool> booleans(100);` のような、個数のみでの初期化ができません
+- 方式 B: `std::basic_string<bool>` で代替する
+- 方式 C: `std::deque<bool>` で代替する
+
+### 方式 A: `std::vector<char>` で代替する
+- 利点: `std::vector` と同じ操作方法が使えます
+- 欠点: `char` → `bool` への明示的な変換が必要です
+- 欠点: 配列の要素に `A` や `z` など、`bool` 型以外の値を代入できてしまいます
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	std::vector<char> booleans = { false, false };
+
+	booleans.push_back(true);
+
+	booleans.front() = true;
+
+	if (booleans.front())
+	{
+		std::cout << "booleans.front() is true\n";
+	}
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << static_cast<bool>(boolean) << '\n';
+	}
+
+	std::cout << booleans.size() << '\n';
+}
+```
+```txt:出力
+booleans.front() is true
+true
+false
+true
+3
+```
+
+### 方式 B: `std::basic_string<bool>` で代替する
+- 利点: `std::string` と同じような操作方法が使えます
+- 利点: 要素は常に `bool` 型の値しか格納しません
+- 欠点: `std::basic_string<bool> booleans(100);` のような、個数のみでの構築ができません。代わりに `std::basic_string<bool> booleans(100, false);` を使います
+
+```cpp
+#include <iostream>
+#include <vector> // std::basic_string のため
+
+int main()
+{
+	std::basic_string<bool> booleans = { false, false };
+
+	booleans.push_back(true);
+
+	booleans.front() = true;
+
+	if (booleans.front())
+	{
+		std::cout << "booleans.front() is true\n";
+	}
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << boolean << '\n';
+	}
+
+	std::cout << booleans.size() << '\n';
+}
+```
+```txt:出力
+booleans.front() is true
+true
+false
+true
+3
+```
+
+## 方式 C: `std::deque<bool>` で代替する
+- 利点: `std::deque` と同じ操作方法が使えます
+- 利点: 要素は常に `bool` 型の値しか格納しません
+- 欠点: `std::deque` の性質で、要素がメモリ連続で配置されないため、使い方によっては実行時性能が低下することがあります
+
+```cpp
+#include <iostream>
+#include <deque> // std::deque のため
+
+int main()
+{
+	std::deque<bool> booleans = { false, false };
+
+	booleans.push_back(true);
+
+	booleans.front() = true;
+
+	if (booleans.front())
+	{
+		std::cout << "booleans.front() is true\n";
+	}
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << boolean << '\n';
+	}
+
+	std::cout << booleans.size() << '\n';
+}
+```
+```txt:出力
+booleans.front() is true
+true
+false
+true
+3
+```
