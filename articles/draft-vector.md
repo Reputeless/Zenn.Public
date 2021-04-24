@@ -315,7 +315,7 @@ int main()
 - プログラムを書く時点で入力される個数がわかっている場合にこの方法が使えます
 ```cpp
 #include <iostream>
-#include <string>
+#include <vector>
 
 int main()
 {
@@ -357,7 +357,7 @@ int main()
 	std::cin >> N; // 入力の個数 N を読み込む
 
 	std::vector<int> numbers(N); // int(), つまり 0 が N 個
-	for (auto& number : nubers) // N 回繰り返す
+	for (auto& number : numbers) // N 回繰り返す
 	{
 		std::cin >> number; // 各要素に入力を読み込み
 	}
@@ -495,7 +495,7 @@ numbers is empty.
 ## 4.1 別のリストを代入する
 - `=` を使って別のリスト `{ ... }` の値を代入します
 - リストの要素の型は、`std::vector<Type>` の `Type` に変換できる型である必要があります
-- 異なるサイズの配列を代入すると、それに合わせて自身の配列の要素数が変わります
+- 異なる要素数のリストを代入すると、それに合わせて自身の配列の要素数が変わります
 ```cpp
 #include <iostream>
 #include <vector>
@@ -535,7 +535,7 @@ int main()
 ## 4.2 別の `std::vector` を代入する
 - `=` を使って別の `std::string<Type>` 型の値を代入します
 - 代入元と代入先の要素の型 `Type` は一致している必要があります
-- 異なるサイズの配列を代入すると、それに合わせて自身の配列の要素数が変わります
+- 異なる要素数の配列を代入すると、それに合わせて自身の配列の要素数が変わります
 ```cpp
 #include <iostream>
 #include <vector>
@@ -610,7 +610,7 @@ true
 - 計算量: `!=` は最初に双方の要素数が違うかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
 ```cpp
 #include <iostream>
-#include <string>
+#include <vector>
 
 int main()
 {
@@ -707,7 +707,7 @@ int main()
 
 ## 6.4 指定した位置の要素にアクセス（範囲外アクセスを例外で検出）
 - `.at(index)` で、指定した位置の要素にアクセスします
-- インデックスは最初の文字が `0`, その次が `1`, ..., `(.size() - 1)` です
+- インデックスは最初の要素が `0`, その次が `1`, ..., `(.size() - 1)` です
 - `v[index]` と異なり、範囲外アクセスがあった場合に `std::out_of_range` 例外を送出します。そのチェックのための追加のコストがあります
 ```cpp
 #include <iostream>
@@ -788,7 +788,7 @@ cat!
 # 7. 要素の追加
 
 ## 7.1 末尾に要素を 1 個追加する
-- `.push_back(ch)` で、現在の配列の末尾に文字 `ch` を追加します
+- `.push_back(value)` で、現在の配列の末尾に要素 `value` を追加します
 ```cpp
 #include <iostream>
 #include <string>
@@ -1149,7 +1149,7 @@ cat
 
 # 11. `std::vector<bool>` の注意
 
-C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個分記録することで、単純な `bool` の配列よりもメモリ消費量が小さくなるような特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
+C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個分記録することで、単純な `bool` の配列よりもメモリ消費量を小さくするという特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
 
 ## 11.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
 - `std::vector<bool>` において、`v[index]` や `.front()`, `.back()`, `.at(index)` は、`bool` 型の参照ではなく「プロキシ」と呼ばれる特殊なオブジェクトを返します。そのため、次のように `auto` と組み合わせたときに、変わった挙動をします
@@ -1227,9 +1227,7 @@ false
 int main()
 {
 	std::vector<char> booleans = { false, false };
-
 	booleans.push_back(true);
-
 	booleans.front() = true;
 
 	if (booleans.front())
@@ -1238,12 +1236,10 @@ int main()
 	}
 
 	std::cout << std::boolalpha;
-
 	for (const auto& boolean : booleans)
 	{
 		std::cout << static_cast<bool>(boolean) << '\n';
 	}
-
 	std::cout << booleans.size() << '\n';
 }
 ```
@@ -1267,9 +1263,7 @@ true
 int main()
 {
 	std::basic_string<bool> booleans = { false, false };
-
 	booleans.push_back(true);
-
 	booleans.front() = true;
 
 	if (booleans.front())
@@ -1278,12 +1272,10 @@ int main()
 	}
 
 	std::cout << std::boolalpha;
-
 	for (const auto& boolean : booleans)
 	{
 		std::cout << boolean << '\n';
 	}
-
 	std::cout << booleans.size() << '\n';
 }
 ```
@@ -1307,9 +1299,7 @@ true
 int main()
 {
 	std::deque<bool> booleans = { false, false };
-
 	booleans.push_back(true);
-
 	booleans.front() = true;
 
 	if (booleans.front())
@@ -1318,12 +1308,10 @@ int main()
 	}
 
 	std::cout << std::boolalpha;
-
 	for (const auto& boolean : booleans)
 	{
 		std::cout << boolean << '\n';
 	}
-
 	std::cout << booleans.size() << '\n';
 }
 ```
