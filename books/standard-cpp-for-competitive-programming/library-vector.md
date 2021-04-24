@@ -1230,6 +1230,7 @@ int main()
 	std::vector<char> booleans = { false, false };
 	booleans.push_back(true);
 	booleans.front() = true;
+	std::swap(booleans[1], booleans[2]);
 
 	if (booleans.front())
 	{
@@ -1247,8 +1248,8 @@ int main()
 ```txt:出力
 booleans.front() is true
 true
-false
 true
+false
 3
 ```
 
@@ -1266,6 +1267,7 @@ int main()
 	std::basic_string<bool> booleans = { false, false };
 	booleans.push_back(true);
 	booleans.front() = true;
+	std::swap(booleans[1], booleans[2]);
 
 	if (booleans.front())
 	{
@@ -1283,8 +1285,8 @@ int main()
 ```txt:出力
 booleans.front() is true
 true
-false
 true
+false
 3
 ```
 
@@ -1302,6 +1304,7 @@ int main()
 	std::deque<bool> booleans = { false, false };
 	booleans.push_back(true);
 	booleans.front() = true;
+	std::swap(booleans[1], booleans[2]);
 
 	if (booleans.front())
 	{
@@ -1319,7 +1322,7 @@ int main()
 ```txt:出力
 booleans.front() is true
 true
-false
 true
+false
 3
 ```
