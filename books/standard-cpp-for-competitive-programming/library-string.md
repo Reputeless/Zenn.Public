@@ -197,7 +197,7 @@ blue ocean
 ```
 
 ## 2.5 【サンプル】たくさんの単語を読み込む
-- 最初に単語の個数 `N`, 続いて N 個の単語が入力される問題において、入力されるすべての単語を `std::vector<std::string>` に読み込んで保存します
+- 最初に単語の個数 $N$, 続いて $N$ 個の単語が入力される問題において、入力されるすべての単語を `std::vector<std::string>` に読み込んで保存します
 ```cpp
 #include <iostream>
 #include <string>
