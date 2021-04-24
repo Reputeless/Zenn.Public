@@ -30,7 +30,7 @@ int main()
 		std::cout << number << '\n';
 	}
 
-	std::cout << "---\n"; // 実行結果を見やすくするため、区切り線を出力します
+	std::cout << "---\n"; // 実行結果を見やすくするための区切り線
 
 	std::vector<std::string> texts = { "apple", "bird", "cat" };
 	std::cout << texts.size() << '\n'; // 要素数を出力
@@ -40,7 +40,7 @@ int main()
 		std::cout << text << '\n';
 	}
 
-	std::cout << "---\n";
+	std::cout << "---\n"; // 実行結果を見やすくするための区切り線
 
 	std::vector<Point> points = { Point{ 33, 44 }, Point{ 55, 66 } };
 	std::cout << points.size() << '\n'; // 要素数を出力
@@ -69,7 +69,7 @@ cat
 ```
 
 ## 1.2 (個数) × (要素) で構築する
-- `std::vector<Type> v(n, e);` は、`n` 個の `Type(e)` で初期化します
+- `std::vector<Type> v(n, value);` は、`n` 個の `Type(value)` で初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -124,10 +124,20 @@ apple
 (33, 44)
 ```
 
-## 1.3 個数だけ指定して構築する
+## 1.3 個数だけを指定して構築する
 - `std::vector<Type> v(n);` は、`n` 個の `Type()` で初期化します
-- `bool()` は `false`, `int()` は `0`, `double()` は `0.0`, `std::string()` は空の文字列、`std::pair<int, int>()` は `std::pair<int, int>(0, 0)`, `struct Point { int x, y; }` の `Point()` は `Point{ 0, 0 }` です
-- `struct Point{ int x = -1, y = -1; }` のときの `Point()` は `Point{ -1, -1 }` です
+- `Type()` について: 
+
+|Type()|値|
+|--|--|
+|`bool()`|`false`|
+|`int()`|`0`|
+|`double()`|`0.0`|
+|`std::string()`|空の文字列|
+|`std::pair<int, int>()`|`std::pair<int, int>(0, 0)`|
+|`struct Point { int x, y; };` のとき<br>`Point()`|`Point{ 0, 0 }`|
+|`struct Point { int x = -1, y = -1; };` のとき<br>`Point()`|`Point{ -1, -1 }`|
+
 ```cpp
 #include <iostream>
 #include <string>
