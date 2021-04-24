@@ -12,7 +12,7 @@ published: false
 # 1. `std::vector` の構築
 
 ## 1.1 要素のリストから構築する
-- `= { ... }` で用意した要素を使って初期化します
+- `= { ... }` の中に値を用意して初期化します
 ```cpp
 #include <iostream>
 #include <string>
@@ -20,23 +20,23 @@ published: false
 
 int main()
 {
-    std::vector<int> numbers = { 10, 20, 50, 100 };
-    std::cout << numbers.size() << '\n'; // 要素数を出力
+	std::vector<int> numbers = { 10, 20, 50, 100 };
+	std::cout << numbers.size() << '\n'; // 要素数を出力
+	// 保持している要素を出力
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
 
-    // 保持している要素を出力
-    for (const auto& number : numbers)
-    {
-        std::cout << number << '\n';
-    }
+	std::cout << "---\n";
 
-    std::vector<std::string> texts = { "apple", "bird", "cat" };
-    std::cout << texts.size() << '\n'; // 要素数を出力
-
-    // 保持している要素を出力
-    for (const auto& text : texts)
-    {
-        std::cout << text << '\n';
-    }
+	std::vector<std::string> texts = { "apple", "bird", "cat" };
+	std::cout << texts.size() << '\n'; // 要素数を出力
+	// 保持している要素を出力
+	for (const auto& text : texts)
+	{
+		std::cout << text << '\n';
+	}
 }
 ```
 ```txt:出力
@@ -45,6 +45,7 @@ int main()
 20
 50
 100
+---
 3
 apple
 bird
@@ -60,23 +61,21 @@ cat
 
 int main()
 {
-    std::vector<int> numbers(5, 100); // 5 個の int(100)
-    std::cout << numbers.size() << '\n'; // 要素数を出力
+	std::vector<int> numbers(5, 100); // 5 個の int(100)
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
 
-    // 保持している要素を出力
-    for (const auto& number : numbers)
-    {
-        std::cout << number << '\n';
-    }
+	std::cout << "---\n";
 
-    std::vector<std::string> texts(3, "apple"); // 3 個の std::string("apple");
-    std::cout << texts.size() << '\n'; // 要素数を出力
-
-    // 保持している要素を出力
-    for (const auto& text : texts)
-    {
-        std::cout << text << '\n';
-    }
+	std::vector<std::string> texts(3, "apple"); // 3 個の std::string("apple");
+	std::cout << texts.size() << '\n';
+	for (const auto& text : texts)
+	{
+		std::cout << text << '\n';
+	}
 }
 ```
 ```txt:出力
@@ -86,6 +85,7 @@ int main()
 100
 100
 100
+---
 3
 apple
 apple
@@ -102,24 +102,22 @@ apple
 
 int main()
 {
-    std::vector<int> numbers(5); // 5 個の int(), つまり 0
-    std::cout << numbers.size() << '\n';
+	std::vector<int> numbers(5); // int(), つまり 0 が 5 個
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
 
-    for (const auto& number : numbers)
-    {
-        std::cout << number << '\n';
-    }
+	std::cout << "---\n";
 
-    std::cout << "---\n";
-
-    std::vector<std::string> texts(3); // 3 個の std::string(), つまり空の文字列
-    std::cout << texts.size() << '\n'; // 要素数を出力
-
-    for (const auto& text : texts)
-    {
-        std::cout << text << '\n';
-        std::cout << text.size() << '\n';
-    }
+	std::vector<std::string> texts(3); // std::string(), つまり空の文字列が 3 個
+	std::cout << texts.size() << '\n';
+	for (const auto& text : texts)
+	{
+		std::cout << text << '\n';
+		std::cout << text.size() << '\n';
+	}
 }
 ```
 ```txt:出力
@@ -149,25 +147,21 @@ int main()
 int main()
 {
 	std::vector<int> v = { 10, 20, 50, 100 };
-	std::vector<int> numbers = v; // v の値をコピー
+	
+	std::vector<int> numbers = v; // v の値をコピー 
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
 
-    std::cout << numbers.size() << '\n'; // 要素数を出力
+	std::cout << "---\n";
 
-    // 保持している要素を出力
-    for (const auto& number : numbers)
-    {
-        std::cout << number << '\n';
-    }
-
-    std::cout << "---\n";
-
-    std::cout << v.size() << '\n'; // 要素数を出力（コピーしたほうは変化しない）
-
-    // 保持している要素を出力（コピーしたほうは変化しない）
-    for (const auto& n : v)
-    {
-        std::cout << n << '\n';
-    }
+	std::cout << v.size() << '\n'; // 要素数を出力（コピーしたほうは変化しない）
+	for (const auto& n : v) // 保持している要素を出力（コピーしたほうは変化しない）
+	{
+		std::cout << n << '\n';
+	}
 }
 ```
 ```txt:出力
@@ -184,22 +178,38 @@ int main()
 100
 ```
 
-## 1.4 (個数) ×
-- `std::string` 型のデフォルトコンストラクタは要素数が 0 の空の文字列を構築します  
-- 空の文字列も、何の問題もなくプログラムで使うことができます
+## 1.5 空の配列
+- `std::string` 型のデフォルトコンストラクタは要素数が 0 の空の配列を構築します  
+- 空の配列も、何の問題もなくプログラムで使うことができます
 ```cpp
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main()
 {
-	std::string s; // 空の文字列を構築
-	std::cout << s << '\n'; // 出力しても何も表示されない
-	std::cout << s.size() << '\n'; // 要素数は 0
+	std::vector<int> numbers; // 空の配列を構築
+	std::cout << numbers.size() << '\n'; // 要素数は 0
+	for (const auto& number : numbers)
+	{	
+		// 1 回も実行されない
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> texts; // 空の配列を構築
+	std::cout << texts.size() << '\n'; // 要素数は 0
+	for (const auto& text : texts)
+	{	
+		// 1 回も実行されない
+		std::cout << text << '\n';
+	}
 }
 ```
 ```txt:出力
-
+0
+---
 0
 ```
 
