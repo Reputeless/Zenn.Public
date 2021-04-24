@@ -33,12 +33,12 @@ int main()
 
 	std::cout << "---\n"; // 実行結果を見やすくするための区切り線
 
-	std::vector<std::string> texts = { "apple", "bird", "cat" };
-	std::cout << texts.size() << '\n'; // 要素数を出力
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n'; // 要素数を出力
 	// 保持している要素を出力
-	for (const auto& text : texts)
+	for (const auto& word : words)
 	{
-		std::cout << text << '\n';
+		std::cout << word << '\n';
 	}
 
 	std::cout << "---\n"; // 実行結果を見やすくするための区切り線
@@ -89,11 +89,11 @@ int main()
 
 	std::cout << "---\n";
 
-	std::vector<std::string> texts(3, "apple"); // 3 個の std::string("apple");
-	std::cout << texts.size() << '\n';
-	for (const auto& text : texts)
+	std::vector<std::string> words(3, "apple"); // 3 個の std::string("apple");
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
 	{
-		std::cout << text << '\n';
+		std::cout << word << '\n';
 	}
 
 	std::cout << "---\n";
@@ -157,12 +157,12 @@ int main()
 
 	std::cout << "---\n";
 
-	std::vector<std::string> texts(3); // std::string(), つまり空の文字列が 3 個
-	std::cout << texts.size() << '\n';
-	for (const auto& text : texts)
+	std::vector<std::string> words(3); // std::string(), つまり空の文字列が 3 個
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
 	{
-		std::cout << text << '\n';
-		std::cout << text.size() << '\n';
+		std::cout << word << '\n';
+		std::cout << word.size() << '\n';
 	}
 
 	std::cout << "---\n";
@@ -256,12 +256,12 @@ int main()
 
 	std::cout << "---\n";
 
-	std::vector<std::string> texts; // 空の配列を構築
-	std::cout << texts.size() << '\n'; // 要素数は 0
-	for (const auto& text : texts)
+	std::vector<std::string> words; // 空の配列を構築
+	std::cout << words.size() << '\n'; // 要素数は 0
+	for (const auto& word : words)
 	{	
 		// 1 回も実行されない
-		std::cout << text << '\n';
+		std::cout << word << '\n';
 	}
 }
 ```
@@ -450,10 +450,10 @@ int main()
 	std::vector<int> numbers = { 10, 20, 50, 100 };
 	std::cout << numbers.size() << '\n'; // 要素数を出力
 
-	std::vector<std::string> texts(10, "apple");
-	std::cout << texts.size() << '\n'; // 要素数を出力
+	std::vector<std::string> words(10, "apple");
+	std::cout << words.size() << '\n'; // 要素数を出力
 
-	std::size_t n = texts.size();
+	std::size_t n = words.size();
 	std::cout << n << '\n';
 }
 ```
@@ -473,16 +473,16 @@ int main()
 int main()
 {
 	std::vector<int> numbers;
-	std::vector<std::string> texts(10, "apple");
+	std::vector<std::string> words(10, "apple");
 
 	if (numbers.empty()) // 空の配列なので true
 	{
 		std::cout << "numbers is empty.\n";
 	}
 
-	if (texts.empty()) // 空の配列ではないので false
+	if (words.empty()) // 空の配列ではないので false
 	{
-		std::cout << "texts is empty.\n";
+		std::cout << "words is empty.\n";
 	}
 }
 ```
@@ -742,11 +742,11 @@ int main()
 
 int main()
 {
-	std::vector<std::string> texts = { "apple", "bird", "cat" };
+	std::vector<std::string> words = { "apple", "bird", "cat" };
 
-	for (const auto& text : texts) // 要素の個数だけ繰り返すループ、text は順に各要素への const 参照
+	for (const auto& word : words) // 要素の個数だけ繰り返すループ、word は順に各要素への const 参照
 	{
-		std::cout << text << '\n';
+		std::cout << word << '\n';
 	}
 }
 ```
@@ -766,16 +766,16 @@ cat
 
 int main()
 {
-	std::vector<std::string> texts = { "apple", "bird", "cat" };
+	std::vector<std::string> words = { "apple", "bird", "cat" };
 
-	for (auto& text : texts) // 要素の個数だけ繰り返すループ、text は順に各要素への参照
+	for (auto& word : words) // 要素の個数だけ繰り返すループ、word は順に各要素への参照
 	{
-		text.push_back('!');
+		word.push_back('!');
 	}
 
-	for (const auto& text : texts) // 変更しないので const 参照でよい
+	for (const auto& word : words) // 変更しないので const 参照でよい
 	{
-		std::cout << text << '\n';
+		std::cout << word << '\n';
 	}
 }
 ```
@@ -791,30 +791,160 @@ cat!
 ## 7.1 末尾に要素を 1 個追加する
 - `.push_back(ch)` で、現在の配列の末尾に文字 `ch` を追加します
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.push_back("dog"); // 末尾に要素を追加
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.push_back("egg"); // 末尾に要素を追加
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+apple
+bird
+cat
+---
+4
+apple
+bird
+cat
+dog
+---
+5
+apple
+bird
+cat
+dog
+egg
 ```
 
 ## 7.2 先頭に要素を 1 個追加する
 - `.insert(it, value)` は、イテレータ `it` が指す位置の前に要素 `value` を追加します
 - 先頭位置のイテレータを返す `.begin()` と組み合わせることで、配列の先頭に要素を追加できます
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.insert(words.begin(), "zoo"); // 先頭に要素を追加
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	words.insert(words.begin(), "young"); // 先頭に要素を追加
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+apple
+bird
+cat
+---
+4
+zoo
+apple
+bird
+cat
+---
+5
+young
+zoo
+apple
+bird
+cat
 ```
 
 ## 7.3 末尾に別の配列を追加する
 - `.insert(it, itFirst, itLast)` は、イテレータ `it` が指す位置の前に範囲 `[itFirst, itLast)` の要素を追加します
-- 先頭位置のイテレータを返す `.begin()` と、追加したい配列の `.begin() / .end()` を組み合わせることで末尾に別の配列を追加できます
+- 終端位置のイテレータを返す `.begin()` と、追加したい配列の `.begin() / .end()` を組み合わせることで末尾に別の配列を追加できます
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> newWords = { "dog", "egg", "five" };
+	words.insert(words.end(), newWords.begin(), newWords.end()); // 末尾に別の配列を追加
+
+	std::cout << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+apple
+bird
+cat
+---
+6
+apple
+bird
+cat
+dog
+egg
+five
 ```
 
 
@@ -877,3 +1007,22 @@ cat!
 
 
 # 11. `std::vector<bool>` の注意
+
+C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値 8 個分の情報を記録することで、単純な `bool` の配列よりもメモリ消費量が 8 分の 1 になるような特殊な実装になることが仕様で定められています。そのため、通常の `std::vector` とは一部の機能の挙動が変わります。
+
+## 11.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
+
+
+
+## 11.2 `std::vector<bool>` 固有の機能
+
+
+
+## 11.3 `std::vector<bool>` の特殊な挙動を避ける方法
+
+通常の `std::vector` の挙動に近い `bool` 型の動的配列を実現するには、以下のような方法があります
+
+- 方式 A: `std::vector<char>` で代替する
+- 方式 B: `struct Boolean{ bool b; };` として `std::vector<Boolean>` を使う
+- 方式 C: `std::basic_string<bool>` を使う
+
