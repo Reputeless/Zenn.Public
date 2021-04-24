@@ -315,7 +315,7 @@ int main()
 		std::cout << "s is empty.\n";
 	}
 
-	if (t.empty()) // 空の文字列でないので false
+	if (t.empty()) // 空の文字列ではないので false
 	{
 		std::cout << "t is empty.\n";
 	}

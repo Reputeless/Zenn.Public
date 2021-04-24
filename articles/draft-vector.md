@@ -11,8 +11,9 @@ published: false
 
 # 1. `std::vector` の構築
 
-## 1.1 要素のリストから構築する
+## 1.1 リストから構築する
 - `= { ... }` の中に値を用意して初期化します
+- リスト内の値は `std::vector<Type>` の要素の型 `Type` に合わせます
 ```cpp
 #include <iostream>
 #include <string>
@@ -97,7 +98,7 @@ int main()
 
 	std::cout << "---\n";
 
-	std::vector<Point> points(2, Point{ 33, 44 }); // 2 個の Point{ 33, 44 }
+	std::vector<Point> points(2, { 33, 44 }); // 2 個の Point{ 33, 44 }
 	std::cout << points.size() << '\n'; // 要素数を出力
 	// 保持している要素を出力
 	for (const auto& point : points)
@@ -135,8 +136,8 @@ apple
 |`double()`|`0.0`|
 |`std::string()`|空の文字列|
 |`std::pair<int, int>()`|`std::pair<int, int>(0, 0)`|
-|`struct Point { int x, y; };` のとき<br>`Point()`|`Point{ 0, 0 }`|
-|`struct Point { int x = -1, y = -1; };` のとき<br>`Point()`|`Point{ -1, -1 }`|
+|`struct Point { int x, y; };`<br>のときの<br>`Point()`|`Point{ 0, 0 }`|
+|`struct Point { int x = -1, y = -1; };`<br>のときの<br>`Point()`|`Point{ -1, -1 }`|
 
 ```cpp
 #include <iostream>
@@ -442,90 +443,145 @@ int main()
 ```cpp
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main()
 {
 	std::vector<int> numbers = { 10, 20, 50, 100 };
 	std::cout << numbers.size() << '\n'; // 要素数を出力
 
-	s = "apple";
-	std::cout << s.size() << '\n';
+	std::vector<std::string> texts(10, "apple");
+	std::cout << texts.size() << '\n'; // 要素数を出力
 
-	std::size_t n = s.size();
+	std::size_t n = texts.size();
 	std::cout << n << '\n';
 }
 ```
 ```txt:出力
-3
-5
-5
-5
-```
-
-## 3.2 空の文字列であるかを調べる
-- `.empty()` は、要素数が 0 の文字列（空の文字列）であるかを `bool` 型の値で返します
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s;
-	std::string t = "abc";
-
-	if (s.empty()) // 空の文字列なので true
-	{
-		std::cout << "s is empty.\n";
-	}
-
-	if (t.empty()) // 空の文字列でないので false
-	{
-		std::cout << "t is empty.\n";
-	}
-}
-```
-```txt:出力
-s is empty.
-```
-
-
-# 4. `std::string` の代入
-
-## 4.1 別の文字列を代入する
-- `=` を使って別の文字列リテラルや `std::string` 型の値を代入します
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s = "abc";
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	s = "apple"; // 代入
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	std::string t = "bird";
-	s = t; // 代入
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
-```
-```txt:出力
-abc
-3
-apple
-5
-bird
 4
+10
+10
 ```
 
-# 5. `std::string` の比較
+## 3.2 空の配列であるかを調べる
+- `.empty()` は、要素数が 0 の配列（空の配列）であるかを `bool` 型の値で返します
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
-## 5.1 同じ文字列であるかを調べる
-- `a == b` の少なくとも一方が `std::string` 型の場合、2 つの文字列 `a`, `b` が一致するかを `bool` 型の値で返します
+int main()
+{
+	std::vector<int> numbers;
+	std::vector<std::string> texts(10, "apple");
+
+	if (numbers.empty()) // 空の配列なので true
+	{
+		std::cout << "numbers is empty.\n";
+	}
+
+	if (texts.empty()) // 空の配列ではないので false
+	{
+		std::cout << "texts is empty.\n";
+	}
+}
+```
+```txt:出力
+numbers is empty.
+```
+
+
+# 4. `std::vector` の代入
+
+## 4.1 別のリストを代入する
+- `=` を使って別のリスト `{ ... }` の値を代入します
+- リストの要素の型は、`std::vector<Type>` の `Type` に変換できる型である必要があります
+- 異なるサイズの配列を代入すると、それに合わせて自身の配列の要素数が変わります
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	std::vector<int> numbers = { 10, 20, 50, 100 };
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	numbers = { 333, 222, 111 }; // 代入
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+}
+```
+```txt:出力
+4
+10
+20
+50
+100
+---
+3
+333
+222
+111
+```
+
+## 4.2 別の配列を代入する
+- `=` を使って別の `std::string<Type>` 型の値を代入します
+- 代入元と代入先の要素の型 `Type` は一致している必要があります
+- 異なるサイズの配列を代入すると、それに合わせて自身の配列の要素数が変わります
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	std::vector<int> numbers = { 10, 20, 50, 100 };
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<int> t(5, 333); // 5 個の 333
+	numbers = t; // 代入
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+}
+```
+```txt:出力
+4
+10
+20
+50
+100
+---
+5
+333
+333
+333
+333
+333
+```
+
+
+# 5. `std::vector` の比較
+
+## 5.1 同じ中身であるかを調べる
+- ともに同じ型 `Type` の要素を持つ `std::vector<Type>` 型の値 'a', 'b' について、`a == b` は配列の中身が一致するかを `bool` 型の値で返します
+- 計算量: `==` は双方の要素数が同じかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
 ```cpp
 #include <iostream>
 #include <string>
