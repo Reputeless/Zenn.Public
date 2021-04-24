@@ -353,7 +353,7 @@ int main()
 
 int main()
 {
-	size_t N;
+	std::size_t N;
 	std::cin >> N; // 入力の個数 N を読み込む
 
 	std::vector<int> numbers(N); // int(), つまり 0 が N 個

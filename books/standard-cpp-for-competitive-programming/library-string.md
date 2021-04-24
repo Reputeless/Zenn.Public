@@ -205,7 +205,7 @@ blue ocean
 
 int main()
 {
-	size_t N;
+	std::size_t N;
 	std::cin >> N; // 単語の個数を読み込む
 
 	std::vector<std::string> ss(N);
