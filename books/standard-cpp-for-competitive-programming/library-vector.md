@@ -1154,7 +1154,7 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 
 ## 11.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
 - `std::vector<bool>` において、`v[index]` や `.front()`, `.back()`, `.at(index)` は、`bool` 型の参照ではなく「プロキシ」と呼ばれる特殊なオブジェクトを返します。そのため、次のように `auto` と組み合わせたときに、異なる挙動をします
-- 個別の要素への参照やポインタを取得できないなどの制約があり、実装によっては要素同士を `std::swap()` できない場合があるなど、通常の `std::vector` と同じコードを使えないことがしばしばあります
+- 個別の要素への参照やポインタを取得できないなどの制約があります
 
 ```cpp
 #include <iostream>
@@ -1166,14 +1166,12 @@ int main()
 	auto n = numbers.front(); // n は int 型
 	n = 1; // numbers[0] は変更されない
 	std::cout << numbers.front() << '\n';
-	std::swap(numbers[0], numbers[2]); // OK
 
 	std::vector<bool> booleans = { false, false, true };	
 	auto b = booleans.front(); // b は bool 型ではない特殊な型
 	b = true; // booleans[0] を false から true に変更できてしまう
 	std::cout << std::boolalpha;
 	std::cout << booleans.front() << '\n';
-	// std::swap(booleans[0], booleans[2]); // コンパイルエラー
 }
 ```
 ```txt:出力
@@ -1230,7 +1228,6 @@ int main()
 	std::vector<char> booleans = { false, false };
 	booleans.push_back(true);
 	booleans.front() = true;
-	std::swap(booleans[1], booleans[2]);
 
 	if (booleans.front())
 	{
@@ -1248,8 +1245,8 @@ int main()
 ```txt:出力
 booleans.front() is true
 true
-true
 false
+true
 3
 ```
 
@@ -1267,7 +1264,6 @@ int main()
 	std::basic_string<bool> booleans = { false, false };
 	booleans.push_back(true);
 	booleans.front() = true;
-	std::swap(booleans[1], booleans[2]);
 
 	if (booleans.front())
 	{
@@ -1285,8 +1281,8 @@ int main()
 ```txt:出力
 booleans.front() is true
 true
-true
 false
+true
 3
 ```
 
@@ -1304,7 +1300,6 @@ int main()
 	std::deque<bool> booleans = { false, false };
 	booleans.push_back(true);
 	booleans.front() = true;
-	std::swap(booleans[1], booleans[2]);
 
 	if (booleans.front())
 	{
@@ -1322,7 +1317,7 @@ int main()
 ```txt:出力
 booleans.front() is true
 true
-true
 false
+true
 3
 ```
