@@ -18,6 +18,8 @@ published: false
 #include <string>
 #include <vector>
 
+struct Point { int x, y; };
+
 int main()
 {
 	std::vector<int> numbers = { 10, 20, 50, 100 };
@@ -28,7 +30,7 @@ int main()
 		std::cout << number << '\n';
 	}
 
-	std::cout << "---\n";
+	std::cout << "---\n"; // 実行結果を見やすくするため、区切り線を出力します
 
 	std::vector<std::string> texts = { "apple", "bird", "cat" };
 	std::cout << texts.size() << '\n'; // 要素数を出力
@@ -36,6 +38,16 @@ int main()
 	for (const auto& text : texts)
 	{
 		std::cout << text << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<Point> points = { Point{ 33, 44 }, Point{ 55, 66 } };
+	std::cout << points.size() << '\n'; // 要素数を出力
+	// 保持している要素を出力
+	for (const auto& point : points)
+	{
+		std::cout << '(' << point.x << ", "  << point.y << ")\n";
 	}
 }
 ```
@@ -50,6 +62,10 @@ int main()
 apple
 bird
 cat
+---
+2
+(33, 44)
+(55, 66)
 ```
 
 ## 1.2 (個数) × (要素) で構築する
@@ -58,6 +74,8 @@ cat
 #include <iostream>
 #include <string>
 #include <vector>
+
+struct Point { int x, y; };
 
 int main()
 {
@@ -76,6 +94,16 @@ int main()
 	{
 		std::cout << text << '\n';
 	}
+
+	std::cout << "---\n";
+
+	std::vector<Point> points(2, Point{ 33, 44 }); // 2 個の Point{ 33, 44 }
+	std::cout << points.size() << '\n'; // 要素数を出力
+	// 保持している要素を出力
+	for (const auto& point : points)
+	{
+		std::cout << '(' << point.x << ", "  << point.y << ")\n";
+	}
 }
 ```
 ```txt:出力
@@ -90,15 +118,22 @@ int main()
 apple
 apple
 apple
+---
+2
+(33, 44)
+(33, 44)
 ```
 
 ## 1.3 個数だけ指定して構築する
 - `std::vector<Type> v(n);` は、`n` 個の `Type()` で初期化します
-- `int()` は `0`, `double()` は `0.0`, `std::string()` は空の文字列です
+- `bool()` は `false`, `int()` は `0`, `double()` は `0.0`, `std::string()` は空の文字列、`std::pair<int, int>()` は `std::pair<int, int>(0, 0)`, `struct Point { int x, y; }` の `Point()` は `Point{ 0, 0 }` です
+- `struct Point{ int x = -1, y = -1; }` のときの `Point()` は `Point{ -1, -1 }` です
 ```cpp
 #include <iostream>
 #include <string>
 #include <vector>
+
+struct Point { int x, y; };
 
 int main()
 {
@@ -118,6 +153,15 @@ int main()
 		std::cout << text << '\n';
 		std::cout << text.size() << '\n';
 	}
+
+	std::cout << "---\n";
+
+	std::vector<Point> points(2); // Point(), つまり Point{ 0, 0 } が 2 個
+	std::cout << points.size() << '\n';
+	for (const auto& point : points)
+	{
+		std::cout << '(' << point.x << ", "  << point.y << ")\n";
+	}
 }
 ```
 ```txt:出力
@@ -135,6 +179,10 @@ int main()
 0
 
 0
+---
+2
+(0, 0)
+(0, 0)
 ```
 
 ## 1.4 別の `std::vector<Type>` から構築する
@@ -213,150 +261,127 @@ int main()
 0
 ```
 
-# 2. `std::string` の入力
+# 2. `std::vector` の入力
 
-## 2.1 標準入力の基本
-- 1 回の `std::cin` で、改行もしくは空白文字が出現するまでの入力（単語）を 1 つ読み取ります 
-- 改行文字や空白文字は除去されます
+`std::vector<Type>` 型の変数をそのまま `std::cin` で使うことはできないため、以下のいずれかの方法を使います
+- A: `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加する
+- B: あらかじめ入力個数分用意した `std::vector<Type>` の各要素に `std::cin` を行う
+
+2.1 では A の方法を、2.2 では B の方法を使います。
+
+## 2.1 入力した値を `std::vector` に追加する (A 方式)
+- `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加します
+- 入力される個数が少なく、プログラムを書く時点でわかっている場合はこの方法が使えます
 ```cpp
 #include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s;
-	std::cin >> s; // 標準入力から単語を読み込む
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
-```
-```txt:入力
-apple
-```
-```txt:出力
-apple
-5
-```
-## 2.2 複数個の入力
-- 複数の入力は、連続する `>>` で読み込むこともできます
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s, t, u;
-	std::cin >> s >> t >> u; // 標準入力から 3 つの単語を読み込む
-
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-	std::cout << t << '\n';
-	std::cout << t.size() << '\n';
-	std::cout << u << '\n';
-	std::cout << u.size() << '\n';
-}
-```
-```txt:入力
-apple
-bird
-cat
-```
-```txt:出力
-apple
-5
-bird
-4
-cat
-3
-```
-
-## 2.3 半角スペースによって入力が区切られる
-- 1 行の入力の途中に空白文字が含まれていると、入力の区切りと見なされます
-- 空白文字は除去されます
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s, t;
-	std::cin >> s >> t; // 標準入力から 2 つの単語を読み込む
-
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-
-	std::cout << t << '\n';
-	std::cout << t.size() << '\n';
-}
-```
-```txt:入力
-blue ocean
-```
-```txt:出力
-blue
-4
-ocean
-5
-```
-
-## 2.4 丸ごと 1 行を入力
-- 空白文字を含む 1 行を丸ごと読み込みたい場合は `std::getline()` を使います
-- 改行文字は除去されます
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string s;
-	std::getline(std::cin, s); // 標準入力から 1 行を読み込む
-	std::cout << s << '\n';
-	std::cout << s.size() << '\n';
-}
-```
-```txt:入力
-blue ocean
-```
-```txt:出力
-blue ocean
-10
-```
-
-## 2.5 【サンプル】たくさんの単語を読み込む
-- 最初に単語の個数 `N`, 続いて N 個の単語が入力される問題において、入力されるすべての単語を `std::vector<std::string>` に読み込んで保存します
-```cpp
-#include <iostream>
-#include <string>
 #include <vector>
 
 int main()
 {
-	size_t n;
-	std::cin >> n; // 単語の個数を読み込む
-	std::vector<std::string> ss(n);
-	for (auto& s : ss) // n 回繰り返す
-	{
-		std::cin >> s;
-	}
+	// 3 個入力されることがわかっている場合
+	int a, b, c;
+	std::cin >> a >> b >> c;
 
-	for (const auto& s : ss) // 読み込めていることを確認
+	std::vector<int> numbers = { a, b, c };
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
 	{
-		std::cout << '>' << s << '\n';
+		std::cout << number << '\n';
 	}
 }
 ```
 ```txt:入力
-4
-red
-green
-blue
-yellow
+10
+20
+50
 ```
 ```txt:出力
->red
->green
->blue
->yellow
+3
+10
+20
+50
+```
+
+## 2.2 入力した値を `std::vector` に追加する (B 方式)
+- あらかじめ入力個数分のサイズで用意した `std::vector<Type>` の各要素に `std::cin` を行います
+- 入力される個数がプログラムを書く時点でわかっている場合はこの方法が使えます
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 3 個入力されることがわかっている場合
+	std::vector<int> numbers(3); // int(), つまり 0 が 3 個
+
+	for (auto& number : numbers)  // 3 回繰り返す
+	{
+		std::cin >> number; // 各要素に入力を読み込み
+	}
+
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+}
+```
+```txt:入力
+10
+20
+50
+```
+```txt:出力
+3
+10
+20
+50
+```
+
+## 2.3 入力される個数が実行時に与えられる場合
+- 2.2 の方法を応用することで、入力される個数が実行時に与えられるケースにも対応できます
+- 最初に入力の個数 `N`, 続いて N 個の入力が与えられる問題において、入力されるすべての値を `std::vector` に読み込んで保存します
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	size_t N;
+	std::cin >> N; // 入力の個数 N を読み込む
+	std::vector<int> numbers(N); // int(), つまり 0 が N 個
+	for (auto& number : nubers) // N 回繰り返す
+	{
+		std::cin >> number; // 各要素に入力を読み込み
+	}
+
+	std::cout << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+}
+```
+```txt:入力
+2
+111 222
+```
+```txt:出力
+2
+111
+222
+```
+```txt:入力
+5
+11 22 33 44 55
+```
+```txt:出力
+5
+11
+22
+33
+44
+55
 ```
 
 
