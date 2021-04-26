@@ -95,15 +95,125 @@ void Main()
 
 
 ## 1.6 さまざまな値の表示
+`Print` で出力できるのは文字列だけではありません。Siv3D で「Format 可能」な型であれば何でも出力できます。
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 文字列リテラル
+	Print << U"Hello, Siv3D!";
+
+	// << の連続
+	Print << U"This" << U" is " << U"fun!";
+
+	// 文字リテラル
+	Print << U'あ';
+
+	// 整数
+	Print << 100 * 5 + 5;
+	
+	// 浮動小数点数
+	Print << U"π = " << Math::Pi;
+
+	// bool
+	Print << Math::IsPrime(65537);
+
+	// 時間型
+	Print << 1h + 3s;
+
+	// 数式パーサの結果 (double 型）
+	Print << Eval(U"10^3 + sqrt(81) + 0.001");
+
+	// 範囲
+	Print << Range(0, 10);
+
+	// 日付と時刻クラス
+	Print << DateTime::Now();
+
+	while (System::Update())
+	{
+
+	}
+}
+```
 
 
-## 1.7 デバッグ表示の消去
+## 1.7 デバッグ表示のあふれ
+次のように `Print` をメインループの中で使うと、毎フレーム新しいメッセージが追加されて、古いメッセージを画面の外に追いやります。画面からあふれたメッセージは自動的に消去されます。
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	int32 count = 0;
+
+	while (System::Update())
+	{
+		Print << count;
+
+		++count;
+	}
+}
+```
 
 
-## 1.8 基本的なデータ型
+## 1.8 デバッグ表示の消去
+`ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。つまり、メインループの先頭で `ClearPrint()` すると、その時点で蓄積されていたメッセージが消去され、つねに最新の `Print` した内容だけが表示されるようになります。
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	int32 count = 0;
+
+	while (System::Update())
+	{
+		ClearPrint(); // Print したメッセージを消去
+
+		Print << count;
+
+		++count;
+	}
+}
+```
 
 
-## 1.9 画面の座標系
+## 1.9 基本的なデータ型
+Siv3D でよく使う基本的なデータ型は次のとおりです。
+
+|型名|説明|
+|--|--|
+|`bool`|ブーリアン型|
+|`int8`|符号付 8-bit 整数型|
+|`uint8`|符号無し 8-bit 整数型|
+|`int16`|符号付 16-bit 整数型|
+|`uint16`|符号無し 16-bit 整数型|
+|`int32`|符号付 32-bit 整数型|
+|`uint32`|符号無し 32-bit 整数型|
+|`int64`|符号付 64-bit 整数型|
+|`uint64`|符号無し 64-bit 整数型|
+|`int128`|符号付 128-bit 整数型|
+|`uint128`|符号無し 128-bit 整数型|
+|`BigInt`|任意精度多倍長整数型|
+|`float`|単精度浮動小数点数型|
+|`double`|倍精度浮動小数点数型|
+|`BigFloat`|有効数字100桁の浮動小数点数型|
+|`Byte`|ビット列としてのバイトデータを表す型|
+|`char32`|UTF-32 のコードポイント（文字）|
+|`String`|文字列クラス (C++ の `std::u32string` 相当)|
+|`std::array<Type, N>`|固定長配列|
+|`Array<Type>`|動的配列 (C++ の `std::vector<Type>` 相当)|
+|`Grid<Type>`|二次元配列|
+|`Optional<Type>`|無効値を取りうる型 (C++ の `std::optional<Type>` 相当)|
+|`HashSet<Key>`|ハッシュセット (C++ の `std::unordered_set<Key>` 相当)|
+|`HashTable<Key, Value>`|ハッシュテーブル (C++ の `std::unordered_map<Key, Value>` 相当)|
+|`FilePath`|`String` のエイリアス|
+|`StringView`|所有権を持たない文字列クラス (C++ の `std::string_view` 相当)|
+|`FilePathView`|`StringView` のエイリアス|
+
+
+## 1.10 画面の座標系
 
 
 # 2. 図形を描く
