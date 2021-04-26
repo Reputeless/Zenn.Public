@@ -42,7 +42,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 1.5 OpenSiv3D ライブラリと OpenSiv3D アプリをビルドする
 ◆ Visual Studio で OpenSiv3D ライブラリと OpenSiv3D アプリをビルドします
 
-ソースコード内の `WindowsDesktop/OpenSiv3D.sln` を Visual Studio で開きます。ソリューションの構成を、実行が遅い Debug ビルドではなく Release ビルドに設定しておきましょう。
+1.3 で入手した OpenSiv3D プロジェクトのフォルダ内の `WindowsDesktop/OpenSiv3D.sln` を Visual Studio で開きます。ソリューションの構成を、実行が遅い Debug ビルドではなく Release ビルドに設定しておきましょう。
 
 ![](https://storage.googleapis.com/zenn-user-upload/2v3aepxv4c05lzgqoz4gcc2ee2p5)
 
@@ -84,7 +84,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 2.5 OpenSiv3D ライブラリをビルドする
 ◆ Xcode で OpenSiv3D ライブラリをビルドします
 
-ソースコード内の `macOS/OpenSiv3D.xcodeproj` を Xcode で開き、「Siv3D」という Target をビルドします。フルビルドには数分前後かかります。ビルドが完了すると `libSiv3D.a` が生成されます。
+1.3 で入手した OpenSiv3D プロジェクトのフォルダ内の `macOS/OpenSiv3D.xcodeproj` を Xcode で開き、「Siv3D」という Target をビルドします。フルビルドには数分前後かかります。ビルドが完了すると `libSiv3D.a` が生成されます。
 
 ## 2.6 OpenSiv3D アプリをビルドする
 ◆ Xcode で OpenSiv3D のテストアプリをビルドします
