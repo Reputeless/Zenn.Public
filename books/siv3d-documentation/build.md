@@ -3,11 +3,7 @@ title: "開発の準備 | フルビルドの場合（上級者向け）"
 free: true
 ---
 
-:::message alert
-このページは特殊な利用者向けの説明です。通常はスキップしてください。
-:::
-
-Siv3D の内部を理解したい場合や、内部のコードを改造したい場合に、自前でライブラリのソースコードをビルドする手順を説明します。
+Siv3D の内部を理解したい場合や、内部のコードを改造したい場合に、自前でライブラリのソースコードをビルドする手順を説明します。このページは特殊な利用者向けの説明です。通常はスキップしてください。
 
 # 1. Windows の場合
 
@@ -32,6 +28,18 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 1.3 OpenSiv3D の開発ブランチからソースコードを入手する
 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します。
 
+[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+
+## 1.4 追加のサードパーティ・ライブラリをコピーして追加する
+ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします。
+
+1.3 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_73_0/` フォルダがあります。この中へ 1.2 で準備した Boost ライブラリの一部である `boost_1_73_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_73_0/boost/` となります。
+
+## 1.5 OpenSiv3D ライブラリをビルドする
+
+
+## 1.6 OpenSiv3D アプリをビルドする
+
 
 # 2. macOS の場合
 
@@ -48,9 +56,34 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 2.3 OpenSiv3D の開発ブランチからソースコードを入手する
 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します。
 
+[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+
+## 2.4 追加のサードパーティ・ライブラリをコピーして追加する
+ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします。
+
+1.3 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_73_0/` フォルダがあります。この中へ 1.2 で準備した Boost ライブラリの一部である `boost_1_73_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_73_0/boost/` となります。
+
+## 2.5 OpenSiv3D ライブラリをビルドする
+
+
+## 2.6 OpenSiv3D アプリをビルドする
+
 
 # 3. Linux の場合
 
-## 手順
-- 必要なパッケージ: https://github.com/Siv3D/OpenSiv3D/blob/v6_winmac_develop/.github/workflows/ci.yml#L26
+## 3.1 OpenSiv3D の開発ブランチからソースコードを入手する
+OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します。
+
+[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+
+## 3.2 依存パッケージをインストールする
+次を参考にパッケージをインストールします。  
+https://github.com/Siv3D/OpenSiv3D/blob/v6_winmac_develop/.github/workflows/ci.yml#L30
+
+## 3.3 OpenSiv3D ライブラリをビルドする
+
+
+## 3,4 OpenSiv3D アプリをビルドする
+
+
 
