@@ -29,7 +29,6 @@ void Main()
 
 void Main()
 {
-	// 背景を水色にする
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
 	// ノードの半径
@@ -53,16 +52,13 @@ void Main()
 
 void Main()
 {
-	// 背景を水色にする
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
 	// ノードの個数
 	int32 N = 5;
 
-	// ノードの半径
 	double nodeRadius = 40;
 
-	// 画面の中心
 	const Vec2 sceneCenter = Scene::Center();
 
 	while (System::Update())
@@ -88,57 +84,52 @@ void Main()
 
 # 4. エッジを描く
 
-```diff cpp
+```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6
 
 void Main()
 {
-	// 背景を水色にする
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-	// ノードの個数
 	int32 N = 5;
 
-	// ノードの半径
 	double nodeRadius = 40;
 
 	// エッジの太さ
 	double edgeThickness = 3;
 
-	// 画面の中心
 	const Vec2 sceneCenter = Scene::Center();
 
 	while (System::Update())
 	{
-		// 360° / N
 		const double angleStep = (360_deg / N);
 
 		// エッジを描く
-+		for (auto i : step(N))
-+		{
-+			const double angle = (i * angleStep);
-+			const double nextAngle = (angle + angleStep);
-+
-+			// 現在のノードの中心座標
-+			const Vec2 nodeCenter = sceneCenter.getPointByAngleAndDistance(angle, 200);
-+
-+			// 次のノードの中心座標
-+			const Vec2 nextNodeCenter = sceneCenter.getPointByAngleAndDistance(nextAngle, 200);
-+
-+			// 線分を描く
-+			Line{ nodeCenter, nextNodeCenter }.draw(edgeThickness, ColorF{ 0.25 });
-+		}
-
-		// ノードを描く
-		for (auto i : step(N)) // for (int32 i = 0; i < N; ++i) と同じ
+		for (auto i : step(N))
 		{
-			// 中心から見たノードの方向 (12 時 = 0°, 3 時 = 90°)
+			// 現在のノードの方向
 			const double angle = (i * angleStep);
 
-			// ノードの中心座標、sceneCenter からみて angle 方向に 200px
+			// 次のノードの方向
+			const double nextAngle = (angle + angleStep);
+
+			// 現在のノードの中心座標
 			const Vec2 nodeCenter = sceneCenter.getPointByAngleAndDistance(angle, 200);
 
-			// 円を描く
+			// 次のノードの中心座標
+			const Vec2 nextNodeCenter = sceneCenter.getPointByAngleAndDistance(nextAngle, 200);
+
+			// 線分を描く
+			Line{ nodeCenter, nextNodeCenter }.draw(edgeThickness, ColorF{ 0.25 });
+		}
+
+		// ノードを描く
+		for (auto i : step(N))
+		{
+			const double angle = (i * angleStep);
+
+			const Vec2 nodeCenter = sceneCenter.getPointByAngleAndDistance(angle, 200);
+
 			Circle{ nodeCenter, nodeRadius }.draw();
 		}
 	}
