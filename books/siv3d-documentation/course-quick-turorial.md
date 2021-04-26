@@ -477,7 +477,7 @@ void Main()
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/6-0.png?raw=true)
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 void Main()
@@ -623,7 +623,7 @@ void Main()
 
 ### Texture::drawAt()
 `.drawAt()` では、テクスチャの中心をどこに据えるかを画面の座標で指定します。絵文字やアイコンを描く場合はこちらが便利です。
-
+![](https://storage.googleapis.com/zenn-user-upload/sm7023pc2clnnov9plkxf6if40un)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -645,7 +645,7 @@ void Main()
 
 ### Texture::draw()
 `.draw()` では、テクスチャの左上をどこに据えるかを画面の座標で指定します。背景画像や UI などを描くときにはこちらが便利な場合があります。
-
+![](https://storage.googleapis.com/zenn-user-upload/t49oyggs2p0yo60qtbther221eox)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -672,7 +672,7 @@ OpenSiv3D で使える絵文字は約 3,600 種類あります。絵文字は [e
 
 ### Texture::scaled()
 `Texture::scaled()` に拡大縮小倍率を指定すると、`Texture` にサイズ情報が付加された `TextureRegion` を作成できます。`TextureRegion` は `Texture` のように `.draw()` または `.drawAt()` できます。`Texture` を作成するのと異なり、既存の `Texture` から `TextureRegion` を作成するのは非常に軽い実行時負荷です。サンプルでは示していませんが、縦横で異なる倍率に設定することもできます。
-
+![](https://storage.googleapis.com/zenn-user-upload/6x2n1gnf7niswi6q2i4i4l16kuz3)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -698,7 +698,7 @@ void Main()
 
 ### Texture::resized()
 `Texture::resized()` は、拡大縮小後のサイズを倍率ではなくピクセル単位で指定します。Siv3D 標準の絵文字のサイズは幅が 136 ピクセルなので、136 より大きい数を指定すると拡大、小さい数を指定すると縮小表示になります。サンプルでは示していませんが、縦横で異なるサイズに設定することもできます。
-
+![](https://storage.googleapis.com/zenn-user-upload/8q8tuoga444onyzxg2bo15tsrc5x)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -727,7 +727,7 @@ void Main()
 
 ### Texture::rotated()
 テクスチャの中心を軸にして回転します。回転角度はラジアンで指定します。
-
+![](https://storage.googleapis.com/zenn-user-upload/itswb5hm08lv2ss9x7o70rc3yqsq)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -763,7 +763,7 @@ void Main()
 
 ## 3.4 テクスチャを上下・左右反転して描画する
 `Texture::flipped()` で上下反転、`Texture::mirrored()` で左右反転した `TextureRegion` を作成できます。それぞれ、引数をとらずに反転する関数、引数の `bool` 値が `true` のときだけ反転する関数の 2 種類のオーバーロードがあります。
-
+![](https://storage.googleapis.com/zenn-user-upload/1rwu7czw650kmyvqf9ancnbe0vtj)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1062,7 +1062,7 @@ void Main()
 
 ## 4.5 フォントファイルからフォントを読み込んで使う
 PC 上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタの第二引数に、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
+![](https://storage.googleapis.com/zenn-user-upload/d2oeqr5lg8eyt73nizj8p0qamu8y)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1349,7 +1349,7 @@ void Main()
 
 
 ## 5.6 カラーピッカー
-
+![](https://storage.googleapis.com/zenn-user-upload/s4prwn4uxfeju255i6lklk20c6jj)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1366,7 +1366,6 @@ void Main()
 	}
 }
 ```
-
 
 
 # 6. キーボード入力
@@ -1600,7 +1599,7 @@ void Main()
 
 
 ## 7.3 マウスのボタンの入力状態
-マウスのボタンには、以下の `Key` 型のオブジェクトが割り当てられています。
+マウスのボタンには、以下の `Input` 型のオブジェクトが割り当てられています。
 
 | 定数      | 対応するボタン |
 |---------|---------|
