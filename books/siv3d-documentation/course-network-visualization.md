@@ -88,7 +88,7 @@ void Main()
 
 # 4. エッジを描く
 
-```cpp
+```diff cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6
 
 void Main()
