@@ -11,63 +11,63 @@ free: true
 
 void Main()
 {
-    // キャンバスのサイズ
-    constexpr Size canvasSize{ 600, 600 };
-    
-    // ウィンドウをキャンバスのサイズに
-    Window::Resize(canvasSize);
-    
-    // 分割数
-    constexpr int32 N = 12;
+	// キャンバスのサイズ
+	constexpr Size canvasSize{ 600, 600 };
+	
+	// ウィンドウをキャンバスのサイズに
+	Window::Resize(canvasSize);
+	
+	// 分割数
+	constexpr int32 N = 12;
 
-    // 背景色
-    constexpr Color backgroundColor{ 20, 40, 60 };
+	// 背景色
+	constexpr Color backgroundColor{ 20, 40, 60 };
 
-    // 書き込み用の画像
-    Image image{ canvasSize, backgroundColor };
+	// 書き込み用の画像
+	Image image{ canvasSize, backgroundColor };
 
-    // 画像を表示するための動的テクスチャ
-    DynamicTexture texture{ image };
+	// 画像を表示するための動的テクスチャ
+	DynamicTexture texture{ image };
 
-    while (System::Update())
-    {
-        if (MouseL.pressed())
-        {
-            // 画面の中心が (0, 0) になるようにマウスカーソルの座標を移動
-            const Vec2 begin = (MouseL.down() ? Cursor::PosF() : Cursor::PreviousPosF()) - Scene::Center();
-            const Vec2 end = (Cursor::PosF() - Scene::Center());
+	while (System::Update())
+	{
+		if (MouseL.pressed())
+		{
+			// 画面の中心が (0, 0) になるようにマウスカーソルの座標を移動
+			const Vec2 begin = (MouseL.down() ? Cursor::PosF() : Cursor::PreviousPosF()) - Scene::Center();
+			const Vec2 end = (Cursor::PosF() - Scene::Center());
 
-            for (auto i : step(N))
-            {
-                // 円座標に変換
-                std::array<Circular, 2> cs = { begin, end };
+			for (auto i : step(N))
+			{
+				// 円座標に変換
+				std::array<Circular, 2> cs = { begin, end };
 
-                for (auto& c : cs)
-                {
-                    // 角度をずらす
-                    c.theta = IsEven(i) ? (-c.theta - 2_pi / N * (i - 1)) : (c.theta + 2_pi / N * i);
-                }
+				for (auto& c : cs)
+				{
+					// 角度をずらす
+					c.theta = IsEven(i) ? (-c.theta - 2_pi / N * (i - 1)) : (c.theta + 2_pi / N * i);
+				}
 
-                // ずらした位置をもとに、画像に線を書き込む
-                Line{ cs[0], cs[1] }.moveBy(Scene::Center())
-                    .overwrite(image, 2, HSV{ Scene::Time() * 60.0, 0.5, 1.0 });
-            }
+				// ずらした位置をもとに、画像に線を書き込む
+				Line{ cs[0], cs[1] }.moveBy(Scene::Center())
+					.overwrite(image, 2, HSV{ Scene::Time() * 60.0, 0.5, 1.0 });
+			}
 
-            // 書き込んだ画像でテクスチャを更新
-            texture.fillIfNotBusy(image);
-        }
-        else if (MouseR.down()) // 右クリックされたら
-        {
-            // 画像を塗りつぶす
-            image.fill(backgroundColor);
+			// 書き込んだ画像でテクスチャを更新
+			texture.fillIfNotBusy(image);
+		}
+		else if (MouseR.down()) // 右クリックされたら
+		{
+			// 画像を塗りつぶす
+			image.fill(backgroundColor);
 
-            // 塗りつぶした画像でテクスチャを更新
-            texture.fill(image);
-        }
+			// 塗りつぶした画像でテクスチャを更新
+			texture.fill(image);
+		}
 
-        // テクスチャを描く
-        texture.draw();
-    }
+		// テクスチャを描く
+		texture.draw();
+	}
 }
 ```
 
@@ -77,86 +77,86 @@ void Main()
 
 int32 Mandelbrot(double x, double y)
 {
-    double a = 0.0, b = 0.0;
+	double a = 0.0, b = 0.0;
 
-    for (int32 n = 0; n < 360; ++n)
-    {
-        const double t = a * a - b * b + x;
-        const double u = 2.0 * a * b + y;
+	for (int32 n = 0; n < 360; ++n)
+	{
+		const double t = a * a - b * b + x;
+		const double u = 2.0 * a * b + y;
 
-        if (t * t + u * u > 4.0)
-        {
-            return n;
-        }
+		if (t * t + u * u > 4.0)
+		{
+			return n;
+		}
 
-        a = t;
-        b = u;
-    }
+		a = t;
+		b = u;
+	}
 
-    return 0;
+	return 0;
 }
 
 void Main()
 {
-    constexpr Size resolutuion{ 640, 480 };
-    Window::Resize(resolutuion);
+	constexpr Size resolutuion{ 640, 480 };
+	Window::Resize(resolutuion);
 
-    Vec2 center{ 0, 0 };
-    double scale = -4.0;
+	Vec2 center{ 0, 0 };
+	double scale = -4.0;
 
-    // 結果を格納する画像
-    Image image{ resolutuion, Palette::Black };
+	// 結果を格納する画像
+	Image image{ resolutuion, Palette::Black };
 
-    // 描画用の動的テクスチャ
-    DynamicTexture texture{ image };
+	// 描画用の動的テクスチャ
+	DynamicTexture texture{ image };
 
-    while (System::Update())
-    {
-        const double wheel = Mouse::Wheel();
-        const bool clicked = MouseL.down();
+	while (System::Update())
+	{
+		const double wheel = Mouse::Wheel();
+		const bool clicked = MouseL.down();
 
-        // 最初のフレームか、操作されたときだけ更新
-        if (wheel || clicked || (Scene::FrameCount() == 1))
-        {
-            scale -= wheel;
+		// 最初のフレームか、操作されたときだけ更新
+		if (wheel || clicked || (Scene::FrameCount() == 1))
+		{
+			scale -= wheel;
 
-            const double s = Pow(1.25, scale);
-            const double d = (1.0 / s) / resolutuion.x;
+			const double s = Pow(1.25, scale);
+			const double d = (1.0 / s) / resolutuion.x;
 
-            if (clicked)
-            {
-                center += (Cursor::PosF() - resolutuion / 2) * d;
-            }
+			if (clicked)
+			{
+				center += (Cursor::PosF() - resolutuion / 2) * d;
+			}
 
-            const double xb = center.x - d * (resolutuion.x * 0.5);
-            const double yb = center.y - d * (resolutuion.y * 0.5);
+			const double xb = center.x - d * (resolutuion.x * 0.5);
+			const double yb = center.y - d * (resolutuion.y * 0.5);
 
-            for (auto y : step(resolutuion.y))
-            {
-                const double yPos = yb + (d * y);
+			for (auto y : step(resolutuion.y))
+			{
+				const double yPos = yb + (d * y);
 
-                for (auto x : step(resolutuion.x))
-                {
-                    const double xPos = xb + (d * x);
+				for (auto x : step(resolutuion.x))
+				{
+					const double xPos = xb + (d * x);
 
-                    if (const int32 m = Mandelbrot(xPos, yPos))
-                    {
-                        image[y][x] = HSV{ 240 - m, 0.8, 1.0 };
-                    }
-                    else
-                    {
-                        image[y][x] = Color{ 0 };
-                    }
-                }
-            }
+					if (const int32 m = Mandelbrot(xPos, yPos))
+					{
+						image[y][x] = HSV{ 240 - m, 0.8, 1.0 };
+					}
+					else
+					{
+						image[y][x] = Color{ 0 };
+					}
+				}
+			}
 
-            // 動的テクスチャの中身を image で更新
-            texture.fill(image);
-        }
+			// 動的テクスチャの中身を image で更新
+			texture.fill(image);
+		}
 
-        // テクスチャを描画
-        texture.draw();
-    }
+		// テクスチャを描画
+		texture.draw();
+	}
 }
 ```
 
@@ -167,184 +167,184 @@ void Main()
 // 1 セルが 1 バイトになるよう、ビットフィールドを使用
 struct Cell
 {
-    bool previous : 1;
-    bool current : 1;
+	bool previous : 1;
+	bool current : 1;
 };
 
 // フィールドをランダムなセル値で埋める関数
 void RandomFill(Grid<Cell>& grid)
 {
-    grid.fill({ 0,0 });
+	grid.fill({ 0,0 });
 
-    // 境界のセルを除いて更新
-    for (auto y : Range(1, grid.height() - 2))
-    {
-        for (auto x : Range(1, grid.width() - 2))
-        {
-            grid[y][x] = { 0, RandomBool(0.5) };
-        }
-    }
+	// 境界のセルを除いて更新
+	for (auto y : Range(1, grid.height() - 2))
+	{
+		for (auto x : Range(1, grid.width() - 2))
+		{
+			grid[y][x] = { 0, RandomBool(0.5) };
+		}
+	}
 }
 
 // フィールドの状態を更新する関数
 void Update(Grid<Cell>& grid)
 {
-    for (auto& cell : grid)
-    {
-        cell.previous = cell.current;
-    }
+	for (auto& cell : grid)
+	{
+		cell.previous = cell.current;
+	}
 
-    // 境界のセルを除いて更新
-    for (auto y : Range(1, grid.height() - 2))
-    {
-        for (auto x : Range(1, grid.width() - 2))
-        {
-            const int32 c = grid[y][x].previous;
+	// 境界のセルを除いて更新
+	for (auto y : Range(1, grid.height() - 2))
+	{
+		for (auto x : Range(1, grid.width() - 2))
+		{
+			const int32 c = grid[y][x].previous;
 
-            int32 n = 0;
-            n += grid[y - 1][x - 1].previous;
-            n += grid[y - 1][x].previous;
-            n += grid[y - 1][x + 1].previous;
-            n += grid[y][x - 1].previous;
-            n += grid[y][x + 1].previous;
-            n += grid[y + 1][x - 1].previous;
-            n += grid[y + 1][x].previous;
-            n += grid[y + 1][x + 1].previous;
+			int32 n = 0;
+			n += grid[y - 1][x - 1].previous;
+			n += grid[y - 1][x].previous;
+			n += grid[y - 1][x + 1].previous;
+			n += grid[y][x - 1].previous;
+			n += grid[y][x + 1].previous;
+			n += grid[y + 1][x - 1].previous;
+			n += grid[y + 1][x].previous;
+			n += grid[y + 1][x + 1].previous;
 
-            // セルの状態の更新
-            grid[y][x].current = (c == 0 && n == 3) || (c == 1 && (n == 2 || n == 3));
-        }
-    }
+			// セルの状態の更新
+			grid[y][x].current = (c == 0 && n == 3) || (c == 1 && (n == 2 || n == 3));
+		}
+	}
 }
 
 // フィールドの状態を画像化する関数
 void CopyToImage(const Grid<Cell>& grid, Image& image)
 {
-    for (auto y : step(image.height()))
-    {
-        for (auto x : step(image.width()))
-        {
-            image[y][x] = grid[y + 1][x + 1].current
-                ? Color{ 0, 255, 0 } : Palette::Black;
-        }
-    }
+	for (auto y : step(image.height()))
+	{
+		for (auto x : step(image.width()))
+		{
+			image[y][x] = grid[y + 1][x + 1].current
+				? Color{ 0, 255, 0 } : Palette::Black;
+		}
+	}
 }
 
 void Main()
 {
-    // フィールドのセルの数（横）
-    constexpr int32 width = 60;
+	// フィールドのセルの数（横）
+	constexpr int32 width = 60;
 
-    // フィールドのセルの数（縦）
-    constexpr int32 height = 60;
+	// フィールドのセルの数（縦）
+	constexpr int32 height = 60;
 
-    // 計算をしない境界部分も含めたサイズで二次元配列を確保
-    Grid<Cell> grid(width + 2, height + 2, { 0,0 });
+	// 計算をしない境界部分も含めたサイズで二次元配列を確保
+	Grid<Cell> grid(width + 2, height + 2, { 0,0 });
 
-    // フィールドの状態を可視化するための画像
-    Image image{ width, height, Palette::Black };
+	// フィールドの状態を可視化するための画像
+	Image image{ width, height, Palette::Black };
 
-    // 動的テクスチャ
-    DynamicTexture texture{ image };
+	// 動的テクスチャ
+	DynamicTexture texture{ image };
 
-    Stopwatch s{ StartImmediately::Yes };
+	Stopwatch s{ StartImmediately::Yes };
 
-    // 自動再生
-    bool autoStep = false;
+	// 自動再生
+	bool autoStep = false;
 
-    // 更新頻度
-    double speed = 0.5;
+	// 更新頻度
+	double speed = 0.5;
 
-    // グリッドの表示
-    bool showGrid = true;
+	// グリッドの表示
+	bool showGrid = true;
 
-    // 画像の更新の必要があるか
-    bool updated = false;
+	// 画像の更新の必要があるか
+	bool updated = false;
 
-    while (System::Update())
-    {
-        // フィールドをランダムな値で埋めるボタン
-        if (SimpleGUI::ButtonAt(U"Random", Vec2{ 700, 40 }, 170))
-        {
-            RandomFill(grid);
-            updated = true;
-        }
+	while (System::Update())
+	{
+		// フィールドをランダムな値で埋めるボタン
+		if (SimpleGUI::ButtonAt(U"Random", Vec2{ 700, 40 }, 170))
+		{
+			RandomFill(grid);
+			updated = true;
+		}
 
-        // フィールドのセルをすべてゼロにするボタン
-        if (SimpleGUI::ButtonAt(U"Clear", Vec2{ 700, 80 }, 170))
-        {
-            grid.fill({ 0, 0 });
-            updated = true;
-        }
+		// フィールドのセルをすべてゼロにするボタン
+		if (SimpleGUI::ButtonAt(U"Clear", Vec2{ 700, 80 }, 170))
+		{
+			grid.fill({ 0, 0 });
+			updated = true;
+		}
 
-        // 一時停止 / 再生ボタン
-        if (SimpleGUI::ButtonAt(autoStep ? U"Pause" : U"Run ▶", Vec2{ 700, 160 }, 170))
-        {
-            autoStep = !autoStep;
-        }
+		// 一時停止 / 再生ボタン
+		if (SimpleGUI::ButtonAt(autoStep ? U"Pause" : U"Run ▶", Vec2{ 700, 160 }, 170))
+		{
+			autoStep = !autoStep;
+		}
 
-        // 更新頻度変更スライダー
-        SimpleGUI::SliderAt(U"Speed", speed, 1.0, 0.1, Vec2{ 700, 200 }, 70, 100);
+		// 更新頻度変更スライダー
+		SimpleGUI::SliderAt(U"Speed", speed, 1.0, 0.1, Vec2{ 700, 200 }, 70, 100);
 
-        // 1 ステップ進めるボタン、または更新タイミングの確認
-        if (SimpleGUI::ButtonAt(U"Step", Vec2{ 700, 240 }, 170)
-            || (autoStep && s.sF() >= (speed * speed)))
-        {
-            Update(grid);
-            updated = true;
-            s.restart();
-        }
+		// 1 ステップ進めるボタン、または更新タイミングの確認
+		if (SimpleGUI::ButtonAt(U"Step", Vec2{ 700, 240 }, 170)
+			|| (autoStep && s.sF() >= (speed * speed)))
+		{
+			Update(grid);
+			updated = true;
+			s.restart();
+		}
 
-        // グリッド表示の有無を指定するチェックボックス
-        SimpleGUI::CheckBoxAt(showGrid, U"Grid", Vec2{ 700, 320 }, 170);
+		// グリッド表示の有無を指定するチェックボックス
+		SimpleGUI::CheckBoxAt(showGrid, U"Grid", Vec2{ 700, 320 }, 170);
 
-        // フィールド上でのセルの編集
-        if (Rect(0, 0, 599).mouseOver())
-        {
-            const Point target = (Cursor::Pos() / 10 + Point{ 1, 1 });
+		// フィールド上でのセルの編集
+		if (Rect(0, 0, 599).mouseOver())
+		{
+			const Point target = (Cursor::Pos() / 10 + Point{ 1, 1 });
 
-            if (MouseL.pressed())
-            {
-                grid[target].current = true;
-                updated = true;
-            }
-            else if (MouseR.pressed())
-            {
-                grid[target].current = false;
-                updated = true;
-            }
-        }
+			if (MouseL.pressed())
+			{
+				grid[target].current = true;
+				updated = true;
+			}
+			else if (MouseR.pressed())
+			{
+				grid[target].current = false;
+				updated = true;
+			}
+		}
 
-        // 画像の更新
-        if (updated)
-        {
-            CopyToImage(grid, image);
-            texture.fill(image);
-            updated = false;
-        }
+		// 画像の更新
+		if (updated)
+		{
+			CopyToImage(grid, image);
+			texture.fill(image);
+			updated = false;
+		}
 
-        // 画像をフィルタなしで拡大して表示
-        {
-            ScopedRenderStates2D sampler{ SamplerState::ClampNearest };
-            texture.scaled(10).draw();
-        }
+		// 画像をフィルタなしで拡大して表示
+		{
+			ScopedRenderStates2D sampler{ SamplerState::ClampNearest };
+			texture.scaled(10).draw();
+		}
 
-        // グリッドの表示
-        if (showGrid)
-        {
-            for (auto i : step(61))
-            {
-                Rect{ 0, i * 10, 600, 1 }.draw(ColorF{ 0.4 });
-                Rect{ i * 10, 0, 1, 600 }.draw(ColorF{ 0.4 });
-            }
-        }
+		// グリッドの表示
+		if (showGrid)
+		{
+			for (auto i : step(61))
+			{
+				Rect{ 0, i * 10, 600, 1 }.draw(ColorF{ 0.4 });
+				Rect{ i * 10, 0, 1, 600 }.draw(ColorF{ 0.4 });
+			}
+		}
 
-        if (Rect(0, 0, 599).mouseOver())
-        {
-            Cursor::RequestStyle(CursorStyle::Hidden);
-            Rect{ Cursor::Pos() / 10 * 10, 10 }.draw(Palette::Orange);
-        }
-    }
+		if (Rect(0, 0, 599).mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hidden);
+			Rect{ Cursor::Pos() / 10 * 10, 10 }.draw(Palette::Orange);
+		}
+	}
 }
 ```
 
@@ -355,40 +355,40 @@ void Main()
 
 void Main()
 {
-    Window::Resize(1280, 720);
+	Window::Resize(1280, 720);
    
-    const Font font{ 40, Typeface::Bold };
+	const Font font{ 40, Typeface::Bold };
 
-    // 変換するテキスト
-    String text = U"Abc", previous;
+	// 変換するテキスト
+	String text = U"Abc", previous;
 
-    // QR コードを表示するための動的テクスチャ
-    DynamicTexture texture;
+	// QR コードを表示するための動的テクスチャ
+	DynamicTexture texture;
 
-    while (System::Update())
-    {
-        // テキスト入力
-        TextInput::UpdateText(text);
+	while (System::Update())
+	{
+		// テキスト入力
+		TextInput::UpdateText(text);
 
-        const String current = (text + TextInput::GetEditingText());
+		const String current = (text + TextInput::GetEditingText());
 
-        // テキストの更新があれば QR コードを再作成
-        if (current != previous)
-        {
-            // 入力したテキストを QR コードに変換
-            if (const auto qr = QR::EncodeText(current))
-            {
-                // 枠を付けて拡大した画像で動的テクスチャを更新
-                texture.fill(QR::MakeImage(qr).scaled(500, 500, InterpolationAlgorithm::Nearest));
-            }
-        }
+		// テキストの更新があれば QR コードを再作成
+		if (current != previous)
+		{
+			// 入力したテキストを QR コードに変換
+			if (const auto qr = QR::EncodeText(current))
+			{
+				// 枠を付けて拡大した画像で動的テクスチャを更新
+				texture.fill(QR::MakeImage(qr).scaled(500, 500, InterpolationAlgorithm::Nearest));
+			}
+		}
 
-        previous = current;
+		previous = current;
 
-        font(current).draw(60, 50);
+		font(current).draw(60, 50);
 
-        texture.drawAt(640, 400);
-    }
+		texture.drawAt(640, 400);
+	}
 }
 ```
 
@@ -488,73 +488,73 @@ void Main()
 // ランダムな長方形の配列を作成
 Array<Rect> GenerateRandomRects()
 {
-    Array<Rect> rects(Random(4, 32));
+	Array<Rect> rects(Random(4, 32));
 
-    for (auto& rect : rects)
-    {
-        const Point pos = RandomPoint(Rect{ Scene::Size() - Size{ 150, 150 } });
-        rect.set(pos, Random(20, 150), Random(20, 150));
-    }
+	for (auto& rect : rects)
+	{
+		const Point pos = RandomPoint(Rect{ Scene::Size() - Size{ 150, 150 } });
+		rect.set(pos, Random(20, 150), Random(20, 150));
+	}
 
-    return rects;
+	return rects;
 }
 
 void Main()
 {
-    Window::Resize(1280, 720);
-    Scene::SetBackground(ColorF{ 0.99 });
-    Array<Rect> input;
-    Array<double> rotations;
-    RectanglePack output;
-    Point offset{ 0, 0 };
-    Stopwatch s;
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.99 });
+	Array<Rect> input;
+	Array<double> rotations;
+	RectanglePack output;
+	Point offset{ 0, 0 };
+	Stopwatch s;
 
-    while (System::Update())
-    {
-        if (!s.isStarted() || s > 1.8s)
-        {
-            input = GenerateRandomRects();
-            rotations.resize(input.size());
-            rotations.fill(0.0);
-            output = RectanglePacking::Pack(input, 1024, AllowFlip::Yes);
+	while (System::Update())
+	{
+		if (!s.isStarted() || s > 1.8s)
+		{
+			input = GenerateRandomRects();
+			rotations.resize(input.size());
+			rotations.fill(0.0);
+			output = RectanglePacking::Pack(input, 1024, AllowFlip::Yes);
 
-            for (size_t i = 0; i < input.size(); ++i)
-            {
-                if (input[i].w != output.rects[i].w)
-                {
-                    rotations[i] = 270_deg;
-                }
-            }
+			for (size_t i = 0; i < input.size(); ++i)
+			{
+				if (input[i].w != output.rects[i].w)
+				{
+					rotations[i] = 270_deg;
+				}
+			}
 
-            // 画面中央に表示するよう位置を調整
-            offset = (Scene::Size() - output.size) / 2;
-            for (auto& rect : output.rects)
-            {
-                rect.moveBy(offset);
-            }
+			// 画面中央に表示するよう位置を調整
+			offset = (Scene::Size() - output.size) / 2;
+			for (auto& rect : output.rects)
+			{
+				rect.moveBy(offset);
+			}
 
-            s.restart();
-        }
+			s.restart();
+		}
 
-        // アニメーション
-        const double k = Min(s.sF() * 10, 1.0);
-        const double t = Math::Saturate(s.sF() - 0.2);
-        const double e = EaseInOutExpo(t);
+		// アニメーション
+		const double k = Min(s.sF() * 10, 1.0);
+		const double t = Math::Saturate(s.sF() - 0.2);
+		const double e = EaseInOutExpo(t);
 
-        Rect{ offset, output.size }.draw(ColorF{ 0.7, e });
+		Rect{ offset, output.size }.draw(ColorF{ 0.7, e });
 
-        for (auto i : step(input.size()))
-        {
-            const RectF in = input[i].scaledAt(input[i].center(), k);
-            const RectF out = output.rects[i];
-            const Vec2 center = in.center().lerp(out.center(), e);
-            const RectF rect{ Arg::center = center, in.size };
+		for (auto i : step(input.size()))
+		{
+			const RectF in = input[i].scaledAt(input[i].center(), k);
+			const RectF out = output.rects[i];
+			const Vec2 center = in.center().lerp(out.center(), e);
+			const RectF rect{ Arg::center = center, in.size };
 
-            rect.rotatedAt(rect.center(), Math::Lerp(0.0, rotations[i], e))
-                .draw(HSV{ i * 25.0, 0.65, 0.9 })
-                .drawFrame(2, 0, ColorF{ 0.25 });
-        }
-    }
+			rect.rotatedAt(rect.center(), Math::Lerp(0.0, rotations[i], e))
+				.draw(HSV{ i * 25.0, 0.65, 0.9 })
+				.drawFrame(2, 0, ColorF{ 0.25 });
+		}
+	}
 }
 ```
 
@@ -697,66 +697,66 @@ void Main()
 
 void Main()
 {
-    Scene::SetBackground(ColorF{ 0.9 });
-    Window::Resize(1280, 720);
-    Effect effect;
+	Scene::SetBackground(ColorF{ 0.9 });
+	Window::Resize(1280, 720);
+	Effect effect;
 
-    Vec2 left{ 640 - 100, 100 }, right{ 640 + 100, 100 };
-    double angle = 0_deg;
-    double scale = 400.0;
-    bool covered = true;
+	Vec2 left{ 640 - 100, 100 }, right{ 640 + 100, 100 };
+	double angle = 0_deg;
+	double scale = 400.0;
+	bool covered = true;
 
-    while (System::Update())
-    {
-        Circle{ Vec2{ 640 - 300, 450 }, scale / 2 }.drawFrame(scale * 0.1);
-        Circle{ Vec2{ 640 + 300, 450 }, scale / 2 }.drawFrame(scale * 0.1);
+	while (System::Update())
+	{
+		Circle{ Vec2{ 640 - 300, 450 }, scale / 2 }.drawFrame(scale * 0.1);
+		Circle{ Vec2{ 640 + 300, 450 }, scale / 2 }.drawFrame(scale * 0.1);
 
-        // Joy-Con (L) を取得
-        if (const auto joy = JoyConL(0))
-        {
-            joy.drawAt(Vec2(640 - 300, 450), scale, -90_deg - angle, covered);
+		// Joy-Con (L) を取得
+		if (const auto joy = JoyConL(0))
+		{
+			joy.drawAt(Vec2(640 - 300, 450), scale, -90_deg - angle, covered);
 
-            if (auto d = joy.povD8())
-            {
-                left += Circular{ 4, *d * 45_deg };
-            }
+			if (auto d = joy.povD8())
+			{
+				left += Circular{ 4, *d * 45_deg };
+			}
 
-            if (joy.button2.down())
-            {
-                effect.add([center = left](double t) {
-                    Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
-                    return t < 1.0;
-                    });
-            }
-        }
+			if (joy.button2.down())
+			{
+				effect.add([center = left](double t) {
+					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
+					return t < 1.0;
+					});
+			}
+		}
 
-        // Joy-Con (R) を取得
-        if (const auto joy = JoyConR(0))
-        {
-            joy.drawAt(Vec2{ 640 + 300, 450 }, scale, 90_deg + angle, covered);
+		// Joy-Con (R) を取得
+		if (const auto joy = JoyConR(0))
+		{
+			joy.drawAt(Vec2{ 640 + 300, 450 }, scale, 90_deg + angle, covered);
 
-            if (auto d = joy.povD8())
-            {
-                right += Circular{ 4, *d * 45_deg };
-            }
+			if (auto d = joy.povD8())
+			{
+				right += Circular{ 4, *d * 45_deg };
+			}
 
-            if (joy.button2.down())
-            {
-                effect.add([center = right](double t) {
-                    Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
-                    return t < 1.0;
-                    });
-            }
-        }
+			if (joy.button2.down())
+			{
+				effect.add([center = right](double t) {
+					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
+					return t < 1.0;
+					});
+			}
+		}
 
-        Circle{ left, 30 }.draw(ColorF{ 0.0, 0.75, 0.9 });
-        Circle{ right, 30 }.draw(ColorF{ 1.0, 0.4, 0.3 });
-        effect.update();
+		Circle{ left, 30 }.draw(ColorF{ 0.0, 0.75, 0.9 });
+		Circle{ right, 30 }.draw(ColorF{ 1.0, 0.4, 0.3 });
+		effect.update();
 
-        SimpleGUI::Slider(U"Rotation: ", angle, -180_deg, 180_deg, Vec2{ 20, 20 }, 120, 200);
-        SimpleGUI::Slider(U"Scale: ", scale, 100.0, 600.0, Vec2{ 20, 60 }, 120, 200);
-        SimpleGUI::CheckBox(covered, U"Covered", Vec2{ 20, 100 });
-    }
+		SimpleGUI::Slider(U"Rotation: ", angle, -180_deg, 180_deg, Vec2{ 20, 20 }, 120, 200);
+		SimpleGUI::Slider(U"Scale: ", scale, 100.0, 600.0, Vec2{ 20, 60 }, 120, 200);
+		SimpleGUI::CheckBox(covered, U"Covered", Vec2{ 20, 100 });
+	}
 }
 ```
 
