@@ -37,6 +37,8 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 
 1.3 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_73_0/` フォルダがあります。この中へ 1.2 で準備した Boost ライブラリの一部である `boost_1_73_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_73_0/boost/` となります。
 
+![](https://storage.googleapis.com/zenn-user-upload/e70ir56vvpajl46eu64v88ubwd5r)
+
 ## 1.5 OpenSiv3D ライブラリと OpenSiv3D アプリをビルドする
 ◆ Visual Studio で OpenSiv3D ライブラリと OpenSiv3D アプリをビルドします
 
@@ -48,7 +50,11 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 
 ![](https://storage.googleapis.com/zenn-user-upload/bt43oc3d1wzu995neexa8sd10jm4)
 
-このプログラムをビルドします。初回のビルドでは OpenSiv3D アプリのビルドに必要なライブラリファイルが存在しないため、最初に自動的に OpenSiv3D のライブラリのプロジェクト「Siv3D」のビルドが始まります。ライブラリのビルドには数分かかります。
+「Siv3D-Test」プロジェクトをビルドします。初回のビルドでは OpenSiv3D アプリのビルドに必要なライブラリファイルが存在しないため、先に自動的に OpenSiv3D のライブラリのプロジェクト「Siv3D」のビルドが始まります。ライブラリのビルドには数分かかります。
+
+「Siv3D-Test」のビルドが完了すると、Siv3D-Test.exe が生成されます。Visual Studio メニューの **デバッグ** → **デバッグの開始** で実行します。
+
+![](https://storage.googleapis.com/zenn-user-upload/qxihmyfphys6dr9smbkrqpesnvpq)
 
 
 # 2. macOS の場合
@@ -83,7 +89,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 2.6 OpenSiv3D アプリをビルドする
 ◆ Xcode で OpenSiv3D のテストアプリをビルドします
 
-次に「Siv3D-Test」という Target をビルドします。ソースコードは 1 つだけで、`macOS/Main.cpp` に見つかります。ビルドには数秒かかります。ビルドが完了すると `Siv3D-Test.app` が生成されます。
+次に「Siv3D-Test」という Target をビルドします。ソースコードは 1 つだけで、`macOS/Main.cpp` に見つかります。ビルドには数秒かかります。ビルドが完了すると `Siv3D-Test.app` が生成されます。実行ボタン (▶) でアプリを実行します。
 
 
 # 3. Linux の場合
