@@ -46,7 +46,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 
 ![](https://storage.googleapis.com/zenn-user-upload/2v3aepxv4c05lzgqoz4gcc2ee2p5)
 
-ソリューションの構成を変更したら、OpenSiv3D のテストアプリのプロジェクト「Siv3D-Test」にあるソースコードを開きましょう。「Siv3D-Test」のソースコードはソリューションエクスプローラーの Siv3D-test → Source Files → Main.cpp にあります。
+ソリューションの構成を変更したら、OpenSiv3D のテストアプリのプロジェクト「Siv3D-Test」にあるソースコードを開きましょう。「Siv3D-Test」のソースコードはソリューションエクスプローラーの Siv3D-Test → Source Files → Main.cpp にあります。
 
 ![](https://storage.googleapis.com/zenn-user-upload/bt43oc3d1wzu995neexa8sd10jm4)
 
