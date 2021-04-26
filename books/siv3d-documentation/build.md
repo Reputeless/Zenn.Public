@@ -28,7 +28,9 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 1.3 OpenSiv3D の開発ブランチからソースコードを入手する
 ◆ OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します
 
-[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の最新版 v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+
+![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
 ## 1.4 追加のサードパーティ・ライブラリをコピーして追加する
 ◆ ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします
@@ -64,7 +66,9 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 2.3 OpenSiv3D の開発ブランチからソースコードを入手する
 ◆ OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します
 
-[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の最新版 v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+
+![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
 ## 2.4 追加のサードパーティ・ライブラリをコピーして追加する
 ◆ ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします。
@@ -87,7 +91,9 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 3.1 OpenSiv3D の開発ブランチからソースコードを入手する
 ◆ OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します
 
-[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の最新版 v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+
+![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
 ## 3.2 依存パッケージをインストールする
 ◆ OpenSiv3D のライブラリ本体のビルドに必要なパッケージを準備します
