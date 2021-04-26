@@ -1216,6 +1216,7 @@ void Main()
 # 改造してみよう
 
 ## エッジをベジェ曲線に
+![](https://storage.googleapis.com/zenn-user-upload/r1cvevd2iiahapwx8bd97mivc1p9)
 ```cpp
 void DrawEdge(const Node& from, const Node& to)
 {
@@ -1227,6 +1228,7 @@ void DrawEdge(const Node& from, const Node& to)
 ```
 
 ## アクティブなノードをかっこよく表示
+![](https://storage.googleapis.com/zenn-user-upload/qa4or1vq1hviqj18i3fbx1j6rt0r)
 ```cpp
 void drawNodeActive() const
 {
