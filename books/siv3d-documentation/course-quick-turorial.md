@@ -710,6 +710,198 @@ void Main()
 
 # 4. フォントを使う
 
+## 4.1 Font
+前章までテキストの表示に使ってきた `Print` は、フォントのサイズや種類、描画位置に自由度がありませんでした。自由にカスタマイズしたフォントを使ってテキストを描きたいときは `Font` を作成し、描画したい内容を `()` でつなげたあと、`.draw()` または `.drawAt()` します。
+
+`Texture` と同じように、`Font` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Font` を作成するのは避け、作成が 1 回だけで済むようにしましょう。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/1-0.png?raw=true)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// サイズ 50 のフォントを作成
+	const Font font{ 50 };
+
+	while (System::Update())
+	{
+		// 左上位置 (20, 20) からテキストを描く
+		font(U"Hello, Siv3D!").draw(20, 20);
+
+		// テキストの中心座標が画面の中心になるようにテキストを描く
+		font(U"C++").drawAt(Scene::Center(), Palette::Skyblue);
+
+        // 文字列以外を渡すと Format される
+		font(Cursor::Pos()).draw(50, 300);
+
+        // 複数渡すと、Format でつなげられる
+		font(123, U"ABC").draw(50, 400);
+
+		font(U"{}/{}/{}"_fmt(2020, 12, 31)).draw(50, 500);
+	}
+}
+```
+
+
+## 4.2 改行する
+テキストの中に改行文字 `\n` が含まれていると、そこで改行されます。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/2-0.png?raw=true)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Font font{ 50 };
+
+	while (System::Update())
+	{
+		font(U"Hello,\nSiv3D\n\n!!!").draw(20, 20);
+	}
+}
+```
+
+
+## 4.3 フォントのサイズ
+`Font` のコンストラクタの第一引数にはフォントのサイズを指定します。単位はピクセルです。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/3-0.png?raw=true)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 大きさ 20 のフォント
+	const Font font20{ 20 };
+
+	// 大きさ 40 のフォント
+	const Font font40{ 40 };
+
+	// 大きさ 60 のフォント
+	const Font font60{ 60 };
+
+	// 大きさ 80 のフォント
+	const Font font80{ 80 };
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		font20(text).draw(20, 20);
+
+		font40(text).draw(20, 60);
+
+		font60(text).draw(20, 120);
+
+		font80(text).draw(20, 200);
+	}
+}
+```
+
+
+## 4.4 フォントの種類
+Siv3D には異なる太さの 7 種類の書体が同梱されています。`Font` のコンストラクタの第二引数において `Typeface::` で太さを指定することで、それらの書体を利用できます。何も指定しなかった場合 `Typeface::Regular` が選択されます。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/4-0.png?raw=true)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 細いフォント
+	const Font fontThin{ 50, Typeface::Thin };
+
+	// やや細いフォント
+	const Font fontLight{ 50, Typeface::Light };
+
+	// 通常のフォント（デフォルト）
+	const Font fontRegular{ 50, Typeface::Regular };
+
+	// やや太いフォント
+	const Font fontMedium{ 50, Typeface::Medium };
+
+	// 太いフォント
+	const Font fontBold{ 50, Typeface::Bold };
+
+	// とても太いフォント
+	const Font fontHeavy{ 50, Typeface::Heavy };
+
+	// 非常に太いフォント
+	const Font fontBlack{ 50, Typeface::Black };
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		fontThin(text).draw(20, 20);
+		fontLight(text).draw(20, 70);
+		fontRegular(text).draw(20, 120);
+		fontMedium(text).draw(20, 170);
+		fontBold(text).draw(20, 220);
+		fontHeavy(text).draw(20, 270);
+		fontBlack(text).draw(20, 320);
+	}
+}
+```
+
+
+## 4.5 フォントファイルからフォントを読み込んで使う
+PC 上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタの第二引数に、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// RocknRollOne-Regular.ttf をロードして使う
+	const Font font{ 50, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(20, 20);
+	}
+}
+```
+
+
+## 4.6 PC にインストールされているフォントを使う
+PC にインストールされているフォントは OS ごとに特殊なフォルダに保存されています。そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、ファイルパスを構築できます。`FileSystem::GetFolderPath()` に渡す `SpecialFolder` の種類と OS によって取得できるパスの対応表は次の通りです。macOS のみ 3 つの戻り値が異なります。
+
+|                            | Windows             | macOS                  | Linux       |
+|----------------------------|---------------------|------------------------|-------------|
+| SpecialFolder::SystemFonts | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
+| SpecialFolder::LocalFonts  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/ |
+| SpecialFolder::UserFonts   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/ |
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+# if SIV3D_PLATFORM(WINDOWS)
+
+	const Font font{ 60, FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"arial.ttf" };
+
+# elif SIV3D_PLATFORM(MACOS)
+
+	const Font font{ 60, FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"Helvetica.dfont" };
+
+# endif
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(20, 40);
+	}
+}
+```
+
+`SIV3D_PLATFORM(WINDOWS)` や `SIV3D_PLATFORM(MACOS)` は Siv3D でプラットフォーム別のコードを書くときに使えるマクロです。
+
 
 # 5. GUI
 
