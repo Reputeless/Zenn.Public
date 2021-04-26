@@ -458,7 +458,7 @@ void Main()
 ### Siv3D で使える絵文字の一覧
 OpenSiv3D で使える絵文字は約 3,600 種類あります。絵文字は [emojipedia](https://emojipedia.org/) の Categories から探すのが便利です。 OpenSiv3D v0.6 はオープンソースの絵文字フォント Noto Color Emoji (Android 11.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
 
-## 5.2 テクスチャを拡大縮小して描画する
+## 3.2 テクスチャを拡大縮小して描画する
 
 ### Texture::scaled()
 `Texture::scaled()` に拡大縮小倍率を指定すると、`Texture` にサイズ情報が付加された `TextureRegion` を作成できます。`TextureRegion` は `Texture` のように `.draw()` または `.drawAt()` できます。`Texture` を作成するのと異なり、既存の `Texture` から `TextureRegion` を作成するのは非常に軽い実行時負荷です。サンプルでは示していませんが、縦横で異なる倍率に設定することもできます。
@@ -512,7 +512,7 @@ void Main()
 }
 ```
 
-## 5.3 テクスチャを回転して描画する
+## 3.3 テクスチャを回転して描画する
 `Texture::rotated()` または `Texture::rotatedAt()` によって、テクスチャに回転情報を付加した `TexturedQuad` を作成できます。`TexturedQuad` は `Texture` のように `.draw()` または `.drawAt()` できます。`TextureRegion` と同様、`TexturedQuad` を作成するのは非常に軽い実行時負荷です。
 
 ### Texture::rotated()
@@ -551,7 +551,7 @@ void Main()
 }
 ```
 
-## 5.4 テクスチャを上下・左右反転して描画する
+## 3.4 テクスチャを上下・左右反転して描画する
 `Texture::flipped()` で上下反転、`Texture::mirrored()` で左右反転した `TextureRegion` を作成できます。それぞれ、引数をとらずに反転する関数、引数の `bool` 値が `true` のときだけ反転する関数の 2 種類のオーバーロードがあります。
 
 ```cpp
@@ -575,7 +575,7 @@ void Main()
 }
 ```
 
-## 5.5 アイコンを描画する
+## 3.5 アイコンを描画する
 アイコンコレクションから `Texture` を作成するには、`Texture` のコンストラクタ引数にアイコンオブジェクトを渡します。アイコンは全部で約 7,000 種類用意されています。
 
 `Icon` のコンストラクタには、[Font Awesome アイコン一覧](https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free) または [Material Design Icons](https://pictogrammers.github.io/@mdi/font/5.4.55/) で調べられる 16 進数コードに `_icon` を付けた値と、アイコンのサイズ（ピクセル単位）を渡します。
@@ -609,7 +609,7 @@ void Main()
 }
 ```
 
-## 5.6 画像ファイルを読み込んで描画する
+## 3.6 画像ファイルを読み込んで描画する
 画像ファイルから `Texture` を作成するには、`Texture` のコンストラクタ引数に、読み込みたい画像ファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/6-0.png?raw=true)
@@ -654,7 +654,7 @@ OpenSiv3D v0.6 では、8 種類の画像フォーマットの読み込みがサ
 | TIFF     | tif/tiff        | (将来のバージョン) |
 
 
-## 5.7 テクスチャの一部を描画する
+## 3.7 テクスチャの一部を描画する
 テクスチャの全部ではなく、特定の長方形の領域だけを描画したい場合は `Texture::operator()` で、テクスチャ上の描画したい領域を指定して `TextureRegion` を作成します。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/8-0.png?raw=true)
@@ -682,26 +682,30 @@ void Main()
 ```
 
 
+## 3.8 動画をテクスチャとして扱う
+`VideoTexture` を使うと、動画ファイルを `Texture` のように扱えます。`VideoTexture` は毎フレーム `.advance()` を呼ぶことで再生位置を進めることができます。
+```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const VideoTexture videoTexture{ U"example/video/river.mp4", Loop::Yes };
 
+	while (System::Update())
+	{
+		// 動画の時間を進める (デフォルトでは Scece::DeltaTime() 秒)
+		videoTexture.advance();
 
+		videoTexture(400, 400, 300, 200)
+			.draw();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 3.5 動画をテクスチャとして扱う
-
+		videoTexture
+			.scaled(0.5)
+			.rotated(Scene::Time() * 30_deg)
+			.drawAt(Cursor::Pos());
+	}
+}
+```
 
 
 # 4. フォントを使う
