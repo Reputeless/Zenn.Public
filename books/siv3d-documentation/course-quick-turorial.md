@@ -245,6 +245,9 @@ void Main()
 
 ## 2.1 円を描く
 画面に図形を描く方法を学びましょう。Siv3D では、図形オブジェクトを作成し、その `draw()` メンバ関数を呼んで描画を行うのが基本的なやり方です。円を描くときは `Circle` を作成し、その `.draw()` を呼びます。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-0.png?raw=true)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -261,6 +264,9 @@ void Main()
 
 ## 2.2 X 座標がマウスカーソルと連動する円を描く
 円がマウスカーソルの座標に連動して動くようにしてみましょう。`Circle{}` の最初に指定するパラメータは円の中心の X 座標です。この値をマウスカーソルの X 座標にしてみます。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-2.gif?raw=true)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -278,6 +284,9 @@ void Main()
 
 ## 2.3 マウスカーソルと連動する円を描く
 Siv3D で X 座標、Y 座標 2 つの値を受け取る関数は、多くの場合、1 つの `Point` 型、もしくは `Vec2` 型を受け取る別バージョンの関数（オーバーロード）を提供しているケースがよくあります。`Circle` も、「X 座標」「Y 座標」「半径」の 3 つの引数ではなく、「中心座標 (`Vec2` 型)」「半径」の 2 つの引数を受け取るオーバーロードがあります。これを使って円をマウスカーソルと連動させます。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-3.gif?raw=true)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -326,6 +335,9 @@ void Main()
 | `HSV{ h }`          | `HSV{ h, 1.0, 1.0, 1.0 }`      |
 
 色の付いたいくつかの円を描いてみましょう。`.draw()` に色を指定しなかった場合の図形の色は `Palette::White` (`ColorF{ 1.0, 1.0, 1.0, 1.0 }`) になります。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/2-0.gif?raw=true)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -356,6 +368,9 @@ void Main()
 
 ## 2.5 背景の色を変える
 背景の色を変えるには `Scene::SetBackground()` 関数に色を渡します。新しい背景色は、次の `System::Update()` で画面の描画内容をリセットするときから反映されます。背景色は一度設定すると、再度変更されるまで同じ設定が使われます。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-0.gif?raw=true)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -372,6 +387,9 @@ void Main()
 
 ## 2.6 背景の色を時間の経過とともに変える
 背景色の変更にコストはかからないので、背景色は毎フレーム変更しても大丈夫です。プログラムの経過時間（秒）を `Scene::Time()` で取得して、時間に応じて背景色の色相を変化させてみましょう。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-1.gif?raw=true)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -534,7 +552,7 @@ void Main()
 ```
 
 ### Texture::roatedAt()
-テクスチャ上の指定した座標を軸にして回転します。Vec2(0, 0) を指定すればテクスチャの左上が軸になります。回転角度はラジアンで指定します。
+テクスチャ上の指定した座標を軸にして回転します。`Vec2{ 0, 0 }` を指定すればテクスチャの左上が軸になります。回転角度はラジアンで指定します。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -546,7 +564,7 @@ void Main()
 	while (System::Update())
 	{
 		// 画像中の (40, 20) を軸に回転させて描画
-		cat.rotatedAt(Vec2(40, 20), Scene::Time() * 90_deg).draw(Scene::Center());
+		cat.rotatedAt(Vec2{ 40, 20 }, Scene::Time() * 90_deg).draw(Scene::Center());
 	}
 }
 ```
@@ -619,7 +637,7 @@ void Main()
 
 void Main()
 {
-	Scene::SetBackground(ColorF(0.8, 0.9, 1.0));
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
 	// 風車の画像
 	const Texture textureWindmill{ U"example/windmill.png" };
