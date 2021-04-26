@@ -692,6 +692,9 @@ void Main()
 
 # 9. Joy-Con
 事前に PC に Joy-Con を Bluetooth で接続しておきます。
+
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/gamepad/joycon.mp4?raw=true" autoplay loop muted></video>
+
 ```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6
 
