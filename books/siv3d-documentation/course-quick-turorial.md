@@ -405,20 +405,156 @@ void Main()
 ```
 
 ## 2.7 長方形を描く
+長方形を描くときは `Rect` を作成して `.draw()` します。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 座標 (20, 40) を左上の基準位置にして、幅 400, 高さ 100 の長方形を描く 
+		Rect{ 20, 40, 400, 100 }.draw();
+
+		// 座標 (100, 200) を左上の基準位置にして、幅が 80 の正方形を描く 
+		Rect{ 100, 200, 80 }.draw(Palette::Orange);
+
+		// 座標 (400, 300) を中心の基準位置にして、幅 80, 高さ 40 の長方形を描く
+		Rect{ Arg::center(400, 300), 80, 40 }.draw(Palette::Pink);
+
+		// マウスカーソルの座標を中心の基準位置にして、幅が 100 の正方形を描く 
+		Rect{ Arg::center(Cursor::Pos()), 100 }.draw(ColorF(1.0, 0.0, 0.0, 0.5));
+
+		// 座標や大きさを浮動小数点数 (小数を含む数）で指定したい場合は RectF
+		RectF{ 200.4, 450.3, 390.5, 122.5 }.draw(Palette::Skyblue);
+	}
+}
+```
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/4-0.gif?raw=true)
+
+図形は `draw()` した順番に描画されます。このプログラムでは、マウスカーソルに追従する赤い正方形よりも、画面の下にある水色の大きな長方形が上に来ます。
+
+`Rect` 型は左上の座標と幅、高さをそれぞれ `int32 x`, `int32 y`, `int32 w`, `int32 h` というメンバ変数で表します。整数ではなく浮動小数点数で扱いたい場合は、すべての要素が `double` 型である `RectF` を使います。
 
 
+## 2.8 枠を描く
+図形は、`.draw()` の代わりに `.drawFrame()` することで、枠だけを描けます。`.drawFrame()` の第 1 引数には図形の内側方向への太さを、第 2 引数には外側方向への太さを指定します。図形の `.draw()` や `.drawFrame()` の戻り値はその図形自身なので、`rect.draw().drawFrame()` のように関数を続けて書くこともできます。
 
-## 2.8 線分を描く
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/5-0.png?raw=true)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 長方形の内側に 3px の枠を描く
+		Rect{ 100, 100, 100, 30 }
+			.drawFrame(3, 0);
+
+		// 長方形の外側に 3px の枠を描く
+		Rect{ 220, 100, 100, 30 }
+			.drawFrame(0, 3);
+
+		// 長方形と、その内側 3px と外側 3px に枠を描く
+		Rect{ 200, 200, 400, 100 }
+			.draw(Palette::White)
+			.drawFrame(3, 3, Palette::Orange);
+
+		// 円の内側 1px と外側 1px に枠を描く
+		Circle{ Cursor::Pos(), 40 }
+			.drawFrame(1, 1, Palette::Seagreen);
+	}
+}
+```
 
 
+## 2.9 線分を描く
+始点と終点を指定して線分を描くときは `Line` を作成して `.draw()` します。`.draw()` のパラメータには描画する線分の太さと色を指定します。線分の両端を丸くしたり、点線にしたりするなど、スタイルの変更もできます。
 
-## 2.9 様々な図形
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/6-0.png?raw=true)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 座標 (100, 100) から (400, 150) まで太さ 4px の線分を描く
+		Line{ 100, 100, 400, 150 }.draw(4, Palette::Yellow);
+
+		// 座標 (400, 300) からマウスカーソルの座標まで太さ 10px の線分を描く
+		Line{ 400, 300, Cursor::Pos() }.draw(10, Palette::Skyblue);
+
+		// 通常の線
+		Line{ 100, 400, 700, 400 }.draw(12, Palette::Orange);
+
+		// 両端が丸い線
+		Line{ 100, 450, 700, 450 }.draw(LineStyle::RoundCap, 12, Palette::Orange);
+
+		// 四角いドットの線
+		Line{ 100, 500, 700, 500 }.draw(LineStyle::SquareDot, 12, Palette::Orange);
+
+		// 丸いドットの線
+		Line{ 100, 550, 700, 550 }.draw(LineStyle::RoundDot, 12, Palette::Orange);
+	}
+}
+```
 
 
+## 2.10 様々な図形
+Siv3D にはこれ以外にも様々な図形クラスが用意されていて、複雑な形状を短いコードで記述できます。
 
-## 2.10 グラデーションを描く
+|クラス|図形|
+|--|--|
+|`Line`|線分|
+|`Rect`|長方形 (int32)|
+|`RectF`|長方形 (double)|
+|`Circle`|円|
+|`Ellipse`|楕円|
+|`Triangle`|三角形|
+|`Quad`|凸な四角形|
+|`RoundRect`|角丸四角形|
+|`Polygon`|多角形|
+|`MultiPolygon`|多角形の集合|
+|`Bezier2`|2 次ベジェ曲線|
+|`Bezier3`|3 次ベジェ曲線|
+|`Spline2D`|スプライン曲線|
+|`Shape2D`|正多角形や星、ハート、十字などのコレクション|
 
 
+## 2.11 グラデーションを描く
+`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、グラデーションで塗りつぶすオプションがあります。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/21-0.png?raw=true)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		Line{ 100, 100, 500, 150 }
+			.draw(6, Palette::Yellow, Palette::Red);
+
+		Triangle{ 200, 200, 100 }
+			.draw(HSV{ 0 }, HSV{ 120 }, HSV{ 240 });
+
+		// 左から右へのグラデーション
+		Rect{ 400, 200, 200, 100 }
+			.draw(Arg::left = Palette::Skyblue, Arg::right = Palette::Blue);
+		
+		// 上から下へのグラデーション
+		Rect{ 200, 400, 400, 100 }
+			.draw(Arg::top = ColorF{ 1.0, 1.0 }, Arg::bottom = ColorF{ 1.0, 0.0 });
+	}
+}
+```
 
 # 3. 画像を描く
 
