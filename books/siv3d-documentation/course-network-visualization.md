@@ -7,8 +7,9 @@ free: true
 
 # 1. 背景を設定
 基本画面を作ります。背景を白や黒以外の好きな色に設定しましょう。
+![](https://storage.googleapis.com/zenn-user-upload/hwmdcjcszha6yoqyuus1brbwhn64)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -26,7 +27,7 @@ void Main()
 # 2. ノードクラス
 ID と中心座標を持つ、ノード用のクラスを作ります。
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 // ノード ID を表す型エイリアス
 using NodeID = int32;
@@ -55,8 +56,9 @@ void Main()
 
 # 3. ノード描画関数
 `Node` クラスに、ノードの円を描画するメンバ関数 `.drawNode()` を追加します。
+![](https://storage.googleapis.com/zenn-user-upload/rn1i8021bj1quh9doqc22el5267v)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -90,8 +92,9 @@ void Main()
 
 # 4. ノードのラベルを描画
 `Node` クラスに、ノードのラベルを描画するメンバ関数 `.drawLabel()` を追加します。
+![](https://storage.googleapis.com/zenn-user-upload/cchrps91fnp8pmkimepjs7505bxy)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -135,8 +138,9 @@ void Main()
 
 # 5. ノードに影を付ける
 `Circle::drawShadow(offset, blur, spread, color)` を使って、ノードの影を描きます。
+![](https://storage.googleapis.com/zenn-user-upload/bv9rb9nclrqefc24kt314e6b5yeh)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -178,8 +182,9 @@ void Main()
 
 # 6. 複数のノード
 ハッシュテーブル `HashTable<NodeID, Node>` に複数のノードを用意し、描画します。
+![](https://storage.googleapis.com/zenn-user-upload/7yr5l325lxbt6ts6d5f4k4saxoct)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -232,7 +237,7 @@ void Main()
 # 7. ノードとのインタラクション（マウスオーバー）
 ノードの上にマウスカーソルが重なっているとき、マウスカーソルを手のアイコンにします。
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -299,8 +304,9 @@ void Main()
 
 # 8. ノードとのインタラクション（選択）
 ノードをクリックしたとき、そのノードの番号を取得します。
+![](https://storage.googleapis.com/zenn-user-upload/pugjadrr6z774eiyjogizwp60t56)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -383,8 +389,9 @@ void Main()
 
 # 9. アクティブなノードの可視化
 アクティブなノードを違う色で表示するようにします。
+![](https://storage.googleapis.com/zenn-user-upload/9f26irwt5jbcqwbm746uumx5unie)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -478,8 +485,9 @@ void Main()
 
 # 10. ノードとのインタラクション（移動）
 アクティブなノードをマウスでドラッグして移動できるようにします。
+![](https://storage.googleapis.com/zenn-user-upload/2undsn0zirkxaac7xq1fpry70ne0)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -579,7 +587,7 @@ void Main()
 # 11. エッジクラス
 始点と終点の `NodeID` を持つ `Edge` クラスを作ります。
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -690,8 +698,9 @@ void Main()
 
 # 12. エッジの描画
 2 つのノードの間に線を引く関数を実装します。
+![](https://storage.googleapis.com/zenn-user-upload/yoz9qwtmt1wrx9ouh2u9q6dxgh0n)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -813,8 +822,9 @@ void Main()
 
 # 13. エッジを矢印にする
 `Line::drawArrow(thickness, headSize, color)` を使うと矢印を描けます。
+![](https://storage.googleapis.com/zenn-user-upload/vdv0gdjy7ppk6k6pjc4fjnjolhk8)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -937,8 +947,9 @@ void Main()
 `Transformer2D` を使うと、描画やマウスカーソルの座標に一律にアフィン変換を適用して、視点の移動や拡大ができます。  
 このアフィン変換を簡単に制御してくれる `Camera2D` 機能を利用します。  
 カメラはマウスの右クリックやホイール、WASD↑↓キーで操作できます。
+![](https://storage.googleapis.com/zenn-user-upload/1va2jts1qbdrgxpujhgye1x663aa)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
@@ -1071,8 +1082,9 @@ void Main()
 
 # 15. 拡大してもきれいなフォント
 カメラでラベルを拡大表示すると、ビットマップフォントの文字が粗く表示されてしまいます。これを避けるために、文字を [MSDF](https://github.com/Chlumsky/msdfgen#readme) という方式でレンダリングするようにします。
+![](https://storage.googleapis.com/zenn-user-upload/53hycxbw7gzs9ucnocoduoom0i60)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 using NodeID = int32;
 
