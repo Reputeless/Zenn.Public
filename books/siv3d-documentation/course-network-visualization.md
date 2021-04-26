@@ -35,7 +35,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id; // ID
-
 	Vec2 pos; // 中心座標
 };
 
@@ -64,7 +63,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	// 円の描画用のメンバ関数
@@ -100,7 +98,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	void drawNode() const
@@ -146,7 +143,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	void drawNode() const
@@ -190,7 +186,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	void drawNode() const
@@ -244,7 +239,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	// ノードの円を返すメンバ関数
@@ -313,7 +307,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	Circle getCircle() const
@@ -353,10 +346,8 @@ void Main()
 	while (System::Update())
 	{
 		// デバッグ用の表示
-		{
-			ClearPrint();
-			Print << activeNodeID;
-		}
+		ClearPrint();
+		Print << activeNodeID;
 
 		// 左クリックされたら activeNodeID を none にリセット
 		if (MouseL.down())
@@ -400,7 +391,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	Circle getCircle() const
@@ -446,10 +436,8 @@ void Main()
 
 	while (System::Update())
 	{
-		{
-			ClearPrint();
-			Print << activeNodeID;
-		}
+		ClearPrint();
+		Print << activeNodeID;
 
 		if (MouseL.down())
 		{
@@ -498,7 +486,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	Circle getCircle() const
@@ -543,10 +530,8 @@ void Main()
 
 	while (System::Update())
 	{
-		{
-			ClearPrint();
-			Print << activeNodeID;
-		}
+		ClearPrint();
+		Print << activeNodeID;
 
 		if (MouseL.down())
 		{
@@ -601,7 +586,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	Circle getCircle() const
@@ -633,7 +617,6 @@ struct Node
 struct Edge
 {
 	NodeID from; // 始点の NodeID
-
 	NodeID to; // 終点の NodeID
 };
 
@@ -661,10 +644,8 @@ void Main()
 
 	while (System::Update())
 	{
-		{
-			ClearPrint();
-			Print << activeNodeID;
-		}
+		ClearPrint();
+		Print << activeNodeID;
 
 		if (MouseL.down())
 		{
@@ -717,7 +698,6 @@ using NodeID = int32;
 struct Node
 {
 	NodeID id;
-
 	Vec2 pos;
 
 	Circle getCircle() const
@@ -748,7 +728,6 @@ struct Node
 struct Edge
 {
 	NodeID from;
-
 	NodeID to;
 };
 
@@ -781,10 +760,8 @@ void Main()
 
 	while (System::Update())
 	{
-		{
-			ClearPrint();
-			Print << activeNodeID;
-		}
+		ClearPrint();
+		Print << activeNodeID;
 
 		if (MouseL.down())
 		{
@@ -834,7 +811,418 @@ void Main()
 ```
 
 
+# 13. エッジを矢印にする
+`Line::drawArrow(thickness, headSize, color)` を使うと矢印を描けます。
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6
+
+using NodeID = int32;
+
+struct Node
+{
+	NodeID id;
+	Vec2 pos;
+
+	Circle getCircle() const
+	{
+		return Circle{ pos, 40 };
+	}
+
+	void drawNode() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw();
+	}
+
+	void drawNodeActive() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw(ColorF{ 1.0, 0.9, 0.8 });
+	}
+
+	void drawLabel(const Font& font) const
+	{
+		font(id).drawAt(pos, ColorF{ 0.25 });
+	}
+};
+
+struct Edge
+{
+	NodeID from;
+	NodeID to;
+};
+
+void DrawEdge(const Node& from, const Node& to)
+{
+	Line{ from.pos, to.pos }
+		.stretched(-40) // 線分の両端を、円で隠れる分 (40px) 短くする
+		.drawArrow(3, Vec2{ 10, 20 }, ColorF{ 0.25 }); // 矢印を描く。head のサイズ (10px, 20px)
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Font font{ 40, Typeface::Bold };
+
+	HashTable<NodeID, Node> nodes =
+	{
+		{ 0, Node{ 0, Vec2{ 200, 500 } }},
+		{ 1, Node{ 1, Vec2{ 400, 100 } }},
+		{ 2, Node{ 2, Vec2{ 600, 300 } }},
+	};
+
+	Array<Edge> edges =
+	{
+		Edge{ 0, 1 },
+		Edge{ 1, 2 },
+	};
+
+	Optional<NodeID> activeNodeID;
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << activeNodeID;
+
+		if (MouseL.down())
+		{
+			activeNodeID = none;
+		}
+
+		for (const auto [nodeID, node] : nodes)
+		{
+			if (node.getCircle().mouseOver())
+			{
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
+
+			if (node.getCircle().leftClicked())
+			{
+				activeNodeID = nodeID;
+			}
+		}
+
+		if (activeNodeID && MouseL.pressed())
+		{
+			nodes[activeNodeID.value()].pos += Cursor::DeltaF();
+		}
+
+		for (const auto& edge : edges)
+		{
+			DrawEdge(nodes[edge.from], nodes[edge.to]);
+		}
+
+		for (const auto [nodeID, node] : nodes)
+		{
+			if (nodeID == activeNodeID)
+			{
+				node.drawNodeActive();
+			}
+			else
+			{
+				node.drawNode();
+			}
+
+			node.drawLabel(font);
+		}
+	}
+}
+```
 
 
+# 14. 2D カメラの利用
+`Transformer2D` を使うと、描画やマウスカーソルの座標に一律にアフィン変換を適用して、視点の移動や拡大ができます。  
+このアフィン変換を簡単に制御してくれる `Camera2D` 機能を利用します。  
+カメラはマウスの右クリックやホイール、WASD↑↓キーで操作できます。
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6
 
+using NodeID = int32;
+
+struct Node
+{
+	NodeID id;
+	Vec2 pos;
+
+	Circle getCircle() const
+	{
+		return Circle{ pos, 40 };
+	}
+
+	void drawNode() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw();
+	}
+
+	void drawNodeActive() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw(ColorF{ 1.0, 0.9, 0.8 });
+	}
+
+	void drawLabel(const Font& font) const
+	{
+		font(id).drawAt(pos, ColorF{ 0.25 });
+	}
+};
+
+struct Edge
+{
+	NodeID from;
+	NodeID to;
+};
+
+void DrawEdge(const Node& from, const Node& to)
+{
+	Line{ from.pos, to.pos }
+		.stretched(-40)
+		.drawArrow(3, Vec2{ 10, 20 }, ColorF{ 0.25 });
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Font font{ 40, Typeface::Bold };
+
+	HashTable<NodeID, Node> nodes =
+	{
+		{ 0, Node{ 0, Vec2{ 200, 500 } }},
+		{ 1, Node{ 1, Vec2{ 400, 100 } }},
+		{ 2, Node{ 2, Vec2{ 600, 300 } }},
+	};
+
+	Array<Edge> edges =
+	{
+		Edge{ 0, 1 },
+		Edge{ 1, 2 },
+	};
+
+	Optional<NodeID> activeNodeID;
+
+	// 2D カメラ
+	Camera2D camera{ Scene::Center(), 1.0 };
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << activeNodeID;
+
+		// カメラの更新（右クリック・ホイール・キー）
+		camera.update();
+		{ // transformer のスコープ
+			auto transformer = camera.createTransformer();
+
+			if (MouseL.down())
+			{
+				activeNodeID = none;
+			}
+
+			for (const auto [nodeID, node] : nodes)
+			{
+				if (node.getCircle().mouseOver())
+				{
+					Cursor::RequestStyle(CursorStyle::Hand);
+				}
+
+				if (node.getCircle().leftClicked())
+				{
+					activeNodeID = nodeID;
+				}
+			}
+
+			if (activeNodeID && MouseL.pressed())
+			{
+				nodes[activeNodeID.value()].pos += Cursor::DeltaF();
+			}
+
+			for (const auto& edge : edges)
+			{
+				DrawEdge(nodes[edge.from], nodes[edge.to]);
+			}
+
+			for (const auto [nodeID, node] : nodes)
+			{
+				if (nodeID == activeNodeID)
+				{
+					node.drawNodeActive();
+				}
+				else
+				{
+					node.drawNode();
+				}
+
+				node.drawLabel(font);
+			}
+		} // transformer のスコープここまで
+
+		// マウスの右ボタンでカメラを操作したときの UI 描画
+		camera.draw(Palette::Orange);
+	}
+}
+```
+
+
+# 15. 拡大してもきれいなフォント
+カメラでラベルを拡大表示すると、ビットマップフォントの文字が粗く表示されてしまいます。これを避けるために、文字を [MSDF](https://github.com/Chlumsky/msdfgen#readme) という方式でレンダリングするようにします。
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6
+
+using NodeID = int32;
+
+struct Node
+{
+	NodeID id;
+	Vec2 pos;
+
+	Circle getCircle() const
+	{
+		return Circle{ pos, 40 };
+	}
+
+	void drawNode() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw();
+	}
+
+	void drawNodeActive() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw(ColorF{ 1.0, 0.9, 0.8 });
+	}
+
+	void drawLabel(const Font& font) const
+	{
+		font(id).drawAt(pos, ColorF{ 0.25 });
+	}
+};
+
+struct Edge
+{
+	NodeID from;
+	NodeID to;
+};
+
+void DrawEdge(const Node& from, const Node& to)
+{
+	Line{ from.pos, to.pos }
+		.stretched(-40)
+		.drawArrow(3, Vec2{ 10, 20 }, ColorF{ 0.25 });
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	// MSDF 方式のフォントを生成
+	const Font font{ FontMethod::MSDF, 40, Typeface::Bold };
+
+	HashTable<NodeID, Node> nodes =
+	{
+		{ 0, Node{ 0, Vec2{ 200, 500 } }},
+		{ 1, Node{ 1, Vec2{ 400, 100 } }},
+		{ 2, Node{ 2, Vec2{ 600, 300 } }},
+	};
+
+	Array<Edge> edges =
+	{
+		Edge{ 0, 1 },
+		Edge{ 1, 2 },
+	};
+
+	Optional<NodeID> activeNodeID;
+
+	Camera2D camera{ Scene::Center(), 1.0 };
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << activeNodeID;
+
+		camera.update();
+		{
+			auto transformer = camera.createTransformer();
+
+			if (MouseL.down())
+			{
+				activeNodeID = none;
+			}
+
+			for (const auto [nodeID, node] : nodes)
+			{
+				if (node.getCircle().mouseOver())
+				{
+					Cursor::RequestStyle(CursorStyle::Hand);
+				}
+
+				if (node.getCircle().leftClicked())
+				{
+					activeNodeID = nodeID;
+				}
+			}
+
+			if (activeNodeID && MouseL.pressed())
+			{
+				nodes[activeNodeID.value()].pos += Cursor::DeltaF();
+			}
+
+			for (const auto& edge : edges)
+			{
+				DrawEdge(nodes[edge.from], nodes[edge.to]);
+			}
+
+			for (const auto [nodeID, node] : nodes)
+			{
+				if (nodeID == activeNodeID)
+				{
+					node.drawNodeActive();
+				}
+				else
+				{
+					node.drawNode();
+				}
+
+				node.drawLabel(font);
+			}
+		}
+
+		camera.draw(Palette::Orange);
+	}
+}
+```
+
+
+# 改造してみよう
+
+## エッジをベジェ曲線に
+```cpp
+void DrawEdge(const Node& from, const Node& to)
+{
+	const Vec2 p1{ (from.pos.x + to.pos.x) / 2, from.pos.y };
+	const Vec2 p2{ (from.pos.x + to.pos.x) / 2, to.pos.y };
+	Bezier3{ from.pos, p1, p2, to.pos }
+		.draw(3, ColorF{ 0.25 });
+}
+```
+
+## アクティブなノードをかっこよく表示
+```cpp
+	void drawNodeActive() const
+	{
+		getCircle()
+			.drawShadow(Vec2{ 1, 1 }, 8, 1)
+			.draw(ColorF{ 1.0, 0.9, 0.8 })
+			.drawArc(Scene::Time() * 120_deg, 120_deg, 0, 5, Palette::Orange)
+			.drawArc(Scene::Time() * 120_deg + 180_deg, 120_deg, 0, 5, Palette::Orange);
+	}
+```
 
