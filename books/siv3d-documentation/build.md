@@ -109,12 +109,11 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ◆ OpenSiv3D のライブラリ本体のビルドに必要なパッケージを準備します
 
 次を参考にパッケージをインストールします。  
-https://github.com/Siv3D/OpenSiv3D/blob/v6_winmac_develop/.github/workflows/ci.yml#L30
+https://github.com/Siv3D/OpenSiv3D/blob/v6_winmac_develop/.github/workflows/ci.yml#L30-L38
 
 ## 3.3 OpenSiv3D ライブラリをビルドする
+https://github.com/Siv3D/OpenSiv3D/blob/v6_winmac_develop/.github/workflows/ci.yml#L40-L49
 
-
-## 3,4 OpenSiv3D アプリをビルドする
-
-
+## 3.4 OpenSiv3D アプリをビルドする
+https://github.com/Siv3D/OpenSiv3D/blob/v6_winmac_develop/.github/workflows/ci.yml#L51-L60
 
