@@ -159,7 +159,7 @@ void Main()
 
 
 ## 1.8 デバッグ表示の消去
-`ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。つまり、メインループの先頭で `ClearPrint()` すると、現在のフレームで `Print` した内容だけが表示されるようになります。
+`ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。メインループの先頭で `ClearPrint()` すると、現在のフレームで `Print` した内容だけが表示されるようになります。
 ```cpp
 # include <Siv3D.hpp>
 
@@ -214,6 +214,42 @@ Siv3D で整数を扱うときは、`int` や `unsigned long long` のような�
 |`FilePath`|`String` のエイリアス|
 |`StringView`|所有権を持たない文字列クラス (C++ の `std::string_view` 相当)|
 |`FilePathView`|`StringView` のエイリアス|
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	bool a = true;
+	int32 b = 123;
+	double c = 0.5;
+	BigInt d = 111222333444555666777888999000_big;
+	BigFloat e = 0.1234567890123456789_bigF;
+	Byte f{ 0xF7 };
+	char32 g = U'あ';
+	String h = U"Hello!";
+	Array<int32> i = { 10, 20, 30, 40 };
+	Array<String> j = { U"aaa", U"bbb" };
+	HalfFloat k = 3.333333f;
+
+	Print << a;
+	Print << b;
+	Print << c;
+	Print << d;
+	Print << e;
+	Print << f;
+	Print << g;
+	Print << h;
+	Print << i << U" : " << i.size();
+	Print << j << U" : " << j.size();
+	Print << k << U" : " << sizeof(k);
+
+	while (System::Update())
+	{
+
+	}
+}
+```
 
 
 ## 1.10 画面の座標系
@@ -279,7 +315,7 @@ void Main()
 }
 ```
 
-`Print` で表示したメッセージはいつまでも画面に残りましたが、Siv3D では `Print` 以外のすべての描画は `System::Update()` のたびに背景の色でリセットされます。
+`Print` で表示したメッセージはいつまでも画面に残りましたが、それは例外的なルールです。通常、`Print` 以外のすべての描画は `System::Update()` のたびに背景の色でリセットされます。
 
 
 ## 2.3 マウスカーソルと連動する円を描く
@@ -310,7 +346,7 @@ void Main()
 | Color{ r, g, b, a }  | 0 - 255 の整数の範囲で RGBA の各成分を指定 |
 | HSV{ h, s, v, a }    | 色相 `h`, 彩度 `s`, 明度 `v` とアルファ値 `a` の各成分を指定。<br>h は 0.0 - 360.0 (370.0 は 10.0 と同じ). s, v, a は 0.0 - 1.0,の範囲 |
 
-**Palette::色名** は RGB 値を覚えていなくても使える色の表現です。
+**Palette::色名** は `Palette::Orange`, `Palette::Yellow` のように、RGB 値がわからなくても使えます。
 
 **ColorF** は Siv3D で一番使い勝手が良い色の表現形式です。
 
@@ -334,7 +370,7 @@ void Main()
 | `HSV{ h, a }`       | `HSV{ h, 1.0, 1.0, a }`        |
 | `HSV{ h }`          | `HSV{ h, 1.0, 1.0, 1.0 }`      |
 
-色の付いたいくつかの円を描いてみましょう。`.draw()` に色を指定しなかった場合の図形の色は `Palette::White` (`ColorF{ 1.0, 1.0, 1.0, 1.0 }`) になります。
+色の付いたいくつかの円を描いてみましょう。`.draw()` に色を指定しなかった場合のデフォルトの色は `Palette::White` (`ColorF{ 1.0, 1.0, 1.0, 1.0 }`) です。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/2-0.gif?raw=true)
 
@@ -367,7 +403,7 @@ void Main()
 ```
 
 ## 2.5 背景の色を変える
-背景の色を変えるには `Scene::SetBackground()` 関数に色を渡します。新しい背景色は、次の `System::Update()` で画面の描画内容をリセットするときから反映されます。背景色は一度設定すると、再度変更されるまで同じ設定が使われます。
+背景の色を変えるには `Scene::SetBackground()` に色を渡します。新しい背景色は、次の `System::Update()` で画面の描画内容をリセットするときから反映されます。背景色は一度設定すると、再度変更されるまで同じ設定が使われます。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-0.gif?raw=true)
 
@@ -386,7 +422,7 @@ void Main()
 ```
 
 ## 2.6 背景の色を時間の経過とともに変える
-背景色の変更にコストはかからないので、背景色は毎フレーム変更しても大丈夫です。プログラムの経過時間（秒）を `Scene::Time()` で取得して、時間に応じて背景色の色相を変化させてみましょう。
+プログラムの経過時間（秒）を `Scene::Time()` で取得して、時間に応じて背景色の色相を変化させてみましょう。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-1.gif?raw=true)
 
@@ -906,8 +942,8 @@ void Main()
 		// 動画の時間を進める (デフォルトでは Scece::DeltaTime() 秒)
 		videoTexture.advance();
 
-		videoTexture(400, 400, 300, 200)
-			.draw();
+		videoTexture
+			.scaled(0.5).draw();
 
 		videoTexture
 			.scaled(0.5)
@@ -943,10 +979,10 @@ void Main()
 		// テキストの中心座標が画面の中心になるようにテキストを描く
 		font(U"C++").drawAt(Scene::Center(), Palette::Skyblue);
 
-        // 文字列以外を渡すと Format される
+		// 文字列以外を渡すと Format される
 		font(Cursor::Pos()).draw(50, 300);
 
-        // 複数渡すと、Format でつなげられる
+		// 複数渡すと、Format でつなげられる
 		font(123, U"ABC").draw(50, 400);
 
 		font(U"{}/{}/{}"_fmt(2020, 12, 31)).draw(50, 500);
