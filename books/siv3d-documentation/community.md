@@ -9,20 +9,21 @@ Siv3D ユーザのためのグループチャットです。目的別のチャ�
 - [Siv3D ユーザコミュニティ Slack に参加する](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM) 
 
 
-# 2. 実装会
+# 2. OpenSiv3D 実装会
  OpenSiv3D の開発者やユーザが集まって、プログラムについて質問・相談したり、ドキュメントやテストを作ったり、新機能を提案・議論・実装したり、OpenSiv3D で何かを作ったりする会です。基本個人のペースでゆるゆる進みます。
 
- - 毎月 1～2 回開催
- - 最近は Discord で実施
- 	- 参加方法: Siv3D ユーザコミュニティ Slack の # open-siv3d チャンネルに Discord の招待 URL
- - オフラインで開催していたときの履歴: [OpenSiv3D 実装会](https://siv3d.github.io/ja-jp/community/dev-day/)
+- ハッシュタグ [#OpenSiv3D実装会](https://twitter.com/search?q=%23OpenSiv3D%E5%AE%9F%E8%A3%85%E4%BC%9A&src=typed_query&f=live)
+- 毎月 1～2 回開催
+- 最近は Discord で実施
+  - 参加方法: Siv3D ユーザコミュニティ Slack の # open-siv3d チャンネルに Discord の招待 URL
+  - オフラインで開催していたときの履歴: [OpenSiv3D 実装会](https://siv3d.github.io/ja-jp/community/dev-day/)
 
 # 3. OpenSiv3D Challenge
-OpenSiv3D の新機能を作るいくつかのチャレンジ課題 の中から好きなものを選び、Siv3D ユーザコミュニティ Slack 内の専用のチャンネルに参加し、メンバーどうし協力 or 競争しながら実装の完成を目指すイベントです。優先的なコードレビューや実装のアドバイスなど、技術サポートを受けられます。
+OpenSiv3D の新機能を作るいくつかのチャレンジ課題の中から好きなものを選び、Siv3D ユーザコミュニティ Slack 内の専用のチャンネルに参加し、メンバーどうし協力 or 競争しながら実装の完成を目指すイベントです。優先的なコードレビューや実装のアドバイスなど、技術サポートを受けられます。
 
 - [OpenSiv3D Challenge 2021](https://zenn.dev/reputeless/scraps/79865055750784)
 
-# 4. 勉強会
+# 4. Siv3D 勉強会
 音や画像を使った楽しいプログラミングを体験しながら、ゲームやアプリの開発に役立つ基本的な Siv3D の知識を学ぶイベントです。Siv3D の開発者に直接意見を伝えたり、質問を聞ける機会でもあります。
 
 - [過去の Siv3D 勉強会](https://siv3d.github.io/ja-jp/community/study-meeting/)
