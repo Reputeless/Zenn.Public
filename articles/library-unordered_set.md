@@ -492,12 +492,12 @@ int main()
 	std::unordered_set<int> coins;
 	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
 
-	if (coins.empty()) // 空の配列なので true
+	if (coins.empty()) // 空のハッシュテーブルなので true
 	{
 		std::cout << "coins is empty.\n";
 	}
 
-	if (colors.empty()) // 空の配列ではないので false
+	if (colors.empty()) // 空のハッシュテーブルではないので false
 	{
 		std::cout << "colors is empty.\n";
 	}
