@@ -69,7 +69,7 @@ int main()
 int main()
 {
 	std::vector<int> v = { 1, 2, 3, 4, 5 };
-	std::vector<int> sums = { 0 }; // 最初の要素は 0
+	std::vector<int> sums = { 0 }; // 最初の要素として 0 を入れておく
 
 	// 累積和の結果を sums の末尾に随時追加
 	std::partial_sum(v.begin(), v.end(), std::back_inserter(sums));
