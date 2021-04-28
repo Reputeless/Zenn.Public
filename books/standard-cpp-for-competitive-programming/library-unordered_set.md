@@ -1071,5 +1071,5 @@ red
 
 ## 12.1 デフォルトのハッシュ関数への Hack
 Hack / Challenge ができるプログラミングコンテストでは、ハッシュ関数の性質を逆手に取った Hack をされ、`std::unordered_set` や `std::unordered_map` を使うプログラムの計算量を worst case に近い状態にさせられてしまうことがあります。以下の記事では、その原理の説明と、時刻から生成した乱数をソルトとして使い、Hack に対抗できるハッシュ関数を作る方法が解説されています。
-- https://codeforces.com/blog/entry/62393
+- [Blowing up unordered_map, and how to stop getting hacked on it](https://codeforces.com/blog/entry/62393), neal's blog
 
