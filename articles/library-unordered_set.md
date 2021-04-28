@@ -14,7 +14,7 @@ free: true
 ## 1.1 リストから構築する
 - `= { ... }` の中に値を用意して初期化します
 - リスト内の値に重複がある場合、そのうちの 1 つだけが追加されます
-- データ構造の性質上、要素の順序は保存されず、実装依存の並び順になります
+- データ構造の性質上、リスト内での要素の順序は保存されず、実装依存の並び順になります
 - リスト内の値は `std::unordered_set<Type>` の要素の型 `Type` に合わせます
 ```cpp
 #include <iostream>
@@ -63,7 +63,7 @@ red
 - `std::unordered_set<Type> table(itFirst, itLast);` は、範囲 `[itFirst, itLast)` の要素でハッシュテーブルを初期化します
 - ある `std::vector` の `.begin()`, `.end()` を渡すことで、その配列のすべての要素をもとにハッシュテーブルを構築できます
 - 要素に重複がある場合、そのうちの 1 つだけが追加されます
-- データ構造の性質上、構築後のハッシュテーブルでは要素の順序は保存されておらず、実装依存の並び順になります
+- データ構造の性質上、構築後のハッシュテーブルでは、元の範囲にあったときの要素の順序は保存されておらず、実装依存の並び順になります
 - イテレータの指す値は `std::unordered_set<Type>` の要素の型 `Type` に合わせます
 ```cpp
 #include <iostream>
@@ -113,7 +113,6 @@ red
 ## 1.3 別の `std::unordered_set` から構築する
 - 別の `std::unordered_set<Type>` 型の中身をコピーしてハッシュテーブルを初期化します
 - コピー元とコピー先の要素の型 `Type` は一致している必要があります
-- データ構造の性質上、構築後のハッシュテーブルでは要素の順序は保存されておらず、実装依存の並び順になります
 - コピー元とコピー先で要素の順序が一致する保証はありません
 ```cpp
 #include <iostream>
@@ -201,7 +200,7 @@ int main()
 namespace detail // 便利ライブラリを置く名前空間（名前は任意）
 {
 	// 複数のハッシュ値を組み合わせて新しいハッシュ値を作る関数
-	// 実装出典: Boost.ContainerHash より
+	// 実装出典: Boost.ContainerHash https://github.com/boostorg/container_hash/blob/develop/include/boost/container_hash/hash.hpp
 	inline void HashCombineImpl(std::size_t& h, std::size_t k)
 	{
 		static_assert(sizeof(std::size_t) == 8); // 要 64-bit 環境
