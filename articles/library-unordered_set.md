@@ -272,7 +272,7 @@ int main()
 
 - 方式 A: `Type` 型の変数に `std::cin` を使って入力を読み込み、それらのリストでハッシュテーブルを構築する
 - 方式 B: `std::vector<Type>` に全要素の入力を保存し、それをもとにハッシュテーブルを構築する
-- 方式 C: `Type` 型の変数に `std::cin` を使って入力を読み込み、`std::unordered_set<Type>` の `.insert(value)` を使ってハッシュテーブルを構築する
+- 方式 C: `Type` 型の変数に `std::cin` を使って入力を読み込み、`std::unordered_set<Type>` の `.insert(value)` を使ってハッシュテーブルに追加していく
 
 ## 2.1 入力された値を `std::unordered_set` に追加する (方式 A)
 - `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それをハッシュテーブルに追加します
@@ -320,7 +320,7 @@ red
 
 ## 2.2 入力された値を `std::unordered_set` に追加する (方式 B)
 -  `std::vector<Type>` に全要素の入力を保存し、それをもとに `std::unordered_set<Type>` を構築します
--  `std::vector` に元の入力を保存できるため、あとで使うために入力された値の順序を保持しておきたい場合や、重複する入力を捨てたくない場合にこの方法を使います
+-  `std::vector` に元の入力を保存できるため、入力された値の順序や重複する入力をあとで使うため捨てたくない場合にこの方法を使います
 ```cpp
 #include <iostream>
 #include <vector>
@@ -389,7 +389,7 @@ int main()
 	int N;
 	std::cin >> N; // 単語の個数を読み込む
 
-	std::unordered_set<std::string> words;
+	std::unordered_set<std::string> words; // 空のハッシュテーブルを構築
 
 	for (int i = 0; i < N; ++i)
 	{
@@ -521,6 +521,7 @@ coins is empty.
 ## 4.1 別のリストを代入する
 - `=` を使って別のリスト `{ ... }` の値を代入します
 - リストの要素の型は、`std::unordered_set<Type>` の `Type` に変換できる型である必要があります
+- データ構造の性質上、リスト内での要素の順序は保存されず、実装依存の並び順になります
 ```cpp
 #include <iostream>
 #include <string>
@@ -562,6 +563,7 @@ orange
 ## 4.2 別の `std::unordered_set` を代入する
 - `=` を使って別の `std::string<Type>` 型の値を代入します
 - 代入元と代入先の要素の型 `Type` は一致している必要があります
+- 代入元と代入先で要素の順序が一致する保証はありません
 ```cpp
 #include <iostream>
 #include <string>
@@ -771,7 +773,6 @@ colors does not contain pink
 ## 7.1 range-based for を使い、各要素にアクセスする
 - `std::unordered_set` での要素（キー）へのアクセスは読み取り専用 (const) です
 - `std::unordered_set` に対する range-based for ループは、ハッシュテーブルの内容がループ中に変更されないという前提で実行されるため、ループ内でそのハッシュテーブルを変更する操作をしてはいけません
-- データ構造の性質上、要素は実装依存の並び順になります
 ```cpp
 #include <iostream>
 #include <string>
