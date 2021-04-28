@@ -7,4 +7,5 @@ chapters:
   - library-string
   - library-vector
   - library-numeric
+  - library-unordered_set
   - next

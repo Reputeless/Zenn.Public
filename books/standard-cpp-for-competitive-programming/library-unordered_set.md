@@ -1,13 +1,9 @@
 ---
 title: "<unordered_set>"
-emoji: "🤏"
-type: "tech"
-topics: ["cpp"]
-published: false
+free: true
 ---
 
-title: "<unordered_set>"
-free: true
+- 1～11: ハッシュテーブルによる Set クラス `std::unordered_set` の機能
 
 # 1. `std::unordered_set` の構築
 

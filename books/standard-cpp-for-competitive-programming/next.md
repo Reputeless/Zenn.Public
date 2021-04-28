@@ -7,6 +7,8 @@ free: true
 
 - `<cmath>`
 - `<algorithm>`
-- `<unordered_set>`
+- `<utility>`
+- `<stack>`
+- `<queue>`
 
 あたりを更新予定。
