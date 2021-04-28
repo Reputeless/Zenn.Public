@@ -257,6 +257,13 @@ int main()
 	}
 }
 ```
+```txt:出力（例）
+4
+(55, 66)
+(11, 22)
+(33, 44)
+(0, 0)
+```
 
 
 # 2. `std::unordered_set` への入力
@@ -338,7 +345,7 @@ int main()
 	}
 }
 ```
-```txt:入力 1（例）
+```txt:入力 1
 6
 red
 red
@@ -354,7 +361,7 @@ blue
 green
 red
 ```
-```txt:入力 2（例）
+```txt:入力 2
 4
 red
 red
@@ -407,7 +414,7 @@ int main()
 	}
 }
 ```
-```txt:入力 1（例）
+```txt:入力 1
 8
 red
 red
@@ -434,7 +441,7 @@ red
 blue
 green
 ```
-```txt:入力 2（例）
+```txt:入力 2
 4
 red
 blue
@@ -537,7 +544,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 4
 yellow
 blue
@@ -579,7 +586,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 4
 yellow
 blue
@@ -635,7 +642,7 @@ int main()
 	std::cout << (colors1 == colors3) << '\n'; // 要素の順序が違っていても、含まれる要素が一致すれば true
 }
 ```
-```txt:出力
+```txt:出力（例）
 yellow
 blue
 green
@@ -696,7 +703,7 @@ int main()
 	std::cout << (colors1 != colors3) << '\n'; // 要素の順序が違っていても、含まれる要素が一致するなら false
 }
 ```
-```txt:出力
+```txt:出力（例）
 yellow
 blue
 green
@@ -779,7 +786,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 yellow
 blue
 green
@@ -789,13 +796,12 @@ red
 # 8. 要素の追加
 
 ## 8.1 要素を 1 個追加する
-- `.insert(value)` で、ハッシュテーブルに要素 `value` を追加します
+- `.insert(value)` で、ハッシュテーブルに値 `value` を追加します
 - ハッシュテーブルにすでに存在する値を `.insert(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
-- 重複する値の入力を検知したい場合にこの方法を使います
 ```cpp
 
 ```
-```txt:出力
+```txt:出力（例）
 
 ```
 
@@ -840,7 +846,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 4
 yellow
 blue
@@ -898,7 +904,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 4
 yellow
 blue
@@ -937,7 +943,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 4
 yellow
 blue
@@ -980,7 +986,7 @@ int main()
 	}
 }
 ```
-```txt:出力
+```txt:出力（例）
 3
 purple
 pink
