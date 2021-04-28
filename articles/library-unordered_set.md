@@ -809,12 +809,40 @@ red
 ```
 
 ## 9.2 全要素を消去
--
+- `.clear()` を使うと、全要素を削除して空のハッシュテーブルになります
 ```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	colors.clear(); // 要素を全消去
+
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+}
 ```
 ```txt:出力
-
+4
+yellow
+blue
+green
+red
+---
+0
 ```
 
 
@@ -824,10 +852,43 @@ red
 - `std::unordered_set<Type>` 型の変数 `a`, `b` の中身を入れ替えるには `std::swap(a, b)` を使います
 - 双方とも要素の型 `Type` が一致している必要があります
 ```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colorsA = { "red", "green", "blue", "yellow" };
+	std::unordered_set<std::string> colorsB = { "orange", "pink", "purple" };
+
+	std::swap(colorsA, colorsB); // 中身を交換
+
+	std::cout << colorsA.size() << '\n';
+	for (const auto& color : colorsA)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::cout << colorsB.size() << '\n';
+	for (const auto& color : colorsB)
+	{
+		std::cout << color << '\n';
+	}
+}
 ```
 ```txt:出力
-
+3
+purple
+pink
+orange
+---
+4
+yellow
+blue
+green
+red
 ```
 
 
