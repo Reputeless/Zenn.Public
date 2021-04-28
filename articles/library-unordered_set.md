@@ -718,31 +718,128 @@ false
 
 # 6. 要素の検索
 
+## 6.1 ハッシュテーブルに指定した要素があるか調べる
+- `.count(key)` は、ハッシュテーブルに存在する、キーが `key` の要素の個数を返します
+- ただし、`std::unordered_set` のハッシュテーブルには、同じキーを持つ要素は 1 つまでしか存在しないため、必ず `0` か `1` のどちらかを返します
+- したがって、ハッシュテーブルに、指定したキー `key` の要素があるかを調べるには、`.count(key)` の戻り値が `1` であるかを調べます
+- 計算量: 平均 $O(1)$, 最悪 $O(N)$
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	const std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+
+	std::string s;
+	std::cin >> s;
+
+	if (colors.count(s)) // ハッシュテーブルに s が存在するなら 1, 存在しないなら 0
+	{
+		std::cout << "colors contains " << s << '\n';
+	}
+	else
+	{
+		std::cout << "colors does not contain " << s << '\n';
+	}
+}
+```
+```txt:入力 1
+red
+```
+```txt:出力 1
+colors contains red
+```
+```txt:入力 2
+pink
+```
+```txt:出力 2
+colors does not contain pink
+```
 
 # 7. 要素へのアクセス
 
+## 7.1 range-based for を使い、各要素にアクセス
+- `std::unordered_set` での要素（キー）へのアクセスは読み取り専用 (const) です
+- `std::unordered_set` に対する range-based for ループは、ハッシュテーブルの内容がループ中に変更されないという前提で実行されるため、ループ内でそのハッシュテーブルを変更する操作をしてはいけません
+- データ構造の性質上、要素は実装依存の並び順になります
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+
+	for (const auto& color : colors) // 要素の個数だけ繰り返すループ、color は各要素への const 参照
+	{
+		std::cout << color << '\n';
+	}
+}
+```
+```txt:出力
+yellow
+blue
+green
+red
+```
 
 # 8. 要素の追加
 
-
-
-# 9. 要素の削除
-
-
-
-# 10. `std::unordered_set` の入れ替え
-
-
-
-# 11. `std::unordered_set` のイテレータ
-
-
-
+## 8.1 要素を 1 個追加する
+-
 ```cpp
 
 ```
 ```txt:出力
 
 ```
+
+# 9. 要素の削除
+
+## 9.1 指定した要素を削除
+-
+```cpp
+
+```
+```txt:出力
+
+```
+
+## 9.2 全要素を消去
+-
+```cpp
+
+```
+```txt:出力
+
+```
+
+
+# 10. `std::unordered_set` の入れ替え
+
+## 10.1 二つの `std::unordered_set` を交換
+- `std::unordered_set<Type>` 型の変数 `a`, `b` の中身を入れ替えるには `std::swap(a, b)` を使います
+- 双方とも要素の型 `Type` が一致している必要があります
+```cpp
+
+```
+```txt:出力
+
+```
+
+
+# 11. `std::unordered_set` のイテレータ
+
+アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。イテレータを取得した時点からハッシュテーブルの内容が変更されると、そのイテレータは無効になるため、イテレータを変数に保存して長い期間保持するのは避けるべきです。
+
+## 11.1 先頭位置のイテレータを取得
+- `.begin()` はハッシュテーブルの先頭位置を指すイテレータを返します 
+- 空のハッシュテーブルの場合 `.begin() == .end()` です
+
+## 11.2 終端位置のイテレータを取得
+- `.end()` はハッシュテーブルの終端位置を指すイテレータを返します
+- 空のハッシュテーブルの場合 `.begin() == .end()` です
+
