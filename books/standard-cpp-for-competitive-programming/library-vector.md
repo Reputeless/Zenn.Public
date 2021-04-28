@@ -268,7 +268,7 @@ int main()
 0
 ```
 
-# 2. `std::vector` の入力
+# 2. `std::vector` への入力
 
 `std::vector<Type>` 型の変数を直接 `std::cin` で使うことはできないため、以下のいずれかの方法を使います。
 
@@ -276,7 +276,7 @@ int main()
 - 方式 B: あらかじめ入力個数分用意した `std::vector<Type>` の各要素に `std::cin` を行う
 
 ## 2.1 入力された値を `std::vector` に追加する (方式 A)
-- `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを `std::vector` に追加します
+- `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それを配列に追加します
 - プログラムを書く時点で入力される個数がわかっていて、なおかつ個数が少ない場合にこの方法が使えます
 ```cpp
 #include <iostream>
@@ -350,7 +350,7 @@ int main()
 
 int main()
 {
-	std::size_t N;
+	int N;
 	std::cin >> N; // 入力の個数 N を読み込む
 
 	std::vector<int> numbers(N); // int(), つまり 0 が N 個

@@ -87,7 +87,7 @@ int main()
 0
 ```
 
-# 2. `std::string` の入力
+# 2. `std::string` への入力
 
 ## 2.1 標準入力の基本
 - 1 回の `std::cin` で、改行もしくは空白文字が出現するまでの入力（単語）を 1 つ読み取ります 
@@ -205,7 +205,7 @@ blue ocean
 
 int main()
 {
-	std::size_t N;
+	int N;
 	std::cin >> N; // 単語の個数を読み込む
 
 	std::vector<std::string> ss(N);
