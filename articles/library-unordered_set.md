@@ -188,17 +188,17 @@ int main()
 0
 ```
 
-## 1.5 自分で定義した型を `std::unordered_set` で使えるようにする
-- `std::unordered_set` の要素になれる型は、以下の 2 つを満たす型です
+## 1.5 自分で定義した型を `std::unordered_set` の要素にする
+- `std::unordered_set<Type>` の `Type` は、以下の 2 つを満たす必要があります
   - 同じ型の値同士の `==` が定義されている
   - `std::hash<Type>` の特殊化が定義されている
-- `int` や `std::string` はこれを満たしますが、自分で定義した型については、この 2 つを自分で用意する必要があります
+- `int` や `std::string` はこれを満たしますが、それ以外の型（自分で定義した型など）については、この 2 つを用意する必要があります
 ```cpp
 #include <iostream>
 #include <string>
 #include <unordered_set>
 
-namespace detail
+namespace detail // 便利ライブラリを置く名前空間（名前は任意）
 {
 	// 複数のハッシュ値を組み合わせて新しいハッシュ値を作る関数
 	// 実装出典: Boost.ContainerHash より
