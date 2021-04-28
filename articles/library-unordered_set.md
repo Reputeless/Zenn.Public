@@ -33,7 +33,7 @@ int main()
 
 	std::cout << "---\n"; // 実行結果を見やすくするための区切り線
 
-	// 重複する値を含んでいる ("red")
+	// リスト内に重複する値が存在 ("red")
 	std::unordered_set<std::string> colors = { "red", "red", "green", "blue", "yellow", "red" };
 	std::cout << colors.size() << '\n'; // 要素数を出力
 	// 保持している要素を出力
@@ -188,6 +188,76 @@ int main()
 0
 ```
 
+## 1.5 自分で定義した型を `std::unordered_set` で使えるようにする
+- `std::unordered_set` の要素になれる型は、以下の 2 つを満たす型です
+  - 同じ型の値同士の `==` が定義されている
+  - `std::hash<Type>` の特殊化が定義されている
+- `int` や `std::string` はこれを満たしますが、自分で定義した型については、この 2 つを自分で用意する必要があります
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+namespace detail
+{
+	// 複数のハッシュ値を組み合わせて新しいハッシュ値を作る関数
+	// 実装出典: Boost.ContainerHash より
+	inline void HashCombineImpl(std::size_t& h, std::size_t k)
+	{
+		static_assert(sizeof(std::size_t) == 8); // 要 64-bit 環境
+		constexpr std::uint64_t m = 0xc6a4a7935bd1e995;
+		constexpr int r = 47;
+		k *= m;
+		k ^= k >> r;
+		k *= m;
+		h ^= k;
+		h *= m;
+		h += 0xe6546b64;
+	}
+
+	// 複数のハッシュ値を組み合わせて新しいハッシュ値を作る関数
+	template <class Type>
+	inline void HashCombine(std::size_t& h, const Type& value)
+	{
+		HashCombineImpl(h, std::hash<Type>{}(value));
+	}
+}
+
+struct Point
+{
+	int x, y;
+
+	// 同じ型どうしの ==
+	bool operator ==(const Point& other) const
+	{
+		return (x == other.x) && (y == other.y);
+	}
+};
+
+template <>
+struct std::hash<Point> // std::hash の特殊化
+{
+	size_t operator()(const Point& p) const
+	{
+		std::size_t seed = 0;
+		detail::HashCombine(seed, p.x); // ハッシュ値を更新
+		detail::HashCombine(seed, p.y); // ハッシュ値を更新
+		return seed;
+	}
+};
+
+int main()
+{
+	// リスト内に重複する値が存在 ({ 0, 0 })
+	std::unordered_set<Point> points = { { 0, 0 }, { 11, 22 }, { 33, 44 }, { 55, 66 }, { 0, 0 } };
+	std::cout << points.size() << '\n';
+	for (const auto& point : points)
+	{
+		std::cout << '(' << point.x << ", " << point.y << ")\n";
+	}
+}
+```
+
 
 # 2. `std::unordered_set` への入力
 `std::unordered_set<Type>` 型の変数を直接 `std::cin` で使うことはできないため、以下のいずれかの方法を使います。
@@ -198,7 +268,7 @@ int main()
 
 ## 2.1 入力された値を `std::unordered_set` に追加する (方式 A)
 - `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それをハッシュテーブルに追加します
-- 入力された値の順序を保存する必要が無く、重複する入力を捨ててもよい場合にこの方法が使えます
+- 入力された値の順序を保存する必要が無く、重複する入力値を捨ててもよい場合にこの方法が使えます
 ```cpp
 #include <iostream>
 #include <string>
@@ -242,7 +312,7 @@ red
 
 ## 2.2 入力された値を `std::unordered_set` に追加する (方式 B)
 -  `std::vector<Type>` に全要素の入力を保存し、それをもとに `std::unordered_set<Type>` を構築します
--  `std::vector` に元の入力を保存できるため、入力された値の順序を保持しておきたい場合や、重複する入力を捨てたくない場合にこの方法を使います
+-  `std::vector` に元の入力を保存できるため、あとで使うために入力された値の順序を保持しておきたい場合や、重複する入力を捨てたくない場合にこの方法を使います
 ```cpp
 #include <iostream>
 #include <vector>
@@ -300,7 +370,7 @@ red
 ## 2.3 入力された値を `std::unordered_set` に追加する (方式 C)
 - 空のハッシュテーブルに `.emplace(value)` を使って、値を 1 個ずつ追加します
 - ハッシュテーブルにすでに存在する値を `.emplace(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
-- 重複する値の入力を検知したい場合に、この方法を使います
+- 重複する値の入力を検知したい場合にこの方法を使います
 ```cpp
 #include <iostream>
 #include <string>
@@ -411,7 +481,7 @@ int main()
 ```
 
 ## 3.2 空の配列であるかを調べる
-- `.empty()` は、要素数が 0 の配列（空の配列）であるかを `bool` 型の値で返します
+- `.empty()` は、要素数が 0（空）のハッシュテーブルであるかを `bool` 型の値で返します
 ```cpp
 #include <iostream>
 #include <string>
@@ -440,13 +510,57 @@ coins is empty.
 
 # 4. `std::unordered_set` への代入
 
+## 4.1 別のリストを代入する
+- `=` を使って別のリスト `{ ... }` の値を代入します
+- リストの要素の型は、`std::unordered_set<Type>` の `Type` に変換できる型である必要があります
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	colors = { "orange", "pink", "purple" }; // 代入
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+}
+```
+```txt:出力
+4
+yellow
+blue
+green
+red
+---
+3
+purple
+pink
+orange
+```
+
+
+## 4.2 別の `std::unordered_set` を代入する
+- `=` を使って別の `std::string<Type>` 型の値を代入します
+- 代入元と代入先の要素の型 `Type` は一致している必要があります
 
 
 # 5. `std::unordered_set` の比較
 
-
-
+## 5.1 保持する要素が一致するかを調べる
+-
+-
 
 # 6. 要素へのアクセス
 

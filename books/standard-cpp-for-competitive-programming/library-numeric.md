@@ -39,6 +39,7 @@ int main()
 #include <iostream>
 #include <vector>
 #include <numeric>
+#include <functional> // std::multiplies のため
 
 int main()
 {
