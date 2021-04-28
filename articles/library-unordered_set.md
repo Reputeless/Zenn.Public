@@ -799,10 +799,70 @@ red
 - `.insert(value)` で、ハッシュテーブルに値 `value` を追加します
 - ハッシュテーブルにすでに存在する値を `.insert(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
 ```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue" };
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	colors.insert("yellow"); // "yellow" が新しく追加される
+	colors.insert("red"); // "red" はすでに存在するので追加しない
+
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
+
+	bool a = colors.insert("pink").second; // "pink" が新しく追加される。true
+	std::cout << a << '\n';
+
+	bool b = colors.insert("red").second; // "red" はすでに存在するので追加しない。false
+	std::cout << b << '\n';
+
+	std::cout << "---\n";
+
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+}
 ```
 ```txt:出力（例）
-
+3
+blue
+green
+red
+---
+4
+yellow
+red
+green
+blue
+---
+true
+false
+---
+5
+pink
+yellow
+red
+green
+blue
 ```
 
 # 9. 要素の削除
