@@ -235,7 +235,7 @@ struct Point
 template <>
 struct std::hash<Point> // std::hash の特殊化
 {
-	size_t operator()(const Point& p) const
+	std::size_t operator()(const Point& p) const
 	{
 		std::size_t seed = 0;
 		detail::HashCombine(seed, p.x); // ハッシュ値を更新
