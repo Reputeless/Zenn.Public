@@ -819,7 +819,6 @@ int main()
 
 	colors.insert("yellow"); // "yellow" が新しく追加される
 	colors.insert("red"); // "red" はすでに存在するので追加しない
-
 	std::cout << colors.size() << '\n';
 	for (const auto& color : colors)
 	{
@@ -829,10 +828,8 @@ int main()
 	std::cout << "---\n";
 
 	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
-
 	bool a = colors.insert("pink").second; // "pink" が新しく追加される。true
 	std::cout << a << '\n';
-
 	bool b = colors.insert("red").second; // "red" はすでに存在するので追加しない。false
 	std::cout << b << '\n';
 
@@ -891,7 +888,6 @@ int main()
 	std::cout << "---\n";
 
 	colors.erase("green"); // "green" を削除
-
 	std::cout << colors.size() << '\n';
 	for (const auto& color : colors)
 	{
@@ -901,7 +897,6 @@ int main()
 	std::cout << "---\n";
 
 	colors.erase("orange"); // "orange" を削除（存在しないので何も起こらない）
-
 	std::cout << colors.size() << '\n';
 	for (const auto& color : colors)
 	{
@@ -928,7 +923,7 @@ red
 ```
 
 ## 9.2 条件を満たす要素をすべて削除する
-- `.erase(it)` はイテレータ `it` が指す要素を削除し、その次の要素のイテレータを返します
+- `.erase(it)` はイテレータ `it` が指す要素を削除し、その次の位置のイテレータを返します
 - イテレータを使ったループと組み合わせることで、ハッシュテーブルから条件を満たす要素をすべて削除できます
 - 削除されなかったハッシュテーブルの要素の順序は維持されます
 ```cpp
@@ -998,7 +993,6 @@ int main()
 	std::cout << "---\n";
 
 	colors.clear(); // 要素を全消去
-
 	std::cout << colors.size() << '\n';
 	for (const auto& color : colors)
 	{
@@ -1065,7 +1059,7 @@ red
 
 # 11. `std::unordered_set` のイテレータ
 
-アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。イテレータを取得した時点からハッシュテーブルの内容が変更されると、そのイテレータは無効になるため、イテレータを変数に保存して長い期間保持するのは避けるべきです。
+アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。イテレータを取得した時点からハッシュテーブルの内容が変更されると、そのイテレータは無効になることがあるため、イテレータを変数に保存して長い期間保持するのは避けるべきです。
 
 ## 11.1 先頭位置のイテレータを取得する
 - `.begin()` はハッシュテーブルの先頭位置を指すイテレータを返します 

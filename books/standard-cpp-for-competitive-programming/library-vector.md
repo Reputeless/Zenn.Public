@@ -1073,7 +1073,6 @@ int main()
 	std::cout << "---\n";
 
 	words.clear(); // 要素を全消去
-
 	std::cout << words.size() << '\n';
 	for (const auto& word : words)
 	{
