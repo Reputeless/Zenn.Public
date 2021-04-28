@@ -554,19 +554,173 @@ orange
 ## 4.2 別の `std::unordered_set` を代入する
 - `=` を使って別の `std::string<Type>` 型の値を代入します
 - 代入元と代入先の要素の型 `Type` は一致している必要があります
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::unordered_set<std::string> t = { "orange", "pink", "purple" };
+	colors = t; // 代入
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+}
+```
+```txt:出力
+4
+yellow
+blue
+green
+red
+---
+3
+purple
+pink
+orange
+```
 
 # 5. `std::unordered_set` の比較
 
-## 5.1 保持する要素が一致するかを調べる
--
--
+## 5.1 保持する要素が、2 つのハッシュテーブル間で一致するかを調べる
+- ともに同じ型 `Type` の要素を持つ `std::unordered_set<Type>` 型の値 `a`, `b` について、`a == b` はハッシュテーブルに含まれる要素（順序は考慮しない）が一致するかを `bool` 型の値で返します
+- 計算量: `==` は最初に双方の要素数が同じかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
-# 6. 要素へのアクセス
+int main()
+{
+	std::unordered_set<std::string> colors1 = { "red", "green", "blue", "yellow" };
+	std::unordered_set<std::string> colors2 = { "orange", "pink", "purple" };
+	std::unordered_set<std::string> colors3 = { "blue", "yellow", "red", "green" };
+
+	for (const auto& color : colors1)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	for (const auto& color : colors2)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	for (const auto& color : colors3)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
+	std::cout << (colors1 == colors1) << '\n';
+	std::cout << (colors1 == colors2) << '\n';
+	std::cout << (colors1 == colors3) << '\n'; // 要素の順序が違っていても、含まれる要素が一致すれば true
+}
+```
+```txt:出力
+yellow
+blue
+green
+red
+---
+purple
+pink
+orange
+---
+red
+yellow
+green
+blue
+---
+true
+false
+true
+```
+
+## 5.2 保持する要素が、2 つのハッシュテーブル間で違うかを調べる
+- ともに同じ型 `Type` の要素を持つ `std::unordered_set<Type>` 型の値 `a`, `b` について、`a != b` はハッシュテーブルに含まれる要素（順序は考慮しない）が違うかを `bool` 型の値で返します
+- 計算量: `!=` は最初に双方の要素数が違うかを調べるため、双方のサイズが異なる場合は $O(1)$, それ以外の場合は $O(N)$ です
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+int main()
+{
+	std::unordered_set<std::string> colors1 = { "red", "green", "blue", "yellow" };
+	std::unordered_set<std::string> colors2 = { "orange", "pink", "purple" };
+	std::unordered_set<std::string> colors3 = { "blue", "yellow", "red", "green" };
+
+	for (const auto& color : colors1)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	for (const auto& color : colors2)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	for (const auto& color : colors3)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
+	std::cout << (colors1 != colors1) << '\n';
+	std::cout << (colors1 != colors2) << '\n';
+	std::cout << (colors1 != colors3) << '\n'; // 要素の順序が違っていても、含まれる要素が一致するなら false
+}
+```
+```txt:出力
+yellow
+blue
+green
+red
+---
+purple
+pink
+orange
+---
+red
+yellow
+green
+blue
+---
+false
+true
+false
+```
+
+# 6. 要素の検索
 
 
 
-# 7. 要素の追加
+# 7. 要素へのアクセス
 
 
 
@@ -583,3 +737,12 @@ orange
 
 
 # 11. `std::unordered_set` のイテレータ
+
+
+
+```cpp
+
+```
+```txt:出力
+
+```
