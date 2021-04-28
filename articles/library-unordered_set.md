@@ -6,10 +6,8 @@ topics: ["cpp"]
 published: false
 ---
 
----
 title: "<unordered_set>"
 free: true
----
 
 # 1. `std::unordered_set` の構築
 
@@ -62,10 +60,10 @@ red
 ```
 
 ## 1.2 別の `std::vector` から構築する
-- `std::unordered_set<Type> s(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の要素でハッシュテーブルを初期化します
-- ある `std::vector` の `.begin()`, `.end()` を渡すことで、その配列の要素から構築できます
+- `std::unordered_set<Type> table(itFirst, itLast);` は、範囲 `[itFirst, itLast)` の要素でハッシュテーブルを初期化します
+- ある `std::vector` の `.begin()`, `.end()` を渡すことで、その配列のすべての要素をもとにハッシュテーブルを構築できます
 - 要素に重複がある場合、そのうちの 1 つだけが追加されます
-- データ構造の性質上、要素の順序は保存されず、実装依存の並び順になります
+- データ構造の性質上、構築後のハッシュテーブルでは要素の順序は保存されておらず、実装依存の並び順になります
 - イテレータの指す値は `std::unordered_set<Type>` の要素の型 `Type` に合わせます
 ```cpp
 #include <iostream>
@@ -115,7 +113,7 @@ red
 ## 1.3 別の `std::unordered_set` から構築する
 - 別の `std::unordered_set<Type>` 型の中身をコピーしてハッシュテーブルを初期化します
 - コピー元とコピー先の要素の型 `Type` は一致している必要があります
-- データ構造の性質上、要素の順序は保存されず、実装依存の並び順になります
+- データ構造の性質上、構築後のハッシュテーブルでは要素の順序は保存されておらず、実装依存の並び順になります
 - コピー元とコピー先で要素の順序が一致する保証はありません
 ```cpp
 #include <iostream>
@@ -301,7 +299,7 @@ red
 
 ## 2.3 入力された値を `std::unordered_set` に追加する (方式 C)
 - 空のハッシュテーブルに `.emplace(value)` を使って、値を 1 個ずつ追加します
-- ハッシュテーブルにすでに存在する値を `.emplace(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、追加されたときは `true`）
+- ハッシュテーブルにすでに存在する値を `.emplace(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
 - 重複する値の入力を検知したい場合に、この方法を使います
 ```cpp
 #include <iostream>
@@ -320,7 +318,7 @@ int main()
 		std::string s;
 		std::cin >> s;
 
-		if (words.emplace(s).second)
+		if (words.emplace(s).second) // ハッシュテーブルに同じ値が無かった場合 true
 		{
 			std::cout << s << " (first time)\n";
 		}
@@ -383,3 +381,91 @@ red
 blue
 red
 ```
+
+
+# 3. `std::unordered_set` の要素数
+
+## 3.1 要素数を調べる
+- `.size()` は、ハッシュテーブルが持つ要素数を符号無し整数型の値で返します
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+int main()
+{
+	std::unordered_set<int> coins = { 1, 5, 10, 50, 100, 500 };
+	std::cout << coins.size() << '\n'; // 要素数を出力
+
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::cout << colors.size() << '\n'; // 要素数を出力
+
+	std::size_t n = colors.size();
+	std::cout << n << '\n';
+}
+```
+```txt:出力
+6
+4
+4
+```
+
+## 3.2 空の配列であるかを調べる
+- `.empty()` は、要素数が 0 の配列（空の配列）であるかを `bool` 型の値で返します
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+int main()
+{
+	std::unordered_set<int> coins;
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+
+	if (coins.empty()) // 空の配列なので true
+	{
+		std::cout << "coins is empty.\n";
+	}
+
+	if (colors.empty()) // 空の配列ではないので false
+	{
+		std::cout << "colors is empty.\n";
+	}
+}
+```
+```txt:出力
+coins is empty.
+```
+
+
+# 4. `std::unordered_set` への代入
+
+
+
+
+# 5. `std::unordered_set` の比較
+
+
+
+
+# 6. 要素へのアクセス
+
+
+
+# 7. 要素の追加
+
+
+
+# 8. 要素の追加
+
+
+
+# 9. 要素の削除
+
+
+
+# 10. `std::unordered_set` の入れ替え
+
+
+
+# 11. `std::unordered_set` のイテレータ
