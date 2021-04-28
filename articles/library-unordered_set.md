@@ -800,15 +800,115 @@ red
 # 9. 要素の削除
 
 ## 9.1 指定した要素を削除
--
+- `.erase(key)` は、ハッシュテーブルからキーが `key` の要素を削除します
+- 指定したキーが存在しなかった場合は何もしません
+- ハッシュテーブルの削除されなかった要素の順序は維持されます
 ```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
 
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	colors.erase("green"); // "green" を削除
+
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	colors.erase("orange"); // "orange" を削除（存在しないので何も起こらない）
+
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+}
 ```
 ```txt:出力
-
+4
+yellow
+blue
+green
+red
+---
+3
+yellow
+blue
+red
+---
+3
+yellow
+blue
+red
 ```
 
-## 9.2 全要素を消去
+## 9.2 条件を満たす要素をすべて削除
+- `.erase(it)` はイテレータ `it` が指す要素を削除し、その次の要素のイテレータを返します
+- イテレータを使ったループと組み合わせることで、ハッシュテーブルから条件を満たす要素をすべて削除できます
+- 削除されなかったハッシュテーブルの要素の順序は維持されます
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+int main()
+{
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+
+	std::cout << "---\n";
+
+	// ハッシュテーブルから、5 文字以上の要素を削除
+	for (auto it = colors.begin(); it != colors.end();)
+	{
+		if (it->size() >= 5) // 5 文字以上の要素なら
+		{
+			it = colors.erase(it); // その要素を削除し、イテレータを次の位置へ進める
+		}
+		else
+		{
+			++it; // イテレータを次の位置へ進める
+		}
+	}
+
+	std::cout << colors.size() << '\n';
+	for (const auto& color : colors)
+	{
+		std::cout << color << '\n';
+	}
+}
+```
+```txt:出力
+4
+yellow
+blue
+green
+red
+---
+2
+blue
+red
+```
+
+## 9.3 全要素を消去
 - `.clear()` を使うと、全要素を削除して空のハッシュテーブルになります
 ```cpp
 #include <iostream>
