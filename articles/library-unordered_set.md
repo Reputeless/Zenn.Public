@@ -800,6 +800,7 @@ red
 ## 8.1 要素を 1 個追加する
 - `.insert(value)` で、ハッシュテーブルに値 `value` を追加します
 - ハッシュテーブルにすでに存在する値を `.insert(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
+- 戻り値は使わないのであれば無視しても問題ありません
 ```cpp
 #include <iostream>
 #include <string>
