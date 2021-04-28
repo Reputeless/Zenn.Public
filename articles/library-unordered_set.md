@@ -264,7 +264,7 @@ int main()
 
 - 方式 A: `Type` 型の変数に `std::cin` を使って入力を読み込み、それらのリストでハッシュテーブルを構築する
 - 方式 B: `std::vector<Type>` に全要素の入力を保存し、それをもとにハッシュテーブルを構築する
-- 方式 C: `Type` 型の変数に `std::cin` を使って入力を読み込み、`std::unordered_set<Type>` の `.emplace(value)` を使ってハッシュテーブルを構築する
+- 方式 C: `Type` 型の変数に `std::cin` を使って入力を読み込み、`std::unordered_set<Type>` の `.insert(value)` を使ってハッシュテーブルを構築する
 
 ## 2.1 入力された値を `std::unordered_set` に追加する (方式 A)
 - `Type` 型の変数に `std::cin` を使って要素 1 個分の入力を読み込み、それをハッシュテーブルに追加します
@@ -368,8 +368,8 @@ red
 ```
 
 ## 2.3 入力された値を `std::unordered_set` に追加する (方式 C)
-- 空のハッシュテーブルに `.emplace(value)` を使って、値を 1 個ずつ追加します
-- ハッシュテーブルにすでに存在する値を `.emplace(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
+- 空のハッシュテーブルに `.insert(value)` を使って、値を 1 個ずつ追加します
+- ハッシュテーブルにすでに存在する値を `.insert(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
 - 重複する値の入力を検知したい場合にこの方法を使います
 ```cpp
 #include <iostream>
@@ -388,7 +388,7 @@ int main()
 		std::string s;
 		std::cin >> s;
 
-		if (words.emplace(s).second) // ハッシュテーブルに同じ値が無かった場合 true
+		if (words.insert(s).second) // ハッシュテーブルに同じ値が無かった場合 true
 		{
 			std::cout << s << " (first time)\n";
 		}
@@ -789,7 +789,9 @@ red
 # 8. 要素の追加
 
 ## 8.1 要素を 1 個追加する
--
+- `.insert(value)` で、ハッシュテーブルに要素 `value` を追加します
+- ハッシュテーブルにすでに存在する値を `.insert(value)` で追加しようとすると、値の追加はされず、戻り値 (`std::pair<iterator, bool>` 型) の要素 `.second` が `false` になります（重複が無く、値が追加されたときは `true`）
+- 重複する値の入力を検知したい場合にこの方法を使います
 ```cpp
 
 ```
