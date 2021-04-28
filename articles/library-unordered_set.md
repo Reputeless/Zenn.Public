@@ -129,9 +129,9 @@ int main()
 		std::cout << color << '\n';
 	}
 
-    std::cout << "---\n";
+	std::cout << "---\n";
 
-    std::cout << vs.size() << '\n'; // 要素数を出力（コピーしたほうは変化しない）
+	std::cout << vs.size() << '\n'; // 要素数を出力（コピーしたほうは変化しない）
 	for (const auto& s : vs) // 保持している要素を出力（コピーしたほうは変化しない）
 	{
 		std::cout << s << '\n';
@@ -211,6 +211,8 @@ namespace detail // 便利ライブラリを置く名前空間（名前は任意
 		k *= m;
 		h ^= k;
 		h *= m;
+		// Completely arbitrary number, to prevent 0's
+		// from hashing to 0.
 		h += 0xe6546b64;
 	}
 
