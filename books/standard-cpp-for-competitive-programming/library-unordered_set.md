@@ -198,7 +198,7 @@ namespace detail // 便利ライブラリを置く名前空間（名前は任意
 {
 	// 複数のハッシュ値を組み合わせて新しいハッシュ値を作る関数
 	// 実装出典: Boost.ContainerHash https://github.com/boostorg/container_hash/blob/develop/include/boost/container_hash/hash.hpp
-	inline void HashCombineImpl(std::size_t& h, std::size_t k)
+	inline void HashCombineImpl(std::size_t& h, std::size_t k) noexcept
 	{
 		static_assert(sizeof(std::size_t) == 8); // 要 64-bit 環境
 		constexpr std::uint64_t m = 0xc6a4a7935bd1e995;
@@ -215,7 +215,7 @@ namespace detail // 便利ライブラリを置く名前空間（名前は任意
 
 	// 複数のハッシュ値を組み合わせて新しいハッシュ値を作る関数
 	template <class Type>
-	inline void HashCombine(std::size_t& h, const Type& value)
+	inline void HashCombine(std::size_t& h, const Type& value) noexcept
 	{
 		HashCombineImpl(h, std::hash<Type>{}(value));
 	}
@@ -226,7 +226,7 @@ struct Point
 	int x, y;
 
 	// 同じ型どうしの ==
-	bool operator ==(const Point& other) const
+	bool operator ==(const Point& other) const noexcept
 	{
 		return (x == other.x) && (y == other.y);
 	}
@@ -235,7 +235,7 @@ struct Point
 template <>
 struct std::hash<Point> // std::hash の特殊化
 {
-	std::size_t operator()(const Point& p) const
+	std::size_t operator()(const Point& p) const noexcept
 	{
 		std::size_t seed = 0;
 		detail::HashCombine(seed, p.x); // ハッシュ値を更新
