@@ -247,16 +247,7 @@ free: true
 
 # 4. ソート済みの範囲に対する操作
 
-## 4.1 指定した値が存在するか二分探索する
-- a
-```cpp
-
-```
-```txt:出力
-
-```
-
-## 4.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置を二分探索で取得する
+## 4.1 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置を二分探索で取得する
 - `std::lower_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も左の位置を二分探索し、その位置を指すイテレータを返します
 - 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::lower_bound()` が返したイテレータを渡して、その間の距離を求めます
 > - `std::lower_bound(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
@@ -336,7 +327,7 @@ cat
 dog
 ```
 
-## 4.3 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置を二分探索で取得する
+## 4.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置を二分探索で取得する
 - `std::upper_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も右の位置を二分探索し、その位置を指すイテレータを返します
 - 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::upper_bound()` が返したイテレータを渡して、その間の距離を求めます
 > - `std::upper_bound(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
@@ -414,6 +405,32 @@ banana
 bird
 cat
 dog
+```
+
+## 4.3 lower_bound と upper_bound の結果を同時に取得する
+- `std::equal_range(itFirst, itLast, value)` は、`std::lower_bound(itFirst, itLast, value)` と `std::upper_bound(itFirst, itLast, value)` の結果を `std::pair` で返します
+- 探索時に情報を共有できるため、`std::lower_bound()`, `std::upper_bound()` を個別に呼ぶよりも定数倍高速化されます
+> - `std::equal_range(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
+
+::: message
+`std::equal_range()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。代わりにそれぞれのコンテナのメンバ関数 `std::set::equal_range()`, `std::multiset::equal_range()` を使えば、データ構造の特性に合わせた実装になっているため、計算量は $O(\log N)$ になります。
+:::
+
+```cpp
+
+```
+```txt:出力
+
+```
+
+## 4.4 二つの集合の和集合を得る
+- 
+```cpp
+
+```
+```txt:出力
+
 ```
 
 
