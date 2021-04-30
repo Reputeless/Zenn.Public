@@ -354,6 +354,7 @@ dog
 - `std::next_permutaion(itFirst, itLast)` は、範囲 `[itFirst, itLast)` について、辞書順で次にくる順列になるよう要素を並び替えます
 - 次の順列が存在する場合は `true`, それ以外の場合は `false` を返します
 - ソート済みの範囲から始め、`do while()` と組み合わせることで、全ての順列を列挙できます
+> - `std::next_permutaion(itFirst, itLast)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
