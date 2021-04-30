@@ -474,6 +474,7 @@ int main()
 - `{0, 0, 1, 1}` と `{1, 2}` の和集合は `{0, 0, 1, 1, 2}` です
 - `std::back_inserter()` と組み合わせることで、和集合の結果を別の配列に格納することができます
 - `itOut` に出力される要素の順序はソート済みです
+> - `std::set_union(itFirst1, itLast1, itFirst2, itLast2, itOut)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -525,6 +526,7 @@ int main()
 - `{0, 0, 1, 1, 2, 2}` と `{1, 1, 2}` の積集合は `{1, 1, 2}` です
 - `std::back_inserter()` と組み合わせることで、積集合の結果を別の配列に格納することができます
 - `itOut` に出力される要素の順序はソート済みです
+> - `std::set_intersection(itFirst1, itLast1, itFirst2, itLast2, itOut)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -576,6 +578,7 @@ int main()
 - `{0, 0, 1, 1, 2, 2}` と `{1, 1, 2}` の積集合は `{0, 0, 2}` です
 - `std::back_inserter()` と組み合わせることで、差集合の結果を別の配列に格納することができます
 - `itOut` に出力される要素の順序はソート済みです
+> - `std::set_difference(itFirst1, itLast1, itFirst2, itLast2, itOut)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -627,6 +630,7 @@ int main()
 - `{0, 0, 1, 1, 2, 2}` と `{1, 1, 2}` の対称差集合は `{0, 0, 2}` です
 - `std::back_inserter()` と組み合わせることで、対称差集合の結果を別の配列に格納することができます
 - `itOut` に出力される要素の順序はソート済みです
+> - `std::set_symmetric_difference(itFirst1, itLast1, itFirst2, itLast2, itOut)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -677,6 +681,7 @@ int main()
 - マージ後の要素数は 2 つの範囲の要素数の合計になります
 - `std::back_inserter()` と組み合わせることで、マージした集合の結果を別の配列に格納することができます
 - `itOut` に出力される要素の順序はソート済みです
+> - `std::merge(itFirst1, itLast1, itFirst2, itLast2, itOut)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
