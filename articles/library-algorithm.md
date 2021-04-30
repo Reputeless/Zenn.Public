@@ -290,11 +290,69 @@ free: true
 # 5. 順列
 
 ## 5.1 順列を作成する
-- a
+- `std::next_permutaion(itFirst, itLast)` は、範囲 `[itFirst, itLast)` について、辞書順で次にくる順列になるよう要素を並び替えます
+- 次の順列が存在する場合は `true`, それ以外の場合は `false` を返します
+- ソート済みの範囲から始め、`do while()` と組み合わせることで、全ての順列を列挙できます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	// すべての順列を列挙するためにはソート済みの状態から始める
+	std::vector<int> v = { 1, 2, 3, 4 };
+	do
+	{
+		for (const auto& n : v)
+		{
+			std::cout << n << ' ';
+		}
+		std::cout << '\n';
+	} while (std::next_permutation(v.begin(), v.end())); // 辞書順で次の順列へ
+
+	std::cout << "---\n";
+
+	// すべての順列を列挙するためにはソート済みの状態から始める
+	std::string s = "abc";
+	do
+	{
+		std::cout << s << '\n';
+	} while (std::next_permutation(s.begin(), s.end())); // 辞書順で次の順列へ
+}
 ```
 ```txt:出力
-
+1 2 3 4
+1 2 4 3
+1 3 2 4
+1 3 4 2
+1 4 2 3
+1 4 3 2
+2 1 3 4
+2 1 4 3
+2 3 1 4
+2 3 4 1
+2 4 1 3
+2 4 3 1
+3 1 2 4
+3 1 4 2
+3 2 1 4
+3 2 4 1
+3 4 1 2
+3 4 2 1
+4 1 2 3
+4 1 3 2
+4 2 1 3
+4 2 3 1
+4 3 1 2
+4 3 2 1
+---
+abc
+acb
+bac
+bca
+cab
+cba
 ```
 
