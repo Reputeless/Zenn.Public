@@ -466,42 +466,259 @@ int main()
 (501): 7 -> 7
 ```
 
-# 5. ソート済みの二つの範囲に対する集合演算
+# 5. ソート済みの二つの範囲に対する集合演算や操作
 
 ## 5.1 二つの集合の少なくとも片方に存在する要素からなる集合（和集合）を得る
-- 
+- `std::set_union(itFirst1, itLast1, itFirst2, itLast2, itOut)` は、ソート済みの範囲 `[itFirst1, itLast1)` および `[itFirst2, itLast2)` の少なくとも片方に存在する要素からなる集合（和集合）の要素を `itOut` に出力していきます
+- `{0, 1}` と `{1, 2}` の和集合は `{0, 1, 2}` です
+- `{0, 0, 1, 1}` と `{1, 2}` の和集合は `{0, 0, 1, 1, 2}` です
+- `std::back_inserter()` と組み合わせることで、和集合の結果を別の配列に格納することができます
+- `itOut` に出力される要素の順序はソート済みです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	// 両方ともソート済みの状態
+	std::vector<int> a = { 0, 1, 2, 3 };
+	std::vector<int> b = { 2, 3, 4, 5 };
+	// 結果を格納する配列
+	std::vector<int> c;
+
+	// a と b の和集合を得る
+	std::set_union(a.begin(), a.end(), b.begin(), b.end(), std::back_inserter(c));
+	for (const auto& n : c)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	// 両方ともソート済みの状態
+	std::vector<int> d = { 0, 0, 1, 1, 2, 2 };
+	std::vector<int> e = { 1, 2, 2, 3, 3 };
+	// 結果を格納する配列
+	std::vector<int> f;
+
+	// d と e の和集合を得る
+	std::set_union(d.begin(), d.end(), e.begin(), e.end(), std::back_inserter(f));
+	for (const auto& n : f)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+0 1 2 3 4 5
+---
+0 0 1 1 2 2 3 3
 ```
 
 ## 5.2 二つの集合の両方に存在する要素からなる集合（積集合）を得る
-- 
+- `std::set_intersection(itFirst1, itLast1, itFirst2, itLast2, itOut)` は、ソート済みの範囲 `[itFirst1, itLast1)` および `[itFirst2, itLast2)` の両方に存在する要素からなる集合（積集合）の要素を `itOut` に出力していきます
+- `{0, 1}` と `{1, 2}` の積集合は `{1}` です
+- `{0, 1}` と `{2, 3}` の積集合は `{}` です
+- `{0, 0, 1, 1, 2, 2}` と `{1, 1, 2}` の積集合は `{1, 1, 2}` です
+- `std::back_inserter()` と組み合わせることで、積集合の結果を別の配列に格納することができます
+- `itOut` に出力される要素の順序はソート済みです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	// 両方ともソート済みの状態
+	std::vector<int> a = { 0, 1, 2, 3 };
+	std::vector<int> b = { 2, 3, 4, 5 };
+	// 結果を格納する配列
+	std::vector<int> c;
+
+	// a と b の積集合を得る
+	std::set_intersection(a.begin(), a.end(), b.begin(), b.end(), std::back_inserter(c));
+	for (const auto& n : c)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	// 両方ともソート済みの状態
+	std::vector<int> d = { 0, 0, 1, 1, 2, 2 };
+	std::vector<int> e = { 1, 2, 2, 3, 3 };
+	// 結果を格納する配列
+	std::vector<int> f;
+
+	// d と e の積集合を得る
+	std::set_intersection(d.begin(), d.end(), e.begin(), e.end(), std::back_inserter(f));
+	for (const auto& n : f)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+2 3
+---
+1 2 2
 ```
 
-## 5.3 二つの集合のうち後者にだけ存在しない要素からなる集合（差集合）を得る
-- 
+## 5.3 二つの集合について、前者の中から後者に属する要素を取り除いた集合（差集合）を得る
+- `std::set_difference(itFirst1, itLast1, itFirst2, itLast2, itOut)` は、ソート済みの範囲 `[itFirst1, itLast1)` および `[itFirst2, itLast2)` について、前者の中から後者に属する要素を取り除いた集合（差集合）の要素を `itOut` に出力していきます
+- `{0, 1, 2, 3}` と `{1, 2, 4, 5}` の差集合は `{0, 3}` です
+- `{0, 1}` と `{0, 1}` の積集合は `{}` です
+- `{0, 0, 1, 1, 2, 2}` と `{1, 1, 2}` の積集合は `{0, 0, 2}` です
+- `std::back_inserter()` と組み合わせることで、差集合の結果を別の配列に格納することができます
+- `itOut` に出力される要素の順序はソート済みです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	// 両方ともソート済みの状態
+	std::vector<int> a = { 0, 1, 2, 3 };
+	std::vector<int> b = { 2, 3, 4, 5 };
+	// 結果を格納する配列
+	std::vector<int> c;
+
+	// a と b の差集合を得る
+	std::set_difference(a.begin(), a.end(), b.begin(), b.end(), std::back_inserter(c));
+	for (const auto& n : c)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	// 両方ともソート済みの状態
+	std::vector<int> d = { 0, 0, 1, 1, 2, 2 };
+	std::vector<int> e = { 1, 2, 2, 3, 3 };
+	// 結果を格納する配列
+	std::vector<int> f;
+
+	// d と e の差集合を得る
+	std::set_difference(d.begin(), d.end(), e.begin(), e.end(), std::back_inserter(f));
+	for (const auto& n : f)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+0 1
+---
+0 0 1
 ```
 
 ## 5.4 二つの集合のどちらか片方にしか存在しない要素からなる集合（対称差集合）を得る
-- 
+- `std::set_symmetric_difference(itFirst1, itLast1, itFirst2, itLast2, itOut)` は、ソート済みの範囲 `[itFirst1, itLast1)` および `[itFirst2, itLast2)` について、どちらか片方にしか存在しない要素からなる集合（対称差集合）の要素を `itOut` に出力していきます
+- `{0, 1, 2, 3}` と `{1, 2, 4, 5}` の対称差集合は `{0, 4, 5}` です
+- `{0, 1}` と `{0, 1}` の対称差集合は `{}` です
+- `{0, 0, 1, 1, 2, 2}` と `{1, 1, 2}` の対称差集合は `{0, 0, 2}` です
+- `std::back_inserter()` と組み合わせることで、対称差集合の結果を別の配列に格納することができます
+- `itOut` に出力される要素の順序はソート済みです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	// 両方ともソート済みの状態
+	std::vector<int> a = { 0, 1, 2, 3 };
+	std::vector<int> b = { 2, 3, 4, 5 };
+	// 結果を格納する配列
+	std::vector<int> c;
+
+	// a と b の対称差集合を得る
+	std::set_symmetric_difference(a.begin(), a.end(), b.begin(), b.end(), std::back_inserter(c));
+	for (const auto& n : c)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	// 両方ともソート済みの状態
+	std::vector<int> d = { 0, 0, 1, 1, 2, 2 };
+	std::vector<int> e = { 1, 2, 2, 3, 3 };
+	// 結果を格納する配列
+	std::vector<int> f;
+
+	// d と e の対称差集合を得る
+	std::set_symmetric_difference(d.begin(), d.end(), e.begin(), e.end(), std::back_inserter(f));
+	for (const auto& n : f)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 ```txt:出力
+0 1 4 5
+---
+0 0 1 3 3
+```
 
+## 5.5 二つのソート済みの集合をマージしたソート済みの集合を得る
+- `std::merge(itFirst1, itLast1, itFirst2, itLast2, itOut)` は、ソート済みの範囲 `[itFirst1, itLast1)` および `[itFirst2, itLast2)` の要素をまとめた集合の要素を `itOut` に出力していきます
+- `{0, 1, 2, 2}` と `{0, 1, 3, 4, 5}` をマージした集合は `{0, 0, 1, 1, 2, 2, 3, 4, 5}` です
+- マージ後の要素数は 2 つの範囲の要素数の合計になります
+- `std::back_inserter()` と組み合わせることで、マージした集合の結果を別の配列に格納することができます
+- `itOut` に出力される要素の順序はソート済みです
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// 両方ともソート済みの状態
+	std::vector<int> a = { 0, 1, 2, 3 };
+	std::vector<int> b = { 2, 3, 4, 5 };
+	// 結果を格納する配列
+	std::vector<int> c;
+
+	// a と b をマージした集合を得る
+	std::merge(a.begin(), a.end(), b.begin(), b.end(), std::back_inserter(c));
+	for (const auto& n : c)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	// 両方ともソート済みの状態
+	std::vector<int> d = { 0, 0, 1, 1, 2, 2 };
+	std::vector<int> e = { 1, 2, 2, 3, 3 };
+	// 結果を格納する配列
+	std::vector<int> f;
+
+	// d と e をマージした集合を得る
+	std::merge(d.begin(), d.end(), e.begin(), e.end(), std::back_inserter(f));
+	for (const auto& n : f)
+	{
+		std::cout << n << ' ';
+	}
+	std::cout << '\n';
+}
+```
+```txt:出力
+0 1 2 2 3 3 4 5
+---
+0 0 1 1 1 2 2 2 2 3 3
 ```
 
 
