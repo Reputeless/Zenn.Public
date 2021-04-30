@@ -273,8 +273,9 @@ free: true
 
 ## 4.3 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置を二分探索で取得する
 - `std::upper_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も右の位置を二分探索し、その位置を指すイテレータを返します
-- 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に範囲の先頭のイテレータ `itFirst` と、`std::upper_bound()` が返したイテレータ `itLast` の間の距離を求めます
+- 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::upper_bound()` が返したイテレータを渡して、その間の距離を求めます
 - `std::upper_bound()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+- `std::distance()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 
 ::: message
 `std::upper_bound()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。代わりにそれぞれのコンテナのメンバ関数 `std::set::upper_bound()`, `std::multiset::upper_bound()` を使えば、データ構造の特性に合わせた実装になっているため、計算量は $O(\log N)$ になります。
