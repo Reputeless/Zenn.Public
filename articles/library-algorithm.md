@@ -245,9 +245,9 @@ free: true
 
 
 
-# 4. ソート済みの範囲に対する操作
+# 4. ソート済みの範囲に対する二分探索
 
-## 4.1 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置を二分探索で取得する
+## 4.1 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置 (lower_bound) を二分探索で取得する
 - `std::lower_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も左の位置を二分探索し、その位置を指すイテレータを返します
 - 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::lower_bound()` が返したイテレータを渡して、その間の距離を求めます
 > - `std::lower_bound(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
@@ -327,7 +327,7 @@ cat
 dog
 ```
 
-## 4.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置を二分探索で取得する
+## 4.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置 (upper_bound) を二分探索で取得する
 - `std::upper_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も右の位置を二分探索し、その位置を指すイテレータを返します
 - 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::upper_bound()` が返したイテレータを渡して、その間の距離を求めます
 > - `std::upper_bound(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
@@ -418,13 +418,84 @@ dog
 :::
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// ソート済みの状態
+	std::vector<int> coins = { 1, 1, 5, 10, 10, 10, 500 };
+
+	auto p = std::equal_range(coins.begin(), coins.end(), 0);
+	std::cout << "(0): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+
+	p = std::equal_range(coins.begin(), coins.end(), 1);
+	std::cout << "(1): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+
+	p = std::equal_range(coins.begin(), coins.end(), 2);
+	std::cout << "(2): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+
+	p = std::equal_range(coins.begin(), coins.end(), 5);
+	std::cout << "(5): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+
+	p = std::equal_range(coins.begin(), coins.end(), 10);
+	std::cout << "(10): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+
+	p = std::equal_range(coins.begin(), coins.end(), 500);
+	std::cout << "(500): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+
+	p = std::equal_range(coins.begin(), coins.end(), 501);
+	std::cout << "(501): " << std::distance(coins.begin(), p.first)
+		<< " -> " << std::distance(coins.begin(), p.second) << '\n';
+}
+```
+```txt:出力
+(0): 0 -> 0
+(1): 0 -> 2
+(2): 2 -> 2
+(5): 2 -> 3
+(10): 3 -> 6
+(500): 6 -> 7
+(501): 7 -> 7
+```
+
+# 5. ソート済みの二つの範囲に対する集合演算
+
+## 5.1 二つの集合の少なくとも片方に存在する要素からなる集合（和集合）を得る
+- 
+```cpp
 
 ```
 ```txt:出力
 
 ```
 
-## 4.4 二つの集合の和集合を得る
+## 5.2 二つの集合の両方に存在する要素からなる集合（積集合）を得る
+- 
+```cpp
+
+```
+```txt:出力
+
+```
+
+## 5.3 二つの集合のうち後者にだけ存在しない要素からなる集合（差集合）を得る
+- 
+```cpp
+
+```
+```txt:出力
+
+```
+
+## 5.4 二つの集合のどちらか片方にしか存在しない要素からなる集合（対称差集合）を得る
 - 
 ```cpp
 
@@ -434,9 +505,9 @@ dog
 ```
 
 
-# 5. 順列
+# 6. 順列
 
-## 5.1 順列を作成する
+## 6.1 順列を作成する
 - `std::next_permutaion(itFirst, itLast)` は、範囲 `[itFirst, itLast)` について、辞書順で次にくる順列になるよう要素を並び替えます
 - 次の順列が存在する場合は `true`, それ以外の場合は `false` を返します
 - ソート済みの範囲から始め、`do while()` と組み合わせることで、全ての順列を列挙できます
