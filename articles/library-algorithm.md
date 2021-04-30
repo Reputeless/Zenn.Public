@@ -257,25 +257,90 @@ free: true
 ```
 
 ## 4.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置を二分探索で取得する
-- a
-- 計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+- `std::lower_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も左の位置を二分探索し、その位置を指すイテレータを返します
+- 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::lower_bound()` が返したイテレータを渡して、その間の距離を求めます
+> - `std::lower_bound(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 
 ::: message
 `std::lower_bound()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。代わりにそれぞれのコンテナのメンバ関数 `std::set::lower_bound()`, `std::multiset::lower_bound()` を使えば、データ構造の特性に合わせた実装になっているため、計算量は $O(\log N)$ になります。
 :::
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	// ソート済みの状態
+	std::vector<int> coins = { 1, 5, 10, 50, 100, 500 };
+
+	auto it = std::lower_bound(coins.begin(), coins.end(), 0);
+	std::cout << "(0): " << std::distance(coins.begin(), it) << '\n';
+
+	it = std::lower_bound(coins.begin(), coins.end(), 1);
+	std::cout << "(1): " << std::distance(coins.begin(), it) << '\n';
+
+	it = std::lower_bound(coins.begin(), coins.end(), 2);
+	std::cout << "(2): " << std::distance(coins.begin(), it) << '\n';
+
+	it = std::lower_bound(coins.begin(), coins.end(), 5);
+	std::cout << "(5): " << std::distance(coins.begin(), it) << '\n';
+
+	it = std::lower_bound(coins.begin(), coins.end(), 499);
+	std::cout << "(499): " << std::distance(coins.begin(), it) << '\n';
+
+	it = std::lower_bound(coins.begin(), coins.end(), 500);
+	std::cout << "(500): " << std::distance(coins.begin(), it) << '\n';
+
+	it = std::lower_bound(coins.begin(), coins.end(), 501);
+	std::cout << "(501): " << std::distance(coins.begin(), it) << '\n';
+
+	std::cout << "---\n";
+
+	// ソート済みの状態
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+
+	auto it2 = std::lower_bound(words.begin(), words.end(), "alarm");
+	words.insert(it2, "alarm");
+
+	it2 = std::lower_bound(words.begin(), words.end(), "banana");
+	words.insert(it2, "banana");
+
+	it2 = std::lower_bound(words.begin(), words.end(), "dog");
+	words.insert(it2, "dog");
+
+	// ソート済みの状態が保たれていることを確認
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+(0): 0
+(1): 0
+(2): 1
+(5): 1
+(499): 5
+(500): 5
+(501): 6
+---
+alarm
+apple
+banana
+bird
+cat
+dog
 ```
 
 ## 4.3 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置を二分探索で取得する
 - `std::upper_bound(itFirst, itLast, value)` は、ソート済みの範囲 `[itFirst, itLast)` に対して値 `value` を挿入するとして、ソートされた状態を壊さない最も右の位置を二分探索し、その位置を指すイテレータを返します
 - 何番目かを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::upper_bound()` が返したイテレータを渡して、その間の距離を求めます
-> - `std::upper_bound()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
-> - `std::distance()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
+> - `std::upper_bound(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 
 ::: message
 `std::upper_bound()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。代わりにそれぞれのコンテナのメンバ関数 `std::set::upper_bound()`, `std::multiset::upper_bound()` を使えば、データ構造の特性に合わせた実装になっているため、計算量は $O(\log N)$ になります。
@@ -310,6 +375,9 @@ int main()
 	it = std::upper_bound(coins.begin(), coins.end(), 500);
 	std::cout << "(500): " << std::distance(coins.begin(), it) << '\n';
 
+	it = std::upper_bound(coins.begin(), coins.end(), 501);
+	std::cout << "(501): " << std::distance(coins.begin(), it) << '\n';
+
 	std::cout << "---\n";
 
 	// ソート済みの状態
@@ -338,6 +406,7 @@ int main()
 (5): 2
 (499): 5
 (500): 6
+(501): 6
 ---
 alarm
 apple
