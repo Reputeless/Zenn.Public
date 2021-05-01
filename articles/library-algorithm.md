@@ -35,9 +35,14 @@ int main()
 	std::string g = "apple", h = "bird";
 	std::cout << std::min(g, h) << '\n';
 
-	std::cout << std::min<size_t>(g.size(), 1) << '\n'; // size_t と int なので <> で明示的に型を指定
-	std::cout << std::min(g.size(), size_t(1)) << '\n'; // 1 を size_t 型にするのもあり
-	std::cout << std::min(static_cast<int>(g.size()), 1) << '\n'; // 値がオーバーフローしなければ、これもあり
+	// size_t と int なので <> で明示的に型を指定
+	std::cout << std::min<size_t>(g.size(), 1) << '\n';
+	
+	// 1 を size_t 型にするのもあり
+	std::cout << std::min(g.size(), size_t(1)) << '\n';
+	
+	// 整数オーバーフローの心配が無ければ、これもあり
+	std::cout << std::min(static_cast<int>(g.size()), 1) << '\n';
 }
 ```
 ```txt:出力
@@ -73,9 +78,14 @@ int main()
 	std::string g = "apple", h = "bird";
 	std::cout << std::max(g, h) << '\n';
 
-	std::cout << std::max<size_t>(g.size(), 1) << '\n'; // size_t と int なので <> で明示的に型を指定
-	std::cout << std::max(g.size(), size_t(1)) << '\n'; // 1 を size_t 型にするのもあり
-	std::cout << std::max(static_cast<int>(g.size()), 1) << '\n'; // 値がオーバーフローしなければ、これもあり
+	// size_t と int なので <> で明示的に型を指定
+	std::cout << std::max<size_t>(g.size(), 1) << '\n';
+	
+	// 1 を size_t 型にするのもあり
+	std::cout << std::max(g.size(), size_t(1)) << '\n';
+	
+	// 整数オーバーフローの心配が無ければ、これもあり
+	std::cout << std::max(static_cast<int>(g.size()), 1) << '\n';
 }
 ```
 ```txt:出力
@@ -133,7 +143,7 @@ int main()
 ## 1.5 配列の中から最小の要素とその位置を得る
 - `std::min_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最小の要素の位置を指すイテレータを返します
 - イテレータに `*` を付けると、その位置の値にアクセスできます
-- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::min_element()` が返したイテレータを渡して、その間の距離を求めます
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::min_element()` が返したイテレータを渡し、その間の距離を求めます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -142,12 +152,10 @@ int main()
 
 int main()
 {
-	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
-	
+	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };	
 	// 位置（何番目）の情報が不要な場合、関数の戻り値に直接 * を使うと短く書ける
 	int minNumber = *std::min_element(numbers.begin(), numbers.end());
 	std::cout << minNumber << '\n';
-
 	// イテレータを取得し、値と位置（何番目）を調べる
 	auto it = std::min_element(numbers.begin(), numbers.end());
 	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n';
@@ -176,7 +184,7 @@ c
 ## 1.6 配列の中から最大の要素とその位置を得る
 - `std::max_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最大の要素の位置を指すイテレータを返します
 - イテレータに `*` を付けると、その位置の値にアクセスできます
-- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::max_element()` が返したイテレータを渡して、その間の距離を求めます
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::max_element()` が返したイテレータを渡し、その間の距離を求めます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -185,12 +193,10 @@ c
 
 int main()
 {
-	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
-	
+	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };	
 	// 位置（何番目）の情報が不要な場合、関数の戻り値に直接 * を使うと短く書ける
 	int minNumber = *std::max_element(numbers.begin(), numbers.end());
 	std::cout << minNumber << '\n';
-
 	// イテレータを取得し、値と位置（何番目）を調べる
 	auto it = std::max_element(numbers.begin(), numbers.end());
 	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n';
@@ -217,12 +223,31 @@ u
 ```
 
 ## 1.7 二つの値から小さいほうの値と大きいほうの値を一度に得る
-- a
+- `std::minmax(a, b)` は、小さいほうの値、大きいほうの値を組にした `std::pair` を返します
+- 個別に `std::min(a, b)`, `std::max(a, b)` を呼ぶよりも大小比較の回数を減らせる利点があります
+- `std::pair` を構造化束縛で受け取ることもできます
 ```cpp
+#include <iostream>
+#include <algorithm>
 
+int main()
+{
+	int a = 100, b = -20;
+	auto p = std::minmax(a, b);
+	std::cout << "min: " << p.first << '\n';
+	std::cout << "max: " << p.second << '\n';
+
+	// 構造化束縛を利用する場合
+	auto [min, max] = std::minmax(a, b);
+	std::cout << "min: " << min << '\n';
+	std::cout << "max: " << max << '\n';
+}
 ```
 ```txt:出力
-
+min: -20
+max: 100
+min: -20
+max: 100
 ```
 
 ## 1.8 三つ以上の値から最小値と最大値を一度に得る
