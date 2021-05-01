@@ -13,40 +13,121 @@ free: true
 # 1. 最小値と最大値
 
 ## 1.1 二つの値のうち小さいほうの値を得る
-- `std::min(a, b)` は `a` と `b` のうち小さいほうを返します
-- `a` と `b` が同じ型でない場合、`std::min<Type>(a, b)` のように明示的に型 `Type` を指定します
+- `std::min(a, b)` は、`a` と `b` のうち小さいほうを返します
+- 同じ場合は `a` を返します
+- `a` と `b` が違う型の場合、`std::min<Type>(a, b)` のように比較に使う型 `Type` を指定します
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	int a = 30, b = 60;
+	std::cout << std::min(a, b) << '\n';
+
+	double c = 0.5, d = -10.5;
+	std::cout << std::min(c, d) << '\n';
+
+	char e = 'a', f = 'z';
+	std::cout << std::min(e, f) << '\n';
+
+	std::string g = "apple", h = "bird";
+	std::cout << std::min(g, h) << '\n';
+
+	std::cout << std::min<size_t>(g.size(), 1) << '\n'; // size_t と int なので <> で明示的に型を指定
+	std::cout << std::min(g.size(), size_t(1)) << '\n'; // 1 を size_t 型にするのもあり
+	std::cout << std::min(static_cast<int>(g.size()), 1) << '\n'; // 値がオーバーフローしなければ、これもあり
+}
 ```
 ```txt:出力
-
+30
+-10.5
+a
+apple
+1
+1
+1
 ```
 
 ## 1.2 二つの値のうち大きいほうの値を得る
-- a
+- `std::max(a, b)` は、`a` と `b` のうち小さいほうを返します
+- 同じ場合は `a` を返します
+- `a` と `b` が違う型の場合、`std::max<Type>(a, b)` のように比較に使う型 `Type` を指定します
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	int a = 30, b = 60;
+	std::cout << std::max(a, b) << '\n';
+
+	double c = 0.5, d = -10.5;
+	std::cout << std::max(c, d) << '\n';
+
+	char e = 'a', f = 'z';
+	std::cout << std::max(e, f) << '\n';
+
+	std::string g = "apple", h = "bird";
+	std::cout << std::max(g, h) << '\n';
+
+	std::cout << std::max<size_t>(g.size(), 1) << '\n'; // size_t と int なので <> で明示的に型を指定
+	std::cout << std::max(g.size(), size_t(1)) << '\n'; // 1 を size_t 型にするのもあり
+	std::cout << std::max(static_cast<int>(g.size()), 1) << '\n'; // 値がオーバーフローしなければ、これもあり
+}
 ```
 ```txt:出力
-
+60
+0.5
+z
+bird
+5
+5
+5
 ```
 
 ## 1.3 三つ以上の値から最小値を得る
-- a
+- `std::min({ ... })` は、リスト `{ ... }` 内の要素の最小値を返します
+- リスト内の要素は同じ型である必要があります
 ```cpp
+#include <iostream>
+#include <algorithm>
 
+int main()
+{
+	int a = 30, b = 60, c = 50;
+	std::cout << std::min({ a, b, c }) << '\n';
+
+	double d = 0.1, e = 0.2, f = 0.3, g = 0.4;
+	std::cout << std::min({ d, e, f, g, -0.1 }) << '\n';
+}
 ```
 ```txt:出力
-
+30
+-0.1
 ```
 
 ## 1.4 三つ以上の値から最大値を得る
-- a
+- `std::max({ ... })` は、リスト `{ ... }` 内の要素の最大値を返します
+- リスト内の要素は同じ型である必要があります
 ```cpp
+#include <iostream>
+#include <algorithm>
 
+int main()
+{
+	int a = 30, b = 60, c = 50;
+	std::cout << std::max({ a, b, c }) << '\n';
+
+	double d = 0.1, e = 0.2, f = 0.3, g = 0.4;
+	std::cout << std::max({ d, e, f, g, -0.1 }) << '\n';
+}
 ```
 ```txt:出力
-
+60
+0.4
 ```
 
 ## 1.5 配列の中から最小の要素とその位置を得る
