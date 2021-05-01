@@ -131,21 +131,89 @@ int main()
 ```
 
 ## 1.5 配列の中から最小の要素とその位置を得る
-- a
+- `std::min_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最小の要素の位置を指すイテレータを返します
+- イテレータに `*` を付けると、その位置の値にアクセスできます
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::min_element()` が返したイテレータを渡して、その間の距離を求めます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
+	
+	// 位置（何番目）の情報が不要な場合、関数の戻り値に直接 * を使うと短く書ける
+	int minNumber = *std::min_element(numbers.begin(), numbers.end());
+	std::cout << minNumber << '\n';
+
+	// イテレータを取得し、値と位置（何番目）を調べる
+	auto it = std::min_element(numbers.begin(), numbers.end());
+	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n';
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
+	auto it2 = std::min_element(words.begin(), words.end());
+	std::cout << *it2 << " : " << std::distance(words.begin(), it2) << '\n';
+
+	std::cout << "---\n";
+
+	std::string s = "computer";
+	std::cout << *std::min_element(s.begin(), s.end()) << '\n';
+}
 ```
 ```txt:出力
-
+-30
+-30 : 2
+---
+apple : 1
+---
+c
 ```
 
 ## 1.6 配列の中から最大の要素とその位置を得る
-- a
+- `std::max_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最大の要素の位置を指すイテレータを返します
+- イテレータに `*` を付けると、その位置の値にアクセスできます
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと `std::max_element()` が返したイテレータを渡して、その間の距離を求めます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
+	
+	// 位置（何番目）の情報が不要な場合、関数の戻り値に直接 * を使うと短く書ける
+	int minNumber = *std::max_element(numbers.begin(), numbers.end());
+	std::cout << minNumber << '\n';
+
+	// イテレータを取得し、値と位置（何番目）を調べる
+	auto it = std::max_element(numbers.begin(), numbers.end());
+	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n';
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
+	auto it2 = std::max_element(words.begin(), words.end());
+	std::cout << *it2 << " : " << std::distance(words.begin(), it2) << '\n';
+
+	std::cout << "---\n";
+
+	std::string s = "computer";
+	std::cout << *std::max_element(s.begin(), s.end()) << '\n';
+}
 ```
 ```txt:出力
-
+50
+50 : 4
+---
+dog : 3
+---
+u
 ```
 
 ## 1.7 二つの値から小さいほうの値と大きいほうの値を一度に得る
