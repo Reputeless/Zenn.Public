@@ -3,7 +3,7 @@ title: "未踏ジュニア、伝わる提案書を作る 5 つのコツ"
 emoji: "🆙"
 type: "idea"
 topics: ["未踏ジュニア"]
-published: false
+published: true
 ---
 
 （**未踏ジュニア**に応募する小中高・高専生向け）**伝わる提案書**を作るコツを紹介します。  
