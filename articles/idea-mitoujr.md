@@ -36,16 +36,6 @@ published: false
 
 というスキルは、小中学校で学ぶ機会が少なく、せっかく優れたコンピュータ技術や課題発見能力を持っていても、それを具体的なアイデアや提案書にステップアップさせる段階でつまずいてしまう人が毎年多く見受けられます。
 
-## 応募者の参考になる記事
-
-未踏ジュニアのメンターの中には、応募者向けに、新しいアイデアや提案書の作り方のアドバイスを発信している人がいます。
-
-- 未踏ジュニア メンター、寺本さんの記事
-  - https://note.com/teramotodaiki/n/n148d35899016 | [動画版](https://www.youtube.com/watch?v=VG-nOzTgW2M)
-- 未踏ジュニア メンター、安川さんの動画
-  - https://www.youtube.com/watch?v=euy9BMf_7hE
-- 未踏ジュニア メンター、西尾さんの記事
-  - https://scrapbox.io/nishio/2020%E6%9C%AA%E8%B8%8F%E3%82%B8%E3%83%A5%E3%83%8B%E3%82%A2%E4%B8%80%E6%AC%A1%E5%AF%A9%E6%9F%BB%E3%82%92%E7%B5%82%E3%81%88%E3%81%A6
 
 # 提案書をレベルアップさせる 5 つのコツ
 
@@ -206,3 +196,15 @@ A の場合、インターネット検索や過去のニュースの調査、英
   - 17 歳以下が対象
 - IPA 未踏 IT 人材発掘・育成事業 Web サイト: https://www.ipa.go.jp/jinzai/mitou/it_index.html
   - 25 歳以下が対象
+
+
+# 応募者の参考になる記事
+
+過去にも、未踏ジュニアのメンターが、応募者向けに新しいアイデアや提案書の作り方のアドバイスを記事にしています。こちらも参考になります。
+
+- 未踏ジュニア メンター、寺本さんの記事
+  - https://note.com/teramotodaiki/n/n148d35899016 | [動画版](https://www.youtube.com/watch?v=VG-nOzTgW2M)
+- 未踏ジュニア メンター、安川さんの動画
+  - https://www.youtube.com/watch?v=euy9BMf_7hE
+- 未踏ジュニア メンター、西尾さんの記事
+  - https://scrapbox.io/nishio/2020%E6%9C%AA%E8%B8%8F%E3%82%B8%E3%83%A5%E3%83%8B%E3%82%A2%E4%B8%80%E6%AC%A1%E5%AF%A9%E6%9F%BB%E3%82%92%E7%B5%82%E3%81%88%E3%81%A6
