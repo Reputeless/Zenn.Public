@@ -318,13 +318,40 @@ max: dog : 3
 ```
 
 ## 1.10 ある値を、指定した最小値と最大値の範囲に収める
-- `std::clmap(value, min, max)` は、`value` を `min` 以上 `max` 以下の範囲に収めた値を返します
+- `std::clmap(value, min, max)` は、値 `value` を `min` 以上 `max` 以下の範囲に収めた値を返します
 - `value` が範囲内であれば `value` を、`min` 未満なら `min` を、`max` より大きいなら `max` を返します
+- `value`, `min`, `max` の型がそれぞれ違う場合、`std::min<Type>(a, b)` のように比較に使う型 `Type` を指定します
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	int a = 50;
+	std::cout << std::clamp(a, 0, 100) << '\n';
+	std::cout << std::clamp(a, 0, 10) << '\n';
+	std::cout << std::clamp(a, 100, 200) << '\n';
+
+	std::cout << "---\n";
+
+	std::size_t b = 50;
+	// size_t と int が混在しているため <> で明示的に型を指定
+	std::cout << std::clamp<size_t>(b, 0, 100) << '\n';
+	std::cout << std::clamp<size_t>(b, 0, 10) << '\n';
+	std::cout << std::clamp<size_t>(b, 100, 200) << '\n';
+}
 ```
 ```txt:出力
-
+50
+10
+100
+---
+50
+10
+100
 ```
 
 
