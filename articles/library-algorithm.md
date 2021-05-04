@@ -520,14 +520,26 @@ int main()
 }
 ```
 ```txt:出力
-
+-5
+-1
+0
+2
+2
+3
+5
+10
+---
+apple
+bird
+cat
+dog
 ```
 
 ## 4.2 要素を大きい順にソートする
 - `std::sort(itFirst, itLast, comp)` は、範囲 `[itFirst, itLast)` にある要素を、`comp` による比較の結果でソートします
 - `comp` を `std::greater<>{}` にすることで、大きい順になるようにソートできます
 - イテレータはランダムアクセスイテレータである必要があります
-> - `std::sort(itFirst, itLast)` の計算量:  $O(N log N)$
+> - `std::sort(itFirst, itLast, comp)` の計算量:  $O(N log N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -572,19 +584,88 @@ bird
 apple
 ```
 
-## 4.3 上位 N 個をソートする
-- a
+## 4.3 上位 N 位までを求めるソートをする
+- `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、 それ以降については余計なソートをしないことで、`std::sort(itFirst, itLast)` より定数倍高速化します
+> - `std::partial_sort(itFirst, itMiddle, itLast)` の計算量:  $O(N log N)$
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 10, 3, -5, 5, 2, 2, 0, -1 };
+	// 上位 4 位まで小さい順にソート
+	std::partial_sort(numbers.begin(), numbers.begin() + 4, numbers.end());
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "bird", "cat", "dog", "apple" };
+	// 上位 2 位まで小さい順にソート
+	std::partial_sort(words.begin(), words.begin() + 2, words.end());
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
-```txt:出力
-
+```txt:出力（例）
+-5
+-1
+0
+2
+10
+5
+3
+2
+---
+apple
+bird
+dog
+cat
 ```
 
 ## 4.4 N 番目に小さい要素を求める
-- a
+- `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `itNth` の位置に上位 `N = (itNth - itFirst)` 番目の要素が置かれるようにし、それより前の要素はすべて N 番目の要素より小さく、それ以降の要素はすべて N 番目の要素よりも大きい要素が並ぶということだけ保証する、ごく部分的なソートを行います。
+- 上位 N 番目の要素を求めたいだけの時、`std::sort(itFirst, itLast)` や `std::partial_sort(itFirst, itNth, itLast)` を使うより計算量を小さくできます
+> - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 0, 2, 4, 6, 3, 9, 8, 7 };
+	// 3 番目に小さい要素を探す
+	std::nth_element(numbers.begin(), numbers.begin() + 2, numbers.end());
+	std::cout << "2nd : " << numbers[2] << '\n';
+
+    // 3 番目より左は小さい要素、3 番目より右は大きい要素であることは保証
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "bird", "cat", "dog", "apple", "egg" };
+	// 2 番目に小さい要素を探す
+	std::nth_element(words.begin(), words.begin() + 1, words.end());
+	std::cout << "2nd : " << words[1] << '\n';
+
+    // 2 番目より左は小さい要素、2 番目より右は大きい要素であることは保証
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
 
