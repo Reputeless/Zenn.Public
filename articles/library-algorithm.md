@@ -224,6 +224,7 @@ u
 
 ## 1.7 二つの値から小さいほうの値と大きいほうの値を一度に得る
 - `std::minmax(a, b)` は、小さいほうの値、大きいほうの値を組にした `std::pair` を返します
+- `std::pair`の `.first` が小さいほうの値で、`.second` が大きいほうの値です
 - 個別に `std::min(a, b)`, `std::max(a, b)` を呼ぶよりも大小比較の回数を減らせる利点があります
 - `std::pair` を構造化束縛で受け取ることもできます
 ```cpp
@@ -251,25 +252,74 @@ max: 100
 ```
 
 ## 1.8 三つ以上の値から最小値と最大値を一度に得る
-- a
+- `std::minmax({ ... })` は、リスト `{ ... }` 内の要素の最小値、最大値を組にした `std::pair` を返します
+- `std::pair`の `.first` が小さいほうの値で、`.second` が大きいほうの値です
+- 個別に `std::min(a, b)`, `std::max(a, b)` を呼ぶよりも大小比較の回数を減らせる利点があります
+- `std::pair` を構造化束縛で受け取ることもできます
 ```cpp
+#include <iostream>
+#include <algorithm>
 
+int main()
+{
+	int a = 100, b = -20, c = -50, d = 120;
+	auto p = std::minmax({ a, b, c, d });
+	std::cout << "min: " << p.first << '\n';
+	std::cout << "max: " << p.second << '\n';
+
+	// 構造化束縛を利用する場合
+	auto [min, max] = std::minmax({ a, b, c, d });
+	std::cout << "min: " << min << '\n';
+	std::cout << "max: " << max << '\n';
+}
 ```
 ```txt:出力
-
+min: -50
+max: 120
+min: -50
+max: 120
 ```
 
 ## 1.9 配列の中から最小の要素と最大の要素、およびそれらの位置を一度に得る
-- a
+- `std::minmax_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある要素の最小値、最大値を指すイテレータを組にした `std::pair` を返します
+- `std::pair`の `.first` が小さいほうの値で、`.second` が大きいほうの値です
+- 個別に `std::min_element(itFirst, itLast)`, `std::max_element(itFirst, itLast)` を呼ぶよりも大小比較の回数を減らせる利点があります
+- `std::pair` を構造化束縛で受け取ることもできます
+- イテレータに `*` を付けると、その位置の値にアクセスできます
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::minmax_element()` が返したイテレータを渡し、その間の距離を求めます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
+	// イテレータのペアを取得し、値と位置（何番目）を調べる
+	auto p = std::minmax_element(numbers.begin(), numbers.end());
+	std::cout << "min: " << *p.first << " : " << std::distance(numbers.begin(), p.first) << '\n';
+	std::cout << "max: " << *p.second << " : " << std::distance(numbers.begin(), p.second) << '\n';
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
+	auto[itMin, itMax] = std::minmax_element(words.begin(), words.end());
+	std::cout << "min: " << *itMin << " : " << std::distance(words.begin(), itMin) << '\n';
+	std::cout << "max: " << *itMax << " : " << std::distance(words.begin(), itMax) << '\n';
+}
 ```
 ```txt:出力
-
+min: -30 : 2
+max: 50 : 4
+---
+min: apple : 1
+max: dog : 3
 ```
 
 ## 1.10 ある値を、指定した最小値と最大値の範囲に収める
-- a
+- `std::clmap(value, min, max)` は、`value` を `min` 以上 `max` 以下の範囲に収めた値を返します
+- `value` が範囲内であれば `value` を、`min` 未満なら `min` を、`max` より大きいなら `max` を返します
 ```cpp
 
 ```
