@@ -325,7 +325,6 @@ max: dog : 3
 #include <iostream>
 #include <vector>
 #include <string>
-#include <string>
 #include <algorithm>
 
 int main()
@@ -490,21 +489,87 @@ int main()
 # 4. 範囲に対するソート
 
 ## 4.1 要素を小さい順にソートする
-- a
+- `std::sort(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある要素を、小さい順になるようにソートします
+- イテレータはランダムアクセスイテレータである必要があります
+> - `std::sort(itFirst, itLast)` の計算量:  $O(N log N)$
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 10, 3, -5, 5, 2, 2, 0, -1 };
+	// 小さい順にソート
+	std::sort(numbers.begin(), numbers.end());
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "bird", "cat", "dog", "apple" };
+	// 小さい順にソート
+	std::sort(words.begin(), words.end());
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
 
 ```
 
 ## 4.2 要素を大きい順にソートする
-- a
+- `std::sort(itFirst, itLast, comp)` は、範囲 `[itFirst, itLast)` にある要素を、`comp` による比較の結果でソートします
+- `comp` を `std::greater<>{}` にすることで、大きい順になるようにソートできます
+- イテレータはランダムアクセスイテレータである必要があります
+> - `std::sort(itFirst, itLast)` の計算量:  $O(N log N)$
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <functional> // std::greater のため
 
+int main()
+{
+	std::vector<int> numbers = { 10, 3, -5, 5, 2, 2, 0, -1 };
+	// 大きい順にソート
+	std::sort(numbers.begin(), numbers.end(), std::greater<>{});
+	for (const auto& number : numbers)
+	{
+		std::cout << number << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "bird", "cat", "dog", "apple" };
+	// 大きい順にソート
+	std::sort(words.begin(), words.end(), std::greater<>{});
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+10
+5
+3
+2
+2
+0
+-1
+-5
+---
+dog
+cat
+bird
+apple
 ```
 
 ## 4.3 上位 N 個をソートする
