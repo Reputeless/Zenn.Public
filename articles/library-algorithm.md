@@ -56,7 +56,7 @@ apple
 ```
 
 ## 1.2 二つの値のうち大きいほうの値を得る
-- `std::max(a, b)` は、`a` と `b` のうち小さいほうの値への const 参照を返します
+- `std::max(a, b)` は、`a` と `b` のうち大きいほうの値への const 参照を返します
 - 同じ場合は `a` への const 参照を返します
 - `a` と `b` が違う型の場合、`std::max<Type>(a, b)` のように型 `Type` を明示的に指定します
 ```cpp
@@ -141,7 +141,7 @@ int main()
 ```
 
 ## 1.5 配列の中から最小の要素とその位置を得る
-- `std::min_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最小の要素の位置を指すイテレータを返します
+- `std::min_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の中で最小の要素の位置を指すイテレータを返します
 - イテレータに `*` を付けると、その位置の値にアクセスできます
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::min_element()` が返したイテレータを渡し、その間の距離を求めます
 > - `std::min_element(itFirst, itLast)` の計算量: $O(N)$
@@ -184,7 +184,7 @@ c
 ```
 
 ## 1.6 配列の中から最大の要素とその位置を得る
-- `std::max_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最大の要素の位置を指すイテレータを返します
+- `std::max_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の中で最大の要素の位置を指すイテレータを返します
 - イテレータに `*` を付けると、その位置の値にアクセスできます
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::max_element()` が返したイテレータを渡し、その間の距離を求めます
 > - `std::max_element(itFirst, itLast)` の計算量: $O(N)$
@@ -285,7 +285,7 @@ max: 120
 ```
 
 ## 1.9 配列の中から最小の要素と最大の要素、およびそれらの位置を一度に得る
-- `std::minmax_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある要素の最小値、最大値を指すイテレータを組にした `std::pair` を返します
+- `std::minmax_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の中で最小の要素、最大の要素を指すイテレータを組にした `std::pair` を返します
 - `std::pair`の `.first` が小さいほうの値で、`.second` が大きいほうの値です
 - 個別に `std::min_element(itFirst, itLast)`, `std::max_element(itFirst, itLast)` を呼ぶよりも大小比較の回数を減らせる利点があります
 - `std::pair` を構造化束縛で受け取ることもできます
