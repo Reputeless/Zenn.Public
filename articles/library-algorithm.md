@@ -515,7 +515,7 @@ int main()
 ```
 
 ## 2.6 指定した値の要素が最初に現れる位置を調べる
-![](https://storage.googleapis.com/zenn-user-upload/rxzbih2q6a2fbw70ov4h3a2sllfz)
+![](https://storage.googleapis.com/zenn-user-upload/bivseg4huqf8e73r9yc0lx9nk798)
 - `std::find(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` の要素の中で `value` と等しい最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find()` が返したイテレータを渡し、その間の距離を求めます
@@ -591,7 +591,7 @@ not found
 ```
 
 ## 2.7 条件を満たす要素が最初に現れる位置を調べる
-![](https://storage.googleapis.com/zenn-user-upload/9htijw4sgq3e0mfmm3k20e87jrbe)
+![](https://storage.googleapis.com/zenn-user-upload/cmm0u0vadt7vlffehzmhaiameypq)
 - `std::find_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の要素の中で、条件 `unaryPred` を満たす最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find_if()` が返したイテレータを渡し、その間の距離を求めます
@@ -722,7 +722,7 @@ dog dog dog
 
 ## 3.2 指定した値の要素を削除する
 ![](https://storage.googleapis.com/zenn-user-upload/14n9ju6cs33n08nhzgt2guxhvfrs)  
-![](https://storage.googleapis.com/zenn-user-upload/2hql5smxcc96fwwkbsrplz40ahrh)  
+![](https://storage.googleapis.com/zenn-user-upload/tlbdawpm1u914eq1m3alyvcirgl3)  
 ![](https://storage.googleapis.com/zenn-user-upload/265t7mqtqmoln39qis2v6gtp645t)  
 - `std::remove(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を `value` に等しい要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
@@ -768,7 +768,7 @@ bird cat dog
 
 ## 3.3 条件を満たす要素を削除する
 ![](https://storage.googleapis.com/zenn-user-upload/0eawt9k48qk0dsztugf6894is2g9)  
-![](https://storage.googleapis.com/zenn-user-upload/b90jcf9vi41y850p5stov7rvhw1x)  
+![](https://storage.googleapis.com/zenn-user-upload/yqa2zpolj5n393sgrkjtwv9u1uyx)  
 ![](https://storage.googleapis.com/zenn-user-upload/10f3zfxoorsu6wdqgbgc8dmjl216)  
 - `std::remove_if(itFirst, itLast, unaryPred)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を条件 `unaryPred` を満たす要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
@@ -856,32 +856,177 @@ retupmoc
 
 ## 3.5 要素を回転させる
 ![](https://storage.googleapis.com/zenn-user-upload/00ubzrhcws3ywiv75aplss1u2tkj)  
-![](https://storage.googleapis.com/zenn-user-upload/wavkoy39gim51pko8qdcizja79w2)  
-![](https://storage.googleapis.com/zenn-user-upload/kee64uyg3a23se7w55wvd7wm03ts)  
-- `std::rotate(itFirst, itMiddle, itLast)` は、
+![](https://storage.googleapis.com/zenn-user-upload/4xyfcvmfvg63ulzjgvnoc7pwn29r)  
+![](https://storage.googleapis.com/zenn-user-upload/h39ztens5lp1erqgrudaomemgy9i)  
+- `std::rotate(itFirst, itMiddle, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、イテレータ `itMiddle` で指した要素が先頭の要素になるよう、左方向に回転させて並びかえます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	// 3 個分、左に回転
+	std::rotate(numbers.begin(), numbers.begin() + 3, numbers.end());
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	std::string word = "computer";
+	std::cout << word << '\n';
+
+	// 5 個分、左に回転
+	std::rotate(word.begin(), word.begin() + 5, word.end());
+	std::cout << word << '\n';
+}
 ```
 ```txt:出力
-
+0 1 2 3 4 5 6 7 8 9
+3 4 5 6 7 8 9 0 1 2
+---
+computer
+tercompu
 ```
 
-## 3.6 同じ値が連続しないよう要素を削除する
-- a
+## 3.6 同じ値が隣同士にならないよう要素を削除する
+![](https://storage.googleapis.com/zenn-user-upload/ju1t0e4osdok3jw0g78dfjuvu4em)  
+![](https://storage.googleapis.com/zenn-user-upload/oal49bx7uj5j3pc46so8nx3ngnwm)  
+![](https://storage.googleapis.com/zenn-user-upload/ajffs25zekco5k7e1poxetj6but4)  
+- `std::unique(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を隣同士で重複する要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
+- 有効範囲に残る要素の前後関係は元の順序が維持されます
+- 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
+- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::unique()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から隣同士で重複する要素を削除できます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 1, 1, 3, 4, 3, 3, 2, 0, 2 };
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	// 隣同士で重複する要素を削除
+	numbers.erase(std::unique(numbers.begin(), numbers.end()), numbers.end());
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	std::string word = "communication";
+	std::cout << "size: " << word.size() << '\n';
+	std::cout << word << '\n';
+
+	// 隣同士で重複する要素を削除
+	word.erase(std::unique(word.begin(), word.end()), word.end());
+	std::cout << "size: " << word.size() << '\n';
+	std::cout << word << '\n';
+}
 ```
 ```txt:出力
-
+size: 10
+1 1 1 3 4 3 3 2 0 2
+size: 7
+1 3 4 3 2 0 2
+---
+size: 13
+communication
+size: 12
+comunication
 ```
 
-## 3.7 重複する要素を無くす
-- a
+## 3.7 配列から重複する要素を無くす
+![](https://storage.googleapis.com/zenn-user-upload/8ad2ohrp1h314mi1ae53hundxxg6)  
+![](https://storage.googleapis.com/zenn-user-upload/wmw38txnyspy7lhguqp5ievf3nln)  
+![](https://storage.googleapis.com/zenn-user-upload/zdcgymqoz7tlorn7nq3bpsb7sbcw)  
+![](https://storage.googleapis.com/zenn-user-upload/2n8y9c8nlcrk1iz2q7ciicnqqtps)  
+- ある配列について、ソートしてから「3.6 同じ値が隣同士にならないよう要素を削除する」の操作を行うと、配列から重複する要素を除外できます
 ```cpp
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 1, 1, 3, 4, 3, 3, 2, 0, 2 };
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	// ソート
+	std::sort(numbers.begin(), numbers.end());
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	// 隣同士で重複する要素を削除
+	numbers.erase(std::unique(numbers.begin(), numbers.end()), numbers.end());
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	std::string word = "communication";
+	std::cout << "size: " << word.size() << '\n';
+	std::cout << word << '\n';
+
+	// ソート
+	std::sort(word.begin(), word.end());
+	std::cout << "size: " << word.size() << '\n';
+	std::cout << word << '\n';
+
+	// 隣同士で重複する要素を削除
+	word.erase(std::unique(word.begin(), word.end()), word.end());
+	std::cout << "size: " << word.size() << '\n';
+	std::cout << word << '\n';
+}
 ```
 ```txt:出力
-
+size: 10
+1 1 1 3 4 3 3 2 0 2
+size: 10
+0 1 1 1 2 2 3 3 3 4
+size: 5
+0 1 2 3 4
+---
+size: 13
+communication
+size: 13
+acciimmnnootu
+size: 8
+acimnotu
 ```
 
 
@@ -1583,7 +1728,7 @@ int main()
 # 7. 順列
 
 ## 7.1 順列を作成する
-- `std::next_permutaion(itFirst, itLast)` は、範囲 `[itFirst, itLast)` について、辞書順で次にくる順列になるよう要素を並び替えます
+- `std::next_permutaion(itFirst, itLast)` は、範囲 `[itFirst, itLast)` について、辞書順で次にくる順列になるよう要素を並びかえます
 - 次の順列が存在する場合は `true`, それ以外の場合は `false` を返します
 - ソート済みの範囲から始め、`do while()` と組み合わせることで、全ての順列を列挙できます
 > - `std::next_permutaion(itFirst, itLast)` の計算量: $O(N)$
