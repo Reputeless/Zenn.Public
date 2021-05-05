@@ -457,7 +457,7 @@ int main()
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "apple", "bird", "apple", "cat" };
-	std::ptrdiff_t n = std::count(words.begin(), words.end(), "apple"); // "apple" の個数
+	std::size_t n = std::count(words.begin(), words.end(), "apple"); // "apple" の個数
 	std::cout << n << '\n';
 	std::cout << std::count(words.begin(), words.end(), "dog") << '\n'; // "dog の個数
 }
@@ -484,6 +484,9 @@ int main()
 ![](https://storage.googleapis.com/zenn-user-upload/rxzbih2q6a2fbw70ov4h3a2sllfz)
 - `std::find(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` の要素の中で `value` と等しい最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find()` が返したイテレータを渡し、その間の距離を求めます
+> - `std::find(itFirst, itLast, value)` の計算量: $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
 
 ```
@@ -495,6 +498,9 @@ int main()
 ![](https://storage.googleapis.com/zenn-user-upload/9htijw4sgq3e0mfmm3k20e87jrbe)
 - `std::find_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の要素の中で、条件 `unaryPred` を満たす最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
+- イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find_if()` が返したイテレータを渡し、その間の距離を求めます
+> - `std::find_if(itFirst, itLast, unaryPred)` の計算量: $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
 
 ```
