@@ -1007,6 +1007,8 @@ comunication
 ![](https://storage.googleapis.com/zenn-user-upload/2n8y9c8nlcrk1iz2q7ciicnqqtps)  
 - ある配列について、ソートしてから「3.6 同じ値が隣同士にならないよう要素を削除する」の操作を行うと、配列から重複する要素を除外できます
 ```cpp
+#include <iostream>
+#include <vector>
 #include <string>
 #include <algorithm>
 
@@ -1092,8 +1094,9 @@ int main()
 	std::sort(numbers.begin(), numbers.end());
 	for (const auto& number : numbers)
 	{
-		std::cout << number << '\n';
+		std::cout << number << ' ';
 	}
+	std::cout << '\n';
 
 	std::cout << "---\n";
 
@@ -1102,26 +1105,15 @@ int main()
 	std::sort(words.begin(), words.end());
 	for (const auto& word : words)
 	{
-		std::cout << word << '\n';
+		std::cout << word << ' ';
 	}
+	std::cout << '\n';
 }
 ```
 ```txt:出力
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
+0 1 2 3 4 5 6 7 8 9 
 ---
-apple
-bird
-cat
-dog
+apple bird cat dog 
 ```
 
 ## 4.2 要素を大きい順にソートする
@@ -1144,8 +1136,9 @@ int main()
 	std::sort(numbers.begin(), numbers.end(), std::greater<>{});
 	for (const auto& number : numbers)
 	{
-		std::cout << number << '\n';
+		std::cout << number << ' ';
 	}
+	std::cout << '\n';
 
 	std::cout << "---\n";
 
@@ -1154,26 +1147,15 @@ int main()
 	std::sort(words.begin(), words.end(), std::greater<>{});
 	for (const auto& word : words)
 	{
-		std::cout << word << '\n';
+		std::cout << word << ' ';
 	}
+	std::cout << '\n';
 }
 ```
 ```txt:出力
-9
-8
-7
-6
-5
-4
-3
-2
-1
-0
+9 8 7 6 5 4 3 2 1 0 
 ---
-dog
-cat
-bird
-apple
+dog cat bird apple 
 ```
 
 ## 4.3 上位 N 個までを求めるソートをする
@@ -1193,8 +1175,9 @@ int main()
 	std::partial_sort(numbers.begin(), numbers.begin() + 4, numbers.end());
 	for (const auto& number : numbers)
 	{
-		std::cout << number << '\n';
+		std::cout << number << ' ';
 	}
+	std::cout << '\n';
 
 	std::cout << "---\n";
 
@@ -1203,26 +1186,15 @@ int main()
 	std::partial_sort(words.begin(), words.begin() + 2, words.end());
 	for (const auto& word : words)
 	{
-		std::cout << word << '\n';
+		std::cout << word << ' ';
 	}
+	std::cout << '\n';
 }
 ```
 ```txt:出力（例）
-0
-1
-2
-3
-5
-6
-4
-9
-8
-7
+0 1 2 3 5 6 4 9 8 7 
 ---
-apple
-bird
-dog
-cat
+apple bird dog cat 
 ```
 
 ## 4.4 N 番目に小さい要素を求める
@@ -1246,8 +1218,9 @@ int main()
 	// 4 番目より左は小さい要素、4 番目より右は大きい要素であることは保証
 	for (const auto& number : numbers)
 	{
-		std::cout << number << '\n';
+		std::cout << number << ' ';
 	}
+	std::cout << '\n';
 
 	std::cout << "---\n";
 
@@ -1259,29 +1232,17 @@ int main()
 	// 2 番目より左は小さい要素、2 番目より右は大きい要素であることは保証
 	for (const auto& word : words)
 	{
-		std::cout << word << '\n';
+		std::cout << word << ' ';
 	}
+	std::cout << '\n';
 }
 ```
 ```txt:出力
 4th : 3
-1
-0
-2
-3
-4
-5
-6
-9
-8
-7
+1 0 2 3 4 5 6 9 8 7 
 ---
 2nd : bird
-apple
-bird
-dog
-cat
-egg
+apple bird dog cat egg 
 ```
 
 
