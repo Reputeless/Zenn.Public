@@ -24,25 +24,25 @@ free: true
 int main()
 {
 	int a = 30, b = 60;
-	std::cout << std::min(a, b) << '\n';
+	std::cout << std::min(a, b) << '\n'; // 小さいほうの値を出力
 
 	double c = 0.5, d = -10.5;
-	std::cout << std::min(c, d) << '\n';
+	std::cout << std::min(c, d) << '\n'; // 小さいほうの値を出力
 
 	char e = 'a', f = 'z';
-	std::cout << std::min(e, f) << '\n';
+	std::cout << std::min(e, f) << '\n'; // 小さいほうの値を出力
 
 	std::string g = "apple", h = "bird";
-	std::cout << std::min(g, h) << '\n';
+	std::cout << std::min(g, h) << '\n'; // 小さいほうの値を出力
 
 	// size_t と int なので <> で明示的に型を指定
-	std::cout << std::min<size_t>(g.size(), 1) << '\n';
+	std::cout << std::min<size_t>(g.size(), 1) << '\n'; // 小さいほうの値を出力
 	
 	// 1 を size_t 型にするのもあり
-	std::cout << std::min(g.size(), size_t(1)) << '\n';
+	std::cout << std::min(g.size(), size_t(1)) << '\n'; // 小さいほうの値を出力
 	
 	// 整数オーバーフローの心配が無ければ、これもあり
-	std::cout << std::min(static_cast<int>(g.size()), 1) << '\n';
+	std::cout << std::min(static_cast<int>(g.size()), 1) << '\n'; // 小さいほうの値を出力
 }
 ```
 ```txt:出力
@@ -67,25 +67,25 @@ apple
 int main()
 {
 	int a = 30, b = 60;
-	std::cout << std::max(a, b) << '\n';
+	std::cout << std::max(a, b) << '\n'; // 大きいほうの値を出力
 
 	double c = 0.5, d = -10.5;
-	std::cout << std::max(c, d) << '\n';
+	std::cout << std::max(c, d) << '\n'; // 大きいほうの値を出力
 
 	char e = 'a', f = 'z';
-	std::cout << std::max(e, f) << '\n';
+	std::cout << std::max(e, f) << '\n'; // 大きいほうの値を出力
 
 	std::string g = "apple", h = "bird";
-	std::cout << std::max(g, h) << '\n';
+	std::cout << std::max(g, h) << '\n'; // 大きいほうの値を出力
 
 	// size_t と int なので <> で明示的に型を指定
-	std::cout << std::max<size_t>(g.size(), 1) << '\n';
+	std::cout << std::max<size_t>(g.size(), 1) << '\n'; // 大きいほうの値を出力
 	
 	// 1 を size_t 型にするのもあり
-	std::cout << std::max(g.size(), size_t(1)) << '\n';
+	std::cout << std::max(g.size(), size_t(1)) << '\n'; // 大きいほうの値を出力
 	
 	// 整数オーバーフローの心配が無ければ、これもあり
-	std::cout << std::max(static_cast<int>(g.size()), 1) << '\n';
+	std::cout << std::max(static_cast<int>(g.size()), 1) << '\n'; // 大きいほうの値を出力
 }
 ```
 ```txt:出力
@@ -108,10 +108,10 @@ bird
 int main()
 {
 	int a = 30, b = 60, c = 50;
-	std::cout << std::min({ a, b, c }) << '\n';
+	std::cout << std::min({ a, b, c }) << '\n'; // 最小値を出力
 
 	double d = 0.1, e = 0.2, f = 0.3, g = 0.4;
-	std::cout << std::min({ d, e, f, g, -0.1 }) << '\n';
+	std::cout << std::min({ d, e, f, g, -0.1 }) << '\n'; // 最小値を出力
 }
 ```
 ```txt:出力
@@ -129,10 +129,10 @@ int main()
 int main()
 {
 	int a = 30, b = 60, c = 50;
-	std::cout << std::max({ a, b, c }) << '\n';
+	std::cout << std::max({ a, b, c }) << '\n'; // 最大値を出力
 
 	double d = 0.1, e = 0.2, f = 0.3, g = 0.4;
-	std::cout << std::max({ d, e, f, g, -0.1 }) << '\n';
+	std::cout << std::max({ d, e, f, g, -0.1 }) << '\n'; // 最大値を出力
 }
 ```
 ```txt:出力
@@ -155,21 +155,21 @@ int main()
 	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };	
 	// 位置（何番目）の情報が不要な場合、関数の戻り値に直接 * を使うと短く書ける
 	int minNumber = *std::min_element(numbers.begin(), numbers.end());
-	std::cout << minNumber << '\n';
+	std::cout << minNumber << '\n'; // 最小値を出力
 	// イテレータを取得し、値と位置（何番目）を調べる
 	auto it = std::min_element(numbers.begin(), numbers.end());
-	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n';
+	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n'; // 最小値とその位置を出力
 
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
 	auto it2 = std::min_element(words.begin(), words.end());
-	std::cout << *it2 << " : " << std::distance(words.begin(), it2) << '\n';
+	std::cout << *it2 << " : " << std::distance(words.begin(), it2) << '\n'; // 最小値とその位置を出力
 
 	std::cout << "---\n";
 
 	std::string s = "computer";
-	std::cout << *std::min_element(s.begin(), s.end()) << '\n';
+	std::cout << *std::min_element(s.begin(), s.end()) << '\n'; // 最小値を出力
 }
 ```
 ```txt:出力
@@ -196,21 +196,21 @@ int main()
 	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };	
 	// 位置（何番目）の情報が不要な場合、関数の戻り値に直接 * を使うと短く書ける
 	int minNumber = *std::max_element(numbers.begin(), numbers.end());
-	std::cout << minNumber << '\n';
+	std::cout << minNumber << '\n'; // 最大値を出力
 	// イテレータを取得し、値と位置（何番目）を調べる
 	auto it = std::max_element(numbers.begin(), numbers.end());
-	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n';
+	std::cout << *it << " : " << std::distance(numbers.begin(), it) << '\n'; // 最大値とその位置を出力
 
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
 	auto it2 = std::max_element(words.begin(), words.end());
-	std::cout << *it2 << " : " << std::distance(words.begin(), it2) << '\n';
+	std::cout << *it2 << " : " << std::distance(words.begin(), it2) << '\n'; // 最大値とその位置を出力
 
 	std::cout << "---\n";
 
 	std::string s = "computer";
-	std::cout << *std::max_element(s.begin(), s.end()) << '\n';
+	std::cout << *std::max_element(s.begin(), s.end()) << '\n'; // 最大値を出力
 }
 ```
 ```txt:出力
@@ -235,13 +235,13 @@ int main()
 {
 	int a = 100, b = -20;
 	auto p = std::minmax(a, b);
-	std::cout << "min: " << p.first << '\n';
-	std::cout << "max: " << p.second << '\n';
+	std::cout << "min: " << p.first << '\n'; // 小さいほうの値を出力
+	std::cout << "max: " << p.second << '\n'; // 大きいほうの値を出力
 
 	// 構造化束縛を利用する場合
 	auto [min, max] = std::minmax(a, b);
-	std::cout << "min: " << min << '\n';
-	std::cout << "max: " << max << '\n';
+	std::cout << "min: " << min << '\n'; // 小さいほうの値を出力
+	std::cout << "max: " << max << '\n'; // 大きいほうの値を出力
 }
 ```
 ```txt:出力
@@ -264,13 +264,13 @@ int main()
 {
 	int a = 100, b = -20, c = -50, d = 120;
 	auto p = std::minmax({ a, b, c, d });
-	std::cout << "min: " << p.first << '\n';
-	std::cout << "max: " << p.second << '\n';
+	std::cout << "min: " << p.first << '\n'; // 最小値を出力
+	std::cout << "max: " << p.second << '\n'; // 最大値を出力
 
 	// 構造化束縛を利用する場合
 	auto [min, max] = std::minmax({ a, b, c, d });
-	std::cout << "min: " << min << '\n';
-	std::cout << "max: " << max << '\n';
+	std::cout << "min: " << min << '\n'; // 最小値を出力
+	std::cout << "max: " << max << '\n'; // 最大値を出力
 }
 ```
 ```txt:出力
@@ -298,15 +298,15 @@ int main()
 	std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
 	// イテレータのペアを取得し、値と位置（何番目）を調べる
 	auto p = std::minmax_element(numbers.begin(), numbers.end());
-	std::cout << "min: " << *p.first << " : " << std::distance(numbers.begin(), p.first) << '\n';
-	std::cout << "max: " << *p.second << " : " << std::distance(numbers.begin(), p.second) << '\n';
+	std::cout << "min: " << *p.first << " : " << std::distance(numbers.begin(), p.first) << '\n'; // 最小値とその位置を出力
+	std::cout << "max: " << *p.second << " : " << std::distance(numbers.begin(), p.second) << '\n'; // 最大値とその位置を出力
 
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
 	auto[itMin, itMax] = std::minmax_element(words.begin(), words.end());
-	std::cout << "min: " << *itMin << " : " << std::distance(words.begin(), itMin) << '\n';
-	std::cout << "max: " << *itMax << " : " << std::distance(words.begin(), itMax) << '\n';
+	std::cout << "min: " << *itMin << " : " << std::distance(words.begin(), itMin) << '\n'; // 最小値とその位置を出力
+	std::cout << "max: " << *itMax << " : " << std::distance(words.begin(), itMax) << '\n'; // 最大値とその位置を出力
 }
 ```
 ```txt:出力
@@ -330,17 +330,17 @@ max: dog : 3
 int main()
 {
 	int a = 50;
-	std::cout << std::clamp(a, 0, 100) << '\n';
-	std::cout << std::clamp(a, 0, 10) << '\n';
-	std::cout << std::clamp(a, 100, 200) << '\n';
+	std::cout << std::clamp(a, 0, 100) << '\n'; // a を 0 以上 100 以下に収める
+	std::cout << std::clamp(a, 0, 10) << '\n'; // a を 0 以上 10 以下に収める
+	std::cout << std::clamp(a, 100, 200) << '\n'; // a を 100 以上 200 以下に収める
 
 	std::cout << "---\n";
 
 	std::size_t b = 50;
 	// size_t と int が混在しているため <> で明示的に型を指定
-	std::cout << std::clamp<size_t>(b, 0, 100) << '\n';
-	std::cout << std::clamp<size_t>(b, 0, 10) << '\n';
-	std::cout << std::clamp<size_t>(b, 100, 200) << '\n';
+	std::cout << std::clamp<size_t>(b, 0, 100) << '\n'; // b を 0 以上 100 以下に収める
+	std::cout << std::clamp<size_t>(b, 0, 10) << '\n'; // b を 0 以上 10 以下に収める
+	std::cout << std::clamp<size_t>(b, 100, 200) << '\n'; // b を 100 以上 200 以下に収める
 }
 ```
 ```txt:出力
