@@ -734,7 +734,7 @@ dog dog dog
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
-- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
+- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した値と等しい要素をすべて削除できます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -801,7 +801,7 @@ bird cat dog
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
-- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove_if()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
+- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove_if()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から条件を満たす要素をすべて削除できます
 ```cpp
 #include <iostream>
 #include <vector>
