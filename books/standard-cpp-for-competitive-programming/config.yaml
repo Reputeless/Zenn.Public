@@ -8,5 +8,6 @@ chapters:
   - library-vector
   - library-numeric
   - library-unordered_set
+  - library-algorithm
   - next
   - acknowledgments

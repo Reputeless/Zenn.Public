@@ -1,14 +1,7 @@
 ---
 title: "<algorithm>"
-emoji: "🌡"
-type: "tech"
-topics: ["cpp"]
-published: false
----
-
-
-title: "<algorithm>"
 free: true
+---
 
 # 1. 最小値と最大値
 

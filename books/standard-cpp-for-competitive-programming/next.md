@@ -6,7 +6,6 @@ free: true
 次は
 
 - `<cmath>`
-- `<algorithm>`
 - `<utility>`
 - `<stack>`
 - `<queue>`
