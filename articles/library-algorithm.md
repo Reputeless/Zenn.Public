@@ -360,6 +360,7 @@ int main()
 - `std::all_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素が条件 `unaryPred` を満たしているかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
+> - `std::all_of(itFirst, itLast, unaryPred)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -388,6 +389,7 @@ true
 - `std::any_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素があるかを `bool` 型の値で返します
 - 範囲が空の場合は `false` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
+> - `std::any_of(itFirst, itLast, unaryPred)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -416,6 +418,7 @@ false
 - `std::none_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素がないかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
+> - `std::none_of(itFirst, itLast, unaryPred)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -442,6 +445,7 @@ true
 
 ## 2.4 指定した値と同じ要素の個数を数える
 - `std::count(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` に存在する `value` の個数を返します
+> - `std::count(itFirst, itLast, value)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -473,11 +477,33 @@ int main()
 ## 2.5 条件を満たす要素の個数を数える
 - `std::count_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に存在する、条件 `unaryPred` を満たす要素の個数を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
+> - `std::count_if(itFirst, itLast, unaryPred)` の計算量: $O(N)$
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> coins = { 10, 10, 50, 100, 1, 10, 500, 10 };
+	std::cout << std::count_if(coins.begin(), coins.end(), [](int n){ return n <= 10; }) << '\n'; // 10 以下の個数
+	std::cout << std::count_if(coins.begin(), coins.end(), [](int n){ return (n == 1) || (n == 5); }) << '\n'; // 1 または 5 の個数
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "apple", "bird", "apple", "cat" };
+	std::size_t n = std::count_if(words.begin(), words.end(), [](const std::string& s) { return s.size() == 3; }); // 3 文字の単語の個数
+	std::cout << n << '\n';
+	std::cout << std::count_if(words.begin(), words.end(), [](const std::string& s) { return s.size() <= 4; }) << '\n'; // 4 文字以下の単語の個数
+}
 ```
 ```txt:出力
-
+5
+1
+---
+1
+2
 ```
 
 ## 2.6 指定した値の要素が最初に現れる位置を調べる
@@ -488,10 +514,68 @@ int main()
 > - `std::find(itFirst, itLast, value)` の計算量: $O(N)$
 > - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+	auto it = std::find(numbers.begin(), numbers.end(), 4); // 4 を検索
+	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(numbers.begin(), it) << '\n';
+	}
+
+	it = std::find(numbers.begin(), numbers.end(), 0); // 0 を検索
+	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(numbers.begin(), it) << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "apple", "cat", "bird", "apple" };
+	auto it2 = std::find(words.begin(), words.end(), "apple"); // "apple" を検索
+	if (it2 == words.end()) // itLast と同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(words.begin(), it2) << '\n';
+	}
+
+	it2 = std::find(words.begin(), words.end(), "dog"); // "dog" を検索
+	if (it2 == words.end()) // itLast と同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(words.begin(), it2) << '\n';
+	}
+}
 ```
 ```txt:出力
-
+pos: 4
+not found
+---
+pos: 0
+not found
 ```
 
 ## 2.7 条件を満たす要素が最初に現れる位置を調べる
@@ -502,10 +586,68 @@ int main()
 > - `std::find_if(itFirst, itLast, unaryPred)` の計算量: $O(N)$
 > - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+	auto it = std::find_if(numbers.begin(), numbers.end(), [](int n) { return (n % 2 == 0); }); // 偶数を検索
+	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(numbers.begin(), it) << '\n';
+	}
+
+	it = std::find_if(numbers.begin(), numbers.end(), [](int n) { return (n < 0); }); // 負の数を検索
+	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(numbers.begin(), it) << '\n';
+	}
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "apple", "cat", "bird", "apple" };
+	auto it2 = std::find_if(words.begin(), words.end(), [](const std::string& s) { return (s.size() == 6); }); // 6 文字の単語を検索
+	if (it2 == words.end()) // itLast を同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(words.begin(), it2) << '\n';
+	}
+
+	it2 = std::find_if(words.begin(), words.end(), [](const std::string& s) { return (s == "bird") || (s == "cat"); }); // "bird" または "cat" を検索
+	if (it2 == words.end()) // itLast を同じなら見つからなかったということ
+	{
+		std::cout << "not found\n";
+	}
+	else
+	{
+		// std::distance で 2 つの位置の距離を計算
+		std::cout << "pos: " << std::distance(words.begin(), it2) << '\n';
+	}
+}
 ```
 ```txt:出力
-
+pos: 3
+not found
+---
+not found
+pos: 1
 ```
 
 
