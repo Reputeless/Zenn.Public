@@ -1307,8 +1307,9 @@ int main()
 	// ソート済みの状態が保たれていることを確認
 	for (const auto& word : words)
 	{
-		std::cout << word << '\n';
+		std::cout << word << ' ';
 	}
+	std::cout << '\n';
 }
 ```
 ```txt:出力
@@ -1320,12 +1321,7 @@ int main()
 (500): 5
 (501): 6
 ---
-alarm
-apple
-banana
-bird
-cat
-dog
+alarm apple banana bird cat dog 
 ```
 
 ## 5.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置 (upper_bound) を二分探索で取得する
@@ -1387,8 +1383,9 @@ int main()
 	// ソート済みの状態が保たれていることを確認
 	for (const auto& word : words)
 	{
-		std::cout << word << '\n';
+		std::cout << word << ' ';
 	}
+	std::cout << '\n';
 }
 ```
 ```txt:出力
@@ -1400,12 +1397,7 @@ int main()
 (500): 6
 (501): 6
 ---
-alarm
-apple
-banana
-bird
-cat
-dog
+alarm apple banana bird cat dog 
 ```
 
 ## 5.3 lower_bound と upper_bound の結果を同時に取得する
