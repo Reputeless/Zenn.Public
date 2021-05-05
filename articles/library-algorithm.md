@@ -254,7 +254,7 @@ max: 100
 ## 1.8 三つ以上の値から最小値と最大値を一度に得る
 - `std::minmax({ ... })` は、リスト `{ ... }` 内の要素の最小値、最大値を組にした `std::pair` を返します
 - `std::pair`の `.first` が小さいほうの値で、`.second` が大きいほうの値です
-- 個別に `std::min(a, b)`, `std::max(a, b)` を呼ぶよりも大小比較の回数を減らせる利点があります
+- 個別に `std::min({ ... })`, `std::max({ ... })` を呼ぶよりも大小比較の回数を減らせる利点があります
 - `std::pair` を構造化束縛で受け取ることもできます
 ```cpp
 #include <iostream>
@@ -401,7 +401,7 @@ int main()
 	std::vector<double> b = { 36.2, 36.6, 36.9 };
 	std::vector<double> c;
 
-	std::cout << std::boolalpha; s// bool 型の値を true / false で表示させるためのマニピュレータ
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
 	// 37.5℃ 以上の人がいる？
 	std::cout << std::any_of(a.begin(), a.end(), [](double t) { return 37.5 <= t; }) << '\n';
 	std::cout << std::any_of(b.begin(), b.end(), [](double t) { return 37.5 <= t; }) << '\n';
@@ -444,7 +444,7 @@ true
 ```
 
 ## 2.4 指定した値と同じ要素の個数を数える
-- `std::count(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` に存在する `value` の個数を返します
+- `std::count(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` に存在する、`value` と等しい要素の個数を返します
 > - `std::count(itFirst, itLast, value)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
@@ -515,7 +515,7 @@ int main()
 ```
 
 ## 2.6 指定した値の要素が最初に現れる位置を調べる
-![](https://storage.googleapis.com/zenn-user-upload/bivseg4huqf8e73r9yc0lx9nk798)
+![](https://storage.googleapis.com/zenn-user-upload/merltfiqqm7jouov7jnz4kvxewt7)
 - `std::find(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` の要素の中で `value` と等しい最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find()` が返したイテレータを渡し、その間の距離を求めます
@@ -591,7 +591,7 @@ not found
 ```
 
 ## 2.7 条件を満たす要素が最初に現れる位置を調べる
-![](https://storage.googleapis.com/zenn-user-upload/cmm0u0vadt7vlffehzmhaiameypq)
+![](https://storage.googleapis.com/zenn-user-upload/y41i3iwzyzxs1pyxq7l2ym3bbzkx)
 - `std::find_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の要素の中で、条件 `unaryPred` を満たす最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find_if()` が返したイテレータを渡し、その間の距離を求めます
