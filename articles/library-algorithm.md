@@ -14,7 +14,7 @@ free: true
 
 ## 1.1 二つの値のうち小さいほうの値を得る
 - `std::min(a, b)` は、`a` と `b` のうち小さいほうの値への const 参照を返します
-- 同じ場合は `a` を返します
+- 同じ場合は `a` への const 参照を返します
 - `a` と `b` が違う型の場合、`std::min<Type>(a, b)` のように型 `Type` を明示的に指定します
 ```cpp
 #include <iostream>
@@ -57,7 +57,7 @@ apple
 
 ## 1.2 二つの値のうち大きいほうの値を得る
 - `std::max(a, b)` は、`a` と `b` のうち小さいほうの値への const 参照を返します
-- 同じ場合は `a` を返します
+- 同じ場合は `a` への const 参照を返します
 - `a` と `b` が違う型の場合、`std::max<Type>(a, b)` のように型 `Type` を明示的に指定します
 ```cpp
 #include <iostream>
