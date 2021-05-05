@@ -1011,7 +1011,7 @@ comunication
 ![](https://storage.googleapis.com/zenn-user-upload/wmw38txnyspy7lhguqp5ievf3nln)  
 ![](https://storage.googleapis.com/zenn-user-upload/zdcgymqoz7tlorn7nq3bpsb7sbcw)  
 ![](https://storage.googleapis.com/zenn-user-upload/2n8y9c8nlcrk1iz2q7ciicnqqtps)  
-- ある配列について、ソートしてから「3.6 同じ値が隣同士にならないよう要素を削除する」の操作を行うと、配列から重複する要素を除外できます
+- ある配列について、ソートしてから「3.6 同じ値が隣同士にならないよう要素を削除する」の操作を行うと、重複する要素を配列から削除できます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -1166,7 +1166,7 @@ dog cat bird apple
 
 ## 4.3 上位 N 個までを求めるソートをする
 ![](https://storage.googleapis.com/zenn-user-upload/piahsffvr41zhkm6b79507xvo7e0)
-- `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、 それ以降については余計なソートをしないことで、`std::sort(itFirst, itLast)` より定数倍高速化します
+- `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、それ以降についてはソートが未完了のままにすることで、`std::sort(itFirst, itLast)` より定数倍高速化します
 > - `std::partial_sort(itFirst, itMiddle, itLast)` の計算量:  $O(N log N)$
 ```cpp
 #include <iostream>
@@ -1205,7 +1205,7 @@ apple bird dog cat
 
 ## 4.4 N 番目に小さい要素を求める
 ![](https://storage.googleapis.com/zenn-user-upload/hwom96sdwa49wi3tsv5il3ijrouk)
-- `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `itNth` の位置に上位 `N = (itNth - itFirst)` 番目の要素が置かれるようにし、それより前の要素はすべて N 番目の要素より小さく、それ以降の要素はすべて N 番目の要素よりも大きい要素が並ぶということだけ保証する、ごく部分的なソートを行います。
+- `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `itNth` の位置に上位 `N = (itNth - itFirst)` 番目の要素が置かれるようにし、それより前の要素はすべて N 番目の要素より小さく、それ以降の要素はすべて N 番目の要素よりも大きい要素が並ぶということだけ保証する、部分的なソートを行います
 - 上位 N 番目の要素を求めたいだけの時、`std::sort(itFirst, itLast)` や `std::partial_sort(itFirst, itNth, itLast)` を使うより計算量を小さくできます
 > - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)$
 ```cpp
@@ -1220,8 +1220,6 @@ int main()
 	// 4 番目に小さい要素を探す
 	std::nth_element(numbers.begin(), numbers.begin() + 3, numbers.end());
 	std::cout << "4th : " << numbers[3] << '\n';
-
-	// 4 番目より左は小さい要素、4 番目より右は大きい要素であることは保証
 	for (const auto& number : numbers)
 	{
 		std::cout << number << ' ';
@@ -1234,8 +1232,6 @@ int main()
 	// 2 番目に小さい要素を探す
 	std::nth_element(words.begin(), words.begin() + 1, words.end());
 	std::cout << "2nd : " << words[1] << '\n';
-
-	// 2 番目より左は小さい要素、2 番目より右は大きい要素であることは保証
 	for (const auto& word : words)
 	{
 		std::cout << word << ' ';
