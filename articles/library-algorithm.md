@@ -747,7 +747,7 @@ int main()
 	}
 	std::cout << '\n';
 
-	std::vector<std::string> words = { "apple", "bird", "cat", "apple" };
+	std::vector<std::string> words = { "apple", "bird", "cat", "apple", "dog" };
 	// 配列から "apple" を削除
 	words.erase(std::remove(words.begin(), words.end(), "apple"), words.end());
 	std::cout << "size: " << words.size() << '\n';
@@ -757,13 +757,12 @@ int main()
 	}
 	std::cout << '\n';
 }
-
 ```
 ```txt:出力
 size: 7
 5 2 4 2 4 5 1
-size: 2
-bird cat
+size: 3
+bird cat dog
 ```
 
 
@@ -777,23 +776,89 @@ bird cat
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
 - `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove_if()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+	// 配列から偶数を削除
+	numbers.erase(std::remove_if(numbers.begin(), numbers.end(), [](int n){ return (n % 2 == 0); }), numbers.end());
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::vector<std::string> words = { "apple", "bird", "cat", "apple", "dog" };
+	// 配列から 3 文字の単語を削除
+	words.erase(std::remove_if(words.begin(), words.end(), [](const std::string& s){ return (s.size() == 3); }), words.end());
+	std::cout << "size: " << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+size: 6
+5 3 3 3 5 1
+size: 3
+apple bird apple
 ```
 
 ## 3.4 範囲の要素を逆順にする
-- a
+- `std::reverse(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` にある要素の順序を反転します
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 3, 5, 2, 4, 0 };
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	// 順序を反転
+	std::reverse(numbers.begin(), numbers.end());
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	std::string word = "computer";
+	std::cout << word << '\n';
+
+	// 順序を反転
+	std::reverse(word.begin(), word.end());
+	std::cout << word << '\n';
+}
 ```
 ```txt:出力
-
+1 3 5 2 4 0
+0 4 2 5 3 1
+---
+computer
+retupmoc
 ```
 
 ## 3.5 要素を回転させる
-- a
+![](https://storage.googleapis.com/zenn-user-upload/00ubzrhcws3ywiv75aplss1u2tkj)  
+![](https://storage.googleapis.com/zenn-user-upload/wavkoy39gim51pko8qdcizja79w2)  
+![](https://storage.googleapis.com/zenn-user-upload/kee64uyg3a23se7w55wvd7wm03ts)  
+- `std::rotate(itFirst, itMiddle, itLast)` は、
 ```cpp
 
 ```
