@@ -727,8 +727,8 @@ dog dog dog
 - `std::remove(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を `value` に等しい要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
-- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除します
-- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove()` が返した有効範囲の終端イテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
+- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
 ```cpp
 #include <iostream>
 #include <vector>
@@ -768,7 +768,14 @@ bird cat
 
 
 ## 3.3 条件を満たす要素を削除する
-- a
+![](https://storage.googleapis.com/zenn-user-upload/0eawt9k48qk0dsztugf6894is2g9)  
+![](https://storage.googleapis.com/zenn-user-upload/b90jcf9vi41y850p5stov7rvhw1x)  
+![](https://storage.googleapis.com/zenn-user-upload/10f3zfxoorsu6wdqgbgc8dmjl216)  
+- `std::remove_if(itFirst, itLast, unaryPred)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を条件 `unaryPred` を満たす要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
+- 有効範囲に残る要素の前後関係は元の順序が維持されます
+- 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
+- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove_if()` が返したイテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
 ```cpp
 
 ```
