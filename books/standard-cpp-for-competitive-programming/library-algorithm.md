@@ -317,9 +317,9 @@ max: dog : 3
 ```
 
 ## 1.10 ある値を、指定した最小値と最大値の範囲に収める
-- `std::clmap(value, min, max)` は、値 `value` を `min` 以上 `max` 以下の範囲に収めた値を返します
+- `std::clamp(value, min, max)` は、値 `value` を `min` 以上 `max` 以下の範囲に収めた値を返します
 - `value` が範囲内であれば `value` を、`min` 未満なら `min` を、`max` より大きいなら `max` を返します
-- `value`, `min`, `max` の型がそれぞれ違う場合、`std::clmap<Type>(value, min, max)` のように型 `Type` を明示的に指定します
+- `value`, `min`, `max` の型がそれぞれ違う場合、`std::clamp<Type>(value, min, max)` のように型 `Type` を明示的に指定します
 ```cpp
 #include <iostream>
 #include <vector>
