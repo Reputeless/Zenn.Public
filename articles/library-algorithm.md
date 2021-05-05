@@ -1077,7 +1077,7 @@ acimnotu
 # 4. 範囲に対するソート
 
 ## 4.1 要素を小さい順にソートする
-![](https://storage.googleapis.com/zenn-user-upload/kpstynsi0sc673qhi3mxcqoklk99)
+![](https://storage.googleapis.com/zenn-user-upload/pm5dghn9gr65rhybj6mk3u45t39o)
 - `std::sort(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある要素を、小さい順になるようにソートします
 - イテレータはランダムアクセスイテレータである必要があります
 > - `std::sort(itFirst, itLast)` の計算量:  $O(N log N)$
@@ -1117,7 +1117,7 @@ apple bird cat dog
 ```
 
 ## 4.2 要素を大きい順にソートする
-![](https://storage.googleapis.com/zenn-user-upload/3wrp3z5jxmlew6yvxnzgfe8txqi7)
+![](https://storage.googleapis.com/zenn-user-upload/ubuylg828bh5vefi0ilq8h8fr3q0)
 - `std::sort(itFirst, itLast, comp)` は、範囲 `[itFirst, itLast)` にある要素を、`comp` による比較の結果でソートします
 - `comp` を `std::greater<>{}` にすることで、大きい順になるようにソートできます
 - イテレータはランダムアクセスイテレータである必要があります
@@ -1159,7 +1159,7 @@ dog cat bird apple
 ```
 
 ## 4.3 上位 N 個までを求めるソートをする
-![](https://storage.googleapis.com/zenn-user-upload/nfsmogqjy0uejbn92yb6inemgwy7)
+![](https://storage.googleapis.com/zenn-user-upload/piahsffvr41zhkm6b79507xvo7e0)
 - `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、 それ以降については余計なソートをしないことで、`std::sort(itFirst, itLast)` より定数倍高速化します
 > - `std::partial_sort(itFirst, itMiddle, itLast)` の計算量:  $O(N log N)$
 ```cpp
@@ -1198,7 +1198,7 @@ apple bird dog cat
 ```
 
 ## 4.4 N 番目に小さい要素を求める
-![](https://storage.googleapis.com/zenn-user-upload/rbqo2wjpv1sy92bggsf7x58mbv4v)
+![](https://storage.googleapis.com/zenn-user-upload/hwom96sdwa49wi3tsv5il3ijrouk)
 - `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `itNth` の位置に上位 `N = (itNth - itFirst)` 番目の要素が置かれるようにし、それより前の要素はすべて N 番目の要素より小さく、それ以降の要素はすべて N 番目の要素よりも大きい要素が並ぶということだけ保証する、ごく部分的なソートを行います。
 - 上位 N 番目の要素を求めたいだけの時、`std::sort(itFirst, itLast)` や `std::partial_sort(itFirst, itNth, itLast)` を使うより計算量を小さくできます
 > - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)$
