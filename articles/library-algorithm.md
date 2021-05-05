@@ -1207,7 +1207,7 @@ apple bird dog cat
 ![](https://storage.googleapis.com/zenn-user-upload/hwom96sdwa49wi3tsv5il3ijrouk)
 - `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素を不完全にソートし、結果として `itNth` の位置に、完全なソートを行ったときと同じ要素が置かれるようにし、それより前はその要素より小さく、それ以降はその要素より大きい要素が並ぶということだけ保証する、部分的なソートを行います
 - 上位 N 番目の要素を求めたいだけの時、`std::sort(itFirst, itLast)` や `std::partial_sort(itFirst, itNth, itLast)` を使うより計算量を小さくできます
-> - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)$
+> - `std::nth_element(itFirst, itNth, itLast)` の計算量:  平均 $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
