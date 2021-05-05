@@ -28,10 +28,10 @@ int main()
 	std::string g = "apple", h = "bird";
 	std::cout << std::min(g, h) << '\n'; // 小さいほうの値を出力
 
-	// size_t と int なので <> で明示的に型を指定
+	// std::size_t と int なので <> で明示的に型を指定
 	std::cout << std::min<std::size_t>(g.size(), 1) << '\n'; // 小さいほうの値を出力
 	
-	// 1 を size_t 型にするのもあり
+	// 1 を std::size_t 型にするのもあり
 	std::cout << std::min(g.size(), std::size_t(1)) << '\n'; // 小さいほうの値を出力
 	
 	// 整数オーバーフローの心配が無ければ、これもあり
@@ -71,10 +71,10 @@ int main()
 	std::string g = "apple", h = "bird";
 	std::cout << std::max(g, h) << '\n'; // 大きいほうの値を出力
 
-	// size_t と int なので <> で明示的に型を指定
+	// std::size_t と int なので <> で明示的に型を指定
 	std::cout << std::max<std::size_t>(g.size(), 1) << '\n'; // 大きいほうの値を出力
 	
-	// 1 を size_t 型にするのもあり
+	// 1 を std::size_t 型にするのもあり
 	std::cout << std::max(g.size(), std::size_t(1)) << '\n'; // 大きいほうの値を出力
 	
 	// 整数オーバーフローの心配が無ければ、これもあり
