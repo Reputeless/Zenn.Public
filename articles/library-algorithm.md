@@ -489,11 +489,10 @@ int main()
 # 4. 範囲に対するソート
 
 ## 4.1 要素を小さい順にソートする
+![](https://storage.googleapis.com/zenn-user-upload/kpstynsi0sc673qhi3mxcqoklk99)
 - `std::sort(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある要素を、小さい順になるようにソートします
 - イテレータはランダムアクセスイテレータである必要があります
 > - `std::sort(itFirst, itLast)` の計算量:  $O(N log N)$
-
-![](https://storage.googleapis.com/zenn-user-upload/kpstynsi0sc673qhi3mxcqoklk99)
 ```cpp
 #include <iostream>
 #include <vector>
