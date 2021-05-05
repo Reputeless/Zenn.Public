@@ -730,7 +730,7 @@ dog dog dog
 ![](https://storage.googleapis.com/zenn-user-upload/14n9ju6cs33n08nhzgt2guxhvfrs)  
 ![](https://storage.googleapis.com/zenn-user-upload/9bnh7kb5j8n1auxnlqx0lvjakmpz)  
 ![](https://storage.googleapis.com/zenn-user-upload/265t7mqtqmoln39qis2v6gtp645t)  
-- `std::remove(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を `value` に等しい要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
+- `std::remove(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半が、`value` に等しい要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
@@ -797,7 +797,7 @@ bird cat dog
 ![](https://storage.googleapis.com/zenn-user-upload/0eawt9k48qk0dsztugf6894is2g9)  
 ![](https://storage.googleapis.com/zenn-user-upload/5c076a59mn7r67r3lmc686eifow5)  
 ![](https://storage.googleapis.com/zenn-user-upload/10f3zfxoorsu6wdqgbgc8dmjl216)  
-- `std::remove_if(itFirst, itLast, unaryPred)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を条件 `unaryPred` を満たす要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
+- `std::remove_if(itFirst, itLast, unaryPred)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半が、`unaryPred` を満たす要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
@@ -952,7 +952,7 @@ tercompu
 ![](https://storage.googleapis.com/zenn-user-upload/ju1t0e4osdok3jw0g78dfjuvu4em)  
 ![](https://storage.googleapis.com/zenn-user-upload/oal49bx7uj5j3pc46so8nx3ngnwm)  
 ![](https://storage.googleapis.com/zenn-user-upload/ajffs25zekco5k7e1poxetj6but4)  
-- `std::unique(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を隣同士で重複する要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
+- `std::unique(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半が、隣同士で重複する要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します
