@@ -29,10 +29,10 @@ int main()
 	std::cout << std::min(g, h) << '\n'; // 小さいほうの値を出力
 
 	// size_t と int なので <> で明示的に型を指定
-	std::cout << std::min<size_t>(g.size(), 1) << '\n'; // 小さいほうの値を出力
+	std::cout << std::min<std::size_t>(g.size(), 1) << '\n'; // 小さいほうの値を出力
 	
 	// 1 を size_t 型にするのもあり
-	std::cout << std::min(g.size(), size_t(1)) << '\n'; // 小さいほうの値を出力
+	std::cout << std::min(g.size(), std::size_t(1)) << '\n'; // 小さいほうの値を出力
 	
 	// 整数オーバーフローの心配が無ければ、これもあり
 	std::cout << std::min(static_cast<int>(g.size()), 1) << '\n'; // 小さいほうの値を出力
@@ -72,10 +72,10 @@ int main()
 	std::cout << std::max(g, h) << '\n'; // 大きいほうの値を出力
 
 	// size_t と int なので <> で明示的に型を指定
-	std::cout << std::max<size_t>(g.size(), 1) << '\n'; // 大きいほうの値を出力
+	std::cout << std::max<std::size_t>(g.size(), 1) << '\n'; // 大きいほうの値を出力
 	
 	// 1 を size_t 型にするのもあり
-	std::cout << std::max(g.size(), size_t(1)) << '\n'; // 大きいほうの値を出力
+	std::cout << std::max(g.size(), std::size_t(1)) << '\n'; // 大きいほうの値を出力
 	
 	// 整数オーバーフローの心配が無ければ、これもあり
 	std::cout << std::max(static_cast<int>(g.size()), 1) << '\n'; // 大きいほうの値を出力
@@ -336,10 +336,10 @@ int main()
 	std::cout << "---\n";
 
 	std::size_t b = 50;
-	// size_t と int が混在しているため <> で明示的に型を指定
-	std::cout << std::clamp<size_t>(b, 0, 100) << '\n'; // b を 0 以上 100 以下に収める
-	std::cout << std::clamp<size_t>(b, 0, 10) << '\n'; // b を 0 以上 10 以下に収める
-	std::cout << std::clamp<size_t>(b, 100, 200) << '\n'; // b を 100 以上 200 以下に収める
+	// std::size_t と int が混在しているため <> で明示的に型を指定
+	std::cout << std::clamp<std::size_t>(b, 0, 100) << '\n'; // b を 0 以上 100 以下に収める
+	std::cout << std::clamp<std::size_t>(b, 0, 10) << '\n'; // b を 0 以上 10 以下に収める
+	std::cout << std::clamp<std::size_t>(b, 100, 200) << '\n'; // b を 100 以上 200 以下に収める
 }
 ```
 ```txt:出力
