@@ -357,7 +357,7 @@ int main()
 # 2. 範囲に対する検索操作
 
 ## 2.1 全ての要素が条件を満たすか調べる
-- `std::all_of(itFirst, itEnd, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素が条件 `unaryPred` を満たしているかを `bool` 型の値で返します
+- `std::all_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素が条件 `unaryPred` を満たしているかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
@@ -372,7 +372,6 @@ int main()
 	std::vector<double> c;
 
 	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
-
 	// 全員 37.5℃ 未満？
 	std::cout << std::all_of(a.begin(), a.end(), [](double t) { return t < 37.5; }) << '\n';
 	std::cout << std::all_of(b.begin(), b.end(), [](double t) { return t < 37.5; }) << '\n';
@@ -386,7 +385,7 @@ true
 ```
 
 ## 2.2 条件を満たす要素があるか調べる
-- `std::any_of(itFirst, itEnd, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素があるかを `bool` 型の値で返します
+- `std::any_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素があるかを `bool` 型の値で返します
 - 範囲が空の場合は `false` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
@@ -401,7 +400,6 @@ int main()
 	std::vector<double> c;
 
 	std::cout << std::boolalpha; s// bool 型の値を true / false で表示させるためのマニピュレータ
-
 	// 37.5℃ 以上の人がいる？
 	std::cout << std::any_of(a.begin(), a.end(), [](double t) { return 37.5 <= t; }) << '\n';
 	std::cout << std::any_of(b.begin(), b.end(), [](double t) { return 37.5 <= t; }) << '\n';
@@ -415,7 +413,7 @@ false
 ```
 
 ## 2.3 条件を満たす要素が存在しないかを調べる
-- `std::none_of(itFirst, itEnd, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素がないかを `bool` 型の値で返します
+- `std::none_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素がないかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
@@ -430,7 +428,6 @@ int main()
 	std::vector<double> c;
 
 	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
-
 	// 37.5℃ 以上の人は 0 人？
 	std::cout << std::none_of(a.begin(), a.end(), [](double t) { return 37.5 <= t; }) << '\n';
 	std::cout << std::none_of(b.begin(), b.end(), [](double t) { return 37.5 <= t; }) << '\n';
@@ -444,16 +441,38 @@ true
 ```
 
 ## 2.4 指定した値と同じ要素の個数を数える
-- a
+- `std::count(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` に存在する `value` の個数を返します
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> coins = { 10, 10, 50, 100, 1, 10, 500, 10 };
+	std::cout << std::count(coins.begin(), coins.end(), 10) << '\n'; // 10 の個数
+	std::cout << std::count(coins.begin(), coins.end(), 5) << '\n'; // 5 の個数
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "apple", "bird", "apple", "cat" };
+	std::ptrdiff_t n = std::count(words.begin(), words.end(), "apple"); // "apple" の個数
+	std::cout << n << '\n';
+	std::cout << std::count(words.begin(), words.end(), "dog") << '\n'; // "dog の個数
+}
 ```
 ```txt:出力
-
+4
+0
+---
+2
+0
 ```
 
 ## 2.5 条件を満たす要素の個数を数える
-- a
+- `std::count_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に存在する、条件 `unaryPred` を満たす要素の個数を返します
+- `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
 
 ```
@@ -462,7 +481,9 @@ true
 ```
 
 ## 2.6 指定した値の要素が最初に現れる位置を調べる
-- a
+![](https://storage.googleapis.com/zenn-user-upload/rxzbih2q6a2fbw70ov4h3a2sllfz)
+- `std::find(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` の要素の中で `value` と等しい最初の要素の位置のイテレータを返します
+- 要素の中に `value` が見つからなかった場合は `itLast` を返します
 ```cpp
 
 ```
@@ -471,7 +492,9 @@ true
 ```
 
 ## 2.7 条件を満たす要素が最初に現れる位置を調べる
-- a
+![](https://storage.googleapis.com/zenn-user-upload/9htijw4sgq3e0mfmm3k20e87jrbe)
+- `std::find_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の要素の中で、条件 `unaryPred` を満たす最初の要素の位置のイテレータを返します
+- 要素の中に `value` が見つからなかった場合は `itLast` を返します
 ```cpp
 
 ```
@@ -700,7 +723,7 @@ cat
 ```
 
 ## 4.4 N 番目に小さい要素を求める
-![](https://storage.googleapis.com/zenn-user-upload/ysj6wn04q6yazlx28sdewovu88nz)
+![](https://storage.googleapis.com/zenn-user-upload/rbqo2wjpv1sy92bggsf7x58mbv4v)
 - `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `itNth` の位置に上位 `N = (itNth - itFirst)` 番目の要素が置かれるようにし、それより前の要素はすべて N 番目の要素より小さく、それ以降の要素はすべて N 番目の要素よりも大きい要素が並ぶということだけ保証する、ごく部分的なソートを行います。
 - 上位 N 番目の要素を求めたいだけの時、`std::sort(itFirst, itLast)` や `std::partial_sort(itFirst, itNth, itLast)` を使うより計算量を小さくできます
 > - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)$
