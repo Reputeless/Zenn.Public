@@ -1170,7 +1170,7 @@ dog cat bird apple
 > - `std::partial_sort(itFirst, itMiddle, itLast)` の計算量:  $O(N log N)$
 
 ::: message
-使用されているソートアルゴリズムの関係で、全体に対して大きい範囲に `std::partial_sort()` を使う場合、`std::sort()` よりも遅いことがあります。その場合は、代わりに `std::nth_element()` 後に `std::sort()` による部分的なソートを行うのが効果的です。下記が参考記事です。
+使用されているソートアルゴリズムの関係で、全体に対して大きい部分に `std::partial_sort()` を使う場合、`std::sort()` よりも遅いことがあります。その場合は、代わりに `std::nth_element()` 後に `std::sort()` による部分的なソートを行うのが効果的です。下記が参考記事です。
 - [sort() vs. partial_sort() vs. nth_element() + sort() in C++ STL](https://www.geeksforgeeks.org/sort-vs-partial_sort-vs-nth_element-sort-in-c-stl/), GeeksforGeeks
 :::
 ```cpp
