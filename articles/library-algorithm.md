@@ -492,6 +492,8 @@ int main()
 - `std::sort(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある要素を、小さい順になるようにソートします
 - イテレータはランダムアクセスイテレータである必要があります
 > - `std::sort(itFirst, itLast)` の計算量:  $O(N log N)$
+
+![](https://storage.googleapis.com/zenn-user-upload/kpstynsi0sc673qhi3mxcqoklk99)
 ```cpp
 #include <iostream>
 #include <vector>
@@ -647,7 +649,7 @@ int main()
 	std::nth_element(numbers.begin(), numbers.begin() + 2, numbers.end());
 	std::cout << "2nd : " << numbers[2] << '\n';
 
-    // 3 番目より左は小さい要素、3 番目より右は大きい要素であることは保証
+	// 3 番目より左は小さい要素、3 番目より右は大きい要素であることは保証
 	for (const auto& number : numbers)
 	{
 		std::cout << number << '\n';
@@ -660,7 +662,7 @@ int main()
 	std::nth_element(words.begin(), words.begin() + 1, words.end());
 	std::cout << "2nd : " << words[1] << '\n';
 
-    // 2 番目より左は小さい要素、2 番目より右は大きい要素であることは保証
+	// 2 番目より左は小さい要素、2 番目より右は大きい要素であることは保証
 	for (const auto& word : words)
 	{
 		std::cout << word << '\n';
@@ -668,7 +670,24 @@ int main()
 }
 ```
 ```txt:出力
-
+2nd : 2
+1
+0
+2
+3
+4
+5
+6
+9
+8
+7
+---
+2nd : bird
+apple
+bird
+dog
+cat
+egg
 ```
 
 
