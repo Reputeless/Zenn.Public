@@ -368,7 +368,7 @@ int main()
 
 int main()
 {
-	std::vector<double> a = { 36.2, 36.6, 36.9, 38.1, 37.2 };
+	std::vector<double> a = { 36.2, 36.6, 36.9, 40.1, 37.2 };
 	std::vector<double> b = { 36.2, 36.6, 36.9 };
 	std::vector<double> c;
 
@@ -397,7 +397,7 @@ true
 
 int main()
 {
-	std::vector<double> a = { 36.2, 36.6, 36.9, 38.1, 37.2 };
+	std::vector<double> a = { 36.2, 36.6, 36.9, 40.1, 37.2 };
 	std::vector<double> b = { 36.2, 36.6, 36.9 };
 	std::vector<double> c;
 
@@ -426,7 +426,7 @@ false
 
 int main()
 {
-	std::vector<double> a = { 36.2, 36.6, 36.9, 38.1, 37.2 };
+	std::vector<double> a = { 36.2, 36.6, 36.9, 40.1, 37.2 };
 	std::vector<double> b = { 36.2, 36.6, 36.9 };
 	std::vector<double> c;
 
@@ -670,22 +670,102 @@ pos: 1
 # 3. 範囲に対する一般的な操作
 
 ## 3.1 範囲の要素を指定した値で埋める
-- a
+- `std::fill(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` のすべての要素を `value` にします
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 2, 4, 8 };
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	// 全要素を -1 にする
+	std::fill(numbers.begin(), numbers.end(), -1);
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+
+	// 全要素を "dog" にする
+	std::fill(words.begin(), words.end(), "dog");
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+1 2 4 8
+-1 -1 -1 -1
+---
+apple bird cat
+dog dog dog
 ```
 
 ## 3.2 指定した値の要素を削除する
-- a
+![](https://storage.googleapis.com/zenn-user-upload/14n9ju6cs33n08nhzgt2guxhvfrs)  
+![](https://storage.googleapis.com/zenn-user-upload/2hql5smxcc96fwwkbsrplz40ahrh)  
+![](https://storage.googleapis.com/zenn-user-upload/265t7mqtqmoln39qis2v6gtp645t)  
+- `std::remove(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を `value` に等しい要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
+- 有効範囲に残る要素の前後関係は元の順序が維持されます
+- 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除します
+- `std::vector` の `.erase(itFirst, itLast)` において、`itFirst` を `std::remove()` が返した有効範囲の終端イテレータ、`itLast` を配列の終端イテレータにすることで、配列から指定した要素を削除できます
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+	// 配列から 3 を削除
+	numbers.erase(std::remove(numbers.begin(), numbers.end(), 3), numbers.end());
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::vector<std::string> words = { "apple", "bird", "cat", "apple" };
+	// 配列から "apple" を削除
+	words.erase(std::remove(words.begin(), words.end(), "apple"), words.end());
+	std::cout << "size: " << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+}
 
 ```
 ```txt:出力
-
+size: 7
+5 2 4 2 4 5 1
+size: 2
+bird cat
 ```
+
 
 ## 3.3 条件を満たす要素を削除する
 - a
