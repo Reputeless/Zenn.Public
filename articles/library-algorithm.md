@@ -15,7 +15,7 @@ free: true
 ## 1.1 二つの値のうち小さいほうの値を得る
 - `std::min(a, b)` は、`a` と `b` のうち小さいほうを返します
 - 同じ場合は `a` を返します
-- `a` と `b` が違う型の場合、`std::min<Type>(a, b)` のように比較に使う型 `Type` を指定します
+- `a` と `b` が違う型の場合、`std::min<Type>(a, b)` のように型 `Type` を明示的に指定します
 ```cpp
 #include <iostream>
 #include <string>
@@ -58,7 +58,7 @@ apple
 ## 1.2 二つの値のうち大きいほうの値を得る
 - `std::max(a, b)` は、`a` と `b` のうち小さいほうを返します
 - 同じ場合は `a` を返します
-- `a` と `b` が違う型の場合、`std::max<Type>(a, b)` のように比較に使う型 `Type` を指定します
+- `a` と `b` が違う型の場合、`std::max<Type>(a, b)` のように型 `Type` を明示的に指定します
 ```cpp
 #include <iostream>
 #include <string>
@@ -144,6 +144,8 @@ int main()
 - `std::min_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最小の要素の位置を指すイテレータを返します
 - イテレータに `*` を付けると、その位置の値にアクセスできます
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::min_element()` が返したイテレータを渡し、その間の距離を求めます
+> - `std::min_element(itFirst, itLast)` の計算量: $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -185,6 +187,8 @@ c
 - `std::max_element(itFirst, itLast)` は、範囲 `[itFirst, itLast)` にある最大の要素の位置を指すイテレータを返します
 - イテレータに `*` を付けると、その位置の値にアクセスできます
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::max_element()` が返したイテレータを渡し、その間の距離を求めます
+> - `std::max_element(itFirst, itLast)` の計算量: $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
@@ -287,6 +291,8 @@ max: 120
 - `std::pair` を構造化束縛で受け取ることもできます
 - イテレータに `*` を付けると、その位置の値にアクセスできます
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::minmax_element()` が返したイテレータを渡し、その間の距離を求めます
+> - `std::minmax_element(itFirst, itLast)` の計算量: $O(N)$
+> - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
