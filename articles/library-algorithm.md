@@ -357,30 +357,90 @@ int main()
 # 2. 範囲に対する検索操作
 
 ## 2.1 全ての要素が条件を満たすか調べる
-- a
+- `std::all_of(itFirst, itEnd, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素が条件 `unaryPred` を満たしているかを `bool` 型の値で返します
+- 範囲が空の場合は `true` を返します
+- `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	std::vector<double> a = { 36.2, 36.6, 36.9, 38.1, 37.2 };
+	std::vector<double> b = { 36.2, 36.6, 36.9 };
+	std::vector<double> c;
+
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
+
+	// 全員 37.5℃ 未満？
+	std::cout << std::all_of(a.begin(), a.end(), [](double t) { return t < 37.5; }) << '\n';
+	std::cout << std::all_of(b.begin(), b.end(), [](double t) { return t < 37.5; }) << '\n';
+	std::cout << std::all_of(c.begin(), c.end(), [](double t) { return t < 37.5; }) << '\n';
+}
 ```
 ```txt:出力
-
+false
+true
+true
 ```
 
 ## 2.2 条件を満たす要素があるか調べる
-- a
+- `std::any_of(itFirst, itEnd, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素があるかを `bool` 型の値で返します
+- 範囲が空の場合は `false` を返します
+- `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	std::vector<double> a = { 36.2, 36.6, 36.9, 38.1, 37.2 };
+	std::vector<double> b = { 36.2, 36.6, 36.9 };
+	std::vector<double> c;
+
+	std::cout << std::boolalpha; s// bool 型の値を true / false で表示させるためのマニピュレータ
+
+	// 37.5℃ 以上の人がいる？
+	std::cout << std::any_of(a.begin(), a.end(), [](double t) { return 37.5 <= t; }) << '\n';
+	std::cout << std::any_of(b.begin(), b.end(), [](double t) { return 37.5 <= t; }) << '\n';
+	std::cout << std::any_of(c.begin(), c.end(), [](double t) { return 37.5 <= t; }) << '\n';
+}
 ```
 ```txt:出力
-
+true
+false
+false
 ```
 
 ## 2.3 条件を満たす要素が存在しないかを調べる
-- a
+- `std::none_of(itFirst, itEnd, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素がないかを `bool` 型の値で返します
+- 範囲が空の場合は `true` を返します
+- `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	std::vector<double> a = { 36.2, 36.6, 36.9, 38.1, 37.2 };
+	std::vector<double> b = { 36.2, 36.6, 36.9 };
+	std::vector<double> c;
+
+	std::cout << std::boolalpha; // bool 型の値を true / false で表示させるためのマニピュレータ
+
+	// 37.5℃ 以上の人は 0 人？
+	std::cout << std::none_of(a.begin(), a.end(), [](double t) { return 37.5 <= t; }) << '\n';
+	std::cout << std::none_of(b.begin(), b.end(), [](double t) { return 37.5 <= t; }) << '\n';
+	std::cout << std::none_of(c.begin(), c.end(), [](double t) { return 37.5 <= t; }) << '\n';
+}
 ```
 ```txt:出力
-
+false
+true
+true
 ```
 
 ## 2.4 指定した値と同じ要素の個数を数える
@@ -521,14 +581,16 @@ int main()
 }
 ```
 ```txt:出力
--5
--1
 0
-2
+1
 2
 3
+4
 5
-10
+6
+7
+8
+9
 ---
 apple
 bird
@@ -571,14 +633,16 @@ int main()
 }
 ```
 ```txt:出力
-10
+9
+8
+7
+6
 5
+4
 3
 2
-2
+1
 0
--1
--5
 ---
 dog
 cat
@@ -586,7 +650,7 @@ bird
 apple
 ```
 
-## 4.3 上位 N 位までを求めるソートをする
+## 4.3 上位 N 個までを求めるソートをする
 ![](https://storage.googleapis.com/zenn-user-upload/nfsmogqjy0uejbn92yb6inemgwy7)
 - `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、 それ以降については余計なソートをしないことで、`std::sort(itFirst, itLast)` より定数倍高速化します
 > - `std::partial_sort(itFirst, itMiddle, itLast)` の計算量:  $O(N log N)$
@@ -599,7 +663,7 @@ apple
 int main()
 {
 	std::vector<int> numbers = { 1, 5, 0, 2, 4, 6, 3, 9, 8, 7 };
-	// 上位 4 位まで小さい順にソート
+	// 上位 4 個まで小さい順にソート
 	std::partial_sort(numbers.begin(), numbers.begin() + 4, numbers.end());
 	for (const auto& number : numbers)
 	{
@@ -609,7 +673,7 @@ int main()
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "bird", "cat", "dog", "apple" };
-	// 上位 2 位まで小さい順にソート
+	// 上位 2 個まで小さい順にソート
 	std::partial_sort(words.begin(), words.begin() + 2, words.end());
 	for (const auto& word : words)
 	{
@@ -618,14 +682,16 @@ int main()
 }
 ```
 ```txt:出力（例）
--5
--1
 0
+1
 2
-10
-5
 3
-2
+5
+6
+4
+9
+8
+7
 ---
 apple
 bird
@@ -637,7 +703,7 @@ cat
 ![](https://storage.googleapis.com/zenn-user-upload/ysj6wn04q6yazlx28sdewovu88nz)
 - `std::nth_element(itFirst, itNth, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `itNth` の位置に上位 `N = (itNth - itFirst)` 番目の要素が置かれるようにし、それより前の要素はすべて N 番目の要素より小さく、それ以降の要素はすべて N 番目の要素よりも大きい要素が並ぶということだけ保証する、ごく部分的なソートを行います。
 - 上位 N 番目の要素を求めたいだけの時、`std::sort(itFirst, itLast)` や `std::partial_sort(itFirst, itNth, itLast)` を使うより計算量を小さくできます
-> - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)
+> - `std::nth_element(itFirst, itNth, itLast)` の計算量:  $O(N log N)$, 平均 $O(N)$
 ```cpp
 #include <iostream>
 #include <vector>
