@@ -728,7 +728,7 @@ dog dog dog
 
 ## 3.2 指定した値と等しい要素をすべて削除する
 ![](https://storage.googleapis.com/zenn-user-upload/14n9ju6cs33n08nhzgt2guxhvfrs)  
-![](https://storage.googleapis.com/zenn-user-upload/tlbdawpm1u914eq1m3alyvcirgl3)  
+![](https://storage.googleapis.com/zenn-user-upload/9bnh7kb5j8n1auxnlqx0lvjakmpz)  
 ![](https://storage.googleapis.com/zenn-user-upload/265t7mqtqmoln39qis2v6gtp645t)  
 - `std::remove(itFirst, itLast, value)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を `value` に等しい要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
@@ -795,7 +795,7 @@ bird cat dog
 
 ## 3.3 条件を満たす要素をすべて削除する
 ![](https://storage.googleapis.com/zenn-user-upload/0eawt9k48qk0dsztugf6894is2g9)  
-![](https://storage.googleapis.com/zenn-user-upload/yqa2zpolj5n393sgrkjtwv9u1uyx)  
+![](https://storage.googleapis.com/zenn-user-upload/5c076a59mn7r67r3lmc686eifow5)  
 ![](https://storage.googleapis.com/zenn-user-upload/10f3zfxoorsu6wdqgbgc8dmjl216)  
 - `std::remove_if(itFirst, itLast, unaryPred)` は、イテレータで指定した範囲 `[itFirst, itLast)` について、前半を条件 `unaryPred` を満たす要素を除外した有効範囲とし、それ以降は無効範囲になるよう並びかえ、有効範囲の終端イテレータを返します
 - 有効範囲に残る要素の前後関係は元の順序が維持されます
