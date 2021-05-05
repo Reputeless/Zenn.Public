@@ -1166,8 +1166,13 @@ dog cat bird apple
 
 ## 4.3 上位 N 個までを求めるソートをする
 ![](https://storage.googleapis.com/zenn-user-upload/piahsffvr41zhkm6b79507xvo7e0)
-- `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、それ以降についてはソートが未完了のままにすることで、`std::sort(itFirst, itLast)` より定数倍高速化します
+- `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、それ以降についてはソートが未完了のままにすることで、`std::sort(itFirst, itLast)` より計算回数を少なくします
 > - `std::partial_sort(itFirst, itMiddle, itLast)` の計算量:  $O(N log N)$
+
+::: message
+使用されているソートアルゴリズムの関係で、全体に対して大きい範囲に `std::partial_sort()` を使う場合、`std::sort()` よりも遅いことがあります。その場合は、代わりに `std::nth_element()` 後に `std::sort()` による部分的なソートを行うのが効果的です。下記が参考記事です。
+- [sort() vs. partial_sort() vs. nth_element() + sort() in C++ STL](https://www.quora.com/When-should-I-use-std-stable_sort-when-std-sort-and-when-std-partial_sort), GeeksforGeeks
+:::
 ```cpp
 #include <iostream>
 #include <vector>
@@ -1404,7 +1409,7 @@ alarm apple banana bird cat dog
 
 ## 5.3 lower_bound と upper_bound の結果を同時に取得する
 - `std::equal_range(itFirst, itLast, value)` は、`std::lower_bound(itFirst, itLast, value)` と `std::upper_bound(itFirst, itLast, value)` の結果を `std::pair` で返します
-- 探索時に情報を共有できるため、`std::lower_bound()`, `std::upper_bound()` を個別に呼ぶよりも定数倍高速化されます
+- 探索時に情報を共有できるため、`std::lower_bound(itFirst, itLast, value)`, `std::upper_bound(itFirst, itLast, value)` を個別に呼ぶよりも定数倍高速化されます
 > - `std::equal_range(itFirst, itLast, value)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
 > - `std::distance(itFirst, itLast)` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
 
