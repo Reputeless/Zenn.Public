@@ -455,15 +455,19 @@ true
 int main()
 {
 	std::vector<int> coins = { 10, 10, 50, 100, 1, 10, 500, 10 };
-	std::cout << std::count(coins.begin(), coins.end(), 10) << '\n'; // 10 の個数
-	std::cout << std::count(coins.begin(), coins.end(), 5) << '\n'; // 5 の個数
+	// 10 の個数
+	std::cout << std::count(coins.begin(), coins.end(), 10) << '\n';
+	// 5 の個数
+	std::cout << std::count(coins.begin(), coins.end(), 5) << '\n';
 
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "apple", "bird", "apple", "cat" };
-	std::size_t n = std::count(words.begin(), words.end(), "apple"); // "apple" の個数
+	// "apple" の個数
+	std::size_t n = std::count(words.begin(), words.end(), "apple");
 	std::cout << n << '\n';
-	std::cout << std::count(words.begin(), words.end(), "dog") << '\n'; // "dog の個数
+	// "dog の個数
+	std::cout << std::count(words.begin(), words.end(), "dog") << '\n';
 }
 ```
 ```txt:出力
@@ -487,15 +491,19 @@ int main()
 int main()
 {
 	std::vector<int> coins = { 10, 10, 50, 100, 1, 10, 500, 10 };
-	std::cout << std::count_if(coins.begin(), coins.end(), [](int n){ return n <= 10; }) << '\n'; // 10 以下の個数
-	std::cout << std::count_if(coins.begin(), coins.end(), [](int n){ return (n == 1) || (n == 5); }) << '\n'; // 1 または 5 の個数
+	// 10 以下の要素の個数
+	std::cout << std::count_if(coins.begin(), coins.end(), [](int n){ return n <= 10; }) << '\n';
+	// 1 または 5 の個数
+	std::cout << std::count_if(coins.begin(), coins.end(), [](int n){ return (n == 1) || (n == 5); }) << '\n';
 
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "apple", "bird", "apple", "cat" };
-	std::size_t n = std::count_if(words.begin(), words.end(), [](const std::string& s) { return s.size() == 3; }); // 3 文字の単語の個数
+	// 3 文字の単語の個数
+	std::size_t n = std::count_if(words.begin(), words.end(), [](const std::string& s) { return s.size() == 3; });
 	std::cout << n << '\n';
-	std::cout << std::count_if(words.begin(), words.end(), [](const std::string& s) { return s.size() <= 4; }) << '\n'; // 4 文字以下の単語の個数
+	// 4 文字以下の単語の個数
+	std::cout << std::count_if(words.begin(), words.end(), [](const std::string& s) { return s.size() <= 4; }) << '\n';
 }
 ```
 ```txt:出力
@@ -522,7 +530,8 @@ int main()
 int main()
 {
 	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
-	auto it = std::find(numbers.begin(), numbers.end(), 4); // 4 を検索
+	// 4 を検索
+	auto it = std::find(numbers.begin(), numbers.end(), 4);
 	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -533,7 +542,8 @@ int main()
 		std::cout << "pos: " << std::distance(numbers.begin(), it) << '\n';
 	}
 
-	it = std::find(numbers.begin(), numbers.end(), 0); // 0 を検索
+	// 0 を検索
+	it = std::find(numbers.begin(), numbers.end(), 0);
 	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -547,7 +557,8 @@ int main()
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "apple", "cat", "bird", "apple" };
-	auto it2 = std::find(words.begin(), words.end(), "apple"); // "apple" を検索
+	// "apple" を検索
+	auto it2 = std::find(words.begin(), words.end(), "apple");
 	if (it2 == words.end()) // itLast と同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -558,7 +569,8 @@ int main()
 		std::cout << "pos: " << std::distance(words.begin(), it2) << '\n';
 	}
 
-	it2 = std::find(words.begin(), words.end(), "dog"); // "dog" を検索
+	// "dog" を検索
+	it2 = std::find(words.begin(), words.end(), "dog");
 	if (it2 == words.end()) // itLast と同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -594,7 +606,8 @@ not found
 int main()
 {
 	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
-	auto it = std::find_if(numbers.begin(), numbers.end(), [](int n) { return (n % 2 == 0); }); // 偶数を検索
+	// 偶数を検索
+	auto it = std::find_if(numbers.begin(), numbers.end(), [](int n) { return (n % 2 == 0); });
 	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -605,7 +618,8 @@ int main()
 		std::cout << "pos: " << std::distance(numbers.begin(), it) << '\n';
 	}
 
-	it = std::find_if(numbers.begin(), numbers.end(), [](int n) { return (n < 0); }); // 負の数を検索
+	// 負の数を検索
+	it = std::find_if(numbers.begin(), numbers.end(), [](int n) { return (n < 0); });
 	if (it == numbers.end()) // itLast と同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -619,7 +633,8 @@ int main()
 	std::cout << "---\n";
 
 	std::vector<std::string> words = { "apple", "cat", "bird", "apple" };
-	auto it2 = std::find_if(words.begin(), words.end(), [](const std::string& s) { return (s.size() == 6); }); // 6 文字の単語を検索
+	// 6 文字の単語を検索
+	auto it2 = std::find_if(words.begin(), words.end(), [](const std::string& s) { return (s.size() == 6); });
 	if (it2 == words.end()) // itLast を同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
@@ -630,7 +645,8 @@ int main()
 		std::cout << "pos: " << std::distance(words.begin(), it2) << '\n';
 	}
 
-	it2 = std::find_if(words.begin(), words.end(), [](const std::string& s) { return (s == "bird") || (s == "cat"); }); // "bird" または "cat" を検索
+	// "bird" または "cat" を検索
+	it2 = std::find_if(words.begin(), words.end(), [](const std::string& s) { return (s == "bird") || (s == "cat"); });
 	if (it2 == words.end()) // itLast を同じなら見つからなかったということ
 	{
 		std::cout << "not found\n";
