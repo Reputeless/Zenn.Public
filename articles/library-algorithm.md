@@ -326,7 +326,7 @@ max: dog : 3
 ## 1.10 ある値を、指定した最小値と最大値の範囲に収める
 - `std::clmap(value, min, max)` は、値 `value` を `min` 以上 `max` 以下の範囲に収めた値を返します
 - `value` が範囲内であれば `value` を、`min` 未満なら `min` を、`max` より大きいなら `max` を返します
-- `value`, `min`, `max` の型がそれぞれ違う場合、`std::min<Type>(a, b)` のように比較に使う型 `Type` を指定します
+- `value`, `min`, `max` の型がそれぞれ違う場合、`std::clmap<Type>(value, min, max)` のように型 `Type` を明示的に指定します
 ```cpp
 #include <iostream>
 #include <vector>
@@ -363,7 +363,7 @@ int main()
 # 2. 範囲に対する検索操作
 
 ## 2.1 全ての要素が条件を満たすか調べる
-- `std::all_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素が条件 `unaryPred` を満たしているかを `bool` 型の値で返します
+- `std::all_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素すべてが条件 `unaryPred` を満たしているかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 > - `std::all_of(itFirst, itLast, unaryPred)` の計算量: $O(N)$
@@ -392,7 +392,7 @@ true
 ```
 
 ## 2.2 条件を満たす要素があるか調べる
-- `std::any_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素があるかを `bool` 型の値で返します
+- `std::any_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素が 1 つでもあるかを `bool` 型の値で返します
 - 範囲が空の場合は `false` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 > - `std::any_of(itFirst, itLast, unaryPred)` の計算量: $O(N)$
@@ -421,7 +421,7 @@ false
 ```
 
 ## 2.3 条件を満たす要素が存在しないかを調べる
-- `std::none_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素がないかを `bool` 型の値で返します
+- `std::none_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` に条件 `unaryPred` を満たす要素が 0 個であるかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
 > - `std::none_of(itFirst, itLast, unaryPred)` の計算量: $O(N)$
@@ -520,9 +520,9 @@ int main()
 2
 ```
 
-## 2.6 指定した値の要素が最初に現れる位置を調べる
+## 2.6 指定した値と等しい要素が最初に現れる位置を調べる
 ![](https://storage.googleapis.com/zenn-user-upload/merltfiqqm7jouov7jnz4kvxewt7)
-- `std::find(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` の要素の中で `value` と等しい最初の要素の位置のイテレータを返します
+- `std::find(itFirst, itLast, value)` は、範囲 `[itFirst, itLast)` の中で `value` と等しい最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find()` が返したイテレータを渡し、その間の距離を求めます
 > - `std::find(itFirst, itLast, value)` の計算量: $O(N)$
@@ -598,7 +598,7 @@ not found
 
 ## 2.7 条件を満たす要素が最初に現れる位置を調べる
 ![](https://storage.googleapis.com/zenn-user-upload/y41i3iwzyzxs1pyxq7l2ym3bbzkx)
-- `std::find_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の要素の中で、条件 `unaryPred` を満たす最初の要素の位置のイテレータを返します
+- `std::find_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の中で、条件 `unaryPred` を満たす最初の要素の位置のイテレータを返します
 - 要素の中に `value` が見つからなかった場合は `itLast` を返します
 - イテレータの指す値が配列の何番目にあるかを整数値で得たい場合は、`std::distance(itFirst, itLast)` に、範囲の先頭のイテレータと、`std::find_if()` が返したイテレータを渡し、その間の距離を求めます
 > - `std::find_if(itFirst, itLast, unaryPred)` の計算量: $O(N)$
