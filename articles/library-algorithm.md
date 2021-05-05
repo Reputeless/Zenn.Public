@@ -720,7 +720,7 @@ apple bird cat
 dog dog dog
 ```
 
-## 3.2 指定した値の要素を削除する
+## 3.2 指定した値と等しい要素をすべて削除する
 ![](https://storage.googleapis.com/zenn-user-upload/14n9ju6cs33n08nhzgt2guxhvfrs)  
 ![](https://storage.googleapis.com/zenn-user-upload/tlbdawpm1u914eq1m3alyvcirgl3)  
 ![](https://storage.googleapis.com/zenn-user-upload/265t7mqtqmoln39qis2v6gtp645t)  
@@ -738,6 +738,13 @@ dog dog dog
 int main()
 {
 	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
 	// 配列から 3 を削除
 	numbers.erase(std::remove(numbers.begin(), numbers.end(), 3), numbers.end());
 	std::cout << "size: " << numbers.size() << '\n';
@@ -747,7 +754,16 @@ int main()
 	}
 	std::cout << '\n';
 
+	std::cout << "---\n";
+
 	std::vector<std::string> words = { "apple", "bird", "cat", "apple", "dog" };
+	std::cout << "size: " << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+
 	// 配列から "apple" を削除
 	words.erase(std::remove(words.begin(), words.end(), "apple"), words.end());
 	std::cout << "size: " << words.size() << '\n';
@@ -759,14 +775,19 @@ int main()
 }
 ```
 ```txt:出力
+size: 10
+5 3 3 2 4 2 4 3 5 1 
 size: 7
-5 2 4 2 4 5 1
+5 2 4 2 4 5 1 
+---
+size: 5
+apple bird cat apple dog 
 size: 3
-bird cat dog
+bird cat dog 
 ```
 
 
-## 3.3 条件を満たす要素を削除する
+## 3.3 条件を満たす要素をすべて削除する
 ![](https://storage.googleapis.com/zenn-user-upload/0eawt9k48qk0dsztugf6894is2g9)  
 ![](https://storage.googleapis.com/zenn-user-upload/yqa2zpolj5n393sgrkjtwv9u1uyx)  
 ![](https://storage.googleapis.com/zenn-user-upload/10f3zfxoorsu6wdqgbgc8dmjl216)  
@@ -784,6 +805,13 @@ bird cat dog
 int main()
 {
 	std::vector<int> numbers = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+	std::cout << "size: " << numbers.size() << '\n';
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
 	// 配列から偶数を削除
 	numbers.erase(std::remove_if(numbers.begin(), numbers.end(), [](int n){ return (n % 2 == 0); }), numbers.end());
 	std::cout << "size: " << numbers.size() << '\n';
@@ -793,7 +821,16 @@ int main()
 	}
 	std::cout << '\n';
 
+	std::cout << "---\n";
+
 	std::vector<std::string> words = { "apple", "bird", "cat", "apple", "dog" };
+	std::cout << "size: " << words.size() << '\n';
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+
 	// 配列から 3 文字の単語を削除
 	words.erase(std::remove_if(words.begin(), words.end(), [](const std::string& s){ return (s.size() == 3); }), words.end());
 	std::cout << "size: " << words.size() << '\n';
@@ -805,14 +842,19 @@ int main()
 }
 ```
 ```txt:出力
+size: 10
+5 3 3 2 4 2 4 3 5 1 
 size: 6
-5 3 3 3 5 1
+5 3 3 3 5 1 
+---
+size: 5
+apple bird cat apple dog 
 size: 3
-apple bird apple
+apple bird apple 
 ```
 
 ## 3.4 範囲の要素を逆順にする
-- `std::reverse(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` にある要素の順序を反転します
+- `std::reverse(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` にある要素を逆順にします
 ```cpp
 #include <iostream>
 #include <vector>
@@ -828,7 +870,7 @@ int main()
 	}
 	std::cout << '\n';
 
-	// 順序を反転
+	// 順序を逆順に
 	std::reverse(numbers.begin(), numbers.end());
 	for (const auto& number : numbers)
 	{
