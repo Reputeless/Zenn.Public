@@ -12,6 +12,7 @@ chapters:
   - course-quick-turorial
   - course-network-visualization
   - community
-  - header-hash
   - header-distribution
+  - header-hash
+  - header-svg
  

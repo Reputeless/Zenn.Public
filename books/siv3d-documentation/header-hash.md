@@ -3,7 +3,9 @@ title: "<Hash.hpp>"
 free: true
 ---
 
-# 1. ハッシュ値の結合
+# 1. ハッシュ値のユーティリティ
+
+## 1.1 ハッシュ値を結合する
 
 ```cpp
 # include <Siv3D.hpp>
@@ -11,7 +13,6 @@ free: true
 struct Agent
 {
 	String team;
-
 	String name;
 };
 

@@ -3,7 +3,9 @@ title: "<Distribution.hpp>"
 free: true
 ---
 
-# 1. ガウス分布（正規分布）
+# 1. 正規分布（ガウス分布）
+
+## 1.1 正規分布で乱数を生成する
 
 ```cpp
 # include <Siv3D.hpp>
