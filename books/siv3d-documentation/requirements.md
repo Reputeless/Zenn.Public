@@ -21,13 +21,13 @@ OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通�
 ## macOS
 |  |  |
 |--|--|
-| OS | macOS Mojave v10.14<br>macOS Catalina v10.15 |
+| OS | macOS Mojave / Catalina / Big Sur |
 | CPU | Intel 製の CPU |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
-| 開発環境 | Xcode 11.3 以降 |
+| 開発環境 | Xcode 11.3 以降 (Big Sur の場合は Xcode 12.5 以降) |
 
-- macOS Big Sur / Apple Silicon は将来のバージョンでサポートが追加されます  
+- Apple Silicon は将来のバージョンでサポートが追加されます  
 - 2012 年以前の機種では GPU が OpenGL 4.1 をサポートしていない場合があります
 
 ## Linux
@@ -59,12 +59,12 @@ Web 版は現在非公式の実験的実装が提供されています。
 ## macOS
 |  |  |
 |--|--|
-| OS | macOS Mojave v10.14<br>macOS Catalina v10.15 |
+| OS | macOS Mojave / Catalina / Big Sur |
 | CPU | Intel 製の CPU |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 
-- macOS Big Sur / Apple Silicon は将来のバージョンでサポートが追加されます 
+- Apple Silicon は将来のバージョンでサポートが追加されます 
 - 2012 年以前の機種では GPU が OpenGL 4.1 をサポートしていない場合があります
 
 ## Linux
