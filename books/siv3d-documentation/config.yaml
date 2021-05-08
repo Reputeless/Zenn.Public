@@ -12,9 +12,8 @@ chapters:
   - course-quick-turorial
   - course-network-visualization
   - community
-  - header-distribution
-  - header-hash
-  - header-htmlwriter
-  - header-svg
-  - header-zipreader
+  - header-d
+  - header-h
+  - header-s
+  - header-z
  

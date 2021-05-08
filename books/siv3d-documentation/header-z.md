@@ -1,9 +1,9 @@
 ---
-title: "<ZIPReader.hpp>"
+title: "Z から始まるヘッダ"
 free: true
 ---
 
-# 1. ZIP ファイルの読み込み
+# 1. `<ZIPReader.hpp>`
 
 ## 1.1 ZIP ファイル内に圧縮されている画像から `Texture` を作成
 

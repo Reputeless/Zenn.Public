@@ -1,9 +1,9 @@
 ---
-title: "<Hash.hpp>"
+title: "H から始まるヘッダ"
 free: true
 ---
 
-# 1. ハッシュ値のユーティリティ
+# 1. `<Hash.hpp>`
 
 ## 1.1 ハッシュ値を結合する
 
@@ -47,3 +47,31 @@ void Main()
 	}
 }
 ```
+
+
+# 2. `<HTMLWriter.hpp>`
+
+## 2.1 HTML ファイルを書き出す
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	HTMLWriter html{ U"test.html", U"OpenSiv3D" };
+	html.writeHeader(U"1. Header");
+	html.writeHeader(U"1.1 Header2", 2);
+	html.writeParagraph(U"Hello, OpenSiv3D!");
+	html.writeList({ U"Red", U"Green", U"Blue", U"Yellow" });
+	html.writeOrderedList({ U"Red", U"Green", U"Blue", U"Yellow" });
+	html.writeImage(Image{ U"example/windmill.png" });
+	html.writeLine();
+	html.writeTable(Grid<String>{ { U"A", U"B" }, { U"a", U"b" } }, true);
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+

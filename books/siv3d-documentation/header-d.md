@@ -1,11 +1,11 @@
 ---
-title: "<Distribution.hpp>"
+title: "D から始まるヘッダ"
 free: true
 ---
 
-# 1. 正規分布（ガウス分布）
+# 1. `<Distribution.hpp>`
 
-## 1.1 正規分布で乱数を生成する
+## 1.1 正規分布（ガウス分布）で乱数を生成する
 
 ```cpp
 # include <Siv3D.hpp>
