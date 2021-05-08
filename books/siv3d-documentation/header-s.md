@@ -5,7 +5,7 @@ free: true
 
 # 1. `<Shape2D.hpp>`
 
-## 2.1 円形のような正方形（Squircle) を描画する
+## 1.1 円形のような正方形（Squircle) を描画する
 
 ```cpp
 # include <Siv3D.hpp>
