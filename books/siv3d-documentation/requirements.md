@@ -14,7 +14,7 @@ OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通�
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | Microsoft Visual C++ 2019 16.11 (「C++ によるデスクトップ開発」をインストール) |
+| 開発環境 | [Microsoft Visual C++ 2019 16.11](https://visualstudio.microsoft.com/ja/downloads/) (インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
 
 ## macOS
 |  |  |
