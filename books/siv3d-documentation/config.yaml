@@ -7,7 +7,6 @@ chapters:
   - introduction
   - requirements
   - setup
-  - build
   - course-quick-example
   - course-quick-turorial
   - course-network-visualization
@@ -18,4 +17,4 @@ chapters:
   - header-s
   - header-u
   - header-z
- 
+  - build
