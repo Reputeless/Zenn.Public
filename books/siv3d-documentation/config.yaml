@@ -8,8 +8,7 @@ chapters:
   - requirements
   - setup
   - quick-example
-  - course-quick-turorial
-  - course-network-visualization
+  - tutorial-basic
   - community
   - header-d
   - header-h
@@ -17,5 +16,7 @@ chapters:
   - header-s
   - header-u
   - header-z
+  - course-quick-turorial
+  - course-network-visualization
   - build
   - troubleshooting-setup

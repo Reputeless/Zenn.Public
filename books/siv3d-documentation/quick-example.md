@@ -4,7 +4,8 @@ free: true
 ---
 
 Siv3D の面白いサンプル 10 個を体験するコースです。  
-どれぐらいのコードでどのようなアプリケーションが作れるのか雰囲気をつかむのに役立ちます。
+どれぐらいのコードでどのようなアプリが作れるのか、雰囲気をつかむのに役立ちます。  
+このページのサンプルコードは Siv3D 上級者の書き方をしているので、見慣れない文法や機能もあるでしょう。この先のチュートリアルを読むとだんだん理解できるようになります。
 
 # 1. 万華鏡ペイント
 ```cpp
@@ -72,117 +73,28 @@ void Main()
 }
 ```
 
-# 2. マンデルブロ集合
-```cpp
-# include <Siv3D.hpp>
-
-int32 Mandelbrot(double x, double y)
-{
-	double a = 0.0, b = 0.0;
-
-	for (int32 n = 0; n < 360; ++n)
-	{
-		const double t = a * a - b * b + x;
-		const double u = 2.0 * a * b + y;
-
-		if (t * t + u * u > 4.0)
-		{
-			return n;
-		}
-
-		a = t;
-		b = u;
-	}
-
-	return 0;
-}
-
-void Main()
-{
-	constexpr Size resolutuion{ 640, 480 };
-	Window::Resize(resolutuion);
-
-	Vec2 center{ 0, 0 };
-	double scale = -4.0;
-
-	// 結果を格納する画像
-	Image image{ resolutuion, Palette::Black };
-
-	// 描画用の動的テクスチャ
-	DynamicTexture texture{ image };
-
-	while (System::Update())
-	{
-		const double wheel = Mouse::Wheel();
-		const bool clicked = MouseL.down();
-
-		// 最初のフレームか、操作されたときだけ更新
-		if (wheel || clicked || (Scene::FrameCount() == 1))
-		{
-			scale -= wheel;
-
-			const double s = Pow(1.25, scale);
-			const double d = (1.0 / s) / resolutuion.x;
-
-			if (clicked)
-			{
-				center += (Cursor::PosF() - resolutuion / 2) * d;
-			}
-
-			const double xb = center.x - d * (resolutuion.x * 0.5);
-			const double yb = center.y - d * (resolutuion.y * 0.5);
-
-			for (auto y : step(resolutuion.y))
-			{
-				const double yPos = yb + (d * y);
-
-				for (auto x : step(resolutuion.x))
-				{
-					const double xPos = xb + (d * x);
-
-					if (const int32 m = Mandelbrot(xPos, yPos))
-					{
-						image[y][x] = HSV{ 240 - m, 0.8, 1.0 };
-					}
-					else
-					{
-						image[y][x] = Color{ 0 };
-					}
-				}
-			}
-
-			// 動的テクスチャの中身を image で更新
-			texture.fill(image);
-		}
-
-		// テクスチャを描画
-		texture.draw();
-	}
-}
-```
-
-# 3. ライフゲーム
+# 2. ライフゲーム
 ```cpp
 # include <Siv3D.hpp>
 
 // 1 セルが 1 バイトになるよう、ビットフィールドを使用
 struct Cell
 {
-	bool previous : 1;
-	bool current : 1;
+	bool previous : 1 = 0;
+	bool current : 1 = 0;
 };
 
 // フィールドをランダムなセル値で埋める関数
 void RandomFill(Grid<Cell>& grid)
 {
-	grid.fill({ 0,0 });
+	grid.fill(Cell{});
 
 	// 境界のセルを除いて更新
 	for (auto y : Range(1, grid.height() - 2))
 	{
 		for (auto x : Range(1, grid.width() - 2))
 		{
-			grid[y][x] = { 0, RandomBool(0.5) };
+			grid[y][x] = Cell{ 0, RandomBool(0.5) };
 		}
 	}
 }
@@ -240,7 +152,7 @@ void Main()
 	constexpr int32 height = 60;
 
 	// 計算をしない境界部分も含めたサイズで二次元配列を確保
-	Grid<Cell> grid(width + 2, height + 2, { 0,0 });
+	Grid<Cell> grid(width + 2, height + 2, Cell{ 0,0 });
 
 	// フィールドの状態を可視化するための画像
 	Image image{ width, height, Palette::Black };
@@ -248,7 +160,7 @@ void Main()
 	// 動的テクスチャ
 	DynamicTexture texture{ image };
 
-	Stopwatch s{ StartImmediately::Yes };
+	Stopwatch stopwatch{ StartImmediately::Yes };
 
 	// 自動再生
 	bool autoStep = false;
@@ -289,11 +201,11 @@ void Main()
 
 		// 1 ステップ進めるボタン、または更新タイミングの確認
 		if (SimpleGUI::ButtonAt(U"Step", Vec2{ 700, 240 }, 170)
-			|| (autoStep && s.sF() >= (speed * speed)))
+			|| (autoStep && stopwatch.sF() >= (speed * speed)))
 		{
 			Update(grid);
 			updated = true;
-			s.restart();
+			stopwatch.restart();
 		}
 
 		// グリッド表示の有無を指定するチェックボックス
@@ -350,7 +262,7 @@ void Main()
 ```
 
 
-# 4. QR コード作成
+# 3. QR コード作成
 キーボードでテキストを入力できます。
 ```cpp
 # include <Siv3D.hpp>
@@ -358,11 +270,10 @@ void Main()
 void Main()
 {
 	Window::Resize(1280, 720);
-   
-	const Font font{ 40, Typeface::Bold };
 
 	// 変換するテキスト
-	String text = U"Abc", previous;
+	TextEditState textEdit{ U"Abc" };
+	String previous;
 
 	// QR コードを表示するための動的テクスチャ
 	DynamicTexture texture;
@@ -370,12 +281,11 @@ void Main()
 	while (System::Update())
 	{
 		// テキスト入力
-		TextInput::UpdateText(text);
-
-		const String current = (text + TextInput::GetEditingText());
+		SimpleGUI::TextBox(textEdit, Vec2{ 20,20 }, 1240);
 
 		// テキストの更新があれば QR コードを再作成
-		if (current != previous)
+		if (const String current = textEdit.text;
+			current != previous)
 		{
 			// 入力したテキストを QR コードに変換
 			if (const auto qr = QR::EncodeText(current))
@@ -383,11 +293,9 @@ void Main()
 				// 枠を付けて拡大した画像で動的テクスチャを更新
 				texture.fill(QR::MakeImage(qr).scaled(500, 500, InterpolationAlgorithm::Nearest));
 			}
+
+			previous = current;
 		}
-
-		previous = current;
-
-		font(current).draw(60, 50);
 
 		texture.drawAt(640, 400);
 	}
@@ -395,7 +303,7 @@ void Main()
 ```
 
 
-# 5. 物理演算スケッチ
+# 4. 物理演算スケッチ
 四角や丸を描くと物体が生成されて物理演算をします。  
 マウスホイールや右クリックで視点を移動できます。
 ```cpp
@@ -485,7 +393,7 @@ void Main()
 ```
 
 
-# 6. 長方形詰込み
+# 5. 長方形詰込み
 長方形が箱詰めされるのを眺めます。
 ```cpp
 # include <Siv3D.hpp>
@@ -512,11 +420,11 @@ void Main()
 	Array<double> rotations;
 	RectanglePack output;
 	Point offset{ 0, 0 };
-	Stopwatch s;
+	Stopwatch stopwatch;
 
 	while (System::Update())
 	{
-		if (!s.isStarted() || s > 1.8s)
+		if ((not stopwatch.isStarted()) || (1.8s < stopwatch))
 		{
 			input = GenerateRandomRects();
 			rotations.resize(input.size());
@@ -538,12 +446,12 @@ void Main()
 				rect.moveBy(offset);
 			}
 
-			s.restart();
+			stopwatch.restart();
 		}
 
 		// アニメーション
-		const double k = Min(s.sF() * 10, 1.0);
-		const double t = Math::Saturate(s.sF() - 0.2);
+		const double k = Min(stopwatch.sF() * 10, 1.0);
+		const double t = Math::Saturate(stopwatch.sF() - 0.2);
 		const double e = EaseInOutExpo(t);
 
 		Rect{ offset, output.size }.draw(ColorF{ 0.7, e });
@@ -564,7 +472,7 @@ void Main()
 ```
 
 
-# 7. kd-tree
+# 6. kd-tree
 ```cpp
 # include <Siv3D.hpp>
 
@@ -637,26 +545,33 @@ void Main()
 }
 ```
 
-# 8. Web カメラと顔検出
+# 7. Web カメラと顔検出
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {
 	Window::Resize(1280, 720);
+
+	// Web カメラを非同期で起動
 	AsyncTask<Webcam> task{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
 	Webcam webcam;
-	Image image;
+
+	// Web カメラ画像の表示用テクスチャ
 	DynamicTexture texture;
-	CascadeClassifier cascade{ U"example/objdetect/haarcascade/frontal_face_alt2.xml" };
+	Image image;
+
+	// 顔検出用の分類器をロード
+	const CascadeClassifier cascade{ U"example/objdetect/haarcascade/frontal_face_alt2.xml" };
 	Array<Rect> faces;
 
 	while (System::Update())
 	{
-		if (!webcam && !task.valid())
+		if ((not webcam) && (not task.isValid()))
 		{
 			if (SimpleGUI::Button(U"Retry", Vec2{ 20, 20 }))
 			{
+				// Web カメラを非同期で再起動
 				task = AsyncTask{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
 			}
 		}
@@ -676,8 +591,8 @@ void Main()
 			texture.fill(image);
 		}
 
-		// Webcam 作成待機中は円を表示
-		if (!webcam)
+		// Web カメラ起動待機中は円を表示
+		if (not webcam)
 		{
 			Circle{ Scene::Center(), 40 }.drawArc(Scene::Time() * 180_deg, 300_deg, 5, 5);
 		}
@@ -695,84 +610,12 @@ void Main()
 }
 ```
 
-# 9. Joy-Con
-事前に PC に Joy-Con を Bluetooth で接続しておきます。
 
-[実行結果のムービー](https://siv3d.github.io/ja-jp/reference/gamepad/#joy-con)
-
-```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.9 });
-	Window::Resize(1280, 720);
-	Effect effect;
-
-	Vec2 left{ 640 - 100, 100 }, right{ 640 + 100, 100 };
-	double angle = 0_deg;
-	double scale = 400.0;
-	bool covered = true;
-
-	while (System::Update())
-	{
-		Circle{ Vec2{ 640 - 300, 450 }, scale / 2 }.drawFrame(scale * 0.1);
-		Circle{ Vec2{ 640 + 300, 450 }, scale / 2 }.drawFrame(scale * 0.1);
-
-		// Joy-Con (L) を取得
-		if (const auto joy = JoyConL(0))
-		{
-			joy.drawAt(Vec2(640 - 300, 450), scale, -90_deg - angle, covered);
-
-			if (auto d = joy.povD8())
-			{
-				left += Circular{ 4, *d * 45_deg };
-			}
-
-			if (joy.button2.down())
-			{
-				effect.add([center = left](double t) {
-					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
-					return t < 1.0;
-					});
-			}
-		}
-
-		// Joy-Con (R) を取得
-		if (const auto joy = JoyConR(0))
-		{
-			joy.drawAt(Vec2{ 640 + 300, 450 }, scale, 90_deg + angle, covered);
-
-			if (auto d = joy.povD8())
-			{
-				right += Circular{ 4, *d * 45_deg };
-			}
-
-			if (joy.button2.down())
-			{
-				effect.add([center = right](double t) {
-					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
-					return t < 1.0;
-					});
-			}
-		}
-
-		Circle{ left, 30 }.draw(ColorF{ 0.0, 0.75, 0.9 });
-		Circle{ right, 30 }.draw(ColorF{ 1.0, 0.4, 0.3 });
-		effect.update();
-
-		SimpleGUI::Slider(U"Rotation: ", angle, -180_deg, 180_deg, Vec2{ 20, 20 }, 120, 200);
-		SimpleGUI::Slider(U"Scale: ", scale, 100.0, 600.0, Vec2{ 20, 60 }, 120, 200);
-		SimpleGUI::CheckBox(covered, U"Covered", Vec2{ 20, 100 });
-	}
-}
-```
-
-# 10. 複雑な 2D 物理演算
+# 8. 複雑な 2D 物理演算
 スペースキーで粒子を放出します。  
 マウスの左ボタンでかごを動かせます。
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -813,7 +656,7 @@ void Main()
 	// 2D カメラ
 	Camera2D camera{ Vec2{ 0, -150 } };
 
-	Print << U"[スペース] キーで粒子を放出";
+	Print << U"[Space]: 粒子を放出";
 
 	while (System::Update())
 	{
@@ -875,4 +718,262 @@ void Main()
 }
 ```
 
+
+# 9. 3D 空間
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const Texture windmillTexture{ U"example/windmill.png", TextureDesc::MippedSRGB };
+	const Texture earthTexture{ U"example/texture/earth.jpg", TextureDesc::MippedSRGB };
+
+	const Plane floorPlane{ { 0, 0.01, 0 }, 20 };
+	Image image{ 1000, 1000, Palette::White };
+	DynamicTexture dtexture{ image, TextureDesc::MippedSRGB };
+	Optional<Vec2> previousPenPos;
+
+	const ColorF backgroundColor = ColorF{ 0.8, 0.9, 1.0 }.removeSRGBCurve();
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+		constexpr double verticlaFOV = 30_deg;
+		const Vec3 eyePosition = Cylindrical{ 20, (t * 1_deg), (8 + Periodic::Sine0_1(40s) * 8) };
+		constexpr Vec3 focusPosition{ 0, 0, 0 };
+		const BasicCamera3D camera{ Graphics3D::GetRenderTargetSize(), verticlaFOV, eyePosition, focusPosition, Vec3::Up(), 0.1 };
+
+		// [3D シーンの描画]
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Graphics3D::SetCameraTransform(camera);
+			const Ray ray = camera.screenToRay(Cursor::PosF());
+
+			if (const auto pos = ray.intersectsAt(floorPlane))
+			{
+				Sphere{ *pos, 0.2 }.draw(Linear::Palette::Orange);
+				const Vec2 penPos = pos->xz();
+
+				if (MouseL.pressed())
+				{
+					const Vec2 from = (previousPenPos ? *previousPenPos : penPos);
+					const Vec2 to = penPos;
+					previousPenPos = penPos;
+					Line{ (from * Vec2{ 50, -50 }), (to * Vec2{ 50, -50 }) }
+						.movedBy(500, 500)
+						.overwrite(image, 5, Linear::Palette::Orange);
+					dtexture.fill(image);
+				}
+				else
+				{
+					previousPenPos.reset();
+				}
+			}
+			else
+			{
+				previousPenPos.reset();
+			}
+
+			Plane{ {8, 0, 9}, 12 }.draw(Quaternion::RotateY(30_deg), ColorF{ HSV{ 250, 0.5, 0.9 } }.removeSRGBCurve());
+			Plane{ {-12, 0, 6}, 12 }.draw(Quaternion::RotateY(50_deg), ColorF{ HSV{ 170, 0.5, 0.9 } }.removeSRGBCurve());
+			Plane{ {7, 0, -7}, 12 }.draw(Quaternion::RotateY(10_deg), ColorF{ HSV{ 30, 0.5, 0.9 } }.removeSRGBCurve());
+			floorPlane.draw(dtexture);
+
+			for (auto i : step(36))
+			{
+				const Vec3 pos = Cylindrical{ 3.5, (t + 20_deg + i * 10_deg), (3 + Math::Sin(i * 10_deg * 1 + t * 40_deg)) };
+				Box{ pos, 0.25 }
+					.draw(Quaternion::RotateX(i * 10_deg), ColorF{ HSV{ i * 10, 0.8, 1.0 } }.removeSRGBCurve());
+			}
+
+			Box{ {-8,1,0}, 2 }.draw(ColorF{ 0.25 });
+			Box{ {8,1,0}, 2 }.draw(windmillTexture);
+			Sphere{ {-2, (1 + Periodic::Jump0_1(2s) * 4), 8}, 1 }.draw(ColorF{ 0.5, 0.8, 0.4 }.removeSRGBCurve());
+			Sphere{ {0, (1 + Periodic::Jump0_1(2s, t + 0.3) * 4), 8}, 1 }.draw(ColorF{ 0.8, 0.4, 0.5, }.removeSRGBCurve());
+			Sphere{ {2, (1 + Periodic::Jump0_1(2s, t + 0.6) * 4), 8}, 1 }.draw(ColorF{ 0.4, 0.5, 0.8 }.removeSRGBCurve());
+			Disc{ {-2, (0.2 + Periodic::Jump0_1(2s) * 4), 5}, 1 }.draw(ColorF{ 0.5, 0.8, 0.4 }.removeSRGBCurve());
+			Cylinder{ {0, (1 + Periodic::Jump0_1(2s, t + 0.3) * 4), 5}, 1, 2 }.draw(ColorF{ 0.8, 0.4, 0.5, }.removeSRGBCurve());
+			Cylinder{ {2, (1 + Periodic::Jump0_1(2s, t + 0.6) * 4), 5}, 0.1, 2 }.draw(ColorF{ 0.4, 0.5, 0.8 }.removeSRGBCurve());
+			Sphere{ {0, 3, 0}, 3 }
+				.draw(Quaternion::RotateY(t * -15_deg), earthTexture);
+		}
+
+		// [RenderTexture を 2D シーンに描画]
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
+```
+
+# 10. 屋外の 3D シーン
+
+```cpp
+# include <Siv3D.hpp>
+
+// 羽根が回転する風車用の描画関数
+void DrawMillModel(const Model& model, const Mat4x4& mat)
+{
+	const auto& materials = model.materials();
+
+	for (const auto& object : model.objects())
+	{
+		Mat4x4 m = Mat4x4::Identity();
+
+		// 風車の羽根の回転
+		if (object.name == U"Mill_Blades_Cube.007")
+		{
+			m *= Mat4x4::Rotate(Vec3{ 0,0,-1 }, (Scene::Time() * -120_deg), Vec3{ 0, 9.37401, 0 });
+		}
+
+		const Transformer3D t{ (m * mat) };
+
+		object.draw(materials);
+	}
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const Mesh groundPlane{ MeshData::OneSidedPlane(2000, { 400, 400 }) };
+	const Texture groundTexture{ U"example/texture/ground.jpg", TextureDesc::MippedSRGB };
+	const Model blacksmithModel{ U"example/obj/blacksmith.obj" };
+	const Model millModel{ U"example/obj/mill.obj" };
+	const Model treeModel{ U"example/obj/tree.obj" };
+	const Model pineModel{ U"example/obj/pine.obj" };
+	Model::RegisterDiffuseTextures(treeModel, TextureDesc::MippedSRGB);
+	Model::RegisterDiffuseTextures(pineModel, TextureDesc::MippedSRGB);
+
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ Graphics3D::GetRenderTargetSize(), 40_deg, Vec3{ 0, 3, -16 } };
+
+	Sky sky;
+	double skyTime = 0.5;
+	bool showUI = true;
+
+	while (System::Update())
+	{
+		// [3D シーンの描画]
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(ColorF{ 0.0 }) };
+			camera.update(4.0);
+			Graphics3D::SetCameraTransform(camera);
+
+			// [モデルの描画]
+			{
+				// 地面の描画
+				groundPlane.draw(groundTexture);
+
+				// 球の描画
+				Sphere{ { 0, 1, 0 }, 1 }.draw(ColorF{ 0.75 }.removeSRGBCurve());
+
+				// 鍛冶屋の描画
+				blacksmithModel.draw(Vec3{ 8, 0, 4 });
+
+				// 風車の描画
+				DrawMillModel(millModel, Mat4x4::Translate(-8, 0, 4));
+
+				// 木の描画
+				{
+					const ScopedRenderStates3D renderState{ BlendState::OpaqueAlphaToCoverage, RasterizerState::SolidCullNone };
+					treeModel.draw(Vec3{ 16, 0, 4 });
+					pineModel.draw(Vec3{ 16, 0, 0 });
+				}
+			}
+
+			// [天空レンダリング]
+			{
+				const double time0_2 = Math::Fraction(skyTime * 0.5) * 2.0;
+				const double halfDay0_1 = Math::Fraction(skyTime);
+				const double distanceFromNoon0_1 = Math::Saturate(1.0 - (Abs(0.5 - halfDay0_1) * 2.0));
+				const bool night = (1.0 < time0_2);
+				const double tf = EaseOutCubic(distanceFromNoon0_1);
+				const double tc = EaseInOutCubic(distanceFromNoon0_1);
+				const double starCenteredTime = Math::Fmod(time0_2 + 1.5, 2.0);
+
+				// set sun
+				{
+					const Quaternion q = (Quaternion::RotateY(halfDay0_1 * 180_deg) * Quaternion::RotateX(50_deg));
+					const Vec3 sunDirection = q * Vec3::Right();
+					const ColorF sunColor{ 0.1 + Math::Pow(tf, 1.0 / 2.0) * (night ? 0.1 : 0.9) };
+
+					Graphics3D::SetSunDirection(sunDirection);
+					Graphics3D::SetSunColor(sunColor);
+					Graphics3D::SetGlobalAmbientColor(ColorF{ sky.zenithColor });
+				}
+
+				// set sky color
+				{
+					if (night)
+					{
+						sky.zenithColor = ColorF{ 0.3, 0.05, 0.1 }.lerp(ColorF{ 0.1, 0.1, 0.15 }, tf);
+						sky.horizonColor = ColorF{ 0.1, 0.1, 0.15 }.lerp(ColorF{ 0.1, 0.1, 0.2 }, tf);
+					}
+					else
+					{
+						sky.zenithColor = ColorF{ 0.4, 0.05, 0.1 }.lerp(ColorF{ 0.15, 0.24, 0.56 }, tf);
+						sky.horizonColor = ColorF{ 0.2, 0.05, 0.15 }.lerp(ColorF{ 0.3, 0.4, 0.5 }, tf);
+					}
+				}
+
+				// set parameters
+				{
+					sky.starBrightness = Math::Saturate(1.0 - Pow(Abs(1.0 - starCenteredTime) * 1.8, 4));
+					sky.fogHeightSky = (1.0 - tf);
+					sky.cloudColor = ColorF{ 0.02 + (night ? 0.0 : (0.98 * tc)) };
+					sky.sunEnabled = (not night);
+					sky.cloudTime = skyTime * sky.cloudScale * 40.0;
+					sky.starTime = skyTime;
+				}
+
+				sky.draw();
+			}
+		}
+
+		// [RenderTexture を 2D シーンに描画]
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		// 天空レンダリングのパラメータ設定
+		if (showUI)
+		{
+			Rect{ 20, 20, 480, 76 }.draw();
+			SimpleGUI::GetFont()(U"zenith:").draw(28, 24, ColorF{ 0.11 });
+			Rect{ 100, 26, 28 }.draw(sky.zenithColor.gamma(2.2)).drawFrame(1, 0, ColorF{ 0.5 });
+			SimpleGUI::GetFont()(U"horizon:").draw(148, 24, ColorF{ 0.11 });
+			Rect{ 230, 26, 28 }.draw(sky.horizonColor.gamma(2.2)).drawFrame(1, 0, ColorF{ 0.5 });
+			SimpleGUI::GetFont()(U"cloud:").draw(276, 24, ColorF{ 0.11 });
+			Rect{ 340, 26, 28 }.draw(sky.cloudColor.gamma(2.2)).drawFrame(1, 0, ColorF{ 0.5 });
+			SimpleGUI::GetFont()(U"sun:").draw(386, 24, ColorF{ 0.11 });
+			Rect{ 430, 26, 28 }.draw(Graphics3D::GetSunColor().gamma(2.2)).drawFrame(1, 0, ColorF{ 0.5 });
+			SimpleGUI::GetFont()(U"sunDir: {:.2f}   cloudTime: {:.1f}"_fmt(Graphics3D::GetSunDirection(), sky.cloudTime)).draw(28, 60, ColorF{ 0.11 });
+
+			SimpleGUI::Slider(U"cloudiness: {:.3f}"_fmt(sky.cloudiness), sky.cloudiness, Vec2{ 20, 100 }, 180, 300);
+			SimpleGUI::Slider(U"cloudScale: {:.2f}"_fmt(sky.cloudScale), sky.cloudScale, 0.0, 2.0, Vec2{ 20, 140 }, 180, 300);
+			SimpleGUI::Slider(U"cloudHeight: {:.0f}"_fmt(sky.cloudPlaneHeight), sky.cloudPlaneHeight, 20.0, 6000.0, Vec2{ 20, 180 }, 180, 300);
+			SimpleGUI::Slider(U"orientation: {:.0f}"_fmt(Math::ToDegrees(sky.cloudOrientation)), sky.cloudOrientation, 0.0, Math::TwoPi, Vec2{ 20, 220 }, 180, 300);
+			SimpleGUI::Slider(U"fogHeightSky: {:.2f}"_fmt(sky.fogHeightSky), sky.fogHeightSky, Vec2{ 20, 260 }, 180, 300, false);
+			SimpleGUI::Slider(U"star: {:.2f}"_fmt(sky.starBrightness), sky.starBrightness, Vec2{ 20, 300 }, 180, 300, false);
+			SimpleGUI::Slider(U"starF: {:.2f}"_fmt(sky.starBrightnessFactor), sky.starBrightnessFactor, Vec2{ 20, 340 }, 180, 300);
+			SimpleGUI::Slider(U"starSat: {:.2f}"_fmt(sky.starSaturation), sky.starSaturation, 0.0, 1.0, Vec2{ 20, 380 }, 180, 300);
+			SimpleGUI::CheckBox(sky.sunEnabled, U"sun", Vec2{ 20, 420 }, 120, false);
+			SimpleGUI::CheckBox(sky.cloudsEnabled, U"clouds", Vec2{ 150, 420 }, 120);
+			SimpleGUI::CheckBox(sky.cloudsLightingEnabled, U"cloudsLighting", Vec2{ 280, 420 }, 220);
+		}
+
+		SimpleGUI::CheckBox(showUI, U"UI", Vec2{ 20, Scene::Height() - 100 });
+		SimpleGUI::Slider(U"time: {:.2f}"_fmt(skyTime), skyTime, -2.0, 4.0, Vec2{ 20, Scene::Height() - 60 }, 120, Scene::Width() - 160);
+	}
+}
+```
 

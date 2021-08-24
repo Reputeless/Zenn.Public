@@ -23,7 +23,7 @@ OpenSiv3D v0.6 でアプリケーションを開発するには、次のよう�
 | CPU | Intel 製の CPU |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
-| 開発環境 | Xcode 11.3 以降 (Big Sur の場合は Xcode 12.5 以降) |
+| 開発環境 | Xcode 11.3 以降<br>(Big Sur の場合は Xcode 12.5 以降) |
 
 - Apple Silicon は将来のバージョンでサポートが追加されます 
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
@@ -34,7 +34,7 @@ OpenSiv3D v0.6 でアプリケーションを開発するには、次のよう�
 | OS | Ubuntu 20.04 LTS |
 | CPU | Intel もしくは AMD 製の CPU |
 | GPU | OpenGL 4.1 サポート |
-| 開発環境 | GCC 9.3.0 以降 |
+| 開発環境 | GCC 9.3.0 |
 
 ## 1.4 Web
 Web 版は現在試験的な実装が提供されています。  
