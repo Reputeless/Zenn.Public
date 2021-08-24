@@ -3,11 +3,100 @@ title: "はじめての Siv3D, おすすめサンプル集"
 free: true
 ---
 
-Siv3D の面白いサンプル 10 個を体験するコースです。  
+Siv3D の面白いサンプル 15 個を体験するコースです。  
 どれぐらいのコードでどのようなアプリが作れるのか、雰囲気をつかむのに役立ちます。  
 このページのサンプルコードは Siv3D 上級者の書き方をしているので、見慣れない文法や機能もあるでしょう。この先のチュートリアルを読むとだんだん理解できるようになります。
 
-# 1. 万華鏡ペイント
+# 1. ブロックくずし
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// ブロックのサイズ
+	constexpr Size brickSize{ 40, 20 };
+	
+	// ボールの速さ
+	constexpr double speed = 480.0;
+	
+	// ボールの速度
+	Vec2 ballVelocity{ 0, -speed };
+	
+	// ボール
+	Circle ball{ 400, 400, 8 };
+
+	// ブロックの配列
+	Array<Rect> bricks;
+
+	// 横 (Scene::Width() / blockSize.x) 個、縦 5 個のブロックを配列に追加する
+	for (auto p : step(Size{ (Scene::Width() / brickSize.x), 5 }))
+	{
+		bricks << Rect{ (p.x * brickSize.x), (60 + p.y * brickSize.y), brickSize };
+	}
+
+	while (System::Update())
+	{
+		// パドル
+		const Rect paddle{ Arg::center(Cursor::Pos().x, 500), 60, 10 };
+
+		// ボールを移動
+		ball.moveBy(ballVelocity * Scene::DeltaTime());
+
+		// ブロックを順にチェック
+		for (auto it = bricks.begin(); it != bricks.end(); ++it)
+		{
+			// ブロックとボールが交差していたら
+			if (it->intersects(ball))
+			{
+				// ボールの向きを反転する
+				(it->bottom().intersects(ball) || it->top().intersects(ball)
+					? ballVelocity.y : ballVelocity.x) *= -1;
+
+				// ブロックを配列から削除（イテレータが無効になるので注意）
+				bricks.erase(it);
+
+				// これ以上チェックしない
+				break;
+			}
+		}
+
+		// 天井にぶつかったらはね返る
+		if (ball.y < 0 && ballVelocity.y < 0)
+		{
+			ballVelocity.y *= -1;
+		}
+
+		// 左右の壁にぶつかったらはね返る
+		if ((ball.x < 0 && ballVelocity.x < 0)
+			|| (Scene::Width() < ball.x && 0 < ballVelocity.x))
+		{
+			ballVelocity.x *= -1;
+		}
+
+		// パドルにあたったらはね返る
+		if (0 < ballVelocity.y && paddle.intersects(ball))
+		{
+			// パドルの中心からの距離に応じてはね返る方向を変える
+			ballVelocity = Vec2{ (ball.x - paddle.center().x) * 10, -ballVelocity.y }.setLength(speed);
+		}
+
+		// すべてのブロックを描画する
+		for (const auto& brick : bricks)
+		{
+			brick.stretched(-1).draw(HSV{ brick.y - 40 });
+		}
+
+		// ボールを描く
+		ball.draw();
+
+		// パドルを描く
+		paddle.draw();
+	}
+}
+```
+
+
+# 2. 万華鏡ペイント
 ```cpp
 # include <Siv3D.hpp>
 
@@ -73,7 +162,7 @@ void Main()
 }
 ```
 
-# 2. ライフゲーム
+# 3. ライフゲーム
 ```cpp
 # include <Siv3D.hpp>
 
@@ -262,7 +351,7 @@ void Main()
 ```
 
 
-# 3. QR コード作成
+# 4. QR コード作成
 キーボードでテキストを入力できます。
 ```cpp
 # include <Siv3D.hpp>
@@ -303,7 +392,7 @@ void Main()
 ```
 
 
-# 4. 物理演算スケッチ
+# 5. 物理演算スケッチ
 四角や丸を描くと物体が生成されて物理演算をします。  
 マウスホイールや右クリックで視点を移動できます。
 ```cpp
@@ -393,7 +482,7 @@ void Main()
 ```
 
 
-# 5. 長方形詰込み
+# 6. 長方形詰込み
 長方形が箱詰めされるのを眺めます。
 ```cpp
 # include <Siv3D.hpp>
@@ -472,7 +561,9 @@ void Main()
 ```
 
 
-# 6. kd-tree
+# 7. kd-tree
+近傍にある点を高速に探索できます。
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -545,7 +636,7 @@ void Main()
 }
 ```
 
-# 7. Web カメラと顔検出
+# 8. Web カメラと顔検出
 ```cpp
 # include <Siv3D.hpp>
 
@@ -611,7 +702,7 @@ void Main()
 ```
 
 
-# 8. 複雑な 2D 物理演算
+# 9. 複雑な 2D 物理演算
 スペースキーで粒子を放出します。  
 マウスの左ボタンでかごを動かせます。
 ```cpp
@@ -719,7 +810,7 @@ void Main()
 ```
 
 
-# 9. 3D 空間
+# 10. 3D 空間
 
 ```cpp
 # include <Siv3D.hpp>
@@ -812,7 +903,7 @@ void Main()
 }
 ```
 
-# 10. 屋外の 3D シーン
+# 11. 屋外の 3D シーン
 
 ```cpp
 # include <Siv3D.hpp>
@@ -977,3 +1068,550 @@ void Main()
 }
 ```
 
+# 12. 地形
+左上の高さマップをクリックすると地形の標高を上げることができます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const VertexShader vsTerrain = HLSL{ U"example/shader/hlsl/terrain_forward.hlsl", U"VS" }
+		| GLSL{ U"example/shader/glsl/terrain_forward.vert", {{ U"VSPerView", 1 }, { U"VSPerObject", 2 }} };
+
+	const PixelShader psTerrain = HLSL{ U"example/shader/hlsl/terrain_forward.hlsl", U"PS" }
+		| GLSL{ U"example/shader/glsl/terrain_forward.frag", {{ U"PSPerFrame", 0 }, { U"PSPerView", 1 }, { U"PSPerMaterial", 3 }} };
+
+	const PixelShader psNormal = HLSL{ U"example/shader/hlsl/terrain_normal.hlsl", U"PS" }
+		| GLSL{ U"example/shader/glsl/terrain_normal.frag", {{U"PSConstants2D", 0}} };
+
+	if ((not vsTerrain) || (not psTerrain) || (not psNormal))
+	{
+		return;
+	}
+
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture terrainTexture{ U"example/texture/grass.jpg", TextureDesc::MippedSRGB };
+	const Texture rockTexture{ U"example/texture/rock.jpg", TextureDesc::MippedSRGB };
+	const Texture brushTexture{ U"example/particle.png" };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	const Mesh gridMesh{ MeshData::Grid({128, 128}, 128, 128) };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+	RenderTexture heightmap{ Size{ 256, 256 }, ColorF{0.0}, TextureFormat::R32_Float };
+	RenderTexture normalmap{ Size{ 256, 256 }, ColorF{0.0, 0.0, 0.0}, TextureFormat::R16G16_Float };
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+
+		// 3D
+		{
+			Graphics3D::SetCameraTransform(camera);
+
+			const ScopedCustomShader3D shader{ vsTerrain, psTerrain };
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			const ScopedRenderStates3D ss{ { ShaderStage::Vertex, 0, SamplerState::ClampLinear} };
+			Graphics3D::SetVSTexture(0, heightmap);
+			Graphics3D::SetPSTexture(1, normalmap);
+			Graphics3D::SetPSTexture(2, rockTexture);
+
+			gridMesh.draw(terrainTexture);
+		}
+
+		// RenderTexture を 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		if (const bool gen = SimpleGUI::Button(U"Random", Vec2{270, 10});
+			(gen || (MouseL | MouseR).pressed())) // 地形を編集
+		{
+			// heightmap を編集
+			if (gen)
+			{
+				const PerlinNoiseF perlin{ RandomUint64() };
+				Grid<float> grid(256, 256);
+				for (auto p : step(grid.size()))
+				{
+					grid[p] = perlin.octave2D0_1(p / 256.0f, 5) * 16.0f;
+				}
+				const RenderTexture noise{ grid };
+				const ScopedRenderTarget2D target{ heightmap };
+				noise.draw();
+			}
+			else
+			{
+				const ScopedRenderTarget2D target{ heightmap };
+				const ScopedRenderStates2D blend{ BlendState::Additive };
+				brushTexture.scaled(1.0 + MouseL.pressed()).drawAt(Cursor::PosF(), ColorF{ Scene::DeltaTime() * 15.0 });
+			}
+
+			// normal map を更新
+			{
+				const ScopedRenderTarget2D target{ normalmap };
+				const ScopedCustomShader2D shader{ psNormal };
+				const ScopedRenderStates2D blend{ BlendState::Opaque, SamplerState::ClampLinear };
+				heightmap.draw();
+			}
+		}
+
+		heightmap.draw(ColorF{ 0.1 });
+		normalmap.draw(0, 260);
+	}
+}
+```
+
+
+# 13. 音楽プレーヤー
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 音楽
+	Audio audio;
+
+	// FFT の結果
+	FFTResult fft;
+
+	// 再生位置の変更の有無
+	bool seeking = false;
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 再生・演奏時間
+		const String time = FormatTime(SecondsF{ audio.posSec() }, U"M:ss")
+			+ U'/' + FormatTime(SecondsF{ audio.lengthSec() }, U"M:ss");
+
+		// プログレスバーの進み具合
+		double progress = static_cast<double>(audio.posSample()) / audio.samples();
+
+		if (audio.isPlaying())
+		{
+			// FFT 解析
+			FFT::Analyze(fft, audio);
+
+			// 結果を可視化
+			for (auto i : step(Min(Scene::Width(), static_cast<int32>(fft.buffer.size()))))
+			{
+				const double size = Pow(fft.buffer[i], 0.6f) * 1000;
+				RectF{ Arg::bottomLeft(i, 480), 1, size }.draw(HSV{ 240.0 - i });
+			}
+
+			// 周波数表示
+			Rect{ Cursor::Pos().x, 0, 1, Scene::Height() }.draw();
+			Print << U"{:.2f} Hz"_fmt(Cursor::Pos().x * fft.resolution);
+		}
+
+		// 再生
+		if (SimpleGUI::Button(U"Play", Vec2{ 40, 500 }, 120, audio && !audio.isPlaying()))
+		{
+			audio.play(0.2s);
+		}
+
+		// 一時停止
+		if (SimpleGUI::Button(U"Pause", Vec2{ 170, 500 }, 120, audio.isPlaying()))
+		{
+			audio.pause(0.2s);
+		}
+
+		// フォルダから音楽ファイルを開く
+		if (SimpleGUI::Button(U"Open", Vec2{ 300, 500 }, 120))
+		{
+			audio.stop(0.5s);
+			audio = Dialog::OpenAudio();
+			audio.play();
+		}
+
+		// スライダー
+		if (SimpleGUI::Slider(time, progress, Vec2{ 40, 540 }, 130, 590, !audio.isEmpty()))
+		{
+			audio.pause(0.05s);
+
+			while (audio.isPlaying()) // 再生が止まるまで待機
+			{
+				System::Sleep(0.01s);
+			}
+
+			// 再生位置を変更
+			audio.seekSamples(static_cast<size_t>(audio.samples() * progress));
+
+			// ノイズを避けるため、スライダーから手を離すまで再生は再開しない
+			seeking = true;
+		}
+		else if (seeking && MouseL.up())
+		{
+			// 再生を再開
+			audio.play(0.05s);
+			seeking = false;
+		}
+	}
+
+	// 終了時に再生中の場合、音量をフェードアウト
+	if (audio.isPlaying())
+	{
+		audio.fadeVolume(0.0, 0.3s);
+		System::Sleep(0.3s);
+	}
+}
+```
+
+
+# 14. オーディオ処理
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	Audio audio;
+	double posSec = 0.0;
+	double volume = 1.0;
+	double pan = 0.0;
+	double speed = 1.0;
+	bool loop = false;
+
+	Array<float> busSamples;
+	Array<float> globalSamples;
+	FFTResult busFFT;
+	FFTResult globalFFT;
+	LineString lines(256, Vec2{ 0, 0 });
+
+	bool pitch = false;
+	double pitchShift = 0.0;
+
+	bool lpf = false;
+	double lpfCutoffFrequency = 800.0;
+	double lpfResonance = 0.5;
+	double lpfWet = 1.0;
+
+	bool hpf = false;
+	double hpfCutoffFrequency = 800.0;
+	double hpfResonance = 0.5;
+	double hpfWet = 1.0;
+
+	bool echo = false;
+	double delay = 0.1;
+	double decay = 0.5;
+	double echoWet = 0.5;
+
+	bool reverb = false;
+	bool freeze = false;
+	double roomSize = 0.5;
+	double damp = 0.0;
+	double width = 0.5;
+	double reverbWet = 0.5;
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"GlobalAudio::GetActiveVoiceCount(): " << GlobalAudio::GetActiveVoiceCount();
+		Print << U"isEmpty : " << audio.isEmpty();
+		Print << U"isStreaming : " << audio.isStreaming();
+		Print << U"sampleRate : " << audio.sampleRate();
+		Print << U"samples : " << audio.samples();
+		Print << U"lengthSec : " << audio.lengthSec();
+		Print << U"posSample : " << audio.posSample();
+		Print << U"posSec : " << (posSec = audio.posSec());
+		Print << U"isActive : " << audio.isActive();
+		Print << U"isPlaying : " << audio.isPlaying();
+		Print << U"isPaused : " << audio.isPaused();
+		Print << U"samplesPlayed : " << audio.samplesPlayed();
+		Print << U"isLoop : " << (loop = audio.isLoop());
+		Print << U"getLoopTimingtLoop : " << audio.getLoopTiming().beginPos << U", " << audio.getLoopTiming().endPos;
+		Print << U"loopCount : " << audio.loopCount();
+		Print << U"getVolume : " << (volume = audio.getVolume());
+		Print << U"getPan : " << (pan = audio.getPan());
+		Print << U"getSpeed : " << (speed = audio.getSpeed());
+
+		if (SimpleGUI::Button(U"Open audio file", Vec2{ 60, 560 }))
+		{
+			audio.stop(0.5s);
+			audio = Dialog::OpenAudio(Audio::Stream);
+		}
+
+		{
+			GlobalAudio::BusGetSamples(0, busSamples);
+			GlobalAudio::BusGetFFT(0, busFFT);
+
+			for (auto [i, s] : Indexed(busSamples))
+			{
+				lines[i].set((300.0 + i), (200.0 - s * 100.0));
+			}
+
+			if (busSamples)
+			{
+				lines.draw(2, Palette::Orange);
+			}
+
+			for (auto [i, s] : Indexed(busFFT.buffer))
+			{
+				RectF{ Arg::bottomLeft(300 + i, 300), 1, (s * 4) }.draw();
+			}
+		}
+
+		{
+			GlobalAudio::GetSamples(globalSamples);
+			GlobalAudio::GetFFT(globalFFT);
+
+			for (auto [i, s] : Indexed(globalSamples))
+			{
+				lines[i].set((300.0 + i), (550.0 - s * 100.0));
+			}
+
+			if (globalSamples)
+			{
+				lines.draw(2, Palette::Orange);
+			}
+
+			for (auto [i, s] : Indexed(globalFFT.buffer))
+			{
+				RectF{ Arg::bottomLeft(300 + i, 650), 1, (s * 4) }.draw();
+			}
+		}
+
+		if (SimpleGUI::Button(U"Play", Vec2{ 600, 20 }, 80, !audio.isPlaying()))
+		{
+			audio.play();
+		}
+
+		if (SimpleGUI::Button(U"Pause", Vec2{ 690, 20 }, 80, (audio.isPlaying() && !audio.isPaused())))
+		{
+			audio.pause();
+		}
+
+		if (SimpleGUI::Button(U"Stop", Vec2{ 780, 20 }, 80, (audio.isPlaying() || audio.isPaused())))
+		{
+			audio.stop();
+		}
+
+		if (SimpleGUI::Button(U"Play in 2s", Vec2{ 870, 20 }, 120, !audio.isPlaying()))
+		{
+			audio.play(2s);
+		}
+
+		if (SimpleGUI::Button(U"Pause in 2s", Vec2{ 1000, 20 }, 120, (audio.isPlaying() && !audio.isPaused())))
+		{
+			audio.pause(2s);
+		}
+
+		if (SimpleGUI::Button(U"Stop in 2s", Vec2{ 1130, 20 }, 120, (audio.isPlaying() || audio.isPaused())))
+		{
+			audio.stop(2s);
+		}
+
+		if (SimpleGUI::Slider(U"{:.1f} / {:.1f}"_fmt(posSec, audio.lengthSec()), posSec, 0.0, audio.lengthSec(), Vec2{ 600, 60 }, 160, 360))
+		{
+			if (MouseL.down() || !Cursor::DeltaF().isZero()) // シークの連続（ノイズの原因）を防ぐ
+			{
+				audio.seekTime(posSec);
+			}
+		}
+
+		if (SimpleGUI::CheckBox(loop, U"Loop", Vec2{ 1130, 60 }))
+		{
+			audio.setLoop(loop);
+		}
+
+		if (SimpleGUI::Slider(U"volume: {:.2f}"_fmt(volume), volume, Vec2{ 600, 110 }, 140, 130))
+		{
+			audio.setVolume(volume);
+		}
+
+		if (SimpleGUI::Button(U"0.0 in 2s", Vec2{ 880, 110 }, 110, audio.isActive()))
+		{
+			audio.fadeVolume(0.0, 2s);
+		}
+
+		if (SimpleGUI::Button(U"0.5 in 2s", Vec2{ 1000, 110 }, 110, audio.isActive()))
+		{
+			audio.fadeVolume(0.5, 2s);
+		}
+
+		if (SimpleGUI::Button(U"1.0 in 2s", Vec2{ 1120, 110 }, 110, audio.isActive()))
+		{
+			audio.fadeVolume(1.0, 2s);
+		}
+
+		if (SimpleGUI::Slider(U"pan: {:.2f}"_fmt(pan), pan, -1.0, 1.0, Vec2{ 600, 150 }, 140, 130))
+		{
+			audio.setPan(pan);
+		}
+
+		if (SimpleGUI::Button(U"-1.0 in 2s", Vec2{ 880, 150 }, 110, audio.isActive()))
+		{
+			audio.fadePan(-1.0, 2s);
+		}
+
+		if (SimpleGUI::Button(U"0.0 in 2s", Vec2{ 1000, 150 }, 110, audio.isActive()))
+		{
+			audio.fadePan(0.0, 2s);
+		}
+
+		if (SimpleGUI::Button(U"1.0 in 2s", Vec2{ 1120, 150 }, 110, audio.isActive()))
+		{
+			audio.fadePan(1.0, 2s);
+		}
+
+		if (SimpleGUI::Slider(U"speed: {:.3f}"_fmt(speed), speed, 0.0, 4.0, Vec2{ 600, 190 }, 140, 130))
+		{
+			audio.setSpeed(speed);
+		}
+
+		if (SimpleGUI::Button(U"0.8 in 2s", Vec2{ 880, 190 }, 110, audio.isActive()))
+		{
+			audio.fadeSpeed(0.8, 2s);
+		}
+
+		if (SimpleGUI::Button(U"1.0 in 2s", Vec2{ 1000, 190 }, 110, audio.isActive()))
+		{
+			audio.fadeSpeed(1.0, 2s);
+		}
+
+		if (SimpleGUI::Button(U"1.2 in 2s", Vec2{ 1120, 190 }, 110, audio.isActive()))
+		{
+			audio.fadeSpeed(1.2, 2s);
+		}
+
+		bool updatePitch = false;
+		bool updateLPF = false;
+		bool updateHPF = false;
+		bool updateEcho = false;
+		bool updateReverb = false;
+
+		if (SimpleGUI::CheckBox(pitch, U"Pitch", Vec2{ 600, 240 }, 120, GlobalAudio::SupportsPitchShift()))
+		{
+			if (pitch)
+			{
+				updatePitch = true;
+			}
+			else
+			{
+				GlobalAudio::BusClearFilter(0, 0);
+			}
+		}
+		updatePitch |= SimpleGUI::Slider(U"pitchShift: {:.2f}"_fmt(pitchShift), pitchShift, -12.0, 12.0, Vec2{ 720, 240 }, 160, 300);
+
+		if (SimpleGUI::CheckBox(lpf, U"LPF", Vec2{ 600, 280 }, 120))
+		{
+			if (lpf)
+			{
+				updateLPF = true;
+			}
+			else
+			{
+				GlobalAudio::BusClearFilter(0, 1);
+			}
+		}
+		updateLPF |= SimpleGUI::Slider(U"cutoffFrequency: {:.0f}"_fmt(lpfCutoffFrequency), lpfCutoffFrequency, 10, 4000, Vec2{ 720, 280 }, 220, 240);
+		updateLPF |= SimpleGUI::Slider(U"resonance: {:.2f}"_fmt(lpfResonance), lpfResonance, 0.1, 8.0, Vec2{ 720, 310 }, 220, 240);
+		updateLPF |= SimpleGUI::Slider(U"wet: {:.2f}"_fmt(lpfWet), lpfWet, Vec2{ 720, 340 }, 220, 240);
+
+		if (SimpleGUI::CheckBox(hpf, U"HPF", Vec2{ 600, 380 }, 120))
+		{
+			if (hpf)
+			{
+				updateHPF = true;
+			}
+			else
+			{
+				GlobalAudio::BusClearFilter(0, 2);
+			}
+		}
+		updateHPF |= SimpleGUI::Slider(U"cutoffFrequency: {:.0f}"_fmt(hpfCutoffFrequency), hpfCutoffFrequency, 10, 4000, Vec2{ 720, 380 }, 220, 240);
+		updateHPF |= SimpleGUI::Slider(U"resonance: {:.2f}"_fmt(hpfResonance), hpfResonance, 0.1, 8.0, Vec2{ 720, 410 }, 220, 240);
+		updateHPF |= SimpleGUI::Slider(U"wet: {:.2f}"_fmt(hpfWet), hpfWet, Vec2{ 720, 440 }, 220, 240);
+
+		if (SimpleGUI::CheckBox(echo, U"Echo", Vec2{ 600, 480 }, 120))
+		{
+			if (echo)
+			{
+				updateEcho = true;
+			}
+			else
+			{
+				GlobalAudio::BusClearFilter(0, 3);
+			}
+		}
+		updateEcho |= SimpleGUI::Slider(U"delay: {:.2f}"_fmt(delay), delay, Vec2{ 720, 480 }, 220, 240);
+		updateEcho |= SimpleGUI::Slider(U"decay: {:.2f}"_fmt(decay), decay, Vec2{ 720, 510 }, 220, 240);
+		updateEcho |= SimpleGUI::Slider(U"wet: {:.2f}"_fmt(echoWet), echoWet, Vec2{ 720, 540 }, 220, 240);
+
+		if (SimpleGUI::CheckBox(reverb, U"Reverb", Vec2{ 600, 580 }, 120))
+		{
+			if (reverb)
+			{
+				updateReverb = true;
+			}
+			else
+			{
+				GlobalAudio::BusClearFilter(0, 4);
+			}
+		}
+		updateReverb |= SimpleGUI::CheckBox(freeze, U"freeze", Vec2{ 720, 580 }, 110);
+		updateReverb |= SimpleGUI::Slider(U"roomSize: {:.2f}"_fmt(roomSize), roomSize, 0.001, 1.0, { 830, 580 }, 150, 200);
+		updateReverb |= SimpleGUI::Slider(U"damp: {:.2f}"_fmt(damp), damp, Vec2{ 720, 610 }, 220, 240);
+		updateReverb |= SimpleGUI::Slider(U"width: {:.2f}"_fmt(width), width, Vec2{ 720, 640 }, 220, 240);
+		updateReverb |= SimpleGUI::Slider(U"wet: {:.2f}"_fmt(reverbWet), reverbWet, Vec2{ 720, 670 }, 220, 240);
+
+		if (pitch && updatePitch)
+		{
+			GlobalAudio::BusSetPitchShiftFilter(0, 0, pitchShift);
+		}
+
+		if (lpf && updateLPF)
+		{
+			GlobalAudio::BusSetLowPassFilter(0, 1, lpfCutoffFrequency, lpfResonance, lpfWet);
+		}
+
+		if (hpf && updateHPF)
+		{
+			GlobalAudio::BusSetHighPassFilter(0, 2, hpfCutoffFrequency, hpfResonance, hpfWet);
+		}
+
+		if (echo && updateEcho)
+		{
+			GlobalAudio::BusSetEchoFilter(0, 3, delay, decay, echoWet);
+		}
+
+		if (reverb && updateReverb)
+		{
+			GlobalAudio::BusSetReverbFilter(0, 4, freeze, roomSize, damp, width, reverbWet);
+		}
+	}
+
+	if (GlobalAudio::GetActiveVoiceCount())
+	{
+		GlobalAudio::FadeVolume(0.0, 0.5s);
+		System::Sleep(0.5s);
+	}
+}
+```
+
+
+# 15. スクリプト
+C++/Siv3D と文法が近いスクリプト言語を実行できます。  
+実行中にスクリプトを編集すると動的にリロードします。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const ManagedScript script{ U"example/script/hello.as" };
+
+	while (System::Update())
+	{
+		script.run();
+	}
+}
+```
