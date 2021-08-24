@@ -6,7 +6,7 @@ free: true
 ![](/images/doc_v6/logo.png)
 
 # 1. Siv3D について
-**Siv3D** (シブスリーディー) ^[2016 年まで開発されていた旧世代 Siv3D と区別して OpenSiv3D (オープンシブスリーディー) と呼ぶこともあります。]は、ゲーム、メディアアート、ビジュアライザ、シミュレータなど、**可視化**や**インタラクション** を駆使するプログラムを、**楽しく簡単なコード**で記述できる**最先端の C++20 フレームワーク**です。MIT ライセンスで配布され、2021 年 8 月時点における直近 1 年間の SDK ダウンロード数は約 1 万回です。
+**Siv3D** (シブスリーディー) ^[2016 年まで開発されていた旧世代 Siv3D と区別して OpenSiv3D (オープンシブスリーディー) と呼ぶこともあります。]は、ゲーム、メディアアート、ビジュアライザ、シミュレータなど、**可視化**や**インタラクション**に関わるプログラムを、**楽しく簡単なコード**で記述できる**最先端の C++20 フレームワーク**です。MIT ライセンスで配布され、2021 年 8 月時点における直近 1 年間の SDK ダウンロード数は約 1 万回です。
 
 ## 1.1 機能の概要
 Siv3D を導入することで、次のような操作を組み合わせたアプリケーションを非常に短いコードで記述できます。
@@ -18,7 +18,7 @@ Siv3D を導入することで、次のような操作を組み合わせたア�
 - 物理演算や経路探索、幾何などの計算
 - データ構造やアルゴリズム
 
-Siv3D は標準的な C++ で書かれていますが、ユーザはほとんどのプログラムを、Siv3D が提供する便利な型や関数を使って記述します。そのため、描画やインタラクションのための DSL (domain-specific language) としての性格が強いです。例えると Java にとっての [Processing](https://processing.org/) に近いです。
+Siv3D は標準的な C++ で書かれていますが、ユーザはほとんどのプログラムを、Siv3D が提供する便利な型や関数を使って記述します。そのため、描画やインタラクションのための DSL (domain-specific language) としての性格が強いです。例えると Java にとっての [Processing](https://processing.org/) です。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -81,6 +81,8 @@ Siv3D で作られたアプリケーションの実行には、ウィンドウ�
 
 ## 1.4 ユーザ事例 (2021)
 
+最近 Twitter に投稿された Siv3D 関連のツイートを紹介します。
+
 https://twitter.com/e869120/status/1425458983154831363
 
 https://twitter.com/Ryoga_exe/status/1429748042169602049
@@ -109,9 +111,18 @@ https://twitter.com/r193333333/status/1377613363929247746
 
 https://twitter.com/awotere7/status/1363471771836567559
 
-https://twitter.com/Reputeless/status/1346065793369350144
+https://twitter.com/agehama_/status/1346062702691565569
 
-https://twitter.com/Reputeless/status/1344967447120470021
+https://twitter.com/Shibaken_8128/status/1344967321454931969
+
+## 1.5 ゲーム作品
+
+Siv3D で開発された人気のゲームを 3 つピックアップします。
+
+- [One week, My room](https://www.freem.ne.jp/win/game/14961)
+  - [レビュー](http://www.moguragames.com/entry/12858/)
+- [ColorfulTone](https://www.freem.ne.jp/win/game/14167)
+- [CORGI JUMP](https://voidproc.itch.io/corgi-jump)
 
 ---
 
