@@ -5,7 +5,7 @@ free: true
 
 # 1. OpenSiv3D v0.6 を使う開発に必要な環境
 
-OpenSiv3D v0.6 でアプリケーションを開発するには、次のような開発環境が必要です。
+OpenSiv3D v0.6 でプログラミングをするには、プラットフォームに応じて次のような開発環境が必要です。
 
 ## 1.1 Windows
 |  |  |
@@ -81,7 +81,11 @@ Web 版は現在試験的な実装が提供されています。
 # 3. 開発環境のインストールガイド
 
 ## 3.1 Visual Studio のインストール (Windows)
-https://visualstudio.microsoft.com/ja/downloads/ から **「Visual Studio Community（コミュニティ）」** を選択してインストーラをダウンロードし、実行します。
+Windows 7 や Windows 8.1, Windows 10 のパソコンで Siv3D プログラミングをする場合は「Visual Studio Community 2019（ビジュアル・スタジオ・コミュニティ 2019）」を使うのが便利です。これは世界中のプロフェッショナルのソフトウェア開発者が使う「Visual Studio」というプログラミングツールの無料版です。学生、個人、少人数での開発であれば、Visual Studio の有料版と同じ機能を無料で使えます。
+
+### 手順
+
+https://visualstudio.microsoft.com/ja/downloads/ から **「Visual Studio 2019 コミュニティ」** を選択してインストーラをダウンロードし、実行します。
 
 インストーラを実行すると、インストールするプログラミング言語や開発ツールを選択する次のような画面が出てきます。インストール項目の選択画面から **「C++ によるデスクトップ開発」** を選択します（右側の「インストールの詳細」に表示される項目は Visual Studio のバージョンによって異なるため、気にする必要はありません）。
 
@@ -90,6 +94,9 @@ https://visualstudio.microsoft.com/ja/downloads/ から **「Visual Studio Commu
 そのまま右下の **「インストール」** ボタンを押せば、C++ プログラミングに必要なツールのインストールがはじまります。
 
 ## 3.2 Xcode のインストール (macOS)
+MacBook や iMac など macOS のパソコンで Siv3D プログラミングをする場合は「Xcode（エックスコード）」を使います。アプリケーションを開発するための開発環境で、アップル社が無料で提供しています。
+
+### 手順
 
 App Store から **Xcode** をインストールします。使用している macOS のバージョンによっては、App Store にある最新の Xcode をインストールできないことがあります。その場合は https://developer.apple.com/download/more/ から 過去の Xcode 11.3.1 以降のバージョンをダウンロードしてください。
 
