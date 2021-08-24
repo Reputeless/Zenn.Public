@@ -10,6 +10,8 @@ chapters:
   - hello-siv3d
   - quick-example
   - tutorial-basic
+  - tutorial-shape
+  - tutorial-animation
   - community
   - header-d
   - header-h
