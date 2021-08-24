@@ -5,6 +5,8 @@ free: true
 
 # 1. Windows で Siv3D を始める
 
+## 1.1 SDK のインストール
+
 - **[OpenSiv3D v0.6 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.0Installer.exe)** をダウンロードして実行します
 - インストーラが自動的に以下のことを行います
   - SDK のコピー（デフォルトではドキュメントフォルダ）
@@ -15,13 +17,30 @@ free: true
 > OpenSiv3D SDK を削除するには、Windows の設定からアンインストールします。
 > ![](/images/doc_v6/manual/uninstall.png)
 
+## 1.2
+
 # 2. macOS で Siv3D を始める
+
+## 2.1 プロジェクトテンプレートのダウンロード
 
 - **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.0_macOS.zip)** をダウンロードしてファイルを展開します
 
 - macOS Catalina 以降の場合、プログラム実行時に、ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
 
+## 2.2 
+
 
 # 3. Linux で　Siv3D を始める
 
+## 3.1
 
+
+## 3.2
+
+
+## 3.3
+
+
+---
+
+次のページでは、Siv3D の機能を体験するいくつかの小さなプログラムを実行します。

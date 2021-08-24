@@ -6,7 +6,7 @@ free: true
 ![](/images/doc_v6/logo.png)
 
 # 1. Siv3D について
-**Siv3D** (シブスリーディー) ^[2016 年まで開発されていた旧世代 Siv3D と区別して OpenSiv3D (オープンシブスリーディー) と呼ぶこともあります。]は、ゲーム、メディアアート、ビジュアライザ、シミュレータなど、**可視化**や**インタラクション** を駆使するプログラムを、**楽しく簡単なコード**で記述できる、**最先端の C++20 フレームワーク**です。MIT ライセンスで配布されており、2021 年 8 月時点における直近 1 年間の SDK ダウンロード数は約 1 万回です。
+**Siv3D** (シブスリーディー) ^[2016 年まで開発されていた旧世代 Siv3D と区別して OpenSiv3D (オープンシブスリーディー) と呼ぶこともあります。]は、ゲーム、メディアアート、ビジュアライザ、シミュレータなど、**可視化**や**インタラクション** を駆使するプログラムを、**楽しく簡単なコード**で記述できる**最先端の C++20 フレームワーク**です。MIT ライセンスで配布され、2021 年 8 月時点における直近 1 年間の SDK ダウンロード数は約 1 万回です。
 
 ## 1.1 機能の概要
 Siv3D を導入することで、次のような操作を組み合わせたアプリケーションを非常に短いコードで記述できます。
@@ -18,7 +18,7 @@ Siv3D を導入することで、次のような操作を組み合わせたア�
 - 物理演算や経路探索、幾何などの計算
 - データ構造やアルゴリズム
 
-Siv3D は標準的な C++ で書かれていますが、ユーザはほとんどのプログラムを Siv3D の提供する便利な型や関数を使って記述します。そのため、描画やインタラクションのための DSL (domain-specific language) としての性格が強いです。類似例を挙げると Java にとっての [Processing](https://processing.org/) です。
+Siv3D は標準的な C++ で書かれていますが、ユーザはほとんどのプログラムを、Siv3D が提供する便利な型や関数を使って記述します。そのため、描画やインタラクションのための DSL (domain-specific language) としての性格が強いです。例えると Java にとっての [Processing](https://processing.org/) に近いです。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -46,7 +46,7 @@ void Main()
 Siv3D は魅力にあふれています。その証拠に、Siv3D の作者は 10 年以上開発に熱中しています。
 
 ### ⚡ 非常に短いコード
-Siv3D のコードは最短で 2 行です。様々なインタラクションを実現するための便利な機能が揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルで完成します。思いついたアイデアや成果物のソースコードを、[GitHub Gist](https://gist.github.com/) のようなコード共有サイトを使って一瞬にして手軽に保存・シェアできるため、世界中の Siv3D ユーザと技術を学び合うことができます。
+Siv3D のコードは最短で 2 行です。様々なインタラクションを実現する便利な機能が揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。思いついたアイデアや成果物のソースコードを、[GitHub Gist](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアできるため、世界中の Siv3D ユーザと技術を学び合うことができます。
 
 ### 🛸 最新の C++ を学べる
 Siv3D のサンプルコードとライブラリ API は、すべて最新の C++20 を活用して書かれています。Siv3D を使っているだけで、モダンな C++ の書き方やテクニックを自然と身につけるができます。Siv3D の作者は、日本最大のゲーム開発カンファレンス CEDEC で[最新 C++ の活用に関する講演](https://speakerdeck.com/cpp/cedec2020)をしたり、[C++ の情報ポータル](https://cppmap.github.io/)を作成したりするなど、最先端の C++ の普及に努めています。
@@ -58,7 +58,7 @@ Siv3D のサンプルコードとライブラリ API は、すべて最新の C+
 Siv3D は MIT ライセンスのもと [GitHub 上でホスティング](https://github.com/Siv3D/OpenSiv3D)されています。内部のコードが気になったらいつでも調べることができ、改造することもできます。サードパーティ・ライブラリを含め商用利用を妨げる条件はありません。Siv3D で開発した Windows, macOS, Linux, Web 向けのゲームやアプリケーションを販売して得た収益は 100% 開発者が獲得できます。Siv3D のビジョンに共感し、より優れた開発体験を心待ちにしている方は [Siv3D の個人スポンサー](https://github.com/sponsors/Reputeless)として Siv3D プロジェクトを応援してください。
 
 ### 💗 親切なユーザコミュニティ
-Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニティ Slack](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/community) で質問しましょう。匿名で質問したい場合は BBS も利用できます。毎月オンラインで開催される Siv3D 実装会では、Siv3D の熱心なユーザや Siv3D の作者と、Discord 上の音声コミュニケーションで雑談や技術的な相談をすることができます。Twitter では定期的に #Siv3D, #OpenSiv3D ハッシュタグを巡回しています。ユーザコミュニティが、作品の宣伝やシェアに協力してくれるでしょう。OSS (オープンソースソフトウェア) 開発に貢献したい学生に対して、Siv3D を練習場にしてサポートするプログラムも毎年実施しています。
+Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニティ Slack](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/community) で質問しましょう。匿名で質問したい場合は BBS も利用できます。毎月オンラインで開催される Siv3D 実装会では、Siv3D の熱心なユーザ達や Siv3D の作者と、Discord 上の音声コミュニケーションで雑談や技術的な相談をすることができます。Twitter では定期的に #Siv3D, #OpenSiv3D ハッシュタグを巡回しています。ユーザコミュニティが、作品の宣伝やシェアに協力してくれるでしょう。OSS (オープンソースソフトウェア) 開発に貢献したい学生に対して、Siv3D を練習場にしてサポートするプログラムも毎年実施しています。
 
 ### 🌐 Web ブラウザ上で動く（試験的）
 現在試験的に提供される Web 版 ([OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)) を使うと、Siv3D で作った C++ アプリケーションを、WebGL2 をサポートするモダンな Web ブラウザ上で実行可能な JavaScript に変換できます。スマホやタブレットから、多くの人があたなの作品を体験できるようになります。
@@ -78,6 +78,40 @@ OpenSiv3D はバージョン 0.0.1 から始まり、4 年かけて 0.6.0 まで
 
 ### GUI 環境が必要（解消予定）
 Siv3D で作られたアプリケーションの実行には、ウィンドウを表示できる GUI 環境が必要です。GUI 環境でなくても実行できる headless モードが現在試験的に存在します。
+
+## 1.4 ユーザ事例 (2021)
+
+https://twitter.com/e869120/status/1425458983154831363
+
+https://twitter.com/Ryoga_exe/status/1429748042169602049
+
+https://twitter.com/takara2314/status/1415649264085069829
+
+https://twitter.com/e869120/status/1428662453785612290
+
+https://twitter.com/agehama_/status/1410563076869394433
+
+https://twitter.com/Ryoga_exe/status/1401098907195559938
+
+https://twitter.com/G4rryS1ngh/status/1394752543364763648
+
+https://twitter.com/azaika_/status/1393421628403380224
+
+https://twitter.com/MASAYA_math/status/1391575153708920832
+
+https://twitter.com/itakawa/status/1389944433177546757
+
+https://twitter.com/Ryoga_exe/status/1388820367922188289
+
+https://twitter.com/discosaan/status/1387061728974839809
+
+https://twitter.com/r193333333/status/1377613363929247746
+
+https://twitter.com/awotere7/status/1363471771836567559
+
+https://twitter.com/Reputeless/status/1346065793369350144
+
+https://twitter.com/Reputeless/status/1344967447120470021
 
 ---
 
