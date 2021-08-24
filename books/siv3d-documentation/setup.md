@@ -67,4 +67,4 @@ https://github.com/Siv3D/OpenSiv3D/blob/v6_master/.github/workflows/ci.yml#L66-L
 
 ---
 
-次のページでは、Siv3D の機能を体験するいくつかの小さなプログラムを実行します。
+次のページでは、Siv3D の基本のサンプルプログラムをカスタマイズする方法を紹介します。
