@@ -5,9 +5,9 @@ free: true
 
 # 1. OpenSiv3D v0.6 を使う開発に必要な環境
 
-OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通りです。
+OpenSiv3D v0.6 でアプリケーションを開発するには、次のような開発環境が必要です。
 
-## Windows
+## 1.1 Windows
 |  |  |
 |--|--|
 | OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit) |
@@ -16,7 +16,7 @@ OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通�
 | 音声出力 | 何らかの音声出力装置があること |
 | 開発環境 | [Microsoft Visual C++ 2019 16.11](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
 
-## macOS
+## 1.2 macOS
 |  |  |
 |--|--|
 | OS | macOS Mojave / Catalina / Big Sur |
@@ -28,7 +28,7 @@ OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通�
 - Apple Silicon は将来のバージョンでサポートが追加されます 
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
 
-## Linux
+## 1.3 Linux
 |  |  |
 |--|--|
 | OS | Ubuntu 20.04 LTS |
@@ -36,7 +36,7 @@ OpenSiv3D v0.6 で公式にサポートしている開発環境は以下の通�
 | GPU | OpenGL 4.1 サポート |
 | 開発環境 | GCC 9.3.0 以降 |
 
-## Web
+## 1.4 Web
 Web 版は現在試験的な実装が提供されています。  
 最新の情報は [OpenSiv3D for Web プロジェクトページ](https://siv3d.kamenokosoft.com/ja/index) を確認してください。  
 将来のバージョンで公式サポート対象に含まれる予定です。
@@ -44,7 +44,7 @@ Web 版は現在試験的な実装が提供されています。
 
 # 2. OpenSiv3D v0.6 で開発したアプリの実行に必要な環境
 
-## Windows
+## 2.1 Windows
 |  |  |
 |--|--|
 | OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit) |
@@ -52,7 +52,7 @@ Web 版は現在試験的な実装が提供されています。
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
 
-## macOS
+## 2.2 macOS
 |  |  |
 |--|--|
 | OS | macOS Mojave / Catalina / Big Sur |
@@ -63,14 +63,14 @@ Web 版は現在試験的な実装が提供されています。
 - Apple Silicon は将来のバージョンでサポートが追加されます 
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
 
-## Linux
+## 2.3 Linux
 |  |  |
 |--|--|
 | OS | Ubuntu 20.04 LTS |
 | CPU | Intel もしくは AMD 製の CPU |
 | GPU | OpenGL 4.1 サポート |
 
-## Web
+## 2.4 Web
 Web 版は現在試験的な実装が提供されています。  
 最新の情報は [OpenSiv3D for Web プロジェクトページ](https://siv3d.kamenokosoft.com/ja/index) を確認してください。  
 将来のバージョンで公式サポート対象に含まれる予定です。
@@ -85,11 +85,11 @@ https://visualstudio.microsoft.com/ja/downloads/ から **「Visual Studio Commu
 
 ![](https://i.gyazo.com/thumb/1000/34b2cf39108e55cb534fc9d9cb8282ac-png.png)
 
-そのまま右下の **「インストール」** ボタンを押せば、C++ プログラミングに必要な最小限のツールのインストールがはじまります。インストールする項目はあとで追加や変更ができます。ほかのプログラミング言語やツールに興味を持ったときや、アンインストールの際にもこのインストーラを使います。
+そのまま右下の **「インストール」** ボタンを押せば、C++ プログラミングに必要なツールのインストールがはじまります。
 
 ## 3.2 Xcode のインストール (macOS)
 
-
+App Store から **Xcode** をインストールします。使用している macOS のバージョンによっては、App Store にある最新の Xcode をインストールできないことがあります。その場合は https://developer.apple.com/download/more/ から 過去の Xcode 11.3.1 以降のバージョンをダウンロードしてください。
 
 ---
 
