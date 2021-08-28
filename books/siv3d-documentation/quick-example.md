@@ -10,6 +10,9 @@ free: true
 次のプログラムをコピーして、基本のサンプルプログラムを置き換えましょう。
 
 # 1. ブロックくずし
+
+![](/images/doc_v6/quick-example/breakout.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
