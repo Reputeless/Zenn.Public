@@ -236,7 +236,7 @@ Siv3D でよく使う基本的なデータ型は次のとおりです。
 Siv3D で整数を扱うときは、`int` や `unsigned long long` のような標準の型名の代わりに、`int32` や `uint64` のように明示的なサイズを持つ型名を使います。これらの型名を使うことで、プラットフォーム間での移植性が高まり、一貫性のある読みやすいコードになります。
 
 |型名|説明|
-|--|--|
+|:--:|--|
 |`bool`|ブーリアン型 (`false` または `true`)|
 |`int8`|符号付き 8-bit 整数型 (-128 ～ 127)|
 |`uint8`|符号無し 8-bit 整数型 (0 ～ 255)|
@@ -304,14 +304,41 @@ void Main()
 }
 ```
 
+## 1.10 `Print` 以外の出力
+`Print` 以外にも、コンソール出力 `Console`, ログ出力 `Logger`, 音声読み上げ出力 `Say` を使えます。
+```cpp
+# include <Siv3D.hpp>
 
-## 1.10 画面の座標系
+void Main()
+{
+	// コンソール画面に出力
+	Console << U"Hello, Console!";
+
+	// ログに出力 (Visual Studio の場合「出力」ウィンドウ）
+	Logger << U"Hello, Logger!";
+
+	// 必要に応じて読み上げ言語を設定（OS に読み上げエンジンがインストールされていない場合は使えない）
+	TextToSpeech::SetDefaultLanguage(LanguageCode::EnglishUS);
+	//TextToSpeech::SetDefaultLanguage(LanguageCode::Japanese);
+
+	// 音声読み上げ出力
+	Say << U"Hello, Say!";
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+
+## 1.11 画面の座標系
 ウィンドウ内の黒い部分が **画面** で、Siv3D はこの領域に文字や図形、画像を表示できます。
 
 画面のサイズは、基本の状態では **幅 800 ピクセル、高さ 600 ピクセル** です。画面上の位置を表す座標系は、一番左上のピクセルを「X 座標 0」「Y 座標 0」を表す `(0, 0)` と表記し、右に進むと X 座標が大きく、下に進むと Y 座標が大きくなります。画面の一番右下のピクセルの座標は `(799, 599)` です。 
 
 `Cursor::Pos()` を使うと、現在のマウスカーソルの座標を `Point` 型で取得できます。`Point` 型の値は X 座標を表す `int32 x` と Y 座標を表す `int32 y` の 2 つの成分を持っています。`Point` 型の値をそのまま丸ごと `Print` に送って表示することもできます。
-![](/images/doc_v6/tutorial/1/1.10.png)
+![](/images/doc_v6/tutorial/1/1.11.png)
 ```cpp
 # include <Siv3D.hpp>
 
