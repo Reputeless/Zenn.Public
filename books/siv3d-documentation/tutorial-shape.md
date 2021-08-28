@@ -51,7 +51,7 @@ void Main()
 {
 	while (System::Update())
 	{
-        // 中心座標 (マウスの X 座標, 300), 半径 100 の円を描く
+		// 中心座標 (マウスの X 座標, 300), 半径 100 の円を描く
 		Circle{ Cursor::Pos().x, 300, 100 }.draw();
 	}
 }
@@ -70,7 +70,7 @@ void Main()
 {
 	while (System::Update())
 	{
-        // 中心座標 (マウスの X 座標, マウスの Y 座標), 半径 100 の円を描く
+		// 中心座標 (マウスの X 座標, マウスの Y 座標), 半径 100 の円を描く
 		Circle{ Cursor::Pos(), 100 }.draw();
 	}
 }
@@ -150,7 +150,7 @@ void Main()
 
 void Main()
 {
-    // 背景色を ColorF{ 0.3, 0.6, 1.0 } に設定
+	// 背景色を ColorF{ 0.3, 0.6, 1.0 } に設定
 	Scene::SetBackground(ColorF{ 0.3, 0.6, 1.0 });
 
 	while (System::Update())
@@ -171,7 +171,7 @@ void Main()
 {
 	while (System::Update())
 	{
-        // 色相 hue = 経過時間 (秒) * 60
+		// 色相 hue = 経過時間 (秒) * 60
 		const double hue = (Scene::Time() * 60);
 
 		Scene::SetBackground(HSV{ hue, 0.6, 1.0 });
@@ -274,4 +274,574 @@ void Main()
 	}
 }
 ```
+
+
+## 2.11 三角形を描く
+三角形を描くには、`Triangle` を作成して `.draw()` します。`Triangle` を作成するには次の 2 つの方法があります
+- 3 つの頂点座標を時計回りに指定する
+- 正三角形の重心座標と辺の長さ、回転角度を指定する
+
+Siv3D における角度は、`2π = 360°` のラジアン角で表現します。`Math::ToRadians()` 関数で度数法からラジアン角へ変換できるほか、`_deg` サフィックスを使うことでリテラルで記述することもできます。
+
+X 座標と Y 座標の組は `Point` 型や `Vec2` 型で表現できます。`Point` 型は各成分が `int32` 型で、`Vec2` 型は `double` 型です。
+![](/images/doc_v6/tutorial/2/11.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 座標 (100, 100), (400, 300), (100, 300) で構成される三角形を描く
+		Triangle{ 100, 100, 400, 300, 100, 300 }.draw();
+
+		// 座標 (300, 100) を重心とする、1 辺が 80px の三角形を描く
+		Triangle{ 300, 100, 80 }.draw(Palette::Orange);
+
+		// 時計回りに 15° 回転させて描く
+		Triangle{ 400, 100, 80, 15_deg }.draw(Palette::Seagreen);
+
+		// 時計回りに 30° 回転させて描く
+		Triangle{ 500, 100, 80, 30_deg }.draw(Palette::Pink);
+
+		// 3 つの頂点座標を Point や Vec2 型で指定
+		Triangle{ Cursor::Pos(), Vec2{ 700, 500 }, Vec2{ 100, 500 } }.draw(Palette::Skyblue);
+	}
+}
+```
+
+
+## 2.12 凸な四角形を描く
+`Rect` や `RectF` では、各辺が X 軸、Y 軸に平行な長方形しか定義できませんでしたが、`Quad` を使うと 4 つの頂点座標を時計回りに指定して四角形を定義できます。ただし、`Quad` で定義される四角形は 180° 以上の内角を含まない形状（すべての角が凸）である必要があります。凹角を含む四角形を定義したい場合はのちにで出てくる `Polygon` 型を使います。
+![](/images/doc_v6/tutorial/2/12a.png)
+
+![](/images/doc_v6/tutorial/2/12b.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 4 つの頂点座標を指定して四角形を描く
+		Quad{ Vec2{ 100, 100 }, Vec2{ 150, 100 }, Vec2{ 300, 300 }, Vec2{ 100, 300 } }.draw();
+
+		Quad{ Vec2{ 300, 400 }, Vec2{ 500, 100 }, Vec2{ 600, 200 }, Vec2{ 500, 500 } }.draw(Palette::Skyblue);
+	}
+}
+```
+
+`Rect` や `RectF` を作成し、`.rotated()` または `.rotatedAt()` を使うと、長方形を回転させて `Quad` を作成できます。その `Quad` を `.draw()` する一連の操作を次のように 1 行で書けます。`Rect::pos` は `Rect` の左上の座標を `Point` 型で、`RectF::pos` は `RectF` の左上の座標を `Vec2` 型で表すメンバ変数です。
+![](/images/doc_v6/tutorial/2/12c.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	constexpr Rect rect{ 150, 200, 400, 100 };
+
+	while (System::Update())
+	{
+		rect.draw();
+
+		// 時計回りに 45° 回転した長方形
+		rect.rotated(45_deg).draw(Palette::Orange);
+
+		// 長方形の左上の座標を回転の軸として時計回りに 60° 回転した長方形
+		rect.rotatedAt(rect.pos, 60_deg).draw(Palette::Skyblue);
+	}
+}
+```
+
+`Rect` や `RectF` を作成し、`.shearedX()` または `.shearedY()` を使うと、長方形の辺を X 軸または Y 軸に沿ってスライドさせた平行四辺形を `Quad` 型として作成できます。
+![](/images/doc_v6/tutorial/2/12d.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 長方形の辺を X 軸方向に 30px ずつスライドさせた平行四辺形
+		Rect{ 100, 50, 200, 100 }.drawFrame(1, 0)
+			.shearedX(30).draw(Palette::Skyblue);
+
+		// 長方形の辺を Y 軸方向に -50px ずつスライドさせた平行四辺形
+		Rect{ 400, 150, 300, 200 }.drawFrame(1, 0)
+			.shearedY(-50).draw(Palette::Orange);
+	}
+}
+```
+
+
+## 2.13 楕円を描く
+楕円を描くときは `Ellipse` を作成して `.draw()` します。中心の座標と X 軸方向の半径、Y 軸方向の半径を指定して `Ellipse` を作成します。
+![](/images/doc_v6/tutorial/2/13.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 中心 (300, 200), X 軸方向の半径 200, Y 軸方向の半径　100 の楕円
+		Ellipse{ 300, 200, 200, 100 }.draw(Palette::Skyblue);
+
+		// 中心 (600, 400), X 軸方向の半径 50, Y 軸方向の半径　150 の楕円
+		Ellipse{ 600, 400, 50, 150 }.draw(Palette::Orange);
+	}
+}
+```
+
+
+## 2.14 角丸長方形を描く
+角が丸い長方形を描くには、`RoundRect` を作成して `.draw()` します。`RectF` と同じパラメータに加えて、最後に角の曲線の半径を指定します。`Rect` や `RectF` の `.rounded()` メンバ関数を使って、`Rect` や `RectF` から `RoundRect` を作成することもできます。
+![](/images/doc_v6/tutorial/2/14.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	constexpr Rect rect{ 100, 350, 500, 200 };
+
+	while (System::Update())
+	{
+		// RectF(100, 100, 200, 100) の角を 10px 丸めた角丸長方形
+		RoundRect{ 100, 100, 200, 100, 10 }.draw();
+
+		// RectF(Arg::center(400, 300), 200, 100) の角を 5px 丸めた角丸長方形
+		RoundRect{ Arg::center(400, 300), 200, 80, 5 }.draw(Palette::Skyblue);
+
+		// 長方形 rect の角を 40px 丸めた角丸長方形
+		rect.rounded(40).draw(Palette::Orange);
+	}
+}
+```
+
+
+## 2.15 多角形を描く
+複雑な図形を簡単に作成できるいくつかの関数が用意されています。これらの関数の戻り値である `Shape2D` 型のオブジェクトを `.draw()`, `.drawFrame()` することで図形を描けます。関数のうち、引数に `double angle` をとるものは、時計回りの回転の角度を指定できます。
+
+| 関数名                  | 形状       | 引数                                                                                    |
+|----------------------|----------|---------------------------------------------------------------------------------------------|
+| Shape2D::Cross       | ✖ マーク    | `double r, double width, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`          |
+| Shape2D::Plus        | ＋マーク     | `double r, double width, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`          |
+| Shape2D::Pentagon    | 正五角形     | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                     |
+| Shape2D::Hexagon     | 正六角形     | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                         |
+| Shape2D::Ngon        | 正 N 角形   | `uint32 n, double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                |
+| Shape2D::Star        | 五芒星      | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                             |
+| Shape2D::Nstar       | 星        | `uint32 n, double rOuter, double rInner, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0` |
+| Shape2D::Arrow       | 矢印       | `const Vec2& from, const Vec2& to, double width, const Vec2& headSize`       |
+| Shape2D::Arrow       | 矢印       | `const Line& line, double width, const Vec2& headSize`                        |
+| Shape2D::DoubleHeadedArrow | 両方向矢印 | `const Vec2& from, const Vec2& to, double width, const Vec2& headSize`  |
+| Shape2D::DoubleHeadedArrow | 両方向矢印 | `const Line& line, double width, const Vec2& headSize`  |
+| Shape2D::Rhombus     | ひし形      | `double w, double h, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`    |
+| Shape2D::RectBalloon | 長方形の吹き出し | `const RectF& rect, const Vec2& target, double pointingRootRatio = 0.5`   |
+| Shape2D::Stairs      | 階段形      | `const Vec2& base, double w, double h, uint32 steps, bool upStairs = true`  |
+| Shape2D::Heart      | ハート形   | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`  |
+| Shape2D::Squircle      | 四角と円の中間形 | `double r, const Vec2& center, uint32 quality`   |
+
+![](/images/doc_v6/tutorial/2/15.png)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// ウィンドウおよびシーンを 1000x600 にリサイズ
+	Window::Resize(1000, 600);
+
+	while (System::Update())
+	{
+		Shape2D::Cross(80, 10, Vec2{ 100, 100 }).draw(Palette::Skyblue);
+
+		Shape2D::Plus(80, 10, Vec2{ 300, 100 }).draw(Palette::Skyblue);
+
+		Shape2D::Pentagon(80, Vec2{ 500, 100 }).draw(Palette::Skyblue);
+
+		Shape2D::Hexagon(80, Vec2{ 700, 100 }).draw(Palette::Skyblue);
+
+		// 30° 回転させる
+		Shape2D::Hexagon(80, Vec2{ 900, 100 }, 30_deg).draw(Palette::Skyblue);
+
+
+		// 正十角形
+		Shape2D::Ngon(10, 80, Vec2{ 100, 300 }).draw(Palette::Skyblue);
+
+		Shape2D::Star(80, Vec2{ 300, 300 }).draw(Palette::Skyblue);
+
+		// rOuter は外周の半径、rInner は内周の半径
+		Shape2D::NStar(10, 80, 60, Vec2{ 500, 300 }).draw(Palette::Skyblue);
+
+		// headSize は三角形の幅と高さ
+		Shape2D::Arrow(Line{ 640, 340, 760, 260 }, 20, Vec2{ 40, 30 }).draw(Palette::Skyblue);
+
+		Shape2D::DoubleHeadedArrow(Line{ 840, 340, 960, 260 }, 20, Vec2{ 40, 30 }).draw(Palette::Skyblue);
+
+
+		Shape2D::Rhombus(160, 120, Vec2{ 100, 500 }).draw(Palette::Skyblue);
+
+		// 吹き出しの長方形と、三角形の頂点の置を指定。三角形のサイズは pointingRootRatio で決まる
+		Shape2D::RectBalloon(RectF{ 220, 420, 160, 120 }, Vec2{ 220, 580 }).draw(Palette::Skyblue);
+
+		// base には階段の最も高い段の底の端の座標を指定。steps は段数、upStairs を false にすると下りの階段に
+		Shape2D::Stairs(Vec2{ 560, 560 }, 120, 120, 4).draw(Palette::Skyblue);
+
+		Shape2D::Heart(80, Vec2{ 700, 500 }).draw(Palette::Skyblue);
+
+		// 第 3 引数は角の丸の分割品質
+		Shape2D::Squircle(60, Vec2{ 900, 500 }, 64).draw(Palette::Skyblue);
+	}
+}
+```
+
+
+## 2.16 自由に多角形を描く
+`Shape2D` では表現できない多角形を描くには `Polygon` を作成して `.draw()` します。`Polygon` オブジェクトの作成には、メモリの確保や三角形分割の計算に少しだけ実行時コストがかかるため、ループの内側で作成するのは避けるべきです。`Polygon` を作成するときは、各頂点の座標を時計回りに指定します。
+![](/images/doc_v6/tutorial/2/16.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Polygon polygon
+	{
+		Vec2{ 400, 100 }, Vec2{ 600, 300 }, Vec2{ 500, 500 }, Vec2{ 400, 400 }, Vec2{ 300, 500 }, Vec2{ 200, 300 }
+	};
+
+	while (System::Update())
+	{
+		polygon.draw(Palette::Skyblue);
+	}
+}
+```
+
+
+## 2.17 穴の開いた多角形を描く
+穴の開いた `Polygon` を作るには、外周の時計回りの頂点座標リスト (`Array<Vec2>` 型) と、穴の形状の「反時計回り」の頂点座標リストの配列 (`Array<Array<Vec2>>` 型) から `Polygon` を作成します。
+![](/images/doc_v6/tutorial/2/17.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Polygon polygon(
+		{ Vec2{ 400, 100 }, Vec2{ 600, 300 }, Vec2{ 500, 500 }, Vec2{ 400, 400 }, Vec2{ 300, 500 }, Vec2{ 200, 300 } },
+		{ { Vec2{ 450, 250 }, Vec2{ 350, 250 }, Vec2{ 350, 350 }, Vec2{ 450, 350 } } }
+	);
+
+	while (System::Update())
+	{
+		polygon.draw(Palette::Skyblue);
+	}
+}
+```
+
+`Polygon` よりも少ない実行時コストで図形を描きたい場合は、`Shape2D` や `Buffer2D` クラスの低レイヤ操作を使います。`Shape2D` では、頂点配列のほかにインデックス配列を自前で用意する必要があり、`Buffer2D` ではさらにテクスチャをマッピングするための UV 座標も必要になり、プログラムが複雑になります。今回のチュートリアルでは扱いません。
+
+
+## 2.18 連続した線分を描く
+連続した線分を描くには、`Vec2` 型の頂点の配列から `LineString` を作成して `.draw()` します。`.drawClosed()` では終点と始点を結んだ線も描画されます。
+![](/images/doc_v6/tutorial/2/18.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const LineString lineA
+	{
+		Vec2{ 100, 60 }, Vec2{ 400, 140 },
+		Vec2{ 100, 220 }, Vec2{ 400, 300 },
+		Vec2{ 100, 380 }, Vec2{ 400, 460 },
+		Vec2{ 100, 540 }
+	};
+
+	const LineString lineB
+	{
+		Vec2{ 500, 100 }, Vec2{ 700, 200 },
+		Vec2{ 600, 500 },
+	};
+
+	while (System::Update())
+	{
+		// 太さ 8px で描く
+		lineA.draw(8, Palette::Skyblue);
+
+		// 太さ 4px で描く（終点から始点も結ぶ）
+		lineB.drawClosed(4, Palette::Orange);
+	}
+}
+```
+
+
+## 2.19 Catmull-Rom スプライン曲線を描く
+指定した通過点を必ず通る Catmull-Rom スプライン曲線を描くには、 `Spline2D` を作成して `.draw()` します。`Spline2D` は `Vec2` の配列か `LineString` から作成できます。コンストラクタの第 2 引数に `Close::Ring` を指定することで、終点と始点がつながっているスプライン曲線を作成できます。
+
+サンプルプログラムでは示していませんが、`.draw()` には曲線計算時の品質（分割数）を指定する引数も用意されていて、デフォルトでは `24` になっています。
+![](/images/doc_v6/tutorial/2/19.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Spline2D splineA
+	{ {
+		Vec2{ 100, 60 }, Vec2{ 400, 140 },
+		Vec2{ 100, 220 }, Vec2{ 400, 300 },
+		Vec2{ 100, 380 }, Vec2{ 400, 460 },
+		Vec2{ 100, 540 }
+	} };
+
+	// CloseRing::Yes -> 終点から始点も結ぶ
+	const Spline2D splineB
+	{ {
+		Vec2{ 500, 100 }, Vec2{ 700, 200 },
+		Vec2{ 600, 500 },
+	}, CloseRing::Yes };
+
+	while (System::Update())
+	{
+		// 太さ 8px で描く
+		splineA.draw(8, Palette::Skyblue);
+
+		// 太さ 4px で描く
+		splineB.draw(4, Palette::Orange);
+	}
+}
+```
+
+
+## 2.20 ベジェ曲線を描く
+2 次ベジェ曲線を描きたいときは `Bezier2`, 3 次ベジェ曲線を描きたいときは `Bezier3` を作成して `.draw()` します。
+
+サンプルプログラムでは示していませんが、`.draw()` には曲線計算時の品質（分割数）を指定する引数も用意されていて、デフォルトでは `24` になっています。
+![](/images/doc_v6/tutorial/2/20.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 2 次ベジェ曲線
+		Bezier2{ Vec2{ 100, 400 }, Vec2{ 100, 250 }, Vec2{ 300, 100 } }
+			.draw(4, Palette::Skyblue);
+
+		// 3 次ベジェ曲線
+		Bezier3{ Vec2{ 300, 400 }, Vec2{ 400, 400 }, Vec2{ 400, 100 }, Vec2{ 500, 100 }}
+			.draw(4, Palette::Orange);
+	}
+}
+```
+
+
+## 2.21 矢印を描く
+`Line` には単方向の矢印を描く `.drawArrow()` と、両方向の矢印を描く `.drawDoubleHeadedArro()` メンバ関数があります。いずれも第 1 引数には線の幅、第 2 引数には三角形の幅と高さを指定します。単方向矢印は、`Line` の始点から終点方向を向きます。
+![](/images/doc_v6/tutorial/2/21.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 線の幅 3px, 三角の幅 20px, 高さ 20px の単方向矢印を描く
+		Line{ 50, 200, 200, 250 }
+			.drawArrow(3, Vec2{ 20, 20 }, Palette::Skyblue);
+
+		// 線の幅 10px, 三角の幅 40px, 高さ 80px の単方向矢印を描く
+		Line{ 350, 450, 450, 100 }
+			.drawArrow(10, Vec2{ 40, 80 }, Palette::Orange);
+
+		// 線の幅 8px, 三角の幅 30px, 高さ 30px の両方向矢印を描く
+		Line{ 600, 100, 700, 400 }
+			.drawDoubleHeadedArrow(8, Vec2{ 30, 30 }, Palette::Limegreen);
+	}
+}
+```
+
+
+## 2.22 扇形を描く
+扇形を描くには、扇形のもとになる円 `Circle` を作成し、`.drawPie()` の引数に、12 時の方向を 0° とした時計回りの開始角度と、扇の角の大きさを指定します。`.drawPie()` が元の図形を返すことを利用して、`drawPie().drawPie()` のようにつなげたコードを書くこともできます。
+![](/images/doc_v6/tutorial/2/22.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		Circle{ 300, 300, 200 }
+			.drawPie(270_deg, 30_deg);
+
+		Circle{ 500, 300, 200 }
+			.drawPie(0_deg, 120_deg, Palette::Skyblue)
+			.drawPie(120_deg, 70_deg, Palette::Orange);
+	}
+}
+```
+
+
+## 2.23 円弧を描く
+円弧を描くには、円弧のもとになる円 `Circle` を作成し、`.drawArc()` の引数に、12 時の方向を 0° とした時計回りの開始角度と、扇の角の大きさ、弧の内側方向の太さ、外側方向の太さを指定します。
+![](/images/doc_v6/tutorial/2/23.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		Circle{ 300, 300, 200 }
+			.drawArc(270_deg, 30_deg, 40, 0);
+
+		Circle{ 500, 300, 200 }		
+			.drawArc(0_deg, 120_deg, 80, 0, Palette::Skyblue)
+			.drawArc(120_deg, 70_deg, 0, 20, Palette::Orange);
+	}
+}
+```
+
+
+## 2.24 図形の操作
+基準になる図形から、少しだけ変化させた形状を描きたいときに便利な機能を紹介します。
+
+多くの図形クラスが `.movedBy()` メンバ関数を持ち、自身の座標を指定したベクトルで平行移動した図形を作成して返します。また、`Rect` や `Circle`, `Line` など一部の図形クラスは `.stretched()` メンバ関数を持ち、自身の幅や高さを変更した図形を作成して返します。
+![](/images/doc_v6/tutorial/2/24a.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	constexpr Circle circle{ 100, 100, 60 };
+
+	constexpr Rect rect{ 400, 300, 200 };
+
+	while (System::Update())
+	{
+		circle.draw();
+
+		// (200, 0) の方向に平行移動
+		circle.movedBy(200, 0).draw(Palette::Skyblue);
+
+		// (0, 200) の方向に平行移動
+		circle.movedBy(0, 200).draw(Palette::Orange);
+
+
+		rect.drawFrame(2, 2);
+
+		// 上下左右を 10px 縮小
+		rect.stretched(-10).drawFrame(2, 2, Palette::Skyblue);
+
+		// 左右を 40px 拡大、上下を 20px 縮小
+		rect.stretched(40, -20).drawFrame(2, 2, Palette::Orange);
+	}
+}
+```
+
+`Polygon` は自身を拡大縮小した新しい `Polygon` を返す `.scaled()` や、回転した `Polygon` を返す `.rotated()`, `.rotatedAt()` などのメンバ関数を持ちます。また、`Shape2D` は `Polygon` に変換可能です。
+![](/images/doc_v6/tutorial/2/24b.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Polygon star = Shape2D::Star(150, Vec2{ 0, 0 });
+
+	while (System::Update())
+	{
+		star.scaled(1.2).movedBy(200, 200).draw(ColorF{ 0.6 });
+
+		star.movedBy(200, 200).draw(ColorF{ 0.8 });
+
+		star.scaled(0.8).movedBy(200, 200).draw(ColorF{ 1.0 });
+
+
+		star.rotated(-30_deg).movedBy(600, 400).draw(ColorF{ 0.6 });
+
+		star.movedBy(600, 400).draw(ColorF{ 0.8 });
+
+		star.rotated(30_deg).movedBy(600, 400).draw(ColorF{ 1.0 });
+	}
+}
+```
+
+
+## 2.25 円 / 長方形 / 角丸長方形の影
+`Rect`, `RectF`, `Circle`, `RoundRect` は、影を描画する `.drawShadow()` メンバ関数を持っています。第 1 引数で影の位置のオフセット、第 2 引数でぼかしの大きさ、第 3 引数で影の大きさのオフセット、第 4 引数で影の色を指定できます。影は図形で隠れて見えない部分も塗りつぶされて描かれるため、影を描いたあとに上から図形を描く必要があります。
+![](/images/doc_v6/tutorial/2/25.png)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	while (System::Update())
+	{
+		Rect{ 100, 50, 150, 200 }
+			.drawShadow(Vec2{ 2, 2 }, 8, 1)
+			.draw();
+
+		Rect{ 300, 50, 150, 200 }
+			.drawShadow(Vec2{ 4, 4 }, 16, 2)
+			.draw();
+
+		Rect{ 500, 50, 150, 200 }
+			.drawShadow(Vec2{ 6, 6 }, 24, 3)
+			.draw();
+
+		Circle{ 100, 400, 50 }
+			.drawShadow(Vec2{ 0, 3 }, 8, 2)
+			.draw();
+
+		Circle{ 300, 400, 50 }
+			.drawShadow(Vec2{ 3, 0 }, 8, 2)
+			.draw();
+
+		Circle{ 500, 400, 50 }
+			.drawShadow(Vec2{ 0, -3 }, 8, 2)
+			.draw();
+
+		Circle{ 700, 400, 50 }
+			.drawShadow(Vec2{ -3, 0 }, 8, 2)
+			.draw();
+	}
+}
+```
+
+これら以外の形状の影を作りたい場合は [リファレンス/2D 図形の影](../../reference/2d-shadow) が参考になります。
+
+## 2.26 グラデーション
+`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、グラデーションで塗りつぶすオプションがあります。
+
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/21-0.png?raw=true)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		Line(100, 100, 500, 150)
+			.draw(6, Palette::Yellow, Palette::Red);
+
+		Triangle(200, 200, 100)
+			.draw(HSV(0), HSV(120), HSV(240));
+
+		// 左から右へのグラデーション
+		Rect(400, 200, 200, 100)
+			.draw(Arg::left = Palette::Skyblue, Arg::right = Palette::Blue);
+		
+		// 上から下へのグラデーション
+		Rect(200, 400, 400, 100)
+			.draw(Arg::top = ColorF(1.0, 1.0), Arg::bottom = ColorF(1.0, 0.0));
+	}
+}
+```
+
+
+
+
 
