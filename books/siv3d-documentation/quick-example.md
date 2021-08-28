@@ -5,14 +5,13 @@ free: true
 
 このページでは Siv3D の面白いサンプル 15 個を体験します。  
 どれぐらいのコードでどのようなアプリが作れるのか、雰囲気をつかむのに役立ちます。  
-このページのサンプルコードは Siv3D 上級者の書き方をしているため、見慣れない文法や機能もあると思います。次のページ以降のチュートリアルを読むことで、だんだんと理解できるようになるでしょう。  
 
-次のプログラムをコピーして、基本のサンプルプログラムを置き換えましょう。
+このページのサンプルコードは Siv3D 上級者の書き方をしているため、見慣れない文法や機能もあると思います。次のページ以降のチュートリアルを読むことで、だんだんと理解できるようになるので、今はコードをざっくり眺めるだけで大丈夫です。  
+
+次のプログラムをコピーして実行してみましょう。ソースコード 1 ファイルで実行できるので、コピペすればすぐに別のプログラムを試せるのが Siv3D の便利なところです。
 
 # 1. ブロックくずし
-
 ![](/images/doc_v6/quick-example/breakout.gif)
-
 ```cpp
 # include <Siv3D.hpp>
 
@@ -102,6 +101,7 @@ void Main()
 
 
 # 2. 万華鏡ペイント
+![](/images/doc_v6/quick-example/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -168,6 +168,7 @@ void Main()
 ```
 
 # 3. ライフゲーム
+![](/images/doc_v6/quick-example/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -359,6 +360,7 @@ void Main()
 # 4. QR コード作成
 キーボードでテキストを入力します。  
 スマートフォンの QR コードリーダーで読み取ることができます。
+![](/images/doc_v6/quick-example/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -401,6 +403,7 @@ void Main()
 # 5. 物理演算スケッチ
 四角や丸を描くと物体が生成されて物理演算をします。  
 マウスホイールや右クリックで視点を移動できます。
+![](/images/doc_v6/quick-example/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -490,6 +493,7 @@ void Main()
 
 # 6. 長方形詰込み
 長方形が箱詰めされるのを眺めます。
+![](/images/doc_v6/quick-example/6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -569,7 +573,7 @@ void Main()
 
 # 7. kd-tree
 近傍にある点を高速に探索できます。
-
+![](/images/doc_v6/quick-example/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -713,6 +717,7 @@ void Main()
 # 9. 複雑な 2D 物理演算
 スペースキーで粒子を放出します。  
 マウスの左ボタンでかごを動かせます。
+![](/images/doc_v6/quick-example/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -820,7 +825,7 @@ void Main()
 
 # 10. 3D 空間
 3D シーンを描くための機能も用意されています。
-
+![](/images/doc_v6/quick-example/10.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -914,7 +919,7 @@ void Main()
 
 # 11. 屋外の 3D シーン
 3D モデルや、説得力のある空を描画する機能が備わっています。
-
+![](/images/doc_v6/quick-example/11.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1080,7 +1085,7 @@ void Main()
 
 # 12. 地形
 左上の高さマップをクリックすると地形の標高を上げることができます。
-
+![](/images/doc_v6/quick-example/12.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1178,7 +1183,7 @@ void Main()
 
 # 13. 音楽プレーヤー
 パソコンに保存されている音楽ファイルを再生します。
-
+![](/images/doc_v6/quick-example/13.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1277,7 +1282,7 @@ void Main()
 
 # 14. オーディオ処理
 音声にリアルタイムでエフェクトを適用できます。
-
+![](/images/doc_v6/quick-example/14.png)
 ```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6
 
@@ -1613,7 +1618,7 @@ void Main()
 # 15. スクリプト
 C++/Siv3D と文法が近いスクリプト言語を実行できます。  
 実行中にスクリプトを編集すると自動でリロードします。
-
+![](/images/doc_v6/quick-example/15.png)
 ```cpp
 # include <Siv3D.hpp>
 
