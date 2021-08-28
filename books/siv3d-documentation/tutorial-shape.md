@@ -810,13 +810,11 @@ void Main()
 }
 ```
 
-これら以外の形状の影を作りたい場合は [リファレンス/2D 図形の影](../../reference/2d-shadow) が参考になります。
+これら以外の形状の影を作りたい場合は [サンプル/図形や絵文字に影を付ける](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/sample-visual#%E5%9B%B3%E5%BD%A2%E3%82%84%E7%B5%B5%E6%96%87%E5%AD%97%E3%81%AB%E5%BD%B1%E3%82%92%E4%BB%98%E3%81%91%E3%82%8B) が参考になります。
 
 ## 2.26 グラデーション
-`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、グラデーションで塗りつぶすオプションがあります。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/21-0.png?raw=true)
-
+`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、塗りつぶしの色をグラデーションでにするオプションがあります。
+![](/images/doc_v6/tutorial/2/26.png)
 ```C++
 # include <Siv3D.hpp>
 
@@ -824,24 +822,20 @@ void Main()
 {
 	while (System::Update())
 	{
-		Line(100, 100, 500, 150)
+		Line{ 100, 100, 500, 150 }
 			.draw(6, Palette::Yellow, Palette::Red);
 
-		Triangle(200, 200, 100)
-			.draw(HSV(0), HSV(120), HSV(240));
+		Triangle{ 200, 200, 100 }
+			.draw(HSV{ 0 }, HSV{ 120 }, HSV{ 240 });
 
 		// 左から右へのグラデーション
-		Rect(400, 200, 200, 100)
+		Rect{ 400, 200, 200, 100 }
 			.draw(Arg::left = Palette::Skyblue, Arg::right = Palette::Blue);
-		
+
 		// 上から下へのグラデーション
-		Rect(200, 400, 400, 100)
-			.draw(Arg::top = ColorF(1.0, 1.0), Arg::bottom = ColorF(1.0, 0.0));
+		Rect{ 200, 400, 400, 100 }
+			.draw(Arg::top = ColorF{ 1.0, 1.0 }, Arg::bottom = ColorF{ 1.0, 0.0 });
 	}
 }
 ```
-
-
-
-
 
