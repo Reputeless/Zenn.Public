@@ -8,12 +8,13 @@ free: true
 
 ## 3.1 経過時間を使ったアニメーション
 
-### Scene::Time()
+#### Scene::Time()
 `Scene::Time()` はプログラムが起動されてからの経過時間（秒）を `double` 型の値で返します。この値を使って簡単なアニメーションを作成できます。
 
-### Scene::Center()
+#### Scene::Center()
 画面の中心座標を返す関数です。画面のサイズが 800x600 のときには `Point{ 400, 300 }` を返します。
 
+https://youtu.be/X0vml6zZlQs
 
 ```cpp
 # include <Siv3D.hpp>
@@ -32,7 +33,7 @@ void Main()
 }
 ```
 
-### Scene::DeltaTime()
+#### Scene::DeltaTime()
 `Scene::DeltaTime()` は、直前のフレームからの経過時間 (秒) を `double` 型の値で返します。`Scene::Time()` を使うかわりに、この値を加算していくことでアニメーションを作成することもできます。
 ```cpp
 # include <Siv3D.hpp>
@@ -55,7 +56,7 @@ void Main()
 
 ## 3.2 たくさんの円を同時に動かす
 `step(N)` は、Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++i)`と同じ働きです。
-
+https://youtu.be/68UrNsZ9eOY
 ```cpp
 # include <Siv3D.hpp>
 
@@ -298,19 +299,19 @@ Siv3D で周期的に移動・点滅・拡大縮小するようなアニメー�
 
 周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って記述します。
 
-### Periodic::Square0_1()
+#### Periodic::Square0_1()
 指定した周期で 0.0 か 1.0 を交互に返す関数です。周期の前半では 1.0 を、残りの半分では 0.0 を返します。
 
-### Periodic::Triangle0_1()
+#### Periodic::Triangle0_1()
 0.0 から一定の速度で値が大きくなって 1.0 に、そして一定の速度で小さくなって 0.0 に、という変化を指定した周期で繰り返す関数です。
 
-### Periodic::Sine0_1()
+#### Periodic::Sine0_1()
 指定した周期で、0.0～1.0 の範囲で正弦波（サインカーブ）を描く数値の変化を返す関数です。
 
-### Periodic::Sawtooth0_1()
+#### Periodic::Sawtooth0_1()
 指定した周期で、0.0 → 1.0 への変化を繰り返す関数です。
 
-### Periodic::Jump0_1()
+#### Periodic::Jump0_1()
 指定した周期で、地面からジャンプしたときの速度のような数値変化を繰り返す関数です。
 
 ```cpp
