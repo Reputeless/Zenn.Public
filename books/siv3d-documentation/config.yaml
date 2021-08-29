@@ -13,39 +13,41 @@ chapters:
   - tutorial-shape
   - tutorial-animation
   - tutorial-shape-2
-  - tutorial-data-structure
-  - tutorial-2d-intersection
-  - tutorial-texture
-  - tutorial-format
-  - tutorial-random
-  - tutorial-time
-  - tutorial-font
-  - tutorial-gui
-  - tutorial-scene
-  - tutorial-keyboard
-  - tutorial-mouse
-  - tutorial-audio
-  - tutorial-asset
-  - tutorial-renderstates2d
-  - tutorial-effect
-  - tutorial-filesystem
-  - tutorial-textfile
-  - tutorial-configfile
-  - tutorial-binaryfile
-  - tutorial-clipboard
-  - tutorial-dialog
-  - tutorial-dragdrop
-  - tutorial-http
-  - tutorial-resource
-  - tutorial-gamepad
-  - tutorial-image
-  - tutorial-texture-2
-  - tutorial-shader2d
-  - tutorial-webcam
-  - tutorial-microphone
-  - tutorial-scene-manager
-  - tutorial-3d
-  - tutorial-shader3d
+ # - tutorial-data-structure
+ # - tutorial-2d-intersection
+ # - tutorial-texture
+ # - tutorial-format
+ # - tutorial-random
+ # - tutorial-time
+ # - tutorial-font
+ # - tutorial-gui
+ # - tutorial-scene
+ # - tutorial-keyboard
+ # - tutorial-mouse
+ # - tutorial-audio
+ # - tutorial-asset
+ # - tutorial-renderstates2d
+ # - tutorial-effect
+ # - tutorial-filesystem
+ # - tutorial-textfile
+ # - tutorial-configfile
+ # - tutorial-binaryfile
+ # - tutorial-clipboard
+ # - tutorial-dialog
+ # - tutorial-dragdrop
+ # - tutorial-http
+ # - tutorial-resource
+ # - tutorial-gamepad
+ # - tutorial-image
+ # - tutorial-texture-2
+ # - tutorial-shader2d
+ # - tutorial-webcam
+ # - tutorial-microphone
+ # - tutorial-scene-manager
+ # - tutorial-3d
+ # - tutorial-shader3d
+  - sample-game
+  - sample-application
   - sample-visual
   - community
   - build
