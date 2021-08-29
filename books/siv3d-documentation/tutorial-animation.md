@@ -14,7 +14,6 @@ free: true
 ### Scene::Center()
 画面の中心座標を返す関数です。画面のサイズが 800x600 のときには `Point{ 400, 300 }` を返します。
 
-<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-0.mp4?raw=true" autoplay loop muted></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -34,7 +33,7 @@ void Main()
 ```
 
 ### Scene::DeltaTime()
-`Scene::DeltaTime()` は、直前のフレームからの経過時間 (秒) を `double` 型の値で返します。`Scene::Time()` を使わずに、この値を加算していくことでアニメーションを作成することもできます。
+`Scene::DeltaTime()` は、直前のフレームからの経過時間 (秒) を `double` 型の値で返します。`Scene::Time()` を使うかわりに、この値を加算していくことでアニメーションを作成することもできます。
 ```cpp
 # include <Siv3D.hpp>
 
@@ -42,22 +41,20 @@ void Main()
 {
 	Scene::SetBackground(Palette::White);
 
-	double r = 0.0;
+	double t = 0.0;
 
 	while (System::Update())
 	{
-		// 経過時間分だけ大きくする
-		r += Scene::DeltaTime() * 50;
+		// 経過時間を加算
+		t += Scene::DeltaTime();
 
-		Circle{ Scene::Center(), r }.draw(ColorF{ 0.25 });
+		Circle{ Scene::Center(), (r * 50) }.draw(ColorF{ 0.25 });
 	}
 }
 ```
 
-### step
-Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++i)`と同じ働きです。
-
-<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-1.mp4?raw=true" autoplay loop muted></video>
+## 3.2 たくさんの円を同時に動かす
+`step(N)` は、Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++i)`と同じ働きです。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -70,23 +67,20 @@ void Main()
 	{
 		const double t = Scene::Time();
 
-		for (auto i : step(12))
+		for (auto i : step(9))
 		{
-			// 長方形が、時間の経過に伴って横に大きくなる
-			RectF{ (-50 * i), (i * 50), (t * 100), 50 }.draw(ColorF{ 0.25 });
+			Circle{ (i * 100), (t * 100), 20 }.draw(ColorF{ 0.25 });
 		}
 	}
 }
 ```
 
-### OffsetCircular
-円周に沿った動きをつくるのに最適な円座標クラスです。オフセット `offset` と円座標系の動径座標 `r`, 角度座標 θ (`theta`) の 3 つの要素で位置を表現します。シーン上の座標 `offset` を中心とする半径 `r` の円を考え、その円周上で 12 時の方向を 0° として時計回りに `theta` の位置が `OffsetCircular{ offset, r, theta }` です。
+## 3.3 円周上に沿って動かす
+`OffsetCircular` は円周に沿った動きをつくるのに最適な円座標クラスです。オフセット `offset` と円座標系の動径座標 `r`, 角度座標 θ (`theta`) の 3 つの要素で位置を表現します。
 
-`OffsetCircular` は `Vec2` に変換できます。
+`OffsetCircular{ offset, r, theta }` は、シーン上の座標 `Vec2 offset` を中心とする半径 `double r` の円を考え、その円周上で 12 時の方向を 0° として時計回りに `double theta` の位置を表します。`OffsetCircular` は `Vec2` に変換できます。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-2.png?raw=true)
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-3.gif?raw=true)
+![](/images/doc_v6/tutorial/3/3a.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -95,22 +89,17 @@ void Main()
 {
 	Scene::SetBackground(Palette::White);
 
-	// 中心位置のオフセット
-	const Vec2 center = Scene::Center();
-	
-	// 円座標系における動径座標
-	constexpr double r = 200.0;
-
 	while (System::Update())
 	{
 		const double t = Scene::Time();
 
-		for (auto i : step(12))
+		for (auto i : step(6))
 		{
 			// 円座標系における角度座標
-			const double theta = (i * 30_deg + t * 30_deg);
+			// 60° ごとに配置し、毎秒 30° の速さで回転する
+			const double theta = (i * 60_deg + t * 30_deg);
 
-			const Vec2 pos = OffsetCircular{ center, r, theta };
+			const Vec2 pos = OffsetCircular{ Scene::Center(), 200, theta };
 
 			Circle{ pos, 20 }.draw(ColorF{ 0.25 });
 		}
@@ -119,17 +108,102 @@ void Main()
 ```
 
 
-## 3.2 ストップウォッチ
-経過時間の計測やリセットを便利に行える `Stopwatch` クラスがあります。
+## 3.4 毎フレーム固定の移動はダメ！ 時間を使おう
+`Scene::Time()` や `Scene::DeltaTime()` を使わなくても、毎フレーム、固定の値を足していくようなプログラムを書けばアニメーションを作れそうですが、それは**大きな間違い**です。
 
-### Stopwatch の経過時間とリスタート
+なぜなら、プログラムが実行されるパソコンのモニタのリフレッシュレートによって、メインループが毎秒何回実行されるかが変わるためです。一般的なモニタのリフレッシュレートは 60Hz で、毎秒 60 回メインループが実行されますが、近年は 120Hz や 144Hz, 240Hz など、より高頻度のリフレッシュレートを持つモニタが増えています。
+
+次のような「毎フレーム 3px ずつ移動」というプログラムでは、60Hz のモニタ上では円は毎秒 180px の速さで移動しますが、120Hz のモニタで実行すると、その倍の毎秒 360px の速さで移動します。もしこれがゲームの敵キャラクターだったら、実行するパソコンによって移動スピードが変わり、ゲームバランスが壊れてしまいます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(Palette::White);
+
+	double x = 0.0;
+
+	while (System::Update())
+	{
+		// 毎フレーム 3px 移動（時間ベースではないので不適切！）
+		x += 3;
+
+		Circle{ x, 300, 50 }.draw(ColorF{ 0.25 });
+	}
+}
+```
+
+こうした問題を避けるため、アニメーションはフレームではなく時間をベースに計算する必要があります。上記のコードを時間ベースになるよう直したコードは次のとおりです。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(Palette::White);
+
+	double x = 0.0;
+
+	while (System::Update())
+	{
+		// 毎秒 180px 移動
+		x += (Scene::DeltaTime() * 180);
+
+		Circle{ x, 300, 50 }.draw(ColorF{ 0.25 });
+	}
+}
+```
+
+
+## 3.5 一定時間ごとに出現
+N 秒に 1 回の頻度でオブジェクトを出現させる、といった処理を書くときも、フレームベースではなく時間ベースのプログラムにします。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 出現間隔（秒）
+	constexpr double spawnTime = 1.0;
+
+	// 蓄積された時間（秒）
+	double accumulatedTime = 0.0;
+
+	while (System::Update())
+	{
+		accumulatedTime += Scene::DeltaTime();
+
+        // 蓄積時間が出現間隔を超えたら
+		if (spawnTime <= accumulatedTime)
+		{
+			accumulatedTime -= spawnTime;
+
+			Print << U"Spawn!";
+		}
+	}
+}
+```
+
+もし出現間隔が非常に短い（1 フレームの時間やそれよりも短い）場合、1 フレームで複数回出現させる必要が生じます。そのような状況には、`if` の代わりに `while (spawnTime <= accumulatedTime)` を使うことで対処できます。
+
+
+## 3.6 ストップウォッチ
+`Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです。
 
 `Stopwatch` のコンストラクタ引数に `StartImmediately::Yes` を渡すと、作成と同時に計測を開始します。`Stopwatch::sF()` はその時点での経過時間（秒）を `double` 型で返します。`Stopwatch::restart()` すると、経過時間をリセットして再び 0 から計測を開始（リスタート）します。
 
-### MouseL.down()
+```cpp
+
+
+```
+
+
+
+## 3.7 マウスのクリック
 マウスの左ボタンがクリック（タッチディスプレイの場合は画面がタッチ）されたかを、`if (MouseL.down())` で調べられます。次のサンプルでは、画面上をマウスでクリックするたびに `Stopwatch` をリスタートします。
 
-<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/2-0.mp4?raw=true" autoplay loop muted></video>
+
 
 ```cpp
 # include <Siv3D.hpp>
@@ -161,11 +235,11 @@ void Main()
 }
 ```
 
-### Stopwatch の一時停止と再開
+## 3.8 Stopwatch の一時停止と再開
 
 ストップウォッチが計測中かどうかは `if (Stopwatch::isRunning())` で調べられます。ストップウォッチの計測を一時停止するには `Stopwatch::pause()`, 一時停止を解除して計測を再開するには `Stopwatch::resume()` します。
 
-<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/2-1.mp4?raw=true" autoplay loop muted></video>
+
 
 ```cpp
 # include <Siv3D.hpp>
@@ -208,13 +282,22 @@ void Main()
 }
 ```
 
-## 3.3 周期的なアニメーション
+## 3.9 周期的なアニメーション
 Siv3D で周期的に移動・点滅・拡大縮小するようなアニメーションを作るときには、`Periodic::` 名前空間に用意されている関数群を使うと便利です。
+
+| 周期関数 | 動き |
+|--|--|
+|`Square0_1`|![](/images/doc_v6/tutorial/3/9a.png)|
+|`Triangle0_1`|![](/images/doc_v6/tutorial/3/9b.png)|
+|`Sine0_1`|![](/images/doc_v6/tutorial/3/9c.png)|
+|`Sawtooth0_1`|![](/images/doc_v6/tutorial/3/9d.png)|
+|`Jump0_1`|![](/images/doc_v6/tutorial/3/9e.png)|
+
+
 
 ### Periodic::Square0_1()
 指定した周期で 0.0 か 1.0 を交互に返す関数です。周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って記述します。周期の前半では 1.0 を、残りの半分では 0.0 を返します。
 
-<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-0.mp4?raw=true" autoplay loop muted></video>
 
 ```cpp
 # include <Siv3D.hpp>
