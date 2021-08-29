@@ -188,22 +188,8 @@ void Main()
 もし出現間隔が非常に短い（1 フレームの時間やそれよりも短い）場合、1 フレームで複数回出現させる必要が生じます。そのような状況には、`if` の代わりに `while (spawnTime <= accumulatedTime)` を使うことで対処できます。
 
 
-## 3.6 ストップウォッチ
-`Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです。
-
-`Stopwatch` のコンストラクタ引数に `StartImmediately::Yes` を渡すと、作成と同時に計測を開始します。`Stopwatch::sF()` はその時点での経過時間（秒）を `double` 型で返します。`Stopwatch::restart()` すると、経過時間をリセットして再び 0 から計測を開始（リスタート）します。
-
-```cpp
-
-
-```
-
-
-
-## 3.7 マウスのクリック
-マウスの左ボタンがクリック（タッチディスプレイの場合は画面がタッチ）されたかを、`if (MouseL.down())` で調べられます。次のサンプルでは、画面上をマウスでクリックするたびに `Stopwatch` をリスタートします。
-
-
+## 3.6 マウスのクリック
+マウスの左ボタンがクリック（タッチディスプレイの場合は画面がタッチ）されたかを、`if (MouseL.down())` で調べられます。次のサンプルでは、画面上をマウスでクリックするたびに円が大きくなります。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -212,7 +198,31 @@ void Main()
 {
 	Scene::SetBackground(Palette::White);
 
-	const Vec2 center = Scene::Center();
+	int32 count = 0;
+
+	while (System::Update())
+	{
+        // もし左クリックされたら
+		if (MouseL.down())
+		{
+			++count;
+		}
+
+		Circle{ Scene::Center(), (count * 20) }.draw(ColorF{ 0.25 });
+	}
+}
+```
+
+
+## 3.7 ストップウォッチ
+`Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです。`Stopwatch` のコンストラクタ引数に `StartImmediately::Yes` を渡すと、作成と同時に計測を開始します。`Stopwatch::sF()` はその時点での経過時間（秒）を `double` 型で返します。`Stopwatch::restart()` すると、経過時間をリセットして再び 0 から計測を開始（リスタート）します。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(Palette::White);
 
 	// ストップウォッチ（作成と同時に計測開始）
 	Stopwatch stopwatch{ StartImmediately::Yes };
@@ -229,17 +239,15 @@ void Main()
 		// ストップウォッチの経過時間（秒）を double 型で取得 
 		const double t = stopwatch.sF();
 
-		// シーンの中心の円の半径が、時間の経過に伴って大きくなる
-		Circle{ center, t * 50 }.draw(ColorF{ 0.25 });
+		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
 	}
 }
 ```
 
+
 ## 3.8 Stopwatch の一時停止と再開
 
 ストップウォッチが計測中かどうかは `if (Stopwatch::isRunning())` で調べられます。ストップウォッチの計測を一時停止するには `Stopwatch::pause()`, 一時停止を解除して計測を再開するには `Stopwatch::resume()` します。
-
-
 
 ```cpp
 # include <Siv3D.hpp>
@@ -248,13 +256,12 @@ void Main()
 {
 	Scene::SetBackground(Palette::White);
 
-	const Vec2 center = Scene::Center();
-
 	// ストップウォッチ（作成と同時に計測開始）
 	Stopwatch stopwatch{ StartImmediately::Yes };
 
 	while (System::Update())
 	{
+		// もし左クリックされたら
 		if (MouseL.down())
 		{
 			// ストップウォッチが計測中なら
@@ -273,11 +280,7 @@ void Main()
 		// ストップウォッチの経過時間（秒）を double 型で取得 
 		const double t = stopwatch.sF();
 
-		Circle{ center, 120 }.drawArc(t * 140_deg, 240_deg, 60, 0, ColorF{ 0.4 });
-
-		Circle{ center, 180 }.drawArc(t * 90_deg, 160_deg, 60, 0, ColorF{ 0.6 });
-
-		Circle{ center, 240 }.drawArc(t * 50_deg, 120_deg, 60, 0, ColorF{ 0.8 });
+		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
 	}
 }
 ```
@@ -293,134 +296,91 @@ Siv3D で周期的に移動・点滅・拡大縮小するようなアニメー�
 |`Periodic::Sawtooth0_1`|![](/images/doc_v6/tutorial/3/9d.png)|
 |`Periodic::Jump0_1`|![](/images/doc_v6/tutorial/3/9e.png)|
 
-
+周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って記述します。
 
 ### Periodic::Square0_1()
-指定した周期で 0.0 か 1.0 を交互に返す関数です。周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って記述します。周期の前半では 1.0 を、残りの半分では 0.0 を返します。
-
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF(0.25));
-
-	while (System::Update())
-	{
-		// 2 秒周期（1 秒点灯、1 秒消灯）で明滅を繰り返す
-		if (Periodic::Square0_1(2s))
-		{
-			Circle{ Scene::Center(), 200 }.draw();
-		}
-	}
-}
-```
+指定した周期で 0.0 か 1.0 を交互に返す関数です。周期の前半では 1.0 を、残りの半分では 0.0 を返します。
 
 ### Periodic::Triangle0_1()
 0.0 から一定の速度で値が大きくなって 1.0 に、そして一定の速度で小さくなって 0.0 に、という変化を指定した周期で繰り返す関数です。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-1.gif?raw=true)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF(0.25));
-
-	while (System::Update())
-	{
-		// 2 秒周期で、一定速度での左右移動を繰り返す
-		const double x = (50 + 700 * Periodic::Triangle0_1(2s));
-		
-		Circle{ x, 300, 50 }.draw();
-	}
-}
-```
-
 ### Periodic::Sine0_1()
 指定した周期で、0.0～1.0 の範囲で正弦波（サインカーブ）を描く数値の変化を返す関数です。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-2.gif?raw=true)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF(0.25));
-
-	while (System::Update())
-	{
-		// 2 秒周期で、サインカーブの速度での左右移動を繰り返す
-		const double x = (50 + 700 * Periodic::Sine0_1(2s));
-		
-		Circle{ x, 300, 50 }.draw();
-	}
-}
-```
 
 ### Periodic::Sawtooth0_1()
 指定した周期で、0.0 → 1.0 への変化を繰り返す関数です。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-3.gif?raw=true)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF(0.25));
-
-	while (System::Update())
-	{
-		// 2 秒周期で、左 → 右への移動を繰り返す 
-		const double x = (50 + 700 * Periodic::Sawtooth0_1(2s));
-		
-		Circle{ x, 300, 50 }.draw();
-	}
-}
-```
-
 ### Periodic::Jump0_1()
 指定した周期で、地面からジャンプしたときの速度のような数値変化を繰り返す関数です。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-4.gif?raw=true)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(Palette::White);
+
+	while (System::Update())
+	{
+		const double p0 = Periodic::Square0_1(2s);
+		const double p1 = Periodic::Triangle0_1(2s);
+		const double p2 = Periodic::Sine0_1(2s);
+		const double p3 = Periodic::Sawtooth0_1(2s);
+		const double p4 = Periodic::Jump0_1(2s);
+
+		Line{ 100, 0, 100, 600 }.draw(2, ColorF{ 0.8 });
+		Line{ 700, 0, 700, 600 }.draw(2, ColorF{ 0.8 });
+
+		Circle{ 100 + p0 * 600, 100, 20 }.draw(ColorF{ 0.25 });
+		Circle{ 100 + p1 * 600, 200, 20 }.draw(ColorF{ 0.25 });
+		Circle{ 100 + p2 * 600, 300, 20 }.draw(ColorF{ 0.25 });
+		Circle{ 100 + p3 * 600, 400, 20 }.draw(ColorF{ 0.25 });
+		Circle{ 100 + p4 * 600, 500, 20 }.draw(ColorF{ 0.25 });
+	}
+}
+```
+
+
+## 3.10 マウスのボタンが押されている
+マウスの左ボタンが押されている（タッチディスプレイの場合は画面がタッチされている）かを、`if (MouseL.pressed())` で調べられます。次のサンプルでは、左ボタンが押されている間だけ円が大きくなります。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF(0.25));
+	Scene::SetBackground(Palette::White);
+
+	double r = 0.0;
 
 	while (System::Update())
 	{
-		// 2 秒周期で、ジャンプのような移動を繰り返す 
-		const double h = (500 * Periodic::Jump0_1(2s));
-		
-		Circle{ 400, (550 - h), 50 }.draw();
+		// もし左ボタンが押されていたら
+		if (MouseL.pressed())
+		{
+			r += (Scene::DeltaTime() * 100.0);
+		}
+
+		Circle{ Scene::Center(), r }.draw(ColorF{ 0.25 });
 	}
 }
 ```
 
-## 3.4 トランジション
+
+## 3.11 トランジション
 
 ### Transition
 値が少しずつ大きくなって最大値に到達する。そこから徐々に小さくなって最小値に戻る、という挙動をプログラムするときには `Transition` を使うと便利です。`Transition` のコンストラクタには、最小値から最大値に増加する所要時間と、最大値から最小値に減少する所要時間を設定します。あとは毎フレーム、`Transition::update()` に、増加の場合は `true` を、減少の場合は `false` を渡せば、設定された速度で値が変化します。`Transition::value()` で現在の値を取得できます。
 
-### MouseL.pressed()
-マウスの左ボタンが押されている（タッチディスプレイの場合は画面がタッチされている）かを、`if (MouseL.pressed())` で調べられます。次のサンプルでは、左ボタンが押されていると扇形が大きくなり、離されていると小さくなります。
+次のサンプルでは、左ボタンが押されていると扇形が大きくなり、離されていると小さくなります。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/4-0.gif?raw=true)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.25 });
+	Scene::SetBackground(Palette::White);
 
 	// 2.0 秒かけて 0.0 から 1.0 になる速度で増加し
 	// 0.5 秒かけて 1.0 から 0.0 になる速度で減少するトランジション
@@ -441,23 +401,23 @@ void Main()
 
 		const double t = transition.value();
 
-		Circle{ Scene::Center(), 200 }.drawPie(0_deg, (360_deg * t));
+		Circle{ Scene::Center(), (t * 200) }.draw(ColorF{ 0.25 });
 	}
 }
 ```
 
-`MouseL.pressed()` は `bool` 型の値を返すので、上記のプログラムは次のように短く書けます。
+`MouseL.pressed()` は `bool` 型の値を返すので、上記のプログラムはさらに次のように短く書けます。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF(0.25));
+	Scene::SetBackground(Palette::White);
 
-	// 2.0 秒かけて 0.0 から 1.0 になる速度で増加し、
+	// 2.0 秒かけて 0.0 から 1.0 になる速度で増加し
 	// 0.5 秒かけて 1.0 から 0.0 になる速度で減少するトランジション
-	Transition transition(2.0s, 0.5s);
+	Transition transition{ 2.0s, 0.5s };
 
 	while (System::Update())
 	{
@@ -466,89 +426,100 @@ void Main()
 
 		const double t = transition.value();
 
-		Circle{ Scene::Center(), 200 }.drawPie(0_deg, (360_deg * t));
+		Circle{ Scene::Center(), (t * 200) }.draw(ColorF{ 0.25 });
 	}
 }
 ```
 
 
-## 3.5 イージング
-
-### Min, Max
-`Min()` 関数は、与えられた引数の中の最小値を返します。`Max()` 関数は最大値を返します。
-
-### 線形補間
-あるベクトル A から別のベクトル B への線形補間は `A.lerp(B, t)` で計算できます。A と B の中間のベクトルは `A.lerp(B, 0.5)` で計算します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/5-0.gif?raw=true)
+## 3.12 線形補間
+あるベクトル A から別のベクトル B への線形補間は `A.lerp(B, t)` で計算できます。`t` は　0.0 ～ 1.0 です。また、`Min()` は、渡された引数のうち最小値を返します。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.25 });
+	Scene::SetBackground(Palette::White);
 
-	constexpr Vec2 begin{ 100, 300 };
-	constexpr Vec2 end{ 700, 300 };
+	// スタート位置
+	Vec2 from{ 100, 100 };
 
-	Stopwatch stopwatch;
+	// ゴール位置
+	Vec2 to{ 700, 500 };
+
+	Stopwatch stopwatch{ StartImmediately::Yes };
 
 	while (System::Update())
 	{
-		if (MouseL.down())
-		{
-			stopwatch.restart();
-		}
-
-		// 移動の割合 0.0～1.0
+        // 移動の割合 0.0～1.0
 		const double t = Min(stopwatch.sF(), 1.0);
 
-		// begin と end の線形補間
-		const Vec2 pos = begin.lerp(end, t);
+		// スタート位置からゴール位置へ t の割合だけ進んだ位置
+		const Vec2 pos = from.lerp(to, t);
 
-		Circle{ pos, 40 }.draw();
+		if (MouseL.down())
+		{
+			// スタート位置を現在の位置に
+			from = pos;
+
+			// ゴール位置をマウスカーソルの位置に
+			to = Cursor::Pos();
+
+			stopwatch.restart();
+		}
+
+		Circle{ pos, 40 }.draw(ColorF{ 0.25 });
+		Circle{ to, 50 }.drawFrame(5, ColorF{ 0.25 });
 	}
 }
 ```
 
-### イージング
-0.0 から 1.0 に一定の割合で値を増加させるだけでは単調な動きになってしまいます。はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、より洗練された視覚効果を実現できます。0.0 → 1.0 の単調増加を、特徴的なカーブに変換できる **イージング関数** を取り入れて、アニメーションの印象を改善しましょう。
+## 3.13 イージング
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/5-1.gif?raw=true)
+0.0 から 1.0 に一定の速度で値を増加させるだけでは単調な動きになってしまいます。はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、より洗練された視覚効果を実現できます。0.0 → 1.0 の単調増加を、特徴的なカーブに変換できる **イージング関数** を使ってアニメーションの印象を改善しましょう。
+
+イージング関数は全部で約 30 種類用意されています。一覧は [Easing Functions Cheat Sheet](https://easings.net/) で確認できます。次のプログラムでは `EaseInOutExpo()` を使っています。ほかにも `EaseOutBounce()` や `EaseInOutBack()` など様々なイージング関数を試してみましょう。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF(0.25));
+	Scene::SetBackground(Palette::White);
 
-	constexpr Vec2 begin{ 100, 300 };
-	constexpr Vec2 end{ 700, 300 };
+	// スタート位置
+	Vec2 from{ 100, 100 };
 
-	Stopwatch stopwatch;
+	// ゴール位置
+	Vec2 to{ 700, 500 };
+
+	Stopwatch stopwatch{ StartImmediately::Yes };
 
 	while (System::Update())
 	{
-		if (MouseL.down())
-		{
-			stopwatch.restart();
-		}
-
 		// 移動の割合 0.0～1.0
 		const double t = Min(stopwatch.sF(), 1.0);
 
 		// イージング関数を適用
 		const double e = EaseInOutExpo(t);
 
-		// begin と end の線形補間
-		const Vec2 pos = begin.lerp(end, e);
+		// スタート位置からゴール位置へ e の割合だけ進んだ位置
+		const Vec2 pos = from.lerp(to, e);
 
-		Circle{ pos, 40 }.draw();
+		if (MouseL.down())
+		{
+			// スタート位置を現在の位置に
+			from = pos;
+
+			// ゴール位置をマウスカーソルの位置に
+			to = Cursor::Pos();
+
+			stopwatch.restart();
+		}
+
+		Circle{ pos, 40 }.draw(ColorF{ 0.25 });
+		Circle{ to, 50 }.drawFrame(5, ColorF{ 0.25 });
 	}
 }
 ```
-
-イージング関数は全部で約 30 種類用意されています。一覧は [Easing Functions Cheat Sheet](https://easings.net/) で確認できます。`EaseInOutExpo()` 以外にも、`EaseOutBounce()` や `EaseInOutBack()` など様々なイージング関数を試してみましょう。
-
