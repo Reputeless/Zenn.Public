@@ -14,6 +14,8 @@ chapters:
   - tutorial-animation
   - tutorial-shape-2
   - tutorial-data-structure
+  - tutorial-2d-intersection
+  - tutorial-texture
   - sample-visual
   - community
   - build
