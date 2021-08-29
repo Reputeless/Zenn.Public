@@ -287,11 +287,11 @@ Siv3D で周期的に移動・点滅・拡大縮小するようなアニメー�
 
 | 周期関数 | 動き |
 |--|--|
-|`Square0_1`|![](/images/doc_v6/tutorial/3/9a.png)|
-|`Triangle0_1`|![](/images/doc_v6/tutorial/3/9b.png)|
-|`Sine0_1`|![](/images/doc_v6/tutorial/3/9c.png)|
-|`Sawtooth0_1`|![](/images/doc_v6/tutorial/3/9d.png)|
-|`Jump0_1`|![](/images/doc_v6/tutorial/3/9e.png)|
+|`Periodic::Square0_1`|![](/images/doc_v6/tutorial/3/9a.png)|
+|`Periodic::Triangle0_1`|![](/images/doc_v6/tutorial/3/9b.png)|
+|`Periodic::Sine0_1`|![](/images/doc_v6/tutorial/3/9c.png)|
+|`Periodic::Sawtooth0_1`|![](/images/doc_v6/tutorial/3/9d.png)|
+|`Periodic::Jump0_1`|![](/images/doc_v6/tutorial/3/9e.png)|
 
 
 
