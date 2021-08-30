@@ -4,7 +4,7 @@ free: true
 ---
 
 ## スケッチ
-
+![](/images/doc_v6/sample/application/sketch.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -61,7 +61,7 @@ void Main()
 
 
 ## ピアノ
-
+![](/images/doc_v6/sample/application/piano.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -206,7 +206,7 @@ void Main()
 
 
 ## Image to Polygon
-
+![](/images/doc_v6/sample/application/image-to-polygon.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -259,15 +259,12 @@ void Main()
 
 
 ## Sketch to Polygon
-
+![](/images/doc_v6/sample/application/sketch-to-polygon.png)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ウィンドウを 1280x720 にリサイズ
-	Window::Resize(1280, 720);
-
 	// 作成した Polygon の配列
 	Array<Polygon> polygons;
 
@@ -408,7 +405,7 @@ void Main()
 
 
 ## Text to Polygon
-
+![](/images/doc_v6/sample/application/text-to-polygon.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -534,7 +531,7 @@ void Main()
 
 
 ## マンデルブロ集合
-
+![](/images/doc_v6/sample/application/mandelbrot.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -858,7 +855,7 @@ void Main()
 
 
 ## ドットお絵かき
-
+![](/images/doc_v6/sample/application/dot-sketch.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -894,7 +891,7 @@ void Main()
 
 
 ## 時計
-
+![](/images/doc_v6/sample/application/clock.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -946,7 +943,7 @@ void Main()
 
 
 ## JPEG Glitch
-
+![](/images/doc_v6/sample/application/glitch.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -992,7 +989,7 @@ void Main()
 
 
 ## マイクで入力した音の周波数解析
-
+![](/images/doc_v6/sample/application/mic-fft.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1120,7 +1117,7 @@ void Main()
 
 
 ## 画像ビューア
-
+![](/images/doc_v6/sample/application/image-viewer.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1151,7 +1148,7 @@ void Main()
 
 
 ## 世界地図
-
+![](/images/doc_v6/sample/application/geojson.png)
 ```cpp
 # include <Siv3D.hpp>
 
