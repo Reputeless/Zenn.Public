@@ -16,7 +16,7 @@ Siv3D で動的配列を扱うときは `Array<Type>` クラステンプレー�
 
 ### 6.1.1 要素の表示
 `Array` の要素が `Print` で表示できる型であれば、`Array` の要素一覧を `Print` することができます。
-
+![](/images/doc_v6/tutorial/6/1.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -44,7 +44,7 @@ void Main()
 
 ### 6.1.2 要素の追加
 `Array` は `<<` 演算子で要素を追加できます。
-
+![](/images/doc_v6/tutorial/6/1.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -71,7 +71,7 @@ void Main()
 
 ### 6.1.3 指定したインデックスの要素にアクセス
 `[]` を使って 0 から始まるインデックスを指定することで、指定したインデックスの位置にある要素にアクセスできます。インデックスを指定する代わりに、`.front()`, `.back()` を使うと、それぞれ先頭、末尾の要素にアクセスできます。存在しない要素にアクセスすることはできません。
-
+![](/images/doc_v6/tutorial/6/1.3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -105,6 +105,7 @@ void Main()
 
 ### 6.1.4 要素の数、要素の削除
 配列の要素数を調べるには `.size()`, 配列の要素をすべて削除するには `.clear()` を使います。
+![](/images/doc_v6/tutorial/6/1.4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -138,6 +139,7 @@ void Main()
 
 ### 6.1.5 空の配列
 要素数が 0 の配列を「空の配列」と呼びます。配列 `a` が空であるかは、`if (a.isEmpty())` や `if (a)` / `if (not a)` で調べられます。`not` は `!` と同じです。Siv3D では `!` よりも視認性の高い `not` を使うコーディングスタイルを採用しています。
+![](/images/doc_v6/tutorial/6/1.5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -170,6 +172,7 @@ void Main()
 
 ### 6.1.6 末尾の要素の削除
 配列の末尾の要素を削除するには `.pop_back()` を使います。空の配列に `.pop_back()` を使うことはできないため、空かどうかのチェックを忘れないでください。
+![](/images/doc_v6/tutorial/6/1.6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -203,6 +206,7 @@ void Main()
 
 ### 6.1.7 特定の条件を満たす要素の削除
 配列から特定の条件を満たす要素を削除するには、`.remove_if()` に、要素を引数にとり、削除の可否を `bool` 型で返すラムダ式、または関数オブジェクトを渡します。
+![](/images/doc_v6/tutorial/6/1.7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -234,6 +238,7 @@ void Main()
 
 ### 6.1.8 イテレータを使った要素の削除
 `.erase()` に特定の要素を指すイテレータを渡すことで、その要素を配列から削除できます。
+![](/images/doc_v6/tutorial/6/1.8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -274,7 +279,7 @@ void Main()
 
 ### 6.1.9 要素数を指定した初期化
 `Array` のコンストラクタ引数に要素の個数と初期化する値を渡し、指定した個数だけ値をコピーした配列を作成できます。このコンストラクタでは `{}` ではなく `()` を使うことに注意します。
-
+![](/images/doc_v6/tutorial/6/1.9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -302,7 +307,7 @@ void Main()
 方眼紙のように区切ったマップの情報や、スプレッドシートのように、二次元配列が必要な情報を扱うときには `Grid<Type>` クラステンプレートを使います。`Grid` を使うことで、動的な二次元配列を扱う際に面倒なコードを書く必要がなくなります。`Grid` の内部では 1 つの `Array` ですべての要素を連続的に保持しています。インデックスとして `[y][x]` の他に `Point` 型の値を使うことができます。
 
 ### 6.2.1 Grid の基本
-
+![](/images/doc_v6/tutorial/6/2.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -318,10 +323,10 @@ void Main()
 	Print << grid.size();
 
 	// グリッドの幅
-	Print << grid.width();
+	Print << U"width: " << grid.width();
 
 	// グリッドの高さ
-	Print << grid.height();
+	Print << U"height: " << grid.height();
 
 	// 0 行目 0 番目の要素にアクセス
 	Print << grid[0][0];
@@ -351,7 +356,7 @@ void Main()
 
 ### 6.2.2 サイズを指定した初期化
 `Grid` のコンストラクタ引数に、グリッドのサイズと初期化する値を渡すことができます。
-
+![](/images/doc_v6/tutorial/6/2.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -379,7 +384,7 @@ void Main()
 
 ## 6.3 ハッシュテーブル
 キーと値の組（エントリ）を格納し、高速に検索できるデータ構造（ハッシュテーブル）として、Siv3D は `HashTable<Key, Value>` クラステンプレートを提供しています。`std::unordered_map` よりも高速な実装を持ち、Siv3D のクラスや関数とも連係が容易です。`std::unordered_map` と同様に、各エントリは追加した順番とは異なる順序で格納されます。
-
+![](/images/doc_v6/tutorial/6/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -414,6 +419,8 @@ void Main()
 		it->second += 100;
 	}
 
+	Print << U"---";
+
 	// 値を変更しないループはこの書き方もできる
 	for (auto [key, value] : table)
 	{
@@ -430,7 +437,7 @@ void Main()
 
 ## 6.4 ハッシュセット
 キーとのみを格納し、高速にキーを検索できるハッシュセットとして、Siv3D は `HashSet<Key>` クラステンプレートを提供しています。`std::unordered_set` よりも高速な実装を持ち、Siv3D のクラスや関数とも連係が容易です。`std::unordered_set` と同様に、各エントリは追加した順番とは異なる順序で格納されます。
-
+![](/images/doc_v6/tutorial/6/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -473,7 +480,7 @@ void Main()
 オプショナル型の値 `opt` が有効値を保持しているかは `if (opt)` や `if (opt.has_value())` で調べられます。`Type` 型の値を取り出すには `*opt` または `opt.value()` を使います。後者は有効値を保持しているかチェックし、保持していなかった場合には `std::bad_optional_access` 例外を投げます。`opt.value_or(x)` は、有効値を保持している場合はその値を、保持していない場合は代わりに `x` を返します。`Type` 型のメンバにアクセスするには `opt->` を使います。
 
 無効値を表現する `none` およびそれと同値の `unspecified` という定数があり、オプショナル型の値に代入できます。
-
+![](/images/doc_v6/tutorial/6/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -500,6 +507,7 @@ void Main()
 
 	Print << pos.has_value();
 
+	// pos が無効値の場合 Point{ -1, -1 } を返す
 	Print << pos.value_or(Point{ -1, -1 });
 
 	pos = Point{ 100, 200 };
