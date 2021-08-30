@@ -365,10 +365,10 @@ void Main()
 //
 //	Textures
 //
-Texture2D       g_texture0 : register(t0);
-Texture2D       g_texture1 : register(t1);
-SamplerState    g_sampler0 : register(s0);
-SamplerState    g_sampler1 : register(s1);
+Texture2D g_texture0 : register(t0);
+Texture2D g_texture1 : register(t1);
+SamplerState g_sampler0 : register(s0);
+SamplerState g_sampler1 : register(s1);
 
 namespace s3d
 {
@@ -451,7 +451,7 @@ layout(std140) uniform PSConstants2D
 // PS_1
 layout(std140) uniform PatternBrush
 {
-    vec2 g_uvScale;
+	vec2 g_uvScale;
 };
 
 //
@@ -459,13 +459,13 @@ layout(std140) uniform PatternBrush
 //
 void main()
 {
-    float alpha = texture(Texture0, UV).r;
+	float alpha = texture(Texture0, UV).r;
 
-    vec4 texColor = texture(Texture1, UV * g_uvScale);
+	vec4 texColor = texture(Texture1, UV * g_uvScale);
 
-    texColor.a = alpha;
+	texColor.a = alpha;
 
-    FragColor = (texColor * Color) + g_colorAdd;
+	FragColor = (texColor * Color) + g_colorAdd;
 }
 ```
 

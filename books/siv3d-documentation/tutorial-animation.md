@@ -203,7 +203,7 @@ void Main()
 
 	while (System::Update())
 	{
-        // もし左クリックされたら
+		// もし左クリックされたら
 		if (MouseL.down())
 		{
 			++count;
@@ -455,7 +455,7 @@ void Main()
 
 	while (System::Update())
 	{
-        // 移動の割合 0.0～1.0
+		// 移動の割合 0.0～1.0
 		const double t = Min(stopwatch.sF(), 1.0);
 
 		// スタート位置からゴール位置へ t の割合だけ進んだ位置

@@ -14,23 +14,23 @@ free: true
 
 void Main()
 {
-    Scene::SetBackground(Palette::White);
+	Scene::SetBackground(Palette::White);
 
-    const Circle circle{ Scene::Center(), 100 };
+	const Circle circle{ Scene::Center(), 100 };
 
-    while (System::Update())
-    {
-        if (circle.mouseOver())
-        {
-            // 円にマウスカーソルが重なっていれば水色
-            circle.draw(Palette::Skyblue);
-        }
-        else
-        {
-            // 重なっていなければ灰色
-            circle.draw(Palette::Gray);
-        }
-    }
+	while (System::Update())
+	{
+		if (circle.mouseOver())
+		{
+			// 円にマウスカーソルが重なっていれば水色
+			circle.draw(Palette::Skyblue);
+		}
+		else
+		{
+			// 重なっていなければ灰色
+			circle.draw(Palette::Gray);
+		}
+	}
 }
 ```
 
@@ -41,15 +41,15 @@ void Main()
 
 void Main()
 {
-    Scene::SetBackground(Palette::White);
+	Scene::SetBackground(Palette::White);
 
-    const Circle circle{ Scene::Center(), 100 };
+	const Circle circle{ Scene::Center(), 100 };
 
-    while (System::Update())
-    {
-        // 円にマウスカーソルが重なっていれば水色、そうでなければ灰色
-        circle.draw(circle.mouseOver() ? Palette::Skyblue : Palette::Gray);
-    }
+	while (System::Update())
+	{
+		// 円にマウスカーソルが重なっていれば水色、そうでなければ灰色
+		circle.draw(circle.mouseOver() ? Palette::Skyblue : Palette::Gray);
+	}
 }
 ```
 
