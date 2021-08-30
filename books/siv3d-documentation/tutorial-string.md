@@ -30,25 +30,30 @@ void Main()
 
 
 ## 5.2 指定したインデックスの文字にアクセス
+`[index]` を使って指定したインデックスの位置にある要素にアクセスできます。`.front()`, `.back()` はそれぞれ先頭、末尾にアクセスします。存在しない要素にアクセスすると実行時エラーとなります。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s = U"Siv3D";
+	String s = U"Siv3D";
 
-	// 0 番目の文字
+	// 0 番目の要素
 	Print << s[0];
 
-	// 2 番目の文字
+	// 2 番目の要素
 	Print << s[2];
 
-	// 先頭の文字
+	// 先頭の要素
 	Print << s.front();
 
-	// 末尾の文字
+	// 末尾の要素
 	Print << s.back();
+
+    s[3] = U'4';
+
+    Print << s;
 
 	while (System::Update())
 	{
@@ -143,7 +148,32 @@ void Main()
 ```
 
 
-## 5.6 他の文字列型への変換
+## 5.6 文字列の消去
+`.pop_front()` は先頭の文字を消去します。`.pop_back()` は末尾の文字を消去します。いずれも空の文字列に対して実行するとエラーとなります。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s = U"Siv3D";
+
+	s.pop_front();
+
+	Print << s;
+
+	s.pop_back();
+
+	Print << s;
+
+	while (System::Update())
+	{
+
+	}
+```
+
+
+## 5.7 他の文字列型への変換
 `String` を `std::string` に変換するには、`.narrow()` を、`std::wstring` に変換するには `.toWstr()` を使います。このほかにも、指定した Unicode 形式に変換する `.toUTF8()`, `.toUTF16()`, `.toUTF32()` などがあります。
 ```cpp
 # include <Siv3D.hpp>
@@ -165,7 +195,7 @@ void Main()
 ```
 
 
-## 5.7 他の文字列型からの変換
+## 5.8 他の文字列型からの変換
 `std::string` を `String` に変換するには `Unicode::Widen()` を、`std::wstring` を `String` に変換するには `Unicode::FromWstring()` を使います。このほかにも、指定した Unicode 形式から変換する `Unicode::FromUTF8()`, `Unicode::FromUTF16()`, `Unicode::FromUTF32()` などがあります。
 ```cpp
 # include <Siv3D.hpp>
