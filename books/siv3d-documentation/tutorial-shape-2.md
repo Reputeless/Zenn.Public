@@ -78,7 +78,7 @@ void Main()
 
 
 ## 4.4 虹色の円
-
+https://youtu.be/7BopB31oTpo
 ```cpp
 # include <Siv3D.hpp>
 
@@ -103,8 +103,8 @@ void Main()
 ```
 
 
-## 4.5 ローディング中
-
+## 4.5 ローディング中の円
+https://youtu.be/FW7YmUSTfkU
 ```cpp
 # include <Siv3D.hpp>
 
@@ -213,7 +213,7 @@ void Main()
 
 
 ## 4.9 幕が閉じる
-
+https://youtu.be/Q6RCY0udrmw
 ```cpp
 # include <Siv3D.hpp>
 

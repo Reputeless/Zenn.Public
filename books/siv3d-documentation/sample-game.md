@@ -94,7 +94,7 @@ void Main()
 
 
 ## ピンボール
-
+https://youtu.be/f6jU7rujFpw
 ```cpp
 # include <Siv3D.hpp>
 
@@ -313,7 +313,7 @@ void Main()
 
 
 ## 絵文字タワー
-
+https://youtu.be/DjtiTbEPqaw
 ```cpp
 # include <Siv3D.hpp>
 
@@ -423,7 +423,7 @@ void Main()
 
 
 ## シューティングゲーム
-
+https://youtu.be/ye92bp_odqI
 ```cpp
 # include <Siv3D.hpp>
 
@@ -683,7 +683,7 @@ void Main()
 
 
 ## 15 パズル
-
+https://youtu.be/8VtlECZmS9Q
 ```cpp
 # include <Siv3D.hpp>
 
@@ -780,7 +780,7 @@ void Main()
 
 
 ## 数つなぎ
-
+https://youtu.be/4ecPIdqPrtI
 ```cpp
 # include <Siv3D.hpp>
 
