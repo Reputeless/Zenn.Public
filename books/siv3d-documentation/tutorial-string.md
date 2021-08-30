@@ -51,9 +51,9 @@ void Main()
 	// 末尾の要素
 	Print << s.back();
 
-    s[3] = U'4';
+	s[3] = U'4';
 
-    Print << s;
+	Print << s;
 
 	while (System::Update())
 	{
