@@ -16,7 +16,7 @@ chapters:
   - tutorial-string
   - tutorial-data-structure
   - tutorial-2d-intersection
- # - tutorial-texture
+  - tutorial-texture
  # - tutorial-format
  # - tutorial-random
  # - tutorial-time
