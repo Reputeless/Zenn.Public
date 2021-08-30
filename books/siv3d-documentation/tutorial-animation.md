@@ -169,16 +169,16 @@ void Main()
 	constexpr double spawnTime = 1.0;
 
 	// 蓄積された時間（秒）
-	double accumulatedTime = 0.0;
+	double accumulator = 0.0;
 
 	while (System::Update())
 	{
-		accumulatedTime += Scene::DeltaTime();
+		accumulator += Scene::DeltaTime();
 
-        // 蓄積時間が出現間隔を超えたら
-		if (spawnTime <= accumulatedTime)
+		// 蓄積時間が出現間隔を超えたら
+		if (spawnTime <= accumulator)
 		{
-			accumulatedTime -= spawnTime;
+			accumulator -= spawnTime;
 
 			Print << U"Spawn!";
 		}
