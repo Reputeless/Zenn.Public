@@ -449,12 +449,9 @@ void Main()
 			// 2D カメラから Transformer2D を作成
 			const auto t = camera.createTransformer();
 
-			// 左クリックされたら
-			if (MouseL.down())
-			{
-				points << Cursor::PosF();
-			}
-			else if (MouseL.pressed() && !Cursor::DeltaF().isZero())
+			// 左クリックもしくはクリックしたままの移動が発生したら
+			if (MouseL.down() ||
+				(MouseL.pressed() && (not Cursor::DeltaF().isZero())))
 			{
 				points << Cursor::PosF();
 			}
@@ -1281,7 +1278,7 @@ void Main()
 
 
 # 14. オーディオ処理
-音声にリアルタイムでエフェクトを適用できます。
+音楽にリアルタイムでエフェクトを適用できます。
 ![](/images/doc_v6/quick-example/14.png)
 ```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6
