@@ -4,7 +4,7 @@ free: true
 ---
 
 ## 図形や絵文字に影を付ける
-
+![](/images/doc_v6/sample/visual/2d-shadow.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -51,7 +51,7 @@ void Main()
 
 
 ## 紙から切り抜いたような描画
-
+![](/images/doc_v6/sample/visual/paper.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -96,7 +96,7 @@ void Main()
 
 
 ## 付箋
-
+![](/images/doc_v6/sample/visual/sticky.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -134,7 +134,7 @@ void Main()
 
 
 ## テクスチャの反射
-
+![](/images/doc_v6/sample/visual/reflection.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -171,7 +171,7 @@ void Main()
 
 
 ## テキストの登場
-
+![](/images/doc_v6/sample/visual/text-effect.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -253,7 +253,7 @@ void Main()
 
 
 ## 2D ライトブルーム
-
+![](/images/doc_v6/sample/visual/2d-bloom.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -285,7 +285,7 @@ void Main()
 	RenderTexture gaussianA4{ sceneSize / 4 }, gaussianB4{ sceneSize / 4 };
 	RenderTexture gaussianA8{ sceneSize / 8 }, gaussianB8{ sceneSize / 8 };
 
-	double a8 = 0.0, a4 = 0.0, a1 = 0.0;
+	double a1 = 0.0, a4 = 0.0, a8 = 0.0;
 
 	while (System::Update())
 	{
@@ -329,30 +329,30 @@ void Main()
 			}
 		}
 
-		SimpleGUI::Slider(U"a8: {:.1f}"_fmt(a8), a8, 0.0, 4.0, Vec2{ 20, 20 });
+		SimpleGUI::Slider(U"a1: {:.1f}"_fmt(a1), a1, 0.0, 4.0, Vec2{ 20, 20 });
 		SimpleGUI::Slider(U"a4: {:.1f}"_fmt(a4), a4, 0.0, 4.0, Vec2{ 20, 60 });
-		SimpleGUI::Slider(U"a1: {:.1f}"_fmt(a1), a1, 0.0, 4.0, Vec2{ 20, 100 });
+		SimpleGUI::Slider(U"a8: {:.1f}"_fmt(a8), a8, 0.0, 4.0, Vec2{ 20, 100 });
 
 		if (SimpleGUI::Button(U"0, 0, 0", Vec2{ 20, 140 }))
 		{
 			a1 = a4 = a8 = 0.0;
 		}
 
-		if (SimpleGUI::Button(U"1, 0, 0", Vec2{ 20, 180 }))
+		if (SimpleGUI::Button(U"0, 0, 1", Vec2{ 20, 180 }))
 		{
+			a1= a4 = 0.0;
 			a8 = 1.0;
-			a4 = a1 = 0.0;
 		}
 
-		if (SimpleGUI::Button(U"1, 1, 0", Vec2{ 20, 220 }))
+		if (SimpleGUI::Button(U"0, 1, 1", Vec2{ 20, 220 }))
 		{
-			a8 = a4 = 1.0;
 			a1 = 0.0;
+			a8 = a4 = 1.0;
 		}
 
 		if (SimpleGUI::Button(U"1, 1, 1", Vec2{ 20, 260 }))
 		{
-			a8 = a4 = a1 = 1.0;
+			a1 = a4 = a8 = 1.0;
 		}
 	}
 }
@@ -360,7 +360,7 @@ void Main()
 
 
 ## パターンブラシ
-
+![](/images/doc_v6/sample/visual/pattern-brush.png)
 ```hlsl:pattern_brush.hlsl
 //
 //	Textures
@@ -561,7 +561,8 @@ void Main()
 
 
 ## 文章中に画像を入れる
-
+`Font::addFallback()` を使ってカラー絵文字フォントをテキストフォントに追加する方法では、絵文字のサイズなどの細かい制御ができません。次のような方法を使うと、絵文字をテキスト中で柔軟に扱えます。
+![](/images/doc_v6/sample/visual/inline-emoji.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -640,7 +641,7 @@ void Main()
 
 
 ## ボロノイ図
-
+![](/images/doc_v6/sample/visual/voronoi.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -680,7 +681,7 @@ void Main()
 
 
 ## OutlineGlyph の応用
-
+![](/images/doc_v6/sample/visual/outlineglyph.png)
 ```cpp
 # include <Siv3D.hpp>
 
