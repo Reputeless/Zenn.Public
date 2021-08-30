@@ -359,9 +359,9 @@ void Main()
 ```
 
 
-## XXX
+## パターンブラシ
 
-```pattern_brush.hlsl
+```hlsl:pattern_brush.hlsl
 //
 //	Textures
 //
@@ -416,7 +416,7 @@ float4 PS(s3d::PSInput input) : SV_TARGET
 }
 ```
 
-```pattern_brush.frag
+```glsl:pattern_brush.frag
 # version 410
 
 //
