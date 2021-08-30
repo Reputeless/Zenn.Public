@@ -257,6 +257,9 @@ void Main()
 | CursorStyle::NotAllowed      | 禁止のマーク    |
 | CursorStyle::ResizeUpDown    | 上下のリサイズ   |
 | CursorStyle::ResizeLeftRight | 左右のリサイズ   |
+| CursorStyle::ResizeNWSE      | 左上-右下のリサイズ   |
+| CursorStyle::ResizeNESW      | 右上-左下のリサイズ   |
+| CursorStyle::ResizeAll       | 上下左右方向のリサイズ   |
 | CursorStyle::Hidden          | 非表示       |
 | CursorStyle::Default         | Arrow と同じ |
 
