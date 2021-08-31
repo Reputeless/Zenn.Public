@@ -8,7 +8,7 @@ free: true
 
 ## 11.1 ボタン
 ボタンの表示と入力の取得を実装するときは `SimpleGUI::Button()` 関数を使うと便利です。関数にはボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::Button()` は自身が押されたときに `true` を返します。
-
+![](/images/doc_v6/tutorial/11/1.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -60,7 +60,7 @@ void Main()
 
 ## 11.2 スライダー
 スライダーの表示と値の取得を実装するときは `SimpleGUI::Slider()` 関数を使うと便利です。関数にはスライダーのテキストや位置、幅、値の範囲などを設定できます。テキストを持たない縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。`SimpleGUI::Slider()` と `SimpleGUI::VerticalSlider()` は値が変更されたときに `true` を返します。
-
+![](/images/doc_v6/tutorial/11/2.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -111,7 +111,7 @@ void Main()
 
 ## 11.3 チェックボックス
 チェックボックスの表示と入力の取得を実装するときは `SimpleGUI::CheckBox()` 関数を使うと便利です。関数にはチェックボックスのテキストや位置、幅、状態などを設定できます。`SimpleGUI::CheckBox()` は値が変更されたときに `true` を返します。
-
+![](/images/doc_v6/tutorial/11/3.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -147,7 +147,7 @@ void Main()
 
 ## 11.4 ラジオボタン
 ラジオボタンの表示と入力の取得を実装するときは `SimpleGUI::RadioButtons()` 関数を使うと便利です。関数にはラジオボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::RadioButtons()` は値が変更されたときに `true` を返します。
-
+![](/images/doc_v6/tutorial/11/4.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -189,7 +189,7 @@ void Main()
 
 ## 11.5 テキストボックス
 テキストボックスを実装するときは `SimpleGUI::TextBox()` 関数を使うと便利です。関数にはテキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストは `TextEditState` 型のオブジェクトによって管理します。`SimpleGUI::TextBox()` はテキストが変更されたときに `true` を返します。
-
+![](/images/doc_v6/tutorial/11/5.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -232,7 +232,7 @@ void Main()
 `SimpleGUI::TextBox()` では、あるテキストボックスがアクティブな時、エンターキーや Tab キーを押したり、無関係な場所をクリックしたりすると、そのテキストボックスが非アクティブになります。
 
 あるテキストボックスが非アクティブ化したときに、テキスト入力に `U'\t` が含まれていたかを `TextInput::GetRawInput().includes(U'\t')` で調べることで、次のテキストボックスへの移動を実現することができます。
-
+![](/images/doc_v6/tutorial/11/6.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -275,7 +275,7 @@ void Main()
 
 ## 11.7 カラーピッカー
 カラーピッカーは `SimpleGUI::ColorPicker()` 関数を使うと便利です。関数にはカラーピッカーの位置、状態などを設定できます。`SimpleGUI::ColorPicker()` は色が変更されたときに `true` を返します。
-
+![](/images/doc_v6/tutorial/11/7.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -300,7 +300,7 @@ void Main()
 
 ## 11.8 見出し
 GUI の各ウィジェットに見出しを付けたい場合、`SimpleGUI::Headline` を使うと便利です。関数には見出しの位置、幅、状態などを設定できます。ヘッドラインの高さは 40px です。
-
+![](/images/doc_v6/tutorial/11/8.png)
 ```cpp
 # include <Siv3D.hpp>
 
