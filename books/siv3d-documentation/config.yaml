@@ -19,7 +19,7 @@ chapters:
   - tutorial-texture
   - tutorial-video
   - tutorial-format
- # - tutorial-random
+  - tutorial-random
  # - tutorial-time
  # - tutorial-font
  # - tutorial-gui
