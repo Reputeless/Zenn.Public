@@ -21,7 +21,7 @@ chapters:
   - tutorial-format
   - tutorial-gui
   - tutorial-random
- # - tutorial-time
+  - tutorial-time
  # - tutorial-font
  # - tutorial-scene
  # - tutorial-keyboard

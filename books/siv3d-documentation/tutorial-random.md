@@ -14,11 +14,11 @@ Siv3D は乱数に関する次のような機能を提供します。
 
 Siv3D の乱数関数では、特に指定しない場合、Siv3D が内部で確保する乱数エンジンが使われます。内部の乱数エンジンはハードウェアノイズからシード値が決定され、実行するたびに異なる乱数列を生成します。
 
-再現性が必要な場合は、内部の乱数エンジンにシードを与えるか、乱数エンジンオブジェクトをコードで作成し、乱数関数に渡します。
+再現性が必要な場合は、内部の乱数エンジンに固定のシードを与えるか、乱数エンジンオブジェクトをコードで作成し、乱数関数に渡します。
 
 ## 12.1 ランダムな整数
 `Random<Type>(max)` は 0 から max までのランダムな数を、`Random<Type>(min, max)` は min から　max の範囲でランダムな数を返します。
-
+![](/images/doc_v6/tutorial/12/1.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -65,7 +65,7 @@ void Main()
 
 ## 12.2 デフォルトの乱数エンジンのシードを設定
 `Reseed()` を使うと、内部の乱数エンジンを指定したシードでリセットできます。同じシードからは同じ乱数列が生成されます。
-
+![](/images/doc_v6/tutorial/12/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -89,7 +89,7 @@ void Main()
 
 ## 12.3 乱数エンジンを渡す
 乱数エンジンオブジェクトを作成し、乱数関数に渡すと、内部の乱数エンジンの代わりにその乱数エンジンを使用して乱数を生成します。使用するたびに乱数エンジンの内部状態は更新されます。内部の乱数エンジンに依存したくないケースでこの方法を使います。
-
+![](/images/doc_v6/tutorial/12/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -113,7 +113,7 @@ void Main()
 
 ## 12.4 半々の確率
 `RandomBool()` は 50% の確率で `true`, 50% の確率で `false` を返します。
-
+![](/images/doc_v6/tutorial/12/4.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -138,7 +138,7 @@ void Main()
 
 ## 12.5 確率を指定
 `RandomBool(p)` は、0.0 ～ 1.0 の範囲で true になる確率を指定できます。10% の確率で `true` を返してほしい場合は `0.1` を、25% の確率で `true` を返してほしい場合は `0.25` を渡します。
-
+![](/images/doc_v6/tutorial/12/5.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -163,7 +163,7 @@ void Main()
 
 ## 12.6 ランダムな色
 `RandomColorF()` はランダムな色を `HSV{ Random(360.0), 1.0, 1.0 }` という式で生成して `ColorF` 型で返します。
-
+![](/images/doc_v6/tutorial/12/6.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -193,7 +193,6 @@ void Main()
 		}
 	}
 }
-
 ```
 
 
@@ -210,6 +209,7 @@ void Main()
 |`RandomVec2(const Triangle&)`|指定した三角形内にあるランダムな点の位置ベクトル|
 |`RandomVec2(const Quad&)`|指定した四角形内にあるランダムな点の位置ベクトル|
 
+![](/images/doc_v6/tutorial/12/7.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -246,7 +246,7 @@ void Main()
 
 ## 12.8 配列中のランダムな要素
 `Array` のメンバ関数 `.choice()` は、配列の中のランダムな要素を返します。空の配列に対して使うことはできません。
-
+![](/images/doc_v6/tutorial/12/8.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -273,7 +273,7 @@ void Main()
 
 ## 12.9 配列中のランダムな複数の要素
 `Array` の `.choice(N)` は、配列の中から重複なく N 個のランダムな要素を選択し、配列で返します。結果の配列の要素の順番は、元の配列内での順序と同じです。
-
+![](/images/doc_v6/tutorial/12/9.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -300,13 +300,13 @@ void Main()
 
 ## 12.10 配列のシャッフル
 `Array` の `.shuffle()` は配列の要素の順番をランダムにシャッフルします。一方 `.shuffled()` を使うと、自身は変更せずに、シャッフルした新しい配列を作成して返します。
-
+![](/images/doc_v6/tutorial/12/10.gif)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int> cities =
+	Array<String> cities =
 	{
 		U"Guangzhou", U"Tokyo", U"Shanghai", U"Jakarta",
 		U"Delhi", U"Metro Manila", U"Mumbai", U"Seoul",
@@ -331,7 +331,7 @@ void Main()
 
 ## 12.11 ランダムに 1 個選択
 `Sample()` を使うと、`{}` で渡した複数の選択肢から要素をランダムに 1 個選択できます。
-
+![](/images/doc_v6/tutorial/12/11.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -353,7 +353,7 @@ void Main()
 
 ## 12.12 ランダムに N 個選択
 `Sample()` は第 1 引数に個数、第 2 引数に選択肢を渡すこともできます。`Array` の `.choice()` と同様に、結果の配列内の要素の順番は、元の順序と同じです。
-
+![](/images/doc_v6/tutorial/12/12.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -375,7 +375,7 @@ void Main()
 
 ## 12.13 出現確率
 確率にバイアスがある複数の選択肢からランダムな結果を選択するときは `DiscreteSample` を使います。選択肢を配列で、選択肢の確率分布を `DiscreteDistribution` で準備しておく必要があります。確率分布は `double` 型の値で指定し、合計が特定の数になる必要はありません。`{1, 6, 3}` なら 10%, 60%, 30% と割り振られます。
-
+![](/images/doc_v6/tutorial/12/13.gif)
 ```cpp
 # include <Siv3D.hpp>
 
