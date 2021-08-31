@@ -290,7 +290,7 @@ void Main()
 
 	Print << values;
 
-	// 5 個の Vec2(0, 0)
+	// 5 個の Vec2{ 0, 0 }
 	Array<Vec2> points(5, Vec2{ 0, 0 });
 
 	Print << points;
