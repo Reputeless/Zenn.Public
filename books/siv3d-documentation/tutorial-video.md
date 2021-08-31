@@ -8,9 +8,7 @@ free: true
 
 
 ## 9.1 動画を描く
-シーンに動画を描きたいときは `VideoTexture` を作成し、`.draw()` または `.drawAt()` します。`VideoTexture` は `Texture` とほぼ同じインタフェースを持ち、動画ファイルを `Texture` のように扱えます。
-
-`VideoTexture` は毎フレーム `.advance()` を呼ぶことで再生位置を進めます。Siv3D はバックグラウンドのスレッドで動画の次のフレームの先読みを行っています。
+シーンに動画を描きたいときは `VideoTexture` を作成し、`.draw()` または `.drawAt()` します。`VideoTexture` は `Texture` とほぼ同じインタフェースを持ち、動画ファイルを `Texture` のように扱えます。`VideoTexture` は毎フレーム `.advance()` を呼ぶことで再生位置を進めます。Siv3D はバックグラウンドのスレッドで動画の次のフレームの先読みを行っています。
 
 `VideoTexture` ではミップマップが作成されないため、動画を縮小して描く場合はあらかじめ小さい解像度の動画を用意しておくことが実行時性能上からも望ましいです。
 
@@ -48,11 +46,7 @@ void Main()
 
 
 ## 9.2 GIF アニメーションを描く
-`AnimatedGIFReader` を使うと、各フレームの画像データ `Image` と、次のフレームまでのディレイ（ミリ秒）の配列を取得できます。
-
-`Image` の配列から `Texture` の配列を作成し、適切なタイミングでフレームを描くことで、GIF アニメーションを描画できます。
-
-ある時間にどのフレームを描けばよいかは、`AnimatedGIFReader::GetFrameIndex()` を使うことで簡単に求められます。
+`AnimatedGIFReader` を使うと、各フレームの画像データ `Image` と、次のフレームまでのディレイ（ミリ秒）の配列を取得できます。`Image` の配列から `Texture` の配列を作成し、適切なタイミングでフレームを描くことで、GIF アニメーションを描画できます。ある時間にどのフレームを描けばよいかは、`AnimatedGIFReader::GetFrameIndex()` を使うことで簡単に求められます。
 
 https://youtu.be/E8dtoDeHE3g
 ```cpp
