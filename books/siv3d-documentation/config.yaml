@@ -19,10 +19,10 @@ chapters:
   - tutorial-texture
   - tutorial-video
   - tutorial-format
+  - tutorial-gui
   - tutorial-random
  # - tutorial-time
  # - tutorial-font
- # - tutorial-gui
  # - tutorial-scene
  # - tutorial-keyboard
  # - tutorial-mouse
