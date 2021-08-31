@@ -8,22 +8,27 @@ free: true
 
 ## 10.1 数値から文字列への変換
 `Format()` を使うと、文字列への変換に対応したあらゆるデータを `String` に変換できます。
-
+![](/images/doc_v6/tutorial/10/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
 	const String a = Format(12345);
+	Print << a;
 
 	const String b = Format(true);
+	Print << b;
 
 	const String c = Format(1.23456789);
+	Print << c;
 
 	const String d = Format(Vec2{ 11, 22 });
+	Print << d;
 
 	const Array<int32> values = { 3, 4, 5, 6 };
 	const String e = Format(values);
+	Print << e;
 
 	const std::array<ColorF, 3> colors =
 	{
@@ -32,15 +37,9 @@ void Main()
 		ColorF{ 0.0 , 0.0, 1.0 },
 	};
 	const String f = Format(colors);
+	Print << f;
 
 	const String g = Format(Rect{ 30, 50, 100, 50 });
-
-	Print << a;
-	Print << b;
-	Print << c;
-	Print << d;
-	Print << e;
-	Print << f;
 	Print << g;
 
 	// (復習) Print は String でなくても使える
@@ -60,7 +59,7 @@ void Main()
 文字列リテラルのあとに `_fmt()` サフィックスを付けると、文字列リテラル内に記述した `{}` という箇所に、`( )` 内に記述した引数が文字列化されて挿入されます。
 
 ### 10.2.1 基本
-
+![](/images/doc_v6/tutorial/10/2.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -85,9 +84,9 @@ void Main()
 ```
 
 
-### 10.2.3 インデックスの指定
+### 10.2.2 インデックスの指定
 `{0}`, `{1}` のようにインデックスを記述して、`_fmt()` 内の対応する引数を指定できます。
-
+![](/images/doc_v6/tutorial/10/2.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -111,7 +110,7 @@ void Main()
 
 ### 10.2.3 小数点以下の桁数
 小数点以下 N 桁を変換したい場合は `{:.Nf}` と記述します。指定しなかった場合は、格納されている値の最大精度の桁数で変換されます。
-
+![](/images/doc_v6/tutorial/10/2.3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -148,7 +147,7 @@ void Main()
 
 ### 10.2.4 パディング
 N 文字の幅になるよう、文字の左にパティング文字 c を挿入したい場合は `{:c>N}`, 右に挿入したい場合は `{:c<N}`, 左右に均等に挿入したい場合は `{:c^N}` と記述します。`c` を省略した場合は半角スペースが使われます。
-
+![](/images/doc_v6/tutorial/10/2.4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -178,7 +177,7 @@ void Main()
 
 ### 10.2.5 基数
 `{:X}` は大文字の十六進数、`{:x}` は小文字の十六進数、`{:o}` は八進数、`{:b}` は二進数に変換します。`#` を付けるとプレフィックスが付きます。
-
+![](/images/doc_v6/tutorial/10/2.5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -203,7 +202,7 @@ void Main()
 
 ### 10.2.6 符号
 `{:+}` は正の値に + 記号を付加し、`{: }` は正の値に半角空白を付加します。
-
+![](/images/doc_v6/tutorial/10/2.6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -232,7 +231,7 @@ void Main()
 
 ### 10.3.1 Parse
 `Parse<Type>(s)` 関数テンプレートは、引数の文字列 `s` を `Type` 型の値に変換し、失敗した場合は例外 `ParseError` を投げます。
-
+![](/images/doc_v6/tutorial/10/3.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -268,7 +267,7 @@ void Main()
 
 ### 10.3.2 ParseOr
 `ParseOr<Type>(s, defaultValue)` 関数テンプレートは、引数の文字列 `s` を `Type` 型の値に変換し、失敗した場合は `defaultValue` を返します。
-
+![](/images/doc_v6/tutorial/10/3.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -294,7 +293,7 @@ void Main()
 
 ### 10.3.3 ParseOpt
 `ParseOpt<Type>(s)` 関数テンプレートは、引数の文字列 `s` を `Type` 型の値に変換し、オプショナル型で返します。変換に失敗した場合は無効値を返します。
-
+![](/images/doc_v6/tutorial/10/3.3.png)
 ```cpp
 # include <Siv3D.hpp>
 
