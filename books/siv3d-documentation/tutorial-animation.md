@@ -12,7 +12,7 @@ free: true
 `Scene::Time()` はプログラムが起動されてからの経過時間（秒）を `double` 型の値で返します。この値を使って簡単なアニメーションを作成できます。
 
 #### Scene::Center()
-`Scene::Center()` は画面の中心座標を `Point` 型で返します。画面のサイズが 800x600 のときには `Point{ 400, 300 }` を返します。
+`Scene::Center()` はシーンの中心座標を `Point` 型で返します。画面のサイズが 800x600 のときには `Point{ 400, 300 }` を返します。
 
 https://youtu.be/X0vml6zZlQs
 
