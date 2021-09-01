@@ -19,7 +19,7 @@ free: true
 | `us` | マイクロ秒 |
 | `ns` | ナノ秒 |
 
-次のような、時間を表現する型に時間を格納できます。`F` の付く型は浮動小数点数で値を保持します。
+次のような、時間を表現する型に時間を格納できます。`F` の付く型は浮動小数点数で値を保持します。Siv3D の API では `SecondsF` 型のエイリアスである `Duration` 型をよく使います。
 
 | 型 | 表現する時間 |
 |--|--|
@@ -31,7 +31,7 @@ free: true
 | `Microseconds` または `MicrosecondsF` | マイクロ秒 |
 | `Nanoseconds` または `NanosecondsF` | ナノ秒 |
 
-時間を表現する型は相互に変換可能です。Siv3D の API では `SecondsF` 型のエイリアスである `Duration` 型をよく使います。
+時間を表現する型は相互に変換可能です。浮動小数点数で表現する時間型から整数で表現する時間型への変換には `DurationCast<Type>()` が必要です。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -62,7 +62,23 @@ void Main()
 `Stopwatch` は `.format()` を使うと、経過時間を `String` として取得できます。この章では説明しませんが、`format()` に書式を渡し、指定したパターンで時間を文字列に変換することができます。`Stopwatch` を `Print` や `Format()` に渡すと、デフォルトの `.format()` の書式で文字列に変換されます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		const String s = stopwatch.format();
+
+		Print << s;
+
+		Print << stopwatch;
+	}
+}
 ```
 
 
@@ -70,7 +86,33 @@ void Main()
 時間型の値は相互に比較できます。また、`Stopwatch` と時間型の値も比較でき、ストップウォッチの経過時間を別の時間と比較することができます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << stopwatch;
+
+		if (500ms <= stopwatch)
+		{
+			Print << U"500msec";
+		}
+
+		if (3s <= stopwatch)
+		{
+			Print << U"3sec";
+		}
+
+		if (5.5s <= stopwatch)
+		{
+			Print << U"5.5sec";
+		}
+	}
+}
 ```
 
 
@@ -78,7 +120,31 @@ void Main()
 `Date` は日付を表現するクラスで、`int32 year`, `int32 month`, `int32 day` をメンバ変数に持ちます。`Days` 型の値を使って加減算ができます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// 現在の日付を取得
+	const Date date = Date::Today();
+	Print << date;
+	Print << date.year;
+	Print << date.month;
+	Print << date.day;
+
+	// 10 日前の日付
+	Print << (date - 10_d);
+
+	// 10 日後の日付
+	Print << (date + 10_d);
+
+	// 日付の引き算
+	Print << (Date::Tomorrow() - Date::Yesterday());
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
@@ -86,33 +152,91 @@ void Main()
 `DateTime` は日付と時刻を表現するクラスで、`int32 year`, `int32 month`, `int32 day`, `int32 hour`, `int32 minute`, `int32 second`, `int32 milliseconds` をメンバ変数に持ちます。時間型の値を使って加減算ができます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// 現在の日付と時刻を取得
+	const DateTime t = DateTime::Now();
+	Print << t;
+	Print << t.year;
+	Print << t.month;
+	Print << t.day;
+	Print << t.hour;
+	Print << t.minute;
+	Print << t.second;
+	Print << t.milliseconds;
+
+	// 30 分前
+	Print << (t - 30min);
+
+	// 来週
+	Print << (t + 7_d);
+
+	// 2030 年まであと
+	const Duration s = (DateTime{ 2030, 1, 1 } - t);
+	Print << s;
+	Print << DaysF{ s };
+	Print << DurationCast<Days>(s);
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
 ## 13.6 アプリケーションの起動時間
-4 章で登場した、シーンの経過時間を返す関数 `Scene::Time()` は、1 フレームで経過できる時間の上限設定（デフォルトでは 0.1 秒）が適用され、また `System::Update()` によってしか更新されないため、実際のアプリケーションの起動時間よりも短くなる場合があります。実際の起動時間を取得する場合は `Time::` 名前空間の次の関数を使います。
+4 章で登場した、シーンの経過時間を返す関数 `Scene::Time()` は、1 フレームで経過できる時間の上限設定（デフォルトでは 0.1 秒）が適用され、また `System::Update()` によってしか更新されないため、実際のアプリケーション起動からの経過時間よりも短くなる場合があります。正確な起動時間を取得したい場合は `Time::` 名前空間の次の関数を使います。
 
 | 関数 | 説明 |
 |--|--|
-| `` |  |
+| `Time::GetSec()` | アプリケーション起動からの時間（秒）を返します |
+| `Time::GetMillisec()` | アプリケーション起動からの時間（ミリ秒）を返します |
+| `Time::GetMicrosec()` | アプリケーション起動からの時間（マイクロ秒）を返します |
+| `Time::GetNanosec()` | アプリケーション起動からの時間（ナノ秒）を返します |
 
 ```cpp
+# include <Siv3D.hpp>
 
-
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << Time::GetSec();
+		Print << Time::GetMillisec();
+		Print << Time::GetMicrosec();
+		Print << Time::GetNanosec();
+	}
+}
 ```
 
-`Scene::Time()` の経過時間上限は、パーティクルや物理シミュレーションの負荷抑制のために設定されています。
-
+`Scene::Time()` の経過時間上限は、パーティクルや物理シミュレーションの負荷抑制のために設定されています。また、最初の `System::Update()` が呼ばれたときからカウントが始まります。
 
 ## 13.7 UNIX 時間の取得
-
+UNIX 時間を取得したい場合は `Time::` 名前空間の次の関数を使います。
 
 | 関数 | 説明 |
 |--|--|
-| `` |  |
+| `Time::GetSecSinceEpoch()` | 協定世界時 (UTC) で 1970 年 1 月 1 日午前 0 時からの経過時間（秒）を返します |
+| `Time::GetMillisecSinceEpoch()` | 協定世界時 (UTC) で 1970 年 1 月 1 日午前 0 時からの経過時間（ミリ秒）を返します |
+| `Time::GetMicrosecSinceEpoch()` | 協定世界時 (UTC) で 1970 年 1 月 1 日午前 0 時からの経過時間（マイクロ秒）を返します |
+| `Time::UTCOffsetMinutes()` | 使用しているコンピュータの、協定世界時 (UTC) との時差（分）を返します |
 
 ```cpp
+# include <Siv3D.hpp>
 
-
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << Time::GetSecSinceEpoch();
+		Print << Time::GetMillisecSinceEpoch();
+		Print << Time::GetMicrosecSinceEpoch();
+		Print << Time::UTCOffsetMinutes();
+	}
+}
 ```
