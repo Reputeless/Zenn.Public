@@ -844,10 +844,10 @@ void Main()
 	while (System::Update())
 	{
 		const double t = Scene::Time();
-		constexpr double verticlaFOV = 30_deg;
+		constexpr double verticalFOV = 30_deg;
 		const Vec3 eyePosition = Cylindrical{ 20, (t * 1_deg), (8 + Periodic::Sine0_1(40s) * 8) };
 		constexpr Vec3 focusPosition{ 0, 0, 0 };
-		const BasicCamera3D camera{ Graphics3D::GetRenderTargetSize(), verticlaFOV, eyePosition, focusPosition, Vec3::Up(), 0.1 };
+		const BasicCamera3D camera{ Graphics3D::GetRenderTargetSize(), verticalFOV, eyePosition, focusPosition, Vec3::Up(), 0.1 };
 
 		// [3D シーンの描画]
 		{
