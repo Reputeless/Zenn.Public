@@ -1205,7 +1205,7 @@ void Main()
 音楽にリアルタイムでエフェクトを適用できます。
 ![](/images/doc_v6/quick-example/14.png)
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {

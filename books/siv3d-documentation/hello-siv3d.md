@@ -10,7 +10,7 @@ Siv3D プロジェクトを作成すると、最初に用意されているの�
 ![](/images/doc_v6/demo/hello-siv3d.gif)
 
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6.0
+# include <Siv3D.hpp>
 
 void Main()
 {

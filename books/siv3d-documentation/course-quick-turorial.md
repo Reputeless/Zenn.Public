@@ -702,7 +702,7 @@ void Main()
 ```
 
 ### Siv3D で使える絵文字の一覧
-OpenSiv3D で使える絵文字は約 3,600 種類あります。絵文字は [emojipedia](https://emojipedia.org/) の Categories から探すのが便利です。 OpenSiv3D v0.6 はオープンソースの絵文字フォント Noto Color Emoji (Android 11.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
+Siv3D で使える絵文字は約 3,600 種類あります。絵文字は [emojipedia](https://emojipedia.org/) の Categories から探すのが便利です。 OpenSiv3D v0.6 はオープンソースの絵文字フォント Noto Color Emoji (Android 11.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
 
 ## 3.2 テクスチャを拡大縮小して描画する
 
