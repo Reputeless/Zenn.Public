@@ -386,3 +386,20 @@ void Main()
 アプリケーションで使われているサードパーティ・ソフトウェアのライセンス情報を Web ブラウザで表示します。
 
 （上級者向け）`LicenseManager::` 名前空間の関数を使い、ライセンス情報を追加したり、一覧を取得したりできます。`LicenseManager::ShowInBrowser()` を実行することで明示的にオープンすることもできます（毎フレーム呼び出さないよう注意）。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// "Licenses" ボタンが押されたら
+		if (SimpleGUI::Button(U"Licenses", Vec2{ 20, 20 }))
+		{
+			// ライセンス情報を表示
+			LicenseManager::ShowInBrowser();
+		}
+	}
+}
+```
