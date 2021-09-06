@@ -1180,7 +1180,7 @@ void Main()
 				for (auto [i, country] : Indexed(countries))
 				{
 					// 画面外にある場合は描画をスキップ
-					if (!country.computeBoundingRect().intersects(viewRect))
+					if (not country.computeBoundingRect().intersects(viewRect))
 					{
 						continue;
 					}

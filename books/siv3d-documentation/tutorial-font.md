@@ -677,8 +677,9 @@ void Main()
 ```
 
 
-## 14.19 文字単位で描画を制御する（基本）
-
+## 14.19 文字単位で自由描画をする（基本）
+`Font` の `.getGlyphs(text)` を `for` ループで次のように使用すると、個々の文字を自由に制御して描画するために必要な `Glyph` 型のオブジェクトを文字ごとに取得できます。  
+`Glyph` の `.codePoint` はその文字の UTF-32 コードポイントを、`.getOffset()` はペンの位置からさらに必要なオフセットを、`.xAdvance` は次の文字への X 座標の距離を表します。
 ```cpp
 # include <Siv3D.hpp>
 
@@ -721,7 +722,18 @@ void Main()
 ```
 
 
-## 14.20 文字単位で描画を制御する（応用）
+## 14.20 文字単位で自由描画をする（応用）
+`for (auto [i, value] : Indexed(values))` は次のプログラムを短く書ける機能です。
+
+```cpp
+size_t i = 0;
+for (const auto& value : values)
+{
+	++i;
+}
+```
+
+これを利用して、1 文字ごとに描画する位置をずらしてみましょう。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -757,21 +769,179 @@ void Main()
 }
 ```
 
+（補足 1）自由描画で使用するフォントが SDF / MSDF 方式の場合、次のように `ScopedCustomShader2D` を作成し、そのオブジェクトが有効なスコープで描画する必要があります。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// MSDF フォント
+	const Font font{ FontMethod::MSDF, 50, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+		constexpr Vec2 basePos{ 20, 20 };
+		Vec2 penPos{ basePos };
+
+		{
+			// MSDF フォントの描画のための設定
+			const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
+			for (auto [index, glyph] : Indexed(font.getGlyphs(text)))
+			{
+				if (glyph.codePoint == U'\n')
+				{
+					penPos.x = basePos.x;
+					penPos.y += font.height();
+					continue;
+				}
+
+				const double offsetY = Math::Sin(index * 45_deg + t * 180_deg) * 10;
+				glyph.texture.draw(penPos + glyph.getOffset() + Vec2{ 0, offsetY });
+				penPos.x += glyph.xAdvance;
+			}
+		}
+	}
+}
+```
+
+（補足 2）自由描画で使用するフォントが SDF / MSDF 方式かつ、`TextStyle` を適用する場合はさらに事前設定が必要です。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	// MSDF フォント
+	const Font font{ FontMethod::MSDF, 50, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+		constexpr Vec2 basePos{ 20, 20 };
+		Vec2 penPos{ basePos };
+
+		{
+			// MSDF フォント + 輪郭描画のための設定
+			const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), TextStyle::Type::OutlineShadow) };
+			const Float4 param{ (0.5f + 0.1f), (0.5f - 0.1f), 2.0f, 2.0f };
+			const Float4 outlineColor = ColorF{ 0.8, 0.4, 0.0 }.toFloat4();
+			const Float4 shadowColor = ColorF{ 0.0, 0.5 }.toFloat4();
+			Graphics2D::Internal::SetSDFParameters({ param, outlineColor, shadowColor });
+
+			for (auto [index, glyph] : Indexed(font.getGlyphs(text)))
+			{
+				if (glyph.codePoint == U'\n')
+				{
+					penPos.x = basePos.x;
+					penPos.y += font.height();
+					continue;
+				}
+
+				const double offsetY = Math::Sin(index * 45_deg + t * 180_deg) * 10;
+				glyph.texture.draw(penPos + glyph.getOffset() + Vec2{ 0, offsetY });
+				penPos.x += glyph.xAdvance;
+			}
+		}
+	}
+}
+```
+
 
 ## 14.21 縦書きでテキストを描画する
 （OpenSiv3D v0.6.0 ではテキストの縦書きに関する機能は未実装です。将来のバージョンで実装予定です）
 
 
-## 14.22 空のフォント
+## 14.22 フォントのプリロード
+Siv3D の `Font` は、初めて描く文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作しているゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。`.preload(text)` を使うと、`text` に含まれる文字を（重複する場合は除去して）内部にあらかじめ用意するため、ゲームの実行中の負荷を抑制できます。  
+また、`.getTexture()` を使うと、`Font` の内部にキャッシュされている `Texture` を取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	const Font font{ 30 };
+	font.preload(U"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,!?0123456789");
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(20, 20, ColorF{ 0.25 });
+
+		font.getTexture().draw(20, 100);
+	}
+}
+```
+
+## 14.23 空のフォント
+データを持たない空（から）のフォントは何も描きません。フォントファイルの読み込みに失敗したときにも空のフォントが作成されます。  
+フォントが空であるかは `if (font.isEmpty())` もしくは `if (not font)` で調べられます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 初期データを与えないと、空のフォントになる
+	Font fontA;
+
+	if (not fontA)
+	{
+		Print << U"fontA is empty";
+	}
+
+	// フォントファイルの読み込みに失敗すると、空のフォントになる
+	Font fontB{ 40, U"aaa/bbb.ttf" };
+
+	if (not fontB)
+	{
+		Print << U"fontB is empty";
+	}
+
+	while (System::Update())
+	{
+		// 何も描かれない
+		fontA(U"Hello, Siv3D!").draw(100, 100);
+
+		// 何も描かれない
+		fontB(U"Hello, Siv3D!").draw(100, 200);
+	}
+}
 
 ```
 
 
-## 14.23 フォントの代入
+## 14.24 フォントの代入
+`Font` は次のように `=` 演算子を使って代入できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Font font;
+
+	while (System::Update())
+	{
+		// テクスチャが空の状態で、左クリックされたら
+		if ((not font) && MouseL.down())
+		{
+			// テクスチャを作成して代入
+			font = Font{ 40 };
+		}
+
+		if (font)
+		{
+			font(U"Helo, Siv3D!").draw(20, 20);
+		}
+	}
+}
 ```
 
