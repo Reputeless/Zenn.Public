@@ -48,6 +48,7 @@ chapters:
  # - tutorial-scene-manager
  # - tutorial-3d
  # - tutorial-shader3d
+  - tutorial-release
   - sample-game
   - sample-application
   - sample-visual
