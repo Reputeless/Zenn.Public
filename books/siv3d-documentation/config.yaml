@@ -23,7 +23,7 @@ chapters:
   - tutorial-random
   - tutorial-time
   - tutorial-font
- # - tutorial-scene
+  - tutorial-scene
  # - tutorial-keyboard
  # - tutorial-mouse
  # - tutorial-audio
