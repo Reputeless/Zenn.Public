@@ -181,9 +181,11 @@ void Main()
 	const Font fontJP{ 36, Typeface::CJK_Regular_JP };
 	const Font fontEmoji{ 36, Typeface::ColorEmoji };
 
+	// fontB にフォールバックフォントを 1 つ追加
 	fontB.addFallback(fontJP);
-	fontC.addFallback(fontJP);
 
+	// fontC にフォールバックフォントを 2 つ追加
+	fontC.addFallback(fontJP);
 	fontC.addFallback(fontEmoji);
 
 	const String s = U"Hello! こんにちは 你好 안녕하세요 🐈🐕🚀";
@@ -202,49 +204,246 @@ void Main()
 コンピュータ上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタに、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（App フォルダ）を基準とする相対パスか、絶対パスを使用します。リリース用のアプリを作るときには、のちの章で説明する「リソース」パスの使用を推奨します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// RocknRollOne-Regular.ttf をロードして使う
+	const Font font{ 50, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!\nこんにちは！").draw(20, 20);
+	}
+}
 ```
 
 
 ## 14.7 PC にインストールされているフォントを使う
+PC にインストールされているフォントは OS ごとに特殊なフォルダに保存されています。そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、ファイルパスを構築できます。`FileSystem::GetFolderPath()` に渡す `SpecialFolder` の種類と OS によって取得できるパスの対応表は次の通りです。
+
+|                            | Windows             | macOS                  | Linux       |
+|----------------------------|:---------------------:|:------------------------:|:-------------:|
+| SpecialFolder::SystemFonts | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
+| SpecialFolder::LocalFonts  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(存在する場合) |
+| SpecialFolder::UserFonts   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(存在する場合) |
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+# if SIV3D_PLATFORM(WINDOWS)
+
+	const Font font{ 60, FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"arial.ttf" };
+
+# elif SIV3D_PLATFORM(MACOS)
+
+	const Font font{ 60, FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"Helvetica.dfont" };
+
+# endif
+
+	while (System::Update())
+	{
+# if SIV3D_PLATFORM(WINDOWS)
+
+		font(U"Arial").draw(20, 40);
+
+# elif SIV3D_PLATFORM(MACOS)
+
+		font(U"Helvetica").draw(20, 40);
+
+# endif
+	}
+}
 ```
 
 
-## 14.8 
+## 14.8 フォントのスタイルを変える
+`Font` のコンストラクタに `FontStyle` を指定することで、イタリックやボールドなどのスタイルをフォントに適用できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 50, Typeface::Regular };
+
+	// ボールド
+	const Font fontBold{ 50, Typeface::Regular, FontStyle::Bold };
+
+	// イタリック
+	const Font fontItalic{ 50, Typeface::Regular, FontStyle::Italic };
+
+	// ボールド・イタリック
+	const Font fontBoldItalic{ 50, Typeface::Regular, FontStyle::BoldItalic };
+
+	const String text = U"Hello, Siv3D! こんにちは。";
+
+	while (System::Update())
+	{
+		font(text).draw(20, 20);
+
+		fontBold(text).draw(20, 70);
+
+		fontItalic(text).draw(20, 120);
+
+		fontBoldItalic(text).draw(20, 170);
+	}
+}
 ```
 
 
-## 14.9 
+## 14.9 ビットマップフォントを使う
+ビットマップフォントはフォントスタイルに `FontStyle::Bitmap` を指定することで、フィルタリングされずドット感を保つことができます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	// RocknRollOne-Regular.ttf をロードして使う
+	const Font font{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf" };
+
+	// RocknRollOne-Regular.ttf をロードして使う
+	const Font fontB{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
+
+	const String text = U"Hello, Siv3D! こんにちは。";
+
+	while (System::Update())
+	{
+		font(text).draw(20, 20, Palette::Black);
+
+		fontB(text).draw(20, 60, Palette::Black);
+	}
+}
 ```
 
 
-## 14.10
+## 14.10 ベースラインを指定してテキストを描く
+文字のベースラインの開始位置を指定して描画したい場合は `.drawBase()` を使います。異なるサイズや種類のフォントを、ベースラインをそろえて描画できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font20{ 20 };
+	const Font font30{ 30, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+	const Font font50{ 50 };
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		// ベースラインがそろわない
+		font20(text).draw(20, 100);
+		font30(text).draw(160, 100);
+		font50(text).draw(380, 100);
+
+		Rect{ 0, 400, 800, 10 }.draw(ColorF{ 0.3 });
+
+		// (20, 400) がベースラインの開始位置になるようテキストを描画
+		font20(text).drawBase(20, 400);
+
+		// (160, 400) がベースラインの開始位置になるようテキストを描画
+		font30(text).drawBase(160, 400);
+
+		// (380, 400) がベースラインの開始位置になるようテキストを描画
+		font50(text).drawBase(380, 400);
+	}
+}
 ```
 
 
-## 14.11
+## 14.11 テキスト描画の基準位置をカスタマイズする
+左上や中心以外にも、描画座標の基準点を設定できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 50 };
+	constexpr Vec2 pos{ 400,300 };
+	const String text = U"Hello, Siv3D!";
+	size_t index = 0;
+
+	while (System::Update())
+	{
+		SimpleGUI::RadioButtons(index,
+			{ U"topLeft", U"bottomLeft", U"bottomRight", U"bottomCenter", U"leftCenter", U"center" },
+			Vec2{20,20});
+
+		Circle{ pos, 2 }.draw(Palette::Red);
+
+		if (index == 0)
+		{
+			font(text).draw(pos);
+		}
+		else if (index == 1)
+		{
+			// 左下を基準にする
+			font(text).draw(Arg::bottomLeft = pos);
+		}
+		else if (index == 2)
+		{
+			// 右下を基準にする
+			font(text).draw(Arg::bottomRight = pos);
+		}
+		else if (index == 3)
+		{
+			// 下辺中央を基準にする
+			font(text).draw(Arg::bottomCenter = pos);
+		}
+		else if (index == 4)
+		{
+			// 左辺中央を基準
+			font(text).draw(Arg::leftCenter = pos);
+		}
+		else
+		{
+			// 中央を基準
+			font(text).drawAt(pos);
+		}
+	}
+}
 ```
 
 
-## 14.12 
+## 14.12 テキストが表示される領域を調べる
+`Font` の `.draw()` や `.drawAt()` は、描画された領域を `RectF` 型で返します。また、`.region()` や `.regionAt()` を使うと、描画なしでその領域を取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 50 };
+	const String text = U"Hello, Siv3D!";
+	constexpr Vec2 pos{ 20, 20 };
+
+	// font を使って text を pos の位置に描画したときのテキストの領域を取得
+	const RectF rect = font(text).region(pos);
+
+	while (System::Update())
+	{
+		// 描画領域の長方形を事前に塗りつぶす
+		rect.draw(Palette::Skyblue);
+
+		// 長方形の上にテキストを描く
+		font(text).draw(pos, ColorF{ 0.25 });
+
+		// テキストの領域を
+		font(text)
+			.drawAt(Scene::Center())
+			.stretched(40, 0)	// 横に広げて
+			.shearedX(20)		// 平行四辺形にして
+			.drawFrame(2);		// 枠を描く
+	}
+}
 ```
 
 
