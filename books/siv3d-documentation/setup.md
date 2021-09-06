@@ -7,7 +7,7 @@ free: true
 
 ## 1.1 SDK のインストール
 
-- **[OpenSiv3D v0.6 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.0Installer.exe)** をダウンロードして実行します
+- **[OpenSiv3D v0.6 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.0_b5Installer.exe)** をダウンロードして実行します
 - インストーラが自動的に以下のことを行います
   - SDK のコピー（デフォルトではドキュメントフォルダ）
   - SDK のパスへのユーザ環境変数の設定
@@ -32,7 +32,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 ## 2.1 プロジェクトテンプレートのダウンロード
 
-- **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.0_macOS.zip)** をダウンロードしてファイルを展開します
+- **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.0_b5_macOS.zip)** をダウンロードしてファイルを展開します
 
 - macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
 
