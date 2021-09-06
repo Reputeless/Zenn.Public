@@ -49,21 +49,21 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 ## 3.1 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手する
 
-[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が v0.6 の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの main ブランチ](https://github.com/Siv3D/OpenSiv3D) が、最新の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
 ## 3.2 依存パッケージをインストールする
 次を参考に必要なパッケージをインストールします。  
-https://github.com/Siv3D/OpenSiv3D/blob/v6_master/.github/workflows/ci.yml#L30-L53
+https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
 ## 3.3 OpenSiv3D ライブラリをビルドする
 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します。 
-https://github.com/Siv3D/OpenSiv3D/blob/v6_master/.github/workflows/ci.yml#L55-L64
+https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 
 ## 3.4 OpenSiv3D アプリをビルドする
 次を参考に Siv3D アプリをビルドします。 
-https://github.com/Siv3D/OpenSiv3D/blob/v6_master/.github/workflows/ci.yml#L66-L75
+https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
 ---
 

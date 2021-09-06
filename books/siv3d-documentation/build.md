@@ -21,7 +21,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 1.2 OpenSiv3D の開発ブランチからソースコードを入手する
 ◆ OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します
 
-[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の最新版 v0.6.x の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの main ブランチ](https://github.com/Siv3D/OpenSiv3D) が、最新の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
@@ -49,7 +49,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 2.2 OpenSiv3D の開発ブランチからソースコードを入手する
 ◆ OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します
 
-[OpenSiv3D 公式リポジトリの v6_master ブランチ](https://github.com/Siv3D/OpenSiv3D/tree/v6_master) が、現在開発中の最新版 v0.6.x の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの main ブランチ](https://github.com/Siv3D/OpenSiv3D) が、最新の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
