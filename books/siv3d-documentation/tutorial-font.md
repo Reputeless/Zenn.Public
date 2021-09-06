@@ -448,13 +448,51 @@ void Main()
 
 
 ## 14.13 指定した長方形の中にテキストを描く
+`Font::draw()` に `Rect` または `RectF` を渡すと、テキストをその長方形の内部に収まるように描画します。長方形内にテキストが収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Font font{ 25, Typeface::Bold };
+	const String text = U"The quick brown fox jumps over the lazy dog.";
+
+	constexpr Rect rect1{ 50, 20, 200, 100 };
+	constexpr Rect rect2{ 50, 160, 300, 100 };
+	constexpr Rect rect3{ 50, 300, 400, 100 };
+
+	while (System::Update())
+	{
+		rect1.draw();
+		if (not font(text).draw(rect1.stretched(-10), ColorF{ 0.25 }))
+		{
+			// 文字が省略されたら赤枠
+			rect1.drawFrame(0, 5, Palette::Red);
+		}
+
+		rect2.draw();
+		if (not font(text).draw(rect2.stretched(-10), ColorF{ 0.25 }))
+		{
+			// 文字が省略されたら赤枠
+			rect2.drawFrame(0, 5, Palette::Red);
+		}
+
+		rect3.stretched(10).draw();
+		if (not font(text).draw(rect3.stretched(-10), ColorF(0.25)))
+		{
+			// 文字が省略されたら赤枠
+			rect3.drawFrame(0, 5, Palette::Red);
+		}
+	}
+}
 ```
 
 
 ## 14.14 テキストを 1 文字ずつ表示する
+`String::substr(0, N)` で、0 文字目から N 文字分の文字列を取得できます。N を時間に応じて増やすことで 1 文字ずつテキストを表示できます。N が文字列の長さよりも大きい場合、超える分は無視されるので問題ありません。 
 
 ```cpp
 
