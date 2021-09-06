@@ -545,13 +545,13 @@ void Main()
 
 ## 14.16 自由に拡大縮小できるフォントを使う（SDF / MSDF）
 
-SDF および MSDF は、Distance field と呼ばれる手法を使ったテキスト描画方式です。これまでの `Font` クラスは、コンストラクタで指定した基本サイズで各文字ごとのビットマップ画像を生成し、それをレンダリングしていました（ビットマップ方式）。そのため、基本サイズより大きなサイズでテキストを描画しようとすると、画像がぼやけるという制限がありました。また、輪郭のようなエフェクトを適用することも困難でした。  
-一方 SDF / MSDF は、文字ごとの Distance field 画像を生成し、拡大してもぼやけない手法でテキストをレンダリングします。SDF / MSDF には影や輪郭などのエフェクトを 1 回の draw で行える仕組みも用意されています。
+これまでの `Font` クラスは、コンストラクタで指定した基本サイズで各文字ごとのビットマップ画像を生成し、それをレンダリングしていました（**ビットマップ方式**）。そのため、基本サイズより大きなサイズでテキストを描画しようとすると、画像がぼやけるという制限がありました。また、輪郭のようなエフェクトを適用することも困難でした。  
+一方、**SDF 方式** / **MSDF 方式**は、文字ごとの Distance field 画像を生成し、基本サイズ以上に拡大してもぼやけない手法でテキストをレンダリングできます。SDF / MSDF には影や輪郭などのエフェクトを 1 回の draw で行える仕組みも用意されています。
 
 各方式の利点と欠点を次の表にまとめました。
 
 | レンダリング手法 | 縮小 | 拡大 | 影 | 輪郭 | 実行時負荷 | 備考 |
-|--|:--:|:--:|:--:|:--:|:--:|:--:|
+|--|:--:|:--:|:--:|:--:|:--:|:--|
 |`FontMethod::Bitmap`| 〇 | △ | 〇<br>(2 回 draw) | × | 低 | デフォルトの手法 |
 |`FontMethod::SDF`| 〇 | 〇 | ◎ | ◎ | 中 | 文字の角が丸くなるなど、細部の情報が失われやすい |
 |`FontMethod::MSDF`| ◎ | ◎ | 〇 | 〇 | 高 | SDF より高品質 |
@@ -565,7 +565,9 @@ SDF / MSDF フォントで設定する基本サイズは、 Distance Field の�
 
 void Main()
 {
+	// 基本サイズ
 	const int32 baseSize = 40;
+
 	const Font font{ baseSize, Typeface::Bold };
 	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
 	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
@@ -573,6 +575,7 @@ void Main()
 
 	while (System::Update())
 	{
+		// 文字のサイズ（指定しない場合は基本サイズで描かれる）
 		const double fontSize = 120;
 
 		// 通常（ビットマップ方式）
@@ -592,41 +595,181 @@ void Main()
 
 
 ## 14.17 文字に影の効果を付ける（SDF / MSDF）
+SDF / MSDF 方式のフォントは、`TextStyle` を `.draw()` や `.drawAt()`, `.drawBase()` に設定することで、簡単なエフェクトを付与できます。文字に影の効果を付けるには `TextStyle::Shadow(影のオフセット, 影の色)` を設定します。
+
+影のオフセットがとても大きく Distance Field の範囲外に及んだ場合、影が途切れてしまいます。それを防ぐには `Font` の `.setBufferThickness(Distance Field の余白のサイズ)` で、Distance Field を大きめに作成しておきます。デフォルトは 2 です。この値を大きくするとメモリ消費量や描画負荷が増加しますが、影や輪郭の効果をより広く適用できるようになります。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const int32 baseSize = 40;
+	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
+	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
+	const String text = U"Hello, Siv3D!";
+
+	const int32 bufferThickness = 3;
+	fontSDF.setBufferThickness(bufferThickness);
+	fontMSDF.setBufferThickness(bufferThickness);
+
+	while (System::Update())
+	{
+		const Vec2 shadowOffset{ 2, 2 };
+		const ColorF shadowColor{ 0.0, 0.5 };
+		const double fontSize = 120;
+
+		// SDF 方式
+		fontSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), 20, 20);
+		fontSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), fontSize, 20, 60);
+
+		// MSDF 方式
+		fontMSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), 20, 220);
+		fontMSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), fontSize, 20, 260);
+	}
+}
 ```
 
 
 ## 14.18 文字に輪郭を付ける（SDF / MSDF）
+文字に輪郭の効果を付けるには `TextStyle::Outline(輪郭スケール, 輪郭の色)` を設定します。
+
+文字に輪郭と影の両方効果を付けるには `TextStyle::OutlineShadow(輪郭スケール, 輪郭の色, 影のオフセット, 影の色)` を設定します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const int32 baseSize = 40;
+	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
+	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
+	const String text = U"Hello, Siv3D!";
+
+	const int32 bufferThickness = 3;
+	fontSDF.setBufferThickness(bufferThickness);
+	fontMSDF.setBufferThickness(bufferThickness);
+
+	while (System::Update())
+	{
+		const double outlineScale = 0.2;
+		const ColorF outlineColor{ 0.0, 0.3, 0.6 };
+
+		const Vec2 shadowOffset{ 2, 2 };
+		const ColorF shadowColor{ 0.0, 0.5 };
+		const double fontSize = 120;
+
+		// SDF 方式
+		fontSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), 20, 20);
+		fontSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), fontSize, 20, 40);
+		fontSDF(text).draw(TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), fontSize, 20, 150);
+
+		// MSDF 方式
+		fontMSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), 20, 300);
+		fontMSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), fontSize, 20, 320);
+		fontMSDF(text).draw(TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), fontSize, 20, 430);
+	}
+}
 ```
 
 
 ## 14.19 文字単位で描画を制御する（基本）
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 50, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		constexpr Vec2 basePos{ 20, 20 };
+		Vec2 penPos{ basePos };
+
+		// 文字単位で描画を制御するためのループ
+		for (const auto& glyph : font.getGlyphs(text))
+		{
+			// 改行文字なら
+			if (glyph.codePoint == U'\n')
+			{
+				// ペンの X 座標をリセット
+				penPos.x = basePos.x;
+
+				// ペンの Y 座標をフォントの高さ分進める
+				penPos.y += font.height();
+
+				continue;
+			}
+
+			// 位置に応じて色を変える
+			const ColorF color = HSV{ penPos.x };
+
+			// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
+			glyph.texture.draw(penPos + glyph.getOffset(), color);
+
+			// ペンの X 座標を文字の幅の分進める
+			penPos.x += glyph.xAdvance;
+		}
+	}
+}
 ```
 
 
 ## 14.20 文字単位で描画を制御する（応用）
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 50, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+		constexpr Vec2 basePos{ 20, 20 };
+		Vec2 penPos{ basePos };
+
+		// 文字単位で描画を制御するためのループ。index には何番目であるかが格納される
+		for (auto [index, glyph] : Indexed(font.getGlyphs(text)))
+		{
+			if (glyph.codePoint == U'\n')
+			{
+				penPos.x = basePos.x;
+				penPos.y += font.height();
+				continue;
+			}
+
+			const double offsetY = Math::Sin(index * 45_deg + t * 180_deg) * 10;
+
+			glyph.texture.draw(penPos + glyph.getOffset() + Vec2{ 0, offsetY });
+
+			penPos.x += glyph.xAdvance;
+		}
+	}
+}
 ```
 
 
-## 14.21 空のフォント
+## 14.21 縦書きでテキストを描画する
+（OpenSiv3D v0.6.0 ではテキストの縦書きに関する機能は未実装です。将来のバージョンで実装予定です）
+
+
+## 14.22 空のフォント
 
 ```cpp
 
 ```
 
 
-## 14.22 フォントの代入
+## 14.23 フォントの代入
 
 ```cpp
 
