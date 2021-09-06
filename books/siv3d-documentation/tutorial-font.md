@@ -492,24 +492,102 @@ void Main()
 
 
 ## 14.14 テキストを 1 文字ずつ表示する
-`String::substr(0, N)` で、0 文字目から N 文字分の文字列を取得できます。N を時間に応じて増やすことで 1 文字ずつテキストを表示できます。N が文字列の長さよりも大きい場合、超える分は無視されるので問題ありません。 
+`String` は、`.substr(0, N)` を使うと、0 文字目から N 文字分の文字列を取得できます。N を時間に応じて増やすことで 1 文字ずつテキストが増えていく処理を実現できます。N が実際の文字列の長さをオーバーしてもその分は無視されるので大丈夫です。 
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 50, Typeface::Bold };
+
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		// 文字カウントを 0.1 秒ごとに増やす
+		const size_t length = static_cast<size_t>(Scene::Time() / 0.1);
+
+		// text の文字数以上の length は切り捨てられる
+		font(text.substr(0, length)).draw(50, 50);
+	}
+}
 ```
 
 
 ## 14.15 文字に影の効果を付ける（2 回描画する手法）
 
 ```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
+
+	const Font font{ 100, Typeface::Bold };
+
+	constexpr Vec2 center{ 400, 150 };
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		// center から (4, 4) ずらした位置を中心にテキストを描く
+		font(text).drawAt(center.movedBy(4, 4), ColorF{ 0.0, 0.5 });
+
+		// center を中心にテキストを描く
+		font(text).drawAt(center);
+	}
+}
 
 ```
 
 
 ## 14.16 自由に拡大縮小できるフォントを使う（SDF / MSDF）
 
-```cpp
+SDF および MSDF は、Distance field と呼ばれる手法を使ったテキスト描画方式です。これまでの `Font` クラスは、コンストラクタで指定した基本サイズで各文字ごとのビットマップ画像を生成し、それをレンダリングしていました（ビットマップ方式）。そのため、基本サイズより大きなサイズでテキストを描画しようとすると、画像がぼやけるという制限がありました。また、輪郭のようなエフェクトを適用することも困難でした。  
+一方 SDF / MSDF は、文字ごとの Distance field 画像を生成し、拡大してもぼやけない手法でテキストをレンダリングします。SDF / MSDF には影や輪郭などのエフェクトを 1 回の draw で行える仕組みも用意されています。
 
+各方式の利点と欠点を次の表にまとめました。
+
+| レンダリング手法 | 縮小 | 拡大 | 影 | 輪郭 | 実行時負荷 | 備考 |
+|--|:--:|:--:|:--:|:--:|:--:|:--:|
+|`FontMethod::Bitmap`| 〇 | △ | 〇<br>(2 回 draw) | × | 低 | デフォルトの手法 |
+|`FontMethod::SDF`| 〇 | 〇 | ◎ | ◎ | 中 | 文字の角が丸くなるなど、細部の情報が失われやすい |
+|`FontMethod::MSDF`| ◎ | ◎ | 〇 | 〇 | 高 | SDF より高品質 |
+
+SDF / MSDF フォントで設定する基本サイズは、 Distance Field のサイズに対応します。この値は描画する字形の複雑さに応じて決める必要があります。画数の少ない数字やアルファベット、曲線的でシンプルな字形であれば、40 ピクセル以下の基本サイズでもきれいなテキストをレンダリングできますが、複雑な字形になるほど、小さな Distance Field では描画結果が乱れたり、ノイズが目立つことがあります。かといって大きすぎると描画に時間がかかってしまいます。SDF / MSDF をアプリケーションで使用する際は、テキストの描画結果をチェックし、適切な基本サイズを設定しましょう。
+
+`.draw()` や `.drawAt()`, `.drawBase()` は、文字のサイズを指定できます。各方式について、基本サイズより大きなテキストを描いたときの結果を見てみましょう。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const int32 baseSize = 40;
+	const Font font{ baseSize, Typeface::Bold };
+	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
+	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		const double fontSize = 120;
+
+		// 通常（ビットマップ方式）
+		font(text).draw(20, 20);
+		font(text).draw(fontSize, 20, 50);
+
+		// SDF 方式
+		fontSDF(text).draw(20, 220);
+		fontSDF(text).draw(fontSize, 20, 250);
+
+		// MSDF 方式
+		fontMSDF(text).draw(20, 420);
+		fontMSDF(text).draw(fontSize, 20, 450);
+	}
+}
 ```
 
 
