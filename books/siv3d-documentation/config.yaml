@@ -24,7 +24,7 @@ chapters:
   - tutorial-time
   - tutorial-font
   - tutorial-scene
- # - tutorial-keyboard
+  - tutorial-keyboard
  # - tutorial-mouse
  # - tutorial-audio
  # - tutorial-asset
