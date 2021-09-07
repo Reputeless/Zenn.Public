@@ -354,23 +354,109 @@ void Main()
 
 
 ## 15.10 ウィンドウをスクリーンの中心に移動する
+`Window::Centering()` を使うと、ウィンドウを現在ウィンドウがあるモニタのワークエリアの中心に移動できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Center", Vec2{ 20, 20 }))
+		{
+			Window::Centering();
+		}
+	}
+}
 ```
 
 
-## 15.11 ウィンドウを最小化する
+## 15.11 ウィンドウを移動させる
+`Window::SetPos()` を使うと、ウィンドウを移動できます。現在のウィンドウの位置は `Window::GetPos()` で取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << Window::GetPos();
+
+		if (SimpleGUI::Button(U"(0, 0)", Vec2{ 200, 20 }))
+		{
+			Window::SetPos(0, 0);
+		}
+
+		if (SimpleGUI::Button(U"(200, 200)", Vec2{ 300, 20 }))
+		{
+			Window::SetPos(200, 200);
+		}
+	}
+}
 ```
 
 
-## 15.12 ウィンドウを最大化する
+## 15.12 ウィンドウを最小化 / 最大化する
+プログラムによってウィンドウを最小化するには `Window::Minimize()` を、最大化するには `Window::Maximize()` を呼びます。ウィンドウを最大化するにはウィンドウスタイルが `WindowStyle::Sizable` である必要があります。ウィンドウを以前のサイズに戻すときは `Window::Restore()` を使います。
+
+ウィンドウが最小化されているかは `Window::GetState().minimized` で、最大化されているかは `Window::GetState().maximized` で取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// ウィンドウの最大化を可能にする
+	Window::SetStyle(WindowStyle::Sizable);
+
+	// 最小化中にカウントする変数
+	int32 count = 0;
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"virtualSize: " << Window::GetState().virtualSize;
+		Print << U"scene size: " << Scene::Size();
+		Print << U"minimized: " << count;
+		Print << U"maximized: " << Window::GetState().maximized;
+
+		if (Window::GetState().minimized)
+		{
+			++count;
+		}
+
+		// 100px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if ((x + y) % 2)
+				{
+					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+				}
+			}
+		}
+
+		if (SimpleGUI::Button(U"Minimize", Vec2{ 300, 20 }))
+		{
+			Window::Minimize();
+		}
+
+		if (SimpleGUI::Button(U"Maximize", Vec2{ 300, 60 }))
+		{
+			Window::Maximize();
+		}
+
+		if (SimpleGUI::Button(U"Restore", Vec2{ 300, 100 }))
+		{
+			Window::Restore();
+		}
+	}
+}
 ```
 
 
