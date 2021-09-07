@@ -12,13 +12,13 @@ Siv3D では、図形やテクスチャ、テキストなどを `.draw()` する
 ## 15.1 三つのサイズ
 Siv3D プログラムにおける画面表示を理解するには、3 つのサイズを知る必要があります。
 
-#### ① シーンサイズ
+#### ① シーンのサイズ
 `.draw()` などの描画や `Cursor::Pos()` などのマウスカーソル座標のプログラムの基準になる、独立した 1 つのシーンのサイズです。`Scene::Size()` で取得できます。デフォルトでは後述する仮想ウィンドウサイズと一致します。
 
 #### ② 仮想ウィンドウサイズ
 ユーザのデスクトップ上における、ウィンドウのクライアント領域の見かけのサイズです。`Window::GetState().virtualSize` で取得できます。仮想ウィンドウサイズに OS 設定の拡大縮小倍率 (150%, 200% など) をかけたものが、後述する実ウィンドウサイズになります。
 
-※ Linux 版では、OS 設定の拡大縮小倍率には未対応で、仮想ウィンドウサイズとフレームバッファサイズが一致します（OpenSiv3D v0.6.0 現在）
+※ Linux 版では、OS 設定の拡大縮小倍率には未対応で、仮想ウィンドウサイズと実ウィンドウサイズが一致します（OpenSiv3D v0.6.0 現在）
 
 #### ③ 実ウィンドウサイズ（フレームバッファサイズ）
 モニタ上のピクセル数で計測したウィンドウのクライアント領域（タイトルやバーやフレームを除く、描画が行われる領域）のサイズです。`Window::GetState().frameBufferSize` で取得できます。
@@ -42,7 +42,7 @@ void Main()
 #### 3 つのサイズのデフォルト値
 次のように Siv3D が OS 設定の拡大縮小倍率の差を吸収することで、プログラマは 800x600 のシーンにグラフィックスを描くことに専念できます。
 
-| OS 設定の拡大縮小倍率 | シーンサイズ | 仮想ウィンドウサイズ | 実ウィンドウサイズ |
+| OS 設定の拡大縮小倍率 | シーンのサイズ | 仮想ウィンドウサイズ | 実ウィンドウサイズ |
 |--|--|--|--|
 | 100% | 800x600 | 800x600 | 800x600 |
 | 125% | 800x600 | 800x600 | 1000x750 |
@@ -56,7 +56,7 @@ void Main()
 |リサイズモード|説明|
 |--|--|
 |`ResizeMode::Virtual` | 仮想ウィンドウサイズに合わせてシーンのサイズを変更します（デフォルト） |
-|`ResizeMode::Actual` | フレームバッファサイズに合わせてシーンのサイズを変更します |
+|`ResizeMode::Actual` | 実ウィンドウサイズに合わせてシーンのサイズを変更します |
 |`ResizeMode::Keep` | シーンのサイズを変更しません |
 
 リサイズモードは `Scene::SetResizeMode(ResizeMode)` で設定します。現在のリサイズモードは `Scene::GetResizeMode()` で取得できます。
@@ -82,9 +82,9 @@ void Main()
 		Print << U"scene size: " << Scene::Size();
 
 		// 100px サイズの市松模様
-		for (int32 y = 0; y < 20; ++y)
+		for (int32 y = 0; y < 50; ++y)
 		{
-			for (int32 x = 0; x < 20; ++x)
+			for (int32 x = 0; x < 50; ++x)
 			{
 				if ((x + y) % 2)
 				{
@@ -96,7 +96,7 @@ void Main()
 }
 ```
 
-リサイズモード `ResizeMode::Keep` が適用されている場合、`Window::Resize()` シーンのサイズは変化しません。シーンとフレームバッファのアスペクト比が異なる場合、左右もしくは上下に**レターボックス**と呼ばれる余白領域が生じます。
+リサイズモード `ResizeMode::Keep` が適用されている場合、`Window::Resize()` シーンのサイズは変化しません。シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、左右もしくは上下に**レターボックス**と呼ばれる余白領域が生じます。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -114,9 +114,9 @@ void Main()
 		Print << U"scene size: " << Scene::Size();
 
 		// 100px サイズの市松模様
-		for (int32 y = 0; y < 20; ++y)
+		for (int32 y = 0; y < 50; ++y)
 		{
-			for (int32 x = 0; x < 20; ++x)
+			for (int32 x = 0; x < 50; ++x)
 			{
 				if ((x + y) % 2)
 				{
@@ -129,10 +129,73 @@ void Main()
 ```
 
 ## 15.4 ウィンドウを手動でリサイズできるようにする
+`Window::SetStyle(WindowStyle::Sizable)` を設定すると、ウィンドウをつかんでリサイズできるようになります。ユーザによって仮想ウィンドウサイズ / 実ウィンドウサイズが変更されると、リサイズモードに応じてシーンのサイズも変更されます。
+
+デフォルトのリサイズモード `ResizeMode::Virtual` が適用されている場合、仮想ウィンドウサイズが新しいシーンのサイズになります。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::SetStyle(WindowStyle::Sizable);
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"virtualSize: " << Window::GetState().virtualSize;
+		Print << U"scene size: " << Scene::Size();
+
+		// 100px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if ((x + y) % 2)
+				{
+					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+				}
+			}
+		}
+	}
+}
 ```
+
+リサイズモード `ResizeMode::Keep` が適用されている場合、ウィンドウを手動でリサイズしてもシーンのサイズは変化しません。シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、左右もしくは上下にレターボックスが生じます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetResizeMode(ResizeMode::Keep);
+	Window::SetStyle(WindowStyle::Sizable);
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"virtualSize: " << Window::GetState().virtualSize;
+		Print << U"scene size: " << Scene::Size();
+
+		// 100px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if ((x + y) % 2)
+				{
+					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+				}
+			}
+		}
+	}
+}
+```
+
+
+
 
 
 ## 15.5 レターボックスの色を変更する
@@ -149,7 +212,7 @@ void Main()
 ```
 
 
-## 15.7 シーンがフレームバッファに送られる際のフィルタを変更する
+## 15.7 シーンが実ウィンドウに送られる際のフィルタを変更する
 
 ```cpp
 
