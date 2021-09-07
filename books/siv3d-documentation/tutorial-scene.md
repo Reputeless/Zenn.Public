@@ -51,9 +51,11 @@ void Main()
 | 150% | 800x600 | 800x600 | 1200x900 |
 | 200% | 800x600 | 800x600 | 1600x1200 |
 
+シーンサイズと実ウィンドウサイズが異なる場合、シーン画像はウィンドウ上でアスペクト比を保ったままクライアント領域にフィットするよう適切に拡大または縮小されて表示されます。
+
 
 ## 15.2 シーンのリサイズモード
-ユーザがウィンドウをマウスでリサイズしたり、ウィンドウをリサイズする関数を呼んだりすると、仮想ウィンドウサイズおよび実ウィンドウサイズが変化します。これらのウィンドウサイズに応じてシーンの新しいサイズを決定するのが、シーンの**リサイズモード**です。リサイズモードは次の 3 種類があります。
+ユーザがウィンドウをマウスでリサイズしたり、ウィンドウをリサイズする関数を呼んだりすると、仮想ウィンドウサイズおよび実ウィンドウサイズが変化します。そして、これらのウィンドウサイズに応じてシーンのサイズも更新されます。その際の挙動を指示するのが、シーンの**リサイズモード**です。リサイズモードは次の 3 種類があります。
 
 |リサイズモード|説明|
 |--|--|
@@ -130,6 +132,7 @@ void Main()
 }
 ```
 
+
 ## 15.4 ウィンドウを手動でリサイズできるようにする
 `Window::SetStyle(WindowStyle::Sizable)` を設定すると、ウィンドウをつかんでリサイズできるようになります。ユーザの操作によって仮想ウィンドウサイズ / 実ウィンドウサイズが変更されたとき、リサイズモードに応じてシーンのサイズも更新されます。
 
@@ -198,37 +201,155 @@ void Main()
 
 
 ## 15.5 レターボックスの色を変更する
+シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、クライアント領域の左右もしくは上下に生じる余白領域をレターボックスと言います。レターボックスの色を変更するには `Scene::SetLetterbox()` で色を指定します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// レターボックスの色を変更
+	Scene::SetLetterbox(ColorF{ 0.8, 0.9, 1.0 });
+
+	Scene::SetResizeMode(ResizeMode::Keep);
+	Window::SetStyle(WindowStyle::Sizable);
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"virtualSize: " << Window::GetState().virtualSize;
+		Print << U"scene size: " << Scene::Size();
+
+		// 100px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if ((x + y) % 2)
+				{
+					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+				}
+			}
+		}
+	}
+}
 ```
 
 
-## 15.6 シーンのサイズだけを変更する
+## 15.6 シーンサイズだけを変更する
+リサイズモードを `ResizeMode::Keep` にした状態で、`Scene::Resize()` を使うと、ウィンドウサイズはそのままにシーンサイズだけを変更できます。
+
+シーンと実ウィンドウサイズが異なるときは、`Cursor::Pos()` の代わりに `Cursor::PosF()` を使うと、シーンの拡大縮小に合わせた `Vec2` 型のマウスカーソル座標を取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetResizeMode(ResizeMode::Keep);
+
+	// シーンを 1600x1200 にリサイズ
+	Scene::Resize(1600, 1200);
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"virtualSize: " << Window::GetState().virtualSize;
+		Print << U"scene size: " << Scene::Size();
+
+		// マウスカーソルの座標を Vec2 型で取得
+		Print << Cursor::PosF();
+
+		// 100px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if ((x + y) % 2)
+				{
+					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+				}
+			}
+		}
+	}
+}
 ```
 
 
-## 15.7 シーンが実ウィンドウに送られる際のフィルタを変更する
+## 15.7 シーンが実ウィンドウに転送される際のフィルタを変更する
+シーンサイズと実ウィンドウサイズが異なる場合、シーン画像はウィンドウ上でアスペクト比を保ったままクライアント領域にフィットするよう適切に拡大または縮小されて表示されますが、拡大縮小時に用いるテクスチャフィルタは 2 種類存在し、`Scene::SetTextureFilter()` で変更できます。
+
+低解像度のシーンを `TextureFilter::Nearest` フィルタで拡大すると、なめらかにフィルタリングされずにドット感を保ったまま拡大できます。
+
+| テクスチャフィルタ | 説明 |
+|--|--|
+|`TextureFilter::Linear`| 画像をバイリニア補間します（デフォルト） |
+|`TextureFilter::Nearest`| 画像を最近傍法で補間します |
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetResizeMode(ResizeMode::Keep);
+	Scene::Resize(200, 150);
+
+	// 拡大縮小時に最近傍法で補間
+	Scene::SetTextureFilter(TextureFilter::Nearest);
+
+	const Texture texture{ U"🐈"_emoji };
+
+	while (System::Update())
+	{
+		Circle{ 120, 75, 50 }.draw();
+
+		texture.draw();
+	}
+}
 ```
 
 
 ## 15.8 ウィンドウの枠を消す
+ウィンドウの枠を非表示にするには、`Window::SetStyle()` で `WindowStyle::Frameless` を設定します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// ウィンドウの枠を非表示にする
+	Window::SetStyle(WindowStyle::Frameless);
+
+	while (System::Update())
+	{
+		Circle{ Cursor::Pos(), 100 }.draw();
+	}
+}
 ```
 
 
 ## 15.9 ウィンドウのタイトルを変更する
+ウィンドウのタイトルを変更するには、`Window::SetTitle()` に文字列や値を渡します。デバッグビルド時には、タイトルのほかに、"(Debug Build)" という文字列と、フレームレート、ウィンドウのサイズ、シーンのサイズが合わせて表示されます。
+
+:::message
+ウィンドウタイトルの変更は時間のかかる処理なので、毎フレーム `Window::SetTitle()` に異なる文字列を設定することは避けてください。既に設定されているタイトルと同じタイトルを設定した場合には何もしないので、コストは発生しません。
+:::
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// ウィンドウのタイトルを変更する
+	Window::SetTitle(U"My Game");
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
