@@ -288,6 +288,7 @@ void Main()
 |`TextureFilter::Linear`| 画像をバイリニア補間します（デフォルト） |
 |`TextureFilter::Nearest`| 画像を最近傍法で補間します |
 
+![](/images/doc_v6/tutorial/15/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
