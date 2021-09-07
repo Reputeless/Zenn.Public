@@ -461,15 +461,114 @@ void Main()
 
 
 ## 15.13 モニタの情報を得る
+接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使うと、`Array<Monitor>` 型で得られます。
+
+`Monitor` 型のメンバ変数は次の通りです。
+
+| 変数 | 説明 |
+|--|--|
+| `String name` | ディスプレイの名前 |
+| `String id` | ディスプレイ ID |
+| `String displayDeviceName` | 内部的に使われているディスプレイの名前 |
+| `Rect displayRect` | ディスプレイ全体の位置とサイズ |
+| `Rect workArea` | タスクバーなどを除いた利用可能な領域の位置とサイズ |
+| `Size fullscreenResolution` | フルスクリーン時の解像度 |
+| `bool isPrimary` | メインディスプレイであるか |
+| `Optional<Size> sizeMillimeter` | 物理的なサイズ (mm), 取得できなかった場合は `none` |
+| `Optional<double> scaling` | UI の拡大倍率。取得できなかった場合は `none` |
+| `Optional<double> refreshRate` | リフレッシュレート。取得できなかった場合は `none` |
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Array<Monitor> monitors = System::EnumerateMonitors();
+
+	for (const auto& monitor : monitors)
+	{
+		Print << U"name: " << monitor.name;
+		Print << U"displayRect: " << monitor.displayRect << U" workArea: " << monitor.workArea;
+		Print << U"fullscreenResolution: " << monitor.fullscreenResolution << U" sizeMillimeter: " << monitor.sizeMillimeter;
+		Print << U"scaling: " << monitor.scaling << U" refreshRate: " << monitor.refreshRate;
+		Print << U"isPrimary: " << monitor.isPrimary;
+		Print << U"-----";
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
+現在ウィンドウが存在するモニタのインデックスをを取得するには `System::GetCurrentMonitorIndex()` を使います。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << System::GetCurrentMonitorIndex();
+	}
+}
+```
 
 ## 15.14 フルスクリーンにする
+アプリケーションをフルスクリーンモードにするには `Window::SetFullscreen(true)` を呼びます。ウィンドウモードに戻すには `Window::SetFullscreen(false)` を呼びます。
+
+`Window::SetFullscreen(true)` の第 2 引数には、フルスクリーン表示する先のモニタのインデックスを指定できます。
+
+アプリケーションがフルスクリーンモードであるかは `Window::GetState().fullscreen` で取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"virtualSize: " << Window::GetState().virtualSize;
+		Print << U"scene size: " << Scene::Size();
+		Print << U"fullscreen: " << Window::GetState().fullscreen;
+
+		// 100px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if ((x + y) % 2)
+				{
+					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+				}
+			}
+		}
+
+		if (Window::GetState().fullscreen)
+		{
+			if (SimpleGUI::Button(U"Window mode", Vec2{ 300, 20 }))
+			{
+				Window::SetFullscreen(false);
+			}
+		}
+		else
+		{
+			if (SimpleGUI::Button(U"Fullscreen mode", Vec2{ 300, 20 }))
+			{
+				Window::SetFullscreen(true);
+			}
+		}
+	}
+}
 
 ```
+
+
+## 15.15 (Windows 版) 全画面モードにする
+Windows 版では、アプリケーションの実行中に Alt + Enter キーを押すことで全画面モードにできます。挙動としてはフルスクリーンモードですが、シーンのリサイズモードが `Resize::Keep` に設定され、シーンサイズが変化しません。フルスクリーンモードや解像度の変更を意識せずに開発したアプリケーションを全画面で大きく表示したい場合に役立ちます。
 
