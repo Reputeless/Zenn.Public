@@ -32,9 +32,9 @@ free: true
 
 | 関数 | 押していないとき | 押した瞬間 | 押され続けている | 離した瞬間 | 離され続けている |
 |:--:|:--:|:--:|:--:|:--:|:--:|
-| `.down()` | | ✔ | | | |
-| `.pressed()` | | ✔ | ✔ | | |
-| `.released()` | | | | ✔ | |
+| `.down()` | false | **✔ true** | false | false | false |
+| `.pressed()` | false | **✔ true** | **✔ true** | false | false |
+| `.released()` | false | false | false | **✔ true** | false |
 
 ```cpp
 # include <Siv3D.hpp>
