@@ -1,5 +1,5 @@
 ---
-title: "Siv3D SDK を自前ビルドする方法"
+title: "Siv3D SDK を自前ビルドする手順"
 free: true
 ---
 
