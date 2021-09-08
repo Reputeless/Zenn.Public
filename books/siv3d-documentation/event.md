@@ -1,5 +1,5 @@
 ---
-title: "イベント"
+title: "イベントに参加する"
 free: true
 ---
 

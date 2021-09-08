@@ -1,5 +1,5 @@
 ---
-title: "マスコット"
+title: "マスコットキャラクター (Siv3D くん)"
 free: true
 ---
 

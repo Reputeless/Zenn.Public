@@ -1,5 +1,5 @@
 ---
-title: "スポンサー"
+title: "スポンサーになる"
 free: true
 ---
 
