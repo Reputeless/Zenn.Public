@@ -81,18 +81,49 @@ void Main()
 
 
 ## 16.2 キーが押されていた時間
+`Input` の `.pressedDuration()` は、そのキーが押され続けている時間を `Duration` 型の値で返します。
+
+押され続けている時間は `.up()` が `true` になるフレームまで有効です。`.up()` されたときに `.pressedDuration()` を調べると、そのキーが離されるまで何秒間押され続けていたかを取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << KeyA.pressedDuration();
+
+		if (1s <= KeySpace.pressedDuration())
+		{
+			Print << U"Space";
+		}
+	}
+}
 ```
 
 
 ## 16.3 キーの名前
+`Input` の `.name()` は、そのキーの名前を `String` 型の値で返します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Print << KeyA.name();
+	Print << KeySpace.name();
+	Print << KeyLeft.name();
+	Print << Key3.name();
+	Print << KeyF11.name();
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
-
 
 
 ## 16.4 すべてのキー入力の取得
@@ -100,7 +131,6 @@ void Main()
 ```cpp
 
 ```
-
 
 
 ## 16.5 複数のキーの組み合わせ
@@ -113,6 +143,9 @@ void Main()
 
 ### 16.5.2 A を押しながら B
 
+```cpp
+
+```
 
 
 ## 16.6 キーコンフィグ
