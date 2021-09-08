@@ -3,8 +3,6 @@ title: "Siv3D の開発に参加する"
 free: true
 ---
 
-# Siv3D の開発に参加する
-
 ## 1. バグや不具合を報告する
 
 OpenSiv3D の [GitHub Issues](https://github.com/Siv3D/OpenSiv3D/issues) に、不具合の説明と再現のためのコード、必要に応じてスクリーンショットを投稿してください。
