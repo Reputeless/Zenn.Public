@@ -57,6 +57,8 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 次を参考に必要なパッケージをインストールします。  
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
+Boost ライブラリについては 1.71.0 / 1.72.0 / 1.73.0 のみサポートしています。それより新しいバージョンではビルドエラーが発生します（将来サポート予定）。
+
 ## 3.3 OpenSiv3D ライブラリをビルドする
 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します。 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60

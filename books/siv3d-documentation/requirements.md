@@ -34,7 +34,7 @@ OpenSiv3D v0.6 でプログラミングをするには、プラットフォー�
 | OS | Ubuntu 20.04 LTS |
 | CPU | Intel もしくは AMD 製の CPU |
 | GPU | OpenGL 4.1 サポート |
-| 開発環境 | GCC 9.3.0 |
+| 開発環境 | GCC 9.3.0<br>Boost 1.71.0 - 1.73.0 |
 
 ## 1.4 Web
 Web 版は現在試験的な実装が提供されています。  
