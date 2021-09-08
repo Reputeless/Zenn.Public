@@ -33,6 +33,7 @@ void Main()
 
 `Cursor::Delta() == (Cursor::Pos() - Cursor::PreviousPos())` です。
 
+![](/images/doc_v6/tutorial/17/2.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -178,6 +179,7 @@ void Main()
 
 マウスホイールのスクロール量はフレームレートに依存しないため、`Scene::Delta()` で調整する必要はありません。
 
+![](/images/doc_v6/tutorial/17/7.gif)
 ```cpp
 # include <Siv3D.hpp>
 
