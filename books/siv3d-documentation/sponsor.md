@@ -1,5 +1,5 @@
 ---
-title: "スポンサーになる"
+title: "Siv3D のスポンサーになる"
 free: true
 ---
 

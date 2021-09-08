@@ -1,5 +1,5 @@
 ---
-title: "イベントに参加する"
+title: "Siv3D のイベントに参加する"
 free: true
 ---
 
