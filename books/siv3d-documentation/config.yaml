@@ -25,7 +25,7 @@ chapters:
   - tutorial-font
   - tutorial-scene
   - tutorial-keyboard
- # - tutorial-mouse
+  - tutorial-mouse
  # - tutorial-audio
  # - tutorial-asset
  # - tutorial-renderstates2d

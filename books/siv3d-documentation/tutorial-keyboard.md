@@ -153,27 +153,158 @@ void Main()
 ## 16.5 複数のキーの組み合わせ
 
 ### 16.5.1 A または B
+`|` を使って複数のキーを組み合わせると、そのいずれかが押されているかどうかを判定できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// [スペース] または [エンター] が押されている
+		if ((KeySpace | KeyEnter).pressed())
+		{
+			Print << U"KeySpace / KeyEnter";
+		}
+	}
+}
 ```
 
 ### 16.5.2 A を押しながら B
+`+` を使って 2 つのキーを組み合わせると、左のキーが押されながら、右のキーが押されたかどうかを判定できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	while (System::Update())
+	{
+		// [Ctrl + C] または [Command + C] が押された
+		if ((KeyControl + KeyC).down()
+			|| (KeyCommand + KeyC).down())
+		{
+			Print << U"Ctrl + C / Command + C";
+		}
+	}
+}
 ```
 
 
 ## 16.6 キーコンフィグ
+`InputGroup` 型は `Input` や、`Input` の `|`, `+` による組み合わせを格納できます。これを応用することで、次のようなキーコンフィグを簡単に実現できます。 
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	InputGroup inputLeft = KeyLeft;
+	InputGroup inputRight = KeyRight;
+	InputGroup inputJump = KeySpace;
+	size_t index = 0;
+
+	const Array<String> options
+	{
+		U"[←] [→] [Space]",
+		U"[A] [D] [W]",
+		U"[←]/[A] [→][D] [Space]/[W]"
+	};
+
+	const Texture texture{ U"🐥"_emoji };
+	Vec2 pos{ 400, 450 };
+	double jumpY = 0.0;
+
+	while (System::Update())
+	{
+		// 🐥 の移動
+		{
+			const double deltaTime = Scene::DeltaTime();
+
+			if (inputLeft.pressed())
+			{
+				pos.x -= (deltaTime * 200);
+			}
+
+			if (inputRight.pressed())
+			{
+				pos.x += (deltaTime * 200);
+			}
+
+			if (inputJump.down())
+			{
+				jumpY = 500.0;
+			}
+
+			pos.y = Min(pos.y - deltaTime * jumpY, 450.0);
+			jumpY = Max(jumpY - deltaTime * 1000.0, -1000.0);
+		}
+
+		// 背景と 🐥 の描画
+		{
+			Rect{ 800, 500 }
+			.draw(Arg::top = ColorF{ 0.1, 0.4, 0.8 }, Arg::bottom = ColorF{ 0.4, 0.7, 1.0 });
+			Rect{ 0, 500, 800, 100 }
+			.draw(ColorF{ 0.2, 0.5, 0.3 });
+
+			texture.drawAt(pos);
+		}
+
+		// キーコンフィグ
+		if (SimpleGUI::RadioButtons(index, options, Vec2{ 20, 20 }))
+		{
+			if (index == 0)
+			{
+				inputLeft = KeyLeft;
+				inputRight = KeyRight;
+				inputJump = KeySpace;
+			}
+			else if (index == 1)
+			{
+				inputLeft = KeyA;
+				inputRight = KeyD;
+				inputJump = KeyW;
+			}
+			else
+			{
+				inputLeft = (KeyLeft | KeyA);
+				inputRight = (KeyRight | KeyD);
+				inputJump = (KeySpace | KeyW);
+			}
+		}
+	}
+}
 ```
 
 
 ## 16.7 テキスト入力
+`TextInput::UpdateText()` に `String` 型の変数を渡すことで、テキスト入力を処理できます。`TextInput::GetEditingText()` は未変換の文字入力を取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font{ 30 };
+
+	String text;
+
+	constexpr Rect area{ 50, 50, 700, 300 };
+
+	while (System::Update())
+	{
+		// キーボードからテキストを入力
+		TextInput::UpdateText(text);
+
+		// 未変換の文字入力を取得
+		const String editingText = TextInput::GetEditingText();
+
+		area.draw(ColorF{ 0.3 });
+
+		font(text + U'|' + editingText).draw(area.stretched(-20));
+	}
+}
 ```
