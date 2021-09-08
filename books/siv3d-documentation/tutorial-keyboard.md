@@ -81,7 +81,7 @@ void Main()
 
 
 ## 16.2 キーが押されていた時間を調べる
-`Input` の `.pressedDuration()` は、そのキーが押され続けている時間を `Duration` 型の値で返します。
+`Input` の `.pressedDuration()` は、その入力が押され続けている時間を `Duration` 型の値で返します。
 
 押され続けている時間は `.up()` が `true` になるフレームまで有効です。`.up()` されたときに `.pressedDuration()` を調べると、そのキーが離されるまで何秒間押され続けていたかを取得できます。
 
