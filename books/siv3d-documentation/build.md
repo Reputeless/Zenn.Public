@@ -39,6 +39,8 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 
 「Siv3D-Test」プロジェクトをビルドします。初回のビルドでは必要なライブラリファイルが存在しないため、先に自動的に OpenSiv3D のライブラリ本体のプロジェクト「Siv3D」のビルドが始まります。ライブラリのビルドには数分かかります。
 
+Windows 版の OpenSiv3D ライブラリビルドで `error C2039: '​CheckForDuplicateEntries': is not a member of 'Microsoft::WRL::Details'` というエラーが出た場合、Visual Studio Installer を使って新しい Windows 10 SDK (バージョン 10.0.18362.0 以降) をインストールすることで解決します。
+
 # 2. macOS の場合
 
 ## 2.1 追加のサードパーティ・ライブラリをダウンロードする
