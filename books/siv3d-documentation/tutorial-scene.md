@@ -368,6 +368,7 @@ void Main()
 	{
 		if (SimpleGUI::Button(U"Center", Vec2{ 20, 20 }))
 		{
+			// ウィンドウを中心に移動
 			Window::Centering();
 		}
 	}
@@ -386,15 +387,19 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
+
+		// スクリーン上のウィンドウの位置を表示
 		Print << Window::GetPos();
 
 		if (SimpleGUI::Button(U"(0, 0)", Vec2{ 200, 20 }))
 		{
+			// ウィンドウをスクリーンの (0, 0) に移動
 			Window::SetPos(0, 0);
 		}
 
 		if (SimpleGUI::Button(U"(200, 200)", Vec2{ 300, 20 }))
 		{
+			// ウィンドウをスクリーンの (200, 200) に移動
 			Window::SetPos(200, 200);
 		}
 	}
@@ -446,16 +451,19 @@ void Main()
 
 		if (SimpleGUI::Button(U"Minimize", Vec2{ 300, 20 }))
 		{
+			// ウィンドウを最小化
 			Window::Minimize();
 		}
 
 		if (SimpleGUI::Button(U"Maximize", Vec2{ 300, 60 }))
 		{
+			// ウィンドウを最大化
 			Window::Maximize();
 		}
 
 		if (SimpleGUI::Button(U"Restore", Vec2{ 300, 100 }))
 		{
+			// 最小化 / 最大化されたウィンドウを元のサイズに戻す
 			Window::Restore();
 		}
 	}
@@ -486,6 +494,7 @@ void Main()
 
 void Main()
 {
+	// 接続されているモニタの情報一覧を取得
 	const Array<Monitor> monitors = System::EnumerateMonitors();
 
 	for (const auto& monitor : monitors)
@@ -554,6 +563,7 @@ void Main()
 		{
 			if (SimpleGUI::Button(U"Window mode", Vec2{ 300, 20 }))
 			{
+				// ウィンドウモードにする
 				Window::SetFullscreen(false);
 			}
 		}
@@ -561,6 +571,7 @@ void Main()
 		{
 			if (SimpleGUI::Button(U"Fullscreen mode", Vec2{ 300, 20 }))
 			{
+				// フルスクリーンモードにする
 				Window::SetFullscreen(true);
 			}
 		}
