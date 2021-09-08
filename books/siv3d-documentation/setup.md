@@ -1,5 +1,5 @@
 ---
-title: "開発の準備"
+title: "開発の準備（SDK のインストール）"
 free: true
 ---
 
@@ -46,6 +46,8 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 > Xcode 用のプロジェクトジェネレータは将来提供される予定です。
 
 # 3. Linux で Siv3D を始める
+
+Linux 版は SDK 形式での配布が無いため。コードを自前でビルドするところから始めます。
 
 ## 3.1 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手する
 
