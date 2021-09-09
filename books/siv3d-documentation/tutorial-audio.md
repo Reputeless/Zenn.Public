@@ -55,10 +55,11 @@ Siv3D では、WAVE, MP3, OggVorbis, FLAC 形式の音声ファイルのスト�
 `Audio` でストリーミング再生を有効にするには、`Audio` のコンストラクタに `Audio::Stream` を渡してストリーミング再生をリクエストします。もし `Audio::Stream` を指定したファイルがストリーミング再生をサポートしていなかった場合は、自動的に通常の読み込みが行われます。ある `Audio` でストリーミング再生が有効になっているかは、`.isStreaming()` で調べられます。
 
 ストリーミング再生では
-- オーディオ全体の音声波形にアクセスできない
-- FFT のサンプル数が少なくなる
+- 区間ループ再生において、ループ末尾位置をオーディオ終端以外に設定できない
+- （音声波形処理）オーディオ全体の音声波形にアクセスできない
+- （音声波形処理）FFT のサンプル数が少なくなる
 
-といった、音声波形処理を行う上での一部制約が生じますが、通常のオーディオ再生用途では問題になりません。
+といった一部制約が生じますが、通常のオーディオ再生用途では問題になりません。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -359,23 +360,117 @@ void Main()
 
 
 ## 19.10 再生位置を変更する
+再生位置を変更するには、`.seekSamples()` で移動先の位置をサンプル単位で指定するか、`.seekTime()` で移動先の位置を時間（秒）で指定します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 曲全体
+		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
+
+		// 再生位置
+		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
+
+		if (SimpleGUI::Button(U"0 samples", Vec2{ 300, 20 }))
+		{
+			// 0 サンプル目（曲の先頭）に移動
+			audio.seekSamples(0);
+		}
+
+		if (SimpleGUI::Button(U"441,000 samples", Vec2{ 300, 60 }))
+		{
+			// 441,000 サンプル目に移動
+			audio.seekSamples(441000);
+		}
+
+		if (SimpleGUI::Button(U"20.0 sec", Vec2{ 300, 100 }))
+		{
+			// 20 秒の位置に移動
+			audio.seekTime(20.0);
+		}
+	}
+}
 ```
 
 
 ## 19.11 ループ再生する
+曲の再生が終端に到達したとき、自動的に先頭からループ再生させたい場合は、`Audio` のコンストラクタに `Loop::Yes` を指定します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3", Loop::Yes };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// ループが設定されているか
+		Print << audio.isLoop();
+
+		// ループ回数
+		Print << audio.loopCount();
+
+		// 曲全体
+		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
+
+		// 再生位置
+		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
+	}
+}
 ```
 
 
-## 19.12 範囲を指定してループ再生する
+## 19.12 区間を指定してループ再生する
+オーディオの再生が指定したループ終端位置に到達したとき、指定したループ先頭位置に戻って区間ループ再生させるには、ループ区間の先頭位置を `Arg::loopBegin`, 終端位置を `Arg::loopEnd` で指定します。位置の指定方法はサンプル数か時間かを選べますが、begin と end で揃える必要があります。
+
+`Arg::loopEnd` を指定するとそれ以降のオーディオデータは保持せず、メモリの消費量が節約されます。
+
+ストリーミング再生では、`Arg::loopEnd` を指定できない制約があります。必要な場合は音声データをあらかじめカットします。
+
+ループの末尾と先頭の波形にずれがあると、ループの瞬間にノイズ音が生じます。サンプル単位でタイミングを調整する必要があります。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// 1.5 秒～44.5 秒の区間をループ
+	const Audio audio{ U"example/test.mp3", Arg::loopBegin = 1.5s, Arg::loopEnd = 44.5s };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// ループが設定されているか
+		Print << audio.isLoop();
+
+		// ループ回数
+		Print << audio.loopCount();
+
+		// 曲全体
+		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
+
+		// 再生位置
+		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
+	}
+}
 ```
 
 
