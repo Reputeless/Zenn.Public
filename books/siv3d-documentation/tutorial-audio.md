@@ -475,13 +475,51 @@ void Main()
 
 
 ## 19.13 楽器の音を生成する
+楽器の種類と音の高さ、長さを指定して、プログラムで楽器の音を生成し、そこから `Audio` を作成できます。`Audio` のコンストラクタに `GMInstrument` で列挙される楽器名、`PianoKey` で列挙される音の高さ、音の長さを渡します。
+
+音の長さは
+- ノート・オン（鳴らす）時間
+- ノート・オン時間とノート・オフ（鳴らし終える）時間
+
+の 2 通りの設定の仕方があります。前者では 1.0 秒のノート・オフ時間が設定されます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// ピアノの C4 (ド) の音。
+	const Audio piano{ GMInstrument::Piano1, PianoKey::C4, 0.5s };
+
+	// クラリネットの D4 (レ) の音
+	const Audio clarinet{ GMInstrument::Clarinet, PianoKey::D4, 0.5s };
+
+	// トランペットの E4 (ミ) の音。ノート・オン 2.0 秒、ノート・オフ 0.5 秒
+	const Audio trumpet{ GMInstrument::Trumpet, PianoKey::E4, 2.0s, 0.5s };
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Piano", Vec2{ 20, 20 }))
+		{
+			piano.play();
+		}
+
+		if (SimpleGUI::Button(U"Clarinet", Vec2{ 20, 60 }))
+		{
+			clarinet.play();
+		}
+
+		if (SimpleGUI::Button(U"Trumpet", Vec2{ 20, 100 }))
+		{
+			trumpet.play();
+		}
+	}
+}
 ```
 
 
 ## 19.14 同じオーディオを重ねて再生する
+1 つの `Audio` を重ねて再生したい場合には `.play()` の代わりに `.playOneShot()` を使います。
 
 ```cpp
 
@@ -503,6 +541,8 @@ void Main()
 
 
 ## 19.17 空のオーディオ
+データを持たない空（から）のオーディオは「フワ」という 0.5 秒の音を鳴らします。音声ファイルの読み込みに失敗したときにも空のオーディオが作成されます。  
+オーディオが空であるかは `if (audio.isEmpty())` もしくは `if (not audio)` で調べられます。
 
 ```cpp
 
@@ -510,6 +550,7 @@ void Main()
 
 
 ## 19.18 オーディオの代入
+`Audio` は次のように `=` 演算子を使って代入できます。
 
 ```cpp
 
