@@ -50,7 +50,7 @@ OpenSiv3D v0.6.0 では、次のような音声フォーマットの読み込み
 
 
 ## 19.2 ストリーミング再生
-WAVE, MP3, OggVorbis, FLAC 形式の音声ファイルはストリーミング再生に対応しています。ストリーミング再生とは、最初にファイル内容の全部を読み込むのではなく、一部だけを読み込んでオーディオを再生しながら、続く部分を逐次読み込む方式のことです。メモリの使用量やファイルのロード時間が大幅に改善されます。
+Siv3D では、WAVE, MP3, OggVorbis, FLAC 形式の音声ファイルのストリーミング再生に対応しています。ストリーミング再生とは、最初にファイル内容の全部を読み込むのではなく、一部だけを読み込んでオーディオを再生しながら、続く部分を逐次読み込む方式のことです。ストリーミング再生を使うと、メモリの使用量やファイルのロード時間が大幅に改善されます。
 
 `Audio` でストリーミング再生を有効にするには、`Audio` のコンストラクタに `Audio::Stream` を渡してストリーミング再生をリクエストします。もし `Audio::Stream` を指定したファイルがストリーミング再生をサポートしていなかった場合は、自動的に通常の読み込みが行われます。ある `Audio` でストリーミング再生が有効になっているかは、`.isStreaming()` で調べられます。
 
@@ -68,7 +68,7 @@ void Main()
 	// 音声ファイルを読み込んで Audio を作成（ストリーミング再生をリクエスト）
 	const Audio audio{ Audio::Stream, U"example/test.mp3" };
 
-    // ストリーミング再生になるかを取得
+	// ストリーミング再生になるかを取得
 	Print << audio.isStreaming();
 
 	// オーディオを再生
@@ -83,23 +83,122 @@ void Main()
 
 
 ## 19.3 一時停止と停止
+再生中のオーディオを一時停止するには `.pause()`, 停止して再生位置を最初に戻すには `.stop()` を呼びます。
+
+オーディオが再生中であるかは `.isPlaying()`, 一時停止中であるかは `.isPaused()` で取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 再生されているか
+		Print << U"isPlaying: " << audio.isPlaying();
+
+		// 一時停止中であるか
+		Print << U"isPaused: " << audio.isPaused();
+
+		if (SimpleGUI::Button(U"Play", Vec2{ 200, 20 }))
+		{
+			// 再生・再開
+			audio.play();
+		}
+
+		if (SimpleGUI::Button(U"Pause", Vec2{ 200, 60 }))
+		{
+			// 一時停止
+			audio.pause();
+		}
+
+		if (SimpleGUI::Button(U"Stop", Vec2{ 200, 100 }))
+		{
+			// 停止して再生位置を最初に戻す
+			audio.stop();
+		}
+	}
+}
 ```
 
 
 ## 19.4 音量を変える
+音量を変えるには `.setVolume()` に 0.0～1.0 の値を設定します。デフォルトでは最大の 1.0 です。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	double volume = 1.0;
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 現在の音量を取得
+		Print << audio.getVolume();
+
+		if (SimpleGUI::Slider(U"volume: {:.2f}"_fmt(volume), volume, Vec2{ 200, 20 }, 160, 140))
+		{
+			// 音量を設定
+			audio.setVolume(volume);
+		}
+	}
+}
 ```
 
 
-## 19.5 音量を徐々に変える
+## 19.5 フェードイン・フェードアウト
+`.play()`, `.pause()`, `.stop()` に時間を設定すると、その時間をかけて音量がフェードイン・フェードアウトします。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 再生されているか
+		Print << U"isPlaying: " << audio.isPlaying();
+
+		// 一時停止中であるか
+		Print << U"isPaused: " << audio.isPaused();
+
+		// 現在の音量
+		Print << audio.getVolume();
+
+		if (SimpleGUI::Button(U"Play", Vec2{ 200, 20 }))
+		{
+			// 2 秒かけて再生・再開
+			audio.play(2s);
+		}
+
+		if (SimpleGUI::Button(U"Pause", Vec2{ 200, 60 }))
+		{
+			// 2 秒かけて一時停止
+			audio.pause(2s);
+		}
+
+		if (SimpleGUI::Button(U"Stop", Vec2{ 200, 100 }))
+		{
+			// 2 秒かけて停止して再生位置を最初に戻す
+			audio.stop(2s);
+		}
+	}
+}
 ```
 
 
@@ -110,77 +209,85 @@ void Main()
 ```
 
 
-## 19.7 パンを変える
+
+## 19.7 再生スピードを変える
 
 ```cpp
 
 ```
 
 
-## 19.8 再生位置を取得する
+## 19.8 パンを変える
 
 ```cpp
 
 ```
 
 
-## 19.9 再生位置を変更する
+## 19.9 再生位置を取得する
 
 ```cpp
 
 ```
 
 
-## 19.10 ループ再生する
+## 19.10 再生位置を変更する
 
 ```cpp
 
 ```
 
 
-## 19.11 範囲を指定してループ再生する
+## 19.11 ループ再生する
 
 ```cpp
 
 ```
 
 
-## 19.12 楽器の音を生成する
+## 19.12 範囲を指定してループ再生する
 
 ```cpp
 
 ```
 
 
-## 19.13 同じオーディオを重ねて再生する
+## 19.13 楽器の音を生成する
 
 ```cpp
 
 ```
 
 
-## 19.14 バスとグローバルオーディオの設定
+## 19.14 同じオーディオを重ねて再生する
 
 ```cpp
 
 ```
 
 
-## 19.15 オーディオフィルタ
+## 19.15 バスとグローバルオーディオの設定
 
 ```cpp
 
 ```
 
 
-## 19.16 空のオーディオ
+## 19.16 オーディオフィルタ
 
 ```cpp
 
 ```
 
 
-## 19.17 オーディオの代入
+## 19.17 空のオーディオ
+
+```cpp
+
+```
+
+
+## 19.18 オーディオの代入
 
 ```cpp
 
