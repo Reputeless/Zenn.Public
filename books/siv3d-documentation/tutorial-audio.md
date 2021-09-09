@@ -129,6 +129,8 @@ void Main()
 ## 19.4 音量を変える
 音量を変えるには `.setVolume()` に 0.0～1.0 の値を設定します。デフォルトでは最大の 1.0 です。
 
+現在の音量は `.getVolume()` で取得できます。
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -202,32 +204,157 @@ void Main()
 ```
 
 
-## 19.6 再生スピードを変える
+## 19.6 再生中に音量を徐々に変える
+`.fadeVolume(volume, duration)` を使うと、指定した時間 `duration` だけかけて、音量が徐々に `volume` に変化します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 現在の音量
+		Print << audio.getVolume();
+
+		if (SimpleGUI::Button(U"1.0", Vec2{ 200, 20 }))
+		{
+			// 2 秒かけて音量を 1.0 に
+			audio.fadeVolume(1.0, 2s);
+		}
+
+		if (SimpleGUI::Button(U"0.5", Vec2{ 200, 60 }))
+		{
+			// 1 秒かけて音量を 0.5 に
+			audio.fadeVolume(0.5, 1s);
+		}
+
+		if (SimpleGUI::Button(U"0.1", Vec2{ 200, 100 }))
+		{
+			// 1.5 秒かけて音量を 0.1 に
+			audio.fadeVolume(0.1, 1.5s);
+		}
+	}
+}
 ```
 
 
-
 ## 19.7 再生スピードを変える
+再生スピードを変えるには `.setSpeed(speed)` または `.fadeSpeed(speed, duration)` を使って、再生スピードの倍率を設定します。デフォルトでは 1.0 です。再生スピードが速くなると音は高く聞こえ、遅くなると低く聞こえます。スピードを早くしても音の高低が発生しないようにするには、この章の後半に出てくる「ピッチシフト機能」と組み合わせます。
+
+現在の再生スピードは `.getSpeed()` で取得できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 現在のスピード
+		Print << audio.getSpeed();
+
+		if (SimpleGUI::Button(U"1.2", Vec2{ 200, 20 }))
+		{
+			// 2 秒かけてスピードを 1.2 に
+			audio.fadeSpeed(1.2, 2s);
+		}
+
+		if (SimpleGUI::Button(U"1.0", Vec2{ 200, 60 }))
+		{
+			// 1 秒かけてスピードを 1.0 に
+			audio.fadeSpeed(1.0, 1s);
+		}
+
+		if (SimpleGUI::Button(U"0.8", Vec2{ 200, 100 }))
+		{
+			// 1.5 秒かけてスピードを 0.8 に
+			audio.fadeSpeed(0.8, 1.5s);
+		}
+	}
+}
 ```
 
 
 ## 19.8 パンを変える
+左右の音量バランス（パン）を変えるには `.setPan(pan)` または `.fadePan(pan, duration)` を使って、パンを -1.0～1.0 の範囲で設定します。デフォルトでは 0.0 で、左が負の方向、右が正の方向です。
 
+現在のパンは `.getPan()` で取得できます。
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 現在のパン
+		Print << audio.getPan();
+
+		if (SimpleGUI::Button(U"0.9", Vec2{ 200, 20 }))
+		{
+			// 2 秒かけてパンを 0.9 に
+			audio.fadePan(0.9, 2s);
+		}
+
+		if (SimpleGUI::Button(U"0.0", Vec2{ 200, 60 }))
+		{
+			// 1 秒かけてパンを 0.0 に
+			audio.fadePan(0.0, 1s);
+		}
+
+		if (SimpleGUI::Button(U"-0.9", Vec2{ 200, 100 }))
+		{
+			// 1.5 秒かけてパンを -0.9 に
+			audio.fadePan(-0.9, 1.5s);
+		}
+	}
+}
 ```
 
 
 ## 19.9 再生位置を取得する
+オーディオの合計再生時間（秒）は `.lengthSec()`, 合計再生サンプルは `.samples()` で取得できます。現在の再生位置を `.posSec()` では秒、 `.posSample()` ではサンプル数で取得できます。
+
+音楽のタイミングに合わせた演出や、音楽ゲームの判定などは、この再生位置を基準にします。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 曲全体の長さ
+		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
+
+		// 現在の再生位置
+		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
+	}
+}
 ```
 
 
