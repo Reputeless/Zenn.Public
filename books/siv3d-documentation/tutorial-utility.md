@@ -231,7 +231,20 @@ void Main()
 `Abs(x)` は `x` の絶対値を返します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Print << Abs(123);
+	Print << Abs(-123);
+	Print << Abs(3.45);
+	Print << Abs(-3.45);
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
@@ -239,7 +252,20 @@ void Main()
 `AbsDiff(a, b)` は `a` と `b` の差の絶対値を返します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Print << AbsDiff(50, 10);
+	Print << AbsDiff(10u, 50u);
+	Print << AbsDiff(-2000000000, 2000000000);
+	Print << AbsDiff(1.23, -1.23);
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
@@ -263,7 +289,21 @@ void Main()
 |`char32 ToUpper(char32)`| アルファベットの小文字を大文字にする |
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Print << IsASCII(U'A') << U' ' << IsASCII(U'あ');
+	Print << IsUpper(U'A') << U' ' << IsUpper(U'a');
+	Print << IsAlnum(U'4') << U' ' << IsAlnum(U'#');
+	Print << IsSpace(U' ') << U' ' << IsSpace(U'-');
+	Print << ToLower(U'A') << U' ' << ToLower(U'a');
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
@@ -293,22 +333,64 @@ void Main()
 `PutText(s, Arg::topLeft = pos)` で座標を左上基準にすることもできます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	while (System::Update())
+	{
+		PutText(DateTime::Now().format(), Scene::Center());
+
+		PutText(U"Hello, Siv3D!", Arg::topLeft = Cursor::Pos());
+	}
+}
 ```
 
 
 ## 18.13 データをコンソール出力する
-`Console` に向かって、出力の記号 `<<` で値を送ると、その値がコンソール出力されます。Windows の場合はコマンドプロンプトに出力されます。
+`Console` に向かって、出力の記号 `<<` で値を送ると、その値がコンソール出力されます。Windows の場合はコマンドプロンプトに出力されます。出力データが大量にある場合や、データをクリップボードにコピーしたい際に便利です。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Array<int32> v = { 10,20,30,40,50 };
+
+	Print << v;
+
+	Console << v;
+
+	Console << U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
 ## 18.14 データをログ出力する
-`Logger` に向かって、出力の記号 `<<` で値を送ると、その値がログ出力されます。Windows の場合は Visual Studio の「出力」ウィンドウに出力されます。
+`Logger` に向かって、出力の記号 `<<` で値を送ると、その値がログ出力されます。Windows の場合は Visual Studio の「出力」ウィンドウに出力されます。出力データが大量にある場合に便利です。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Array<int32> v = { 10,20,30,40,50 };
+
+	Print << v;
+
+	Logger << v;
+
+	Logger << U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
