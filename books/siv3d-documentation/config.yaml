@@ -29,7 +29,7 @@ chapters:
   - tutorial-utility
   - tutorial-audio
   - tutorial-asset
- # - tutorial-renderstates2d
+  - tutorial-renderstates2d
  # - tutorial-effect
  # - tutorial-filesystem
  # - tutorial-textfile
