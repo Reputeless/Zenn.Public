@@ -53,6 +53,7 @@ Siv3D は `Texture` や `Font`, `Audio` などのアセットのハンドルに�
 
 ## 20.2 Texture アセットのサンプル
 
+![](/images/doc_v6/tutorial/20/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -79,6 +80,7 @@ void Main()
 
 ## 20.3 Font アセットのサンプル
 
+![](/images/doc_v6/tutorial/20/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -217,6 +219,7 @@ void Main()
 
 登録されているアセットの一覧を取得する `::Enumerate()` と組み合わせることで、特定のタグを持つアセットをロード、リリースするなど、選択的なアセット処理が便利になります。
 
+![](/images/doc_v6/tutorial/20/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
