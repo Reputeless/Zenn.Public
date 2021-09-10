@@ -28,7 +28,7 @@ chapters:
   - tutorial-mouse
   - tutorial-utility
   - tutorial-audio
- # - tutorial-asset
+  - tutorial-asset
  # - tutorial-renderstates2d
  # - tutorial-effect
  # - tutorial-filesystem
