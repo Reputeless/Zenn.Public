@@ -175,17 +175,59 @@ void Main()
 ```
 
 
-## 21.6
+## 21.6 テクスチャをくり返して描画
+`ScopedRenderStates2D` オブジェクトのコンストラクタにサンプラーステートを渡すことで、テクスチャ描画時に UV 座標が 0.0～1.0 の範囲を超えたときの処理の方法をカスタマイズできます。
+
+`Texture::mapped()` によって、指定したサイズだけテクスチャをくり返しマッピングするような `TextureRegion` を作成できます。それをサンプラーステート `SamplerState::RepeatLinear` が適用されている状態で `.draw()` すると、テクスチャの内容がくり返しマッピングされて描画されます。
 
 ```cpp
+#include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Texture tree{ U"🌲"_emoji };
+
+	while (System::Update())
+	{
+		// UV 座標が 0.0～1.0 の範囲を超えたとき、くり返しマッピング
+		const ScopedRenderStates2D sampler{ SamplerState::RepeatLinear };
+
+		// シーンのサイズぴったりにマッピングして描画
+		tree.mapped(Scene::Size()).draw();
+	}
+}
 ```
 
 
-## 21.7
+## 21.7 シザー矩形の設定
+指定した長方形領域以外への描画を行わないようにしたい場合、シザー矩形が便利です。`Graphics2D::SetScissorRect()` で長方形領域を設定し、`.scissorEnable` を `true` にした `RasterizerState` を `ScopedRenderStates2D` で適用すると、シザー矩形が有効になります。
 
 ```cpp
+#include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Texture textureWindmill{ U"example/windmill.png" };
+	const Texture textureSiv3DKun{ U"example/siv3d-kun.png" };
+
+	// シザー矩形を設定
+	Graphics2D::SetScissorRect(Rect{ 100, 100, 300, 200 });
+
+	while (System::Update())
+	{
+		RasterizerState rs = RasterizerState::Default2D;
+		// シザー矩形を有効化
+		rs.scissorEnable = true;
+		const ScopedRenderStates2D rasterizer{ rs };
+
+		textureWindmill.draw(40, 20);
+		textureSiv3DKun.draw(200, 100);
+	}
+}
 ```
 
 
