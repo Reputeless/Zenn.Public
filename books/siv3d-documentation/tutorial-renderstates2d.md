@@ -378,9 +378,70 @@ void Main()
 
 
 ## 21.12 2D カメラ
+`Camera2D` を使うと、マウスやキーボードを使った直感的な操作で `Transformer2D` を作成、更新できるようになります。
+
+`Camera2D::update()` では W/A/S/D キーで上下左右移動、↑/↓ キーで拡大縮小、マウス右クリックで自由移動、マウスホイールで拡大縮小の操作を行います。キー操作を無効にしたい場合は `Camera2D` コンストラクタに `CameraControl::Mouse` を渡します。カメラの詳細な挙動は `Camera2DParameters` によってカスタマイズできます。
+
+`Camera2D` の主なメンバ関数は次の通りです。
+
+| 関数 | 説明 |
+|--|--|
+|`.createTransformer()`| 現在のカメラの設定から `Transformer2D` を作成する |
+|`.setTargetCenter(Vec2)`| カメラの中心座標の目標を設定する |
+|`.setTargetScale(double)`| カメラのズームアップ倍率の目標を設定する |
+|`.jumpTo(Vec2, double)`| カメラの中心座標およびズームアップ倍率を即座に変更する |
+|`.update()` | カメラの操作や、目標値への移動を行う |
+|`.draw(const ColorF&)`| マウスでのカメラ操作を補助する矢印 UI を表示する |
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture cat{ U"🐈"_emoji };
+
+	// 2D カメラ
+	// 初期設定: 中心 (0, 0), ズームアップ倍率 1.0
+	Camera2D camera{ Vec2{ 0, 0 }, 1.0 };
+	//Camera2D camera{ Vec2{ 0, 0 }, 1.0, CameraControl::Mouse }; // マウス操作のみの場合
+
+	while (System::Update())
+	{
+		// 2D カメラを更新
+		camera.update();
+		{
+			// 2D カメラの設定から Transformer2D を作成
+			const auto t = camera.createTransformer();
+
+			for (int32 i = 0; i < 8; ++i)
+			{
+				Circle{ 0, 0, (50 + i * 50) }.drawFrame(2);
+			}
+
+			cat.drawAt(0, 0);
+
+			Shape2D::Star(50, Vec2{ 200, 200 }).draw(Palette::Yellow);
+		}
+
+		if (SimpleGUI::Button(U"Jump to center", Vec2{ 20, 20 }))
+		{
+			// 中心とズームアップ倍率を即座に変更
+			camera.jumpTo(Vec2{ 0, 0 }, 1.0);
+		}
+
+		if (SimpleGUI::Button(U"Move to center", Vec2{ 20, 60 }))
+		{
+			// 中心とズームアップ倍率の目標値をセットして、時間をかけて変更する
+			camera.setTargetCenter(Vec2{ 0, 0 });
+			camera.setTargetScale(1.0);
+		}
+
+		// 2D カメラ操作の UI を表示
+		camera.draw(Palette::Orange);
+	}
+}
 ```
 
 
