@@ -107,7 +107,7 @@ void Main()
 		{
 			if (keys[i].down())
 			{
-				sounds[i].playOneShot(0, 0.5);
+				sounds[i].playOneShot(0.5);
 			}
 		}
 
@@ -1278,8 +1278,8 @@ void Main()
 		}
 
 		{
-			GlobalAudio::BusGetSamples(0, busSamples);
-			GlobalAudio::BusGetFFT(0, busFFT);
+			GlobalAudio::BusGetSamples(MixBus0, busSamples);
+			GlobalAudio::BusGetFFT(MixBus0, busFFT);
 
 			for (auto [i, s] : Indexed(busSamples))
 			{
@@ -1434,7 +1434,7 @@ void Main()
 			}
 			else
 			{
-				GlobalAudio::BusClearFilter(0, 0);
+				GlobalAudio::BusClearFilter(MixBus0, 0);
 			}
 		}
 		updatePitch |= SimpleGUI::Slider(U"pitchShift: {:.2f}"_fmt(pitchShift), pitchShift, -12.0, 12.0, Vec2{ 720, 240 }, 160, 300);
@@ -1447,7 +1447,7 @@ void Main()
 			}
 			else
 			{
-				GlobalAudio::BusClearFilter(0, 1);
+				GlobalAudio::BusClearFilter(MixBus0, 1);
 			}
 		}
 		updateLPF |= SimpleGUI::Slider(U"cutoffFrequency: {:.0f}"_fmt(lpfCutoffFrequency), lpfCutoffFrequency, 10, 4000, Vec2{ 720, 280 }, 220, 240);
@@ -1462,7 +1462,7 @@ void Main()
 			}
 			else
 			{
-				GlobalAudio::BusClearFilter(0, 2);
+				GlobalAudio::BusClearFilter(MixBus0, 2);
 			}
 		}
 		updateHPF |= SimpleGUI::Slider(U"cutoffFrequency: {:.0f}"_fmt(hpfCutoffFrequency), hpfCutoffFrequency, 10, 4000, Vec2{ 720, 380 }, 220, 240);
@@ -1477,7 +1477,7 @@ void Main()
 			}
 			else
 			{
-				GlobalAudio::BusClearFilter(0, 3);
+				GlobalAudio::BusClearFilter(MixBus0, 3);
 			}
 		}
 		updateEcho |= SimpleGUI::Slider(U"delay: {:.2f}"_fmt(delay), delay, Vec2{ 720, 480 }, 220, 240);
@@ -1492,7 +1492,7 @@ void Main()
 			}
 			else
 			{
-				GlobalAudio::BusClearFilter(0, 4);
+				GlobalAudio::BusClearFilter(MixBus0, 4);
 			}
 		}
 		updateReverb |= SimpleGUI::CheckBox(freeze, U"freeze", Vec2{ 720, 580 }, 110);
@@ -1503,27 +1503,27 @@ void Main()
 
 		if (pitch && updatePitch)
 		{
-			GlobalAudio::BusSetPitchShiftFilter(0, 0, pitchShift);
+			GlobalAudio::BusSetPitchShiftFilter(MixBus0, 0, pitchShift);
 		}
 
 		if (lpf && updateLPF)
 		{
-			GlobalAudio::BusSetLowPassFilter(0, 1, lpfCutoffFrequency, lpfResonance, lpfWet);
+			GlobalAudio::BusSetLowPassFilter(MixBus0, 1, lpfCutoffFrequency, lpfResonance, lpfWet);
 		}
 
 		if (hpf && updateHPF)
 		{
-			GlobalAudio::BusSetHighPassFilter(0, 2, hpfCutoffFrequency, hpfResonance, hpfWet);
+			GlobalAudio::BusSetHighPassFilter(MixBus0, 2, hpfCutoffFrequency, hpfResonance, hpfWet);
 		}
 
 		if (echo && updateEcho)
 		{
-			GlobalAudio::BusSetEchoFilter(0, 3, delay, decay, echoWet);
+			GlobalAudio::BusSetEchoFilter(MixBus0, 3, delay, decay, echoWet);
 		}
 
 		if (reverb && updateReverb)
 		{
-			GlobalAudio::BusSetReverbFilter(0, 4, freeze, roomSize, damp, width, reverbWet);
+			GlobalAudio::BusSetReverbFilter(MixBus0, 4, freeze, roomSize, damp, width, reverbWet);
 		}
 	}
 

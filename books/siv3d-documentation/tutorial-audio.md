@@ -519,14 +519,60 @@ void Main()
 
 
 ## 19.14 同じオーディオを重ねて再生する
-1 つの `Audio` を重ねて再生したい場合には `.play()` の代わりに `.playOneShot()` を使います。
+1 つの `Audio` を重ねて再生したい場合には `.play()` の代わりに `.playOneShot()` を使います。`.playOneShot()` の引数には音量、パン、再生スピードを渡せます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// ピアノの C4 (ド) の音。
+	const Audio piano{ GMInstrument::Piano1, PianoKey::C4, 0.5s };
+
+	// クラリネットの D4 (レ) の音
+	const Audio clarinet{ GMInstrument::Clarinet, PianoKey::D4, 0.5s };
+
+	// トランペットの E4 (ミ) の音
+	const Audio trumpet{ GMInstrument::Trumpet, PianoKey::E4, 0.5s };
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Piano", Vec2{ 20, 20 }))
+		{
+			// 音量 0.5 で再生
+			piano.playOneShot(0.5);
+		}
+
+		if (SimpleGUI::Button(U"Clarinet", Vec2{ 20, 60 }))
+		{
+			clarinet.playOneShot(0.5);
+		}
+
+		if (SimpleGUI::Button(U"Trumpet", Vec2{ 20, 100 }))
+		{
+			trumpet.playOneShot(0.5);
+		}
+	}
+}
 ```
 
 
-## 19.15 バスとグローバルオーディオの設定
+## 19.15 ミキシングバスとグローバルオーディオ
+オーディオを BGM, 環境音、キャラクターボイスなどのグループに分類し、グループごとに音量などを制御したい場合、**ミキシングバス** が役に立ちます。すべてのオーディオは MixBus0 ～ MixBus3 の 4 つのグループのいずれかのミキシングバスを通して再生されます。デフォルトでは MixBus0 が使われます。また、ミキシングバスは最終的に**グローバルオーディオ**によって統合されます。
+
+![](/images/doc_v6/tutorial/19/15.png)
+
+個々のミキシングバスに対しては次のような操作ができます。
+- 音量の調整
+- 再生中の波形サンプルの取得
+- 再生中の波形の FFT の結果取得
+- オーディオフィルタの適用（次節で説明）
+
+グローバルオーディオに対しては次のような操作ができます。
+- オーディオの一斉停止・再開
+- 音量の調整
+- 再生中の波形サンプルの取得
+- 再生中の波形の FFT の結果取得
 
 ```cpp
 
@@ -541,7 +587,7 @@ void Main()
 
 
 ## 19.17 空のオーディオ
-データを持たない空（から）のオーディオは「フワ」という 0.5 秒の音を鳴らします。音声ファイルの読み込みに失敗したときにも空のオーディオが作成されます。  
+データを持たない空（から）のオーディオは「フワ」と鳴る 0.5 秒の音を鳴らします。音声ファイルの読み込みに失敗したときにも空のオーディオが作成されます。  
 オーディオが空であるかは `if (audio.isEmpty())` もしくは `if (not audio)` で調べられます。
 
 ```cpp

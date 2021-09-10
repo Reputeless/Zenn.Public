@@ -924,7 +924,7 @@ void Main()
 				});
 
 				// バブルの数字に応じて効果音を鳴らす
-				sounds[bubble.index].playOneShot(0, 0.8);
+				sounds[bubble.index].playOneShot(0.8);
 			}
 
 			// バブルを円周に沿って移動
