@@ -9,6 +9,7 @@ free: true
 ## 21.1 加算ブレンドで描く
 `ScopedRenderStates2D` オブジェクトのコンストラクタに `BlendState::Additive` を渡すと、そのオブジェクトのスコープが有効な間、図形や画像が加算ブレンドで描画されます。加算ブレンドでは、背景色に RGB 成分を加算するように描画されるので、重ねて描画した部分が明るくなります。
 
+![](/images/doc_v6/tutorial/21/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -54,6 +55,7 @@ void Main()
 ## 21.2 描画色を加算する
 画像や図形を描くときに、本来の色に RGBA 成分を加算して描画するには、`ScopedColorAdd2D` オブジェクトのコンストラクタに、加算したい値を設定します。そのオブジェクトのスコープが有効な間、描画の RGBA 値が加算されます。
 
+![](/images/doc_v6/tutorial/21/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -86,6 +88,7 @@ void Main()
 
 `Texture` の `.draw()` に色を渡すことで乗算の色を設定することもできます（チュートリアル 8.11 参照）。`ScopedColorMul2D` はその設定を一括して行えるものです。
 
+![](/images/doc_v6/tutorial/21/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -119,6 +122,7 @@ void Main()
 ## 21.4 テクスチャ拡大縮小時のフィルタを変える
 テクスチャを拡大縮小して描画する際に、デフォルトではバイリニア補間によって色が補間されます。ドット感を保ったまま拡大したいときにはサンプラーステート `SamplerState::ClampNearest` を `ScopedRenderStates2D` に設定します。
 
+![](/images/doc_v6/tutorial/21/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -152,7 +156,7 @@ void Main()
 ## 21.5 ワイヤフレームモードで描画する
 `ScopedRenderStates2D` オブジェクトのコンストラクタに `RasterizerState::WireframeCullNone` を渡すと、図形や画像を構成する三角形のワイヤフレームのみが描画されるようになります。
 
-
+![](/images/doc_v6/tutorial/21/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -180,6 +184,7 @@ void Main()
 
 `Texture::mapped()` によって、指定したサイズだけテクスチャをくり返しマッピングするような `TextureRegion` を作成できます。それをサンプラーステート `SamplerState::RepeatLinear` が適用されている状態で `.draw()` すると、テクスチャの内容がくり返しマッピングされて描画されます。
 
+![](/images/doc_v6/tutorial/21/6.png)
 ```cpp
 #include <Siv3D.hpp>
 
@@ -204,6 +209,7 @@ void Main()
 ## 21.7 シザー矩形を設定する
 指定した長方形領域以外への描画を行わないようにしたい場合、シザー矩形が便利です。`Graphics2D::SetScissorRect()` で長方形領域を設定し、`.scissorEnable` を `true` にした `RasterizerState` を `ScopedRenderStates2D` で適用すると、シザー矩形が有効になります。
 
+![](/images/doc_v6/tutorial/21/7.png)
 ```cpp
 #include <Siv3D.hpp>
 
@@ -236,6 +242,7 @@ void Main()
 
 ビューポートは描画の座標にしか影響を及ぼしません。マウスカーソルの座標も同様に移動させたい場合には、後述する `Transformer2D` と組み合わせます。
 
+![](/images/doc_v6/tutorial/21/8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -262,6 +269,7 @@ void Main()
 
 座標変換行列を `Mat3x2` によって定義し、`Transformer2D` オブジェクトのコンストラクタに値を設定します。オブジェクトのスコープが有効な間、その行列による座標変換が描画やマウスカーソルに適用されます。
 
+![](/images/doc_v6/tutorial/21/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -324,6 +332,7 @@ void Main()
 ## 21.10 マウスカーソルだけに座標変換行列を適用する
 ビューポートを使ってミニウィンドウを作成した際など、描画の座標変換は不要でマウスカーソルの座標変換だけ行いたい場合があります。そのようなときは、`Transformer2D` の第 1 引数に `Mat3x2:Identity()` を、第 2 引数にマウスカーソル用の座標変換行列を設定します。
 
+![](/images/doc_v6/tutorial/21/10.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -353,6 +362,7 @@ void Main()
 ## 21.11 座標変換行列を重ねて適用する
 `Transformer2D` の効果が適用されているときに新しい `Transformer2D` を作成すると、座標変換の効果が乗算されます。次のプログラムでは、行列の乗算によって複雑な動きを実現しています。
 
+![](/images/doc_v6/tutorial/21/11.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -393,6 +403,7 @@ void Main()
 |`.update()` | カメラの操作や、目標値への移動を行う |
 |`.draw(const ColorF&)`| マウスでのカメラ操作を補助する矢印 UI を表示する |
 
+![](/images/doc_v6/tutorial/21/12.png)
 ```cpp
 # include <Siv3D.hpp>
 

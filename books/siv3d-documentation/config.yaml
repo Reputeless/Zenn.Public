@@ -30,7 +30,7 @@ chapters:
   - tutorial-audio
   - tutorial-asset
   - tutorial-renderstates2d
- # - tutorial-effect
+  - tutorial-effect
  # - tutorial-filesystem
  # - tutorial-textfile
  # - tutorial-configfile
