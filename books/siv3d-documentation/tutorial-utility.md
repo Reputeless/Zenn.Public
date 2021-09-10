@@ -128,6 +128,7 @@ Siv3D では、`for (int32 i = 0; i < N; ++i)` を `for (auto i : step(N))` と�
 
 void Main()
 {
+	// 0, 1, 2
 	for (auto i : step(3))
 	{
 		Print << i;
@@ -135,6 +136,7 @@ void Main()
 
 	Print << U"---";
 
+	// 5, 6, 7, 8, 9, 10
 	for (auto i : Range(5, 10))
 	{
 		Print << i;
@@ -142,6 +144,7 @@ void Main()
 
 	Print << U"---";
 
+	// 20, 18, 16, 14, 12, 10
 	for (auto i : Range(20, 10, -2))
 	{
 		Print << i;
@@ -235,6 +238,7 @@ void Main()
 
 void Main()
 {
+	// 絶対値
 	Print << Abs(123);
 	Print << Abs(-123);
 	Print << Abs(3.45);
@@ -256,6 +260,7 @@ void Main()
 
 void Main()
 {
+	// 差の絶対値
 	Print << AbsDiff(50, 10);
 	Print << AbsDiff(10u, 50u);
 	Print << AbsDiff(-2000000000, 2000000000);
@@ -315,6 +320,7 @@ void Main()
 
 void Main()
 {
+	// 桁区切りを入れる
 	Print << ThousandsSeparate(123456789);
 	Print << ThousandsSeparate(-123456789);
 	Print << ThousandsSeparate(1234567.89);
@@ -339,8 +345,8 @@ void Main()
 {
 	while (System::Update())
 	{
+		// テキストを表示
 		PutText(DateTime::Now().format(), Scene::Center());
-
 		PutText(U"Hello, Siv3D!", Arg::topLeft = Cursor::Pos());
 	}
 }
@@ -359,6 +365,7 @@ void Main()
 
 	Print << v;
 
+	// コンソール出力
 	Console << v;
 
 	Console << U"Hello, Siv3D!";
@@ -383,6 +390,7 @@ void Main()
 
 	Print << v;
 
+	// ログ出力
 	Logger << v;
 
 	Logger << U"Hello, Siv3D!";

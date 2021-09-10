@@ -957,10 +957,10 @@ void Main()
 
 	while (System::Update())
 	{
-		// テクスチャが空の状態で、左クリックされたら
+		// フォントが空の状態で、左クリックされたら
 		if ((not font) && MouseL.down())
 		{
-			// テクスチャを作成して代入
+			// フォントを作成して代入
 			font = Font{ 40 };
 		}
 
