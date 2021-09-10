@@ -7,7 +7,7 @@ free: true
 この章では、プログラムのあらゆるところから `Texture`, `Font`, `Audio` などのアセットデータにアクセスできる機能を学びます。
 
 ## 20.1 アセット管理の概要
-Siv3D は `Texture` や `Font`, `Audio` などのアセットのハンドルに名前をつけ、名前を通してプログラムのどこからでもグローバル変数のようにアクセスできる「アセット管理」の機能を提供しています。
+Siv3D は `Texture` や `Font`, `Audio` などのアセットのハンドルに名前をつけ、その名前を通してプログラムのどこからでもグローバル変数のようにアクセスできる「アセット管理」の機能を提供しています。
 
 プログラムでアセット管理を扱う手順は以下の通りです。
 
@@ -51,42 +51,113 @@ Siv3D は `Texture` や `Font`, `Audio` などのアセットのハンドルに�
 アプリケーション終了時にはすべてのアセットが自動でリリース、登録解除されるため、アセットの登録解除を明示的に行う必要はありません。
 
 
-## 20.2
+## 20.2 Texture アセットのサンプル
+
+```cpp
+# include <Siv3D.hpp>
+
+void Draw()
+{
+	// アセットの使用
+	TextureAsset(U"Windmill").draw();
+	TextureAsset(U"Siv3D-kun").scaled(0.8).drawAt(200, 200);
+}
+
+void Main()
+{
+	// アセットの登録
+	TextureAsset::Register(U"Windmill", U"example/windmill.png");
+	TextureAsset::Register(U"Siv3D-kun", U"example/siv3d-kun.png", TextureDesc::Mipped);
+
+	while (System::Update())
+	{
+		Draw();
+	}
+}
+```
+
+
+## 20.3 Font アセットのサンプル
+
+```cpp
+# include <Siv3D.hpp>
+
+void Draw()
+{
+	// アセットの使用
+	FontAsset(U"Title")(U"My Game").drawAt(400, 100);
+	FontAsset(U"Menu")(U"Play").drawAt(400, 400);
+	FontAsset(U"Menu")(U"Exit").drawAt(400, 500);
+}
+
+void Main()
+{
+	// アセットの登録
+	FontAsset::Register(U"Title", 60, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
+	FontAsset::Register(U"Menu", 40, Typeface::Medium);
+
+	while (System::Update())
+	{
+		Draw();
+	}
+}
+```
+
+
+## 20.4 Audio アセットのサンプル
+
+```cpp
+# include <Siv3D.hpp>
+
+void MakeSound()
+{
+	// アセットの使用
+	AudioAsset(U"Sound").playOneShot();
+}
+
+void Main()
+{
+	// アセットの登録
+	AudioAsset::Register(U"BGM", U"example/test.mp3");
+	AudioAsset::Register(U"Sound", GMInstrument::Piano1, PianoKey::A4, 0.5s);
+
+	// アセットの使用
+	AudioAsset(U"BGM").setVolume(0.2);
+	AudioAsset(U"BGM").play();
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			MakeSound();
+		}
+	}
+}
+```
+
+
+## 20.5 アセットの事前ロード
 
 ```cpp
 
 ```
 
 
-## 20.3
+## 20.6 アセットの非同期ロード
 
 ```cpp
 
 ```
 
 
-## 20.4
+## 20.7 アセットのタグ
 
 ```cpp
 
 ```
 
 
-## 20.5
-
-```cpp
-
-```
-
-
-## 20.6
-
-```cpp
-
-```
-
-
-## 20.7
+## 20.8 アセット一覧の取得
 
 ```cpp
 
