@@ -33,7 +33,7 @@ chapters:
   - tutorial-effect
   - tutorial-filesystem
   - tutorial-textfile
- # - tutorial-configfile
+  - tutorial-configfile
  # - tutorial-binaryfile
  # - tutorial-clipboard
  # - tutorial-dialog
