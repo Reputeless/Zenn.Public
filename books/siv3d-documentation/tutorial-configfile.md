@@ -273,7 +273,7 @@ void Main()
 	// JSON データをすべて表示
 	ShowObject(json);
 
-	Print << U"-----";
+	Console << U"-----";
 
 	// 要素のパスで値を取得
 	const String windowTitle = json[U"Window"][U"title"].getString();
@@ -295,7 +295,7 @@ void Main()
 			values << object.get<int32>();
 		}
 	}
-	Print << values;
+	Console << values;
 
 	// アイテムの配列を JSON データから作成
 	Array<Item> items;
@@ -329,16 +329,336 @@ void Main()
 
 
 ## 25.4 TOML ファイルからデータを読み込む
+TOML ファイルをパースしてデータを読み込むには `TOMLReader` クラスを使います。`TOMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not toml)` で調べられます。
+
+TOML データは次のサンプルの `ShowObject()` 関数のようにして再帰的に全要素を走査できます。また、添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+struct Item
+{
+	// アイテムのラベル
+	String label;
+
+	// アイテムの左上座標
+	Point pos;
+};
+
+// 再帰的に TOML の要素を表示
+void ShowTable(const TOMLValue& value)
+{
+	for (const auto& table : value.tableView())
+	{
+		switch (table.value.getType())
+		{
+		case TOMLValueType::Empty:
+			Console << U"[Empty]" << table.name;
+			break;
+		case TOMLValueType::Table:
+			Console << U"[Table]" << table.name;
+			ShowTable(table.value);
+			break;
+		case TOMLValueType::Array:
+			Console << U"[Array]" << table.name;
+			for (const auto& element : table.value.arrayView())
+			{
+				switch (element.getType())
+				{
+				case TOMLValueType::String:
+					Console << element.getString();
+					break;
+				case TOMLValueType::Number:
+					Console << element.get<double>();
+					break;
+				case TOMLValueType::Bool:
+					Console << element.get<bool>();
+					break;
+				case TOMLValueType::Date:
+					Console << element.getDate();
+					break;
+				case TOMLValueType::DateTime:
+					Console << element.getDateTime();
+					break;
+				default:
+					break;
+				}
+			}
+			break;
+		case TOMLValueType::TableArray:
+			Console << U"[TableArray]" << table.name;
+			for (const auto& table2 : table.value.tableArrayView())
+			{
+				ShowTable(table2);
+			}
+			break;
+		case TOMLValueType::String:
+			Console << U"[String]" << table.name;
+			Console << table.value.getString();
+			break;
+		case TOMLValueType::Number:
+			Console << U"[Number]" << table.name;
+			Console << table.value.get<double>();
+			break;
+		case TOMLValueType::Bool:
+			Console << U"[Bool]" << table.name;
+			Console << table.value.get<bool>();
+			break;
+		case TOMLValueType::Date:
+			Console << U"[Date]" << table.name;
+			Console << table.value.getDate();
+			break;
+		case TOMLValueType::DateTime:
+			Console << U"[DateTime]" << table.name;
+			Console << table.value.getDateTime();
+			break;
+		case TOMLValueType::Unknown:
+			Console << U"[Unknown]" << table.name;
+			break;
+		}
+	}
+}
+
+void Main()
+{
+	// TOML ファイルからデータを読み込む
+	const TOMLReader toml{ U"example/toml/config.toml" };
+
+	if (not toml) // もし読み込みに失敗したら
+	{
+		throw Error{ U"Failed to load `config.toml`" };
+	}
+
+	// TOML データをすべて表示
+	ShowTable(toml);
+
+	Console << U"-----";
+
+	// 要素のパスで値を取得
+	const String windowTitle = toml[U"Window.title"].getString();
+	const int32 windowWidth = toml[U"Window.width"].get<int32>();
+	const int32 windowHeight = toml[U"Window.height"].get<int32>();
+	const bool windowSizable = toml[U"Window.sizable"].get<bool>();
+	const ColorF sceneBackground = toml[U"Scene.background"].get<ColorF>();
+
+	Window::SetTitle(windowTitle);
+	Window::Resize(windowWidth, windowHeight);
+	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+	Scene::SetBackground(sceneBackground);
+
+	// 数値の配列を TOML データから作成
+	Array<int32> values;
+	{
+		for (const auto& object : toml[U"Array.values"].arrayView())
+		{
+			values << object.get<int32>();
+		}
+	}
+	Console << values;
+
+	// アイテムの配列を TOML データから作成
+	Array<Item> items;
+	{
+		for (const auto& object : toml[U"Items"].tableArrayView())
+		{
+			Item item;
+			item.label = object[U"label"].getString();
+			item.pos = Point{ object[U"pos.x"].get<int32>(), object[U"pos.y"].get<int32>() };
+			items << item;
+		}
+	}
+
+	// アイテム描画用のフォント
+	const Font font{ 30, Typeface::Bold };
+
+	while (System::Update())
+	{
+		// アイテムを描画
+		for (const auto& item : items)
+		{
+			const Rect rect{ item.pos, 180, 80 };
+
+			rect.draw();
+
+			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+		}
+	}
+}
 ```
 
 
 ## 25.5 XML ファイルからデータを読み込む
+XML ファイルをパースしてデータを読み込むには `XMLReader` クラスを使います。`XMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not xml)` で調べられます。
+
+XML データは次のサンプルの `ShowElements()` 関数のようにして再帰的に全要素を走査できます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+struct Item
+{
+	// アイテムのラベル
+	String label;
+
+	// アイテムの左上座標
+	Point pos;
+};
+
+// 再帰的に XML の要素を表示
+void ShowElements(const XMLElement& element)
+{
+	for (auto e = element.firstChild(); e; e = e.nextSibling())
+	{
+		Console << U"<{}>"_fmt(e.name());
+
+		if (const auto attributes = e.attributes())
+		{
+			Console << attributes;
+		}
+
+		if (const auto text = e.text())
+		{
+			Console << text;
+		}
+
+		ShowElements(e);
+
+		Console << U"</{}>"_fmt(e.name());
+	}
+}
+
+void Main()
+{
+	// XML ファイルからデータを読み込む
+	const XMLReader xml(U"example/xml/config.xml");
+
+	if (!xml) // もし読み込みに失敗したら
+	{
+		throw Error{ U"Failed to load `config.xml`" };
+	}
+
+	// XML データをすべて表示
+	ShowElements(xml);
+
+	Console << U"-----";
+
+	String windowTitle;
+	int32 windowWidth = Window::DefaultClientSize.x;
+	int32 windowHeight = Window::DefaultClientSize.y;
+	bool windowSizable = false;
+	ColorF sceneBackground{ 0.0 };
+	Array<int32> values;
+	Array<Item> items;
+
+	// 要素を走査して目的の値を取得
+	for (auto elem = xml.firstChild(); elem; elem = elem.nextSibling())
+	{
+		const String name = elem.name();
+
+		if (name == U"Window")
+		{
+			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+			{
+				const String name2 = elem2.name();
+
+				if (name2 == U"title")
+				{
+					windowTitle = elem2.text();
+				}
+				else if (name2 == U"width")
+				{
+					windowWidth = Parse<int32>(elem2.text());
+				}
+				else if (name2 == U"height")
+				{
+					windowHeight = Parse<int32>(elem2.text());
+				}
+				else if (name2 == U"sizable")
+				{
+					windowSizable = Parse<bool>(elem2.text());
+				}
+			}
+		}
+		else if (name == U"Scene")
+		{
+			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+			{
+				const String name2 = elem2.name();
+
+				if (name2 == U"background")
+				{
+					sceneBackground = Parse<ColorF>(elem2.text());
+				}
+			}
+		}
+		if (name == U"Array")
+		{
+			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+			{
+				values << Parse<int32>(elem2.text());
+			}
+		}
+		if (name == U"Items")
+		{
+			Item item;
+
+			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+			{
+				const String name2 = elem2.name();
+
+				if (name2 == U"label")
+				{
+					item.label = elem2.text();
+				}
+				else if (name2 == U"pos")
+				{
+					Point pos{ 0, 0 };
+
+					for (auto elem3 = elem2.firstChild(); elem3; elem3 = elem3.nextSibling())
+					{
+						const String name3 = elem3.name();
+
+						if (name3 == U"x")
+						{
+							pos.x = Parse<int32>(elem3.text());
+						}
+						else if (name3 == U"y")
+						{
+							pos.y = Parse<int32>(elem3.text());
+						}
+					}
+
+					item.pos = pos;
+				}
+			}
+
+			items << item;
+		}
+	}
+
+	Window::SetTitle(windowTitle);
+	Window::Resize(windowWidth, windowHeight);
+	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+	Scene::SetBackground(sceneBackground);
+
+	Console << values;
+
+	// アイテム描画用のフォント
+	const Font font{ 30, Typeface::Bold };
+
+	while (System::Update())
+	{
+		// アイテムを描画
+		for (const auto& item : items)
+		{
+			const Rect rect{ item.pos, 180, 80 };
+
+			rect.draw();
+
+			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+		}
+	}
+}
 ```
 
 
