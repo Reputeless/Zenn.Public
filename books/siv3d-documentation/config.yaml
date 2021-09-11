@@ -34,7 +34,7 @@ chapters:
   - tutorial-filesystem
   - tutorial-textfile
   - tutorial-configfile
- # - tutorial-binaryfile
+  - tutorial-binaryfile
  # - tutorial-clipboard
  # - tutorial-dialog
  # - tutorial-dragdrop
