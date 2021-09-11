@@ -189,9 +189,38 @@ ABC
 
 
 ## 24.5 スコープによる制御
+ファイルのオープン・クローズのタイミングの制御は、`{ } ` でスコープを作り、スコープの終了時にデストラクタで自動的にクローズされるようにするのも良い方法です。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	{
+		TextWriter writer{ U"tutorial.txt" };
+
+		// 1 行書き込む
+		writer.write(U"Hello, Siv3D!");
+
+	} // ここで自動的にクローズ
+
+	String text;
+	{
+		// TextWriter でオープンしたままだと、ここでオープンに失敗する
+		TextReader reader{ U"tutorial.txt" };
+
+		// 1 行読み込む
+		reader.readLine(text);
+	
+	} // ここで自動的にクローズ
+
+	Print << text;
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 JSON ファイルや INI ファイル、CSV ファイルなど、特別なテキストファイルを扱いたい場合は、次章の機能を使うのが便利です。
