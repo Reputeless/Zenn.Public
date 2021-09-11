@@ -4,7 +4,9 @@ free: true
 ---
 
 # 23. ファイルシステム
-この章では、ファイルやディレクトリの情報取得や操作に関する機能を学びます。
+この章では、ファイルやディレクトリの情報取得および操作に関する機能を学びます。
+
+ファイルパスを Siv3D のプログラムで表現するときは、`String` 型のエイリアス（別名）である `FilePath` 型を使うとコードが読みやすくなります。また、フォルダのパスは末尾に `/` を付与した形で表現します（例: `U"example/"`）。
 
 ## 23.1 ファイルやディレクトリが存在するか調べる
 ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います。
@@ -66,6 +68,7 @@ void Main()
 
 ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います。
 
+![](/images/doc_v6/tutorial/23/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -308,7 +311,7 @@ void Main()
 - Removed → Added
 - Modified
 
-`Added` と `Modified` を検出することで、特定のファイルの更新を検出できます。
+`Added` と `Modified` を検出することで、特定のファイルの更新を取りこぼしなく検出できます。
 
 ```cpp
 # include <Siv3D.hpp>
