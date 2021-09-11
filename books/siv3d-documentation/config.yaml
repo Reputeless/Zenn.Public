@@ -32,7 +32,7 @@ chapters:
   - tutorial-renderstates2d
   - tutorial-effect
   - tutorial-filesystem
- # - tutorial-textfile
+  - tutorial-textfile
  # - tutorial-configfile
  # - tutorial-binaryfile
  # - tutorial-clipboard
