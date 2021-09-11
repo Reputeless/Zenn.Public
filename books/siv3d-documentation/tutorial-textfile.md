@@ -92,16 +92,99 @@ void Main()
 
 
 ## 24.3 ファイルにテキストを書き込む
+ファイルにテキストを書き込むには `TextWriter` クラスの機能を使います。`TextWriter` のコンストラクタ引数に、書き込み先のファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが使用中だったり、ファイル名が不正なものだったりしてオープンに失敗したかどうかは `if (not writer)` で調べられます。
+
+同名のファイルがすでに存在する場合はそれを破棄してからオープンし、存在しない場合は新しい空のファイルを作成してオープンします。
+
+書き込み方法は `Print` と似ていて、オープン済みの `TextWriter` の変数に向かって `<<` で書き込みたい 1 行分の文字列や値を送ります。書き込みの最後には改行が自動で挿入されます。これを避けたい場合はメンバ関数 `.write()` を使って書き込みたい内容を送ります。`.writeln()` は改行が挿入されます。
+
+ファイルはデストラクタでクローズされるので、明示的にクローズする必要はありません。ファイルをオープン・クローズするタイミングを制御したい場合は、`TextReader` と同じように、`.open()` を使ってファイルをオープン, `.close()` を使ってファイルをクローズできます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// 書き込み用のファイルをオープンする
+	// （同名のファイルがすでに存在する場合はそれを破棄してからオープン）
+	TextWriter writer(U"tutorial.txt");
+
+	// オープンに失敗
+	if (not writer)
+	{
+		throw Error{ U"Failed to open `tutorial.txt`" };
+	}
+
+	// 文章を 1 行書き込む
+	writer << U"Hello, Siv3D!";
+
+	// 値や文字を　1 行書き込む
+	writer << 123 << U',' << 456 << Point{ 10, 20 };
+
+	// 1 文字ずつ書き込む（改行無し）
+	writer.write(U'A');
+	writer.write(U'B');
+
+	// 1 文字書き込んで改行も書き込む
+	writer.writeln(U'C');
+
+	// 値を書き込む（改行無し）
+	writer.write(777);
+	writer.write(U',');
+	writer.write(888);
+
+	while (System::Update())
+	{
+
+	}
+
+	// writer のデストラクタで自動的にファイルがクローズされる
+}
+```
+
+作成されるテキストファイル
+```txt:tutorial.txt
+Hello, Siv3D!
+123,456(10, 20)
+ABC
+777,888
 ```
 
 
-## 24.4　既存のテキストファイルに追加で書きこむ
+## 24.4 既存のテキストファイルに追加で書きこむ
+テキストを既存のテキストファイルの末尾から追加で書き込みたい場合は、`TextWriter` でのオープン時にファイルオープンモードとして `OpenMode::Append` (追加モード) を指定します。同名のテキストファイルが存在しなかった時は、通常どおり新しいファイルを作成します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// 追加モードでテキストファイルをオープン
+	TextWriter writer{ U"tutorial.txt", OpenMode::Append };
+
+	// オープンに失敗
+	if (not writer)
+	{
+		throw Error{ U"Failed to open `tutorial.txt`" };
+	}
+
+	// 文章を追加する
+	writer.write(U"\n------");
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+24.3 で作成した tutorial.txt に追加した結果
+```txt:tutorial.txt
+Hello, Siv3D!
+123,456(10, 20)
+ABC
+777,888
+------
 ```
 
 
