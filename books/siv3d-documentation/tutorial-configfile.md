@@ -663,23 +663,105 @@ void Main()
 
 
 ## 25.6 CSV ファイルを書き出す
+CSV ファイルを書き出すには、`CSV` の `.writeRow()`, `.write()`, `.newLine()` などで先頭の行からデータを追加し、最後に `.save(path)` で保存します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	CSV csv;
+
+	// 1 行書き込む場合
+	csv.writeRow(U"item", U"price");
+	csv.writeRow(U"Sword", 500);
+
+	// 1 項目ずつ書き込む場合
+	csv.write(U"Arrow");
+	csv.write(400);
+	csv.newLine();
+
+	csv.writeRow(U"Shield", 300);
+	csv.writeRow(U"Carrot Seed", 20);
+	csv.writeRow(Point{ 20,30 }, Palette::Red);
+
+	// 保存
+	csv.save(U"tutorial.csv");
+	
+	while (System::Update())
+	{
+
+	}
+}
+```
+出力されるファイル
+```csv:tutorial.csv
+item,price
+Sword,500
+Arrow,400
+Shield,300
+Carrot Seed,20
+"(20, 30)","(255, 0, 0, 255)"
 ```
 
 
 ## 25.7 INI ファイルを書き出す
+INI ファイルを書き出すには、`INI` の `.addSection()`, `.write()` でデータを追加し、最後に `.save(path)` で保存します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	INI ini;
+
+	// セクションを追加
+	ini.addSection(U"Item");
+	ini.addSection(U"Setting");
+
+	ini.write(U"Item", U"Sword", 500);
+	ini.write(U"Item", U"Arrow", 400);
+	ini.write(U"Item", U"Shield", 300);
+	ini.write(U"Item", U"Carrot Seed", 20);
+	ini.write(U"Setting", U"pos", Point{ 20, 30 });
+	ini.write(U"Setting", U"color", Palette::Red);
+
+	// 保存
+	ini.save(U"tutorial.ini");
+	
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
 ## 25.8 JSON ファイルを書き出す
+JSON ファイルを書き出すには、`JSON` の `operator[]` でデータを追加し、最後に `.save(path)` で保存します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	JSON json;
+
+	json[U"Item"][U"Sword"][U"price"] = 500;
+	json[U"Item"][U"Arrow"][U"price"] = 400;
+	json[U"Item"][U"Shield"][U"price"] = 300;
+	json[U"Item"][U"Carrot Seed"][U"price"] = 20;
+
+	json[U"Setting"][U"pos"] = Point{ 20, 30 };
+	json[U"Setting"][U"color"] = Palette::Red;
+
+	json.save(U"tutorial.json");
+	
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
