@@ -62,11 +62,7 @@ void Main()
 
 
 ## 23.3 ファイルの名前や拡張子を取得する
-親ディレクトリを含まずに、ファイル名部分だけを取得するには `FileSystem::FileName(path)` を使います。
-
-拡張子を除いたファイル名を取得するには `FileSystem::BaseName(path)` を使います。
-
-ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います。
+親ディレクトリを含まずに、ファイル名部分だけを取得するには `FileSystem::FileName(path)` を使います。拡張子を除いたファイル名を取得するには `FileSystem::BaseName(path)` を使います。ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います。
 
 ![](/images/doc_v6/tutorial/23/3.png)
 ```cpp
