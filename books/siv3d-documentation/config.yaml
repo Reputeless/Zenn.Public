@@ -31,7 +31,7 @@ chapters:
   - tutorial-asset
   - tutorial-renderstates2d
   - tutorial-effect
- # - tutorial-filesystem
+  - tutorial-filesystem
  # - tutorial-textfile
  # - tutorial-configfile
  # - tutorial-binaryfile
