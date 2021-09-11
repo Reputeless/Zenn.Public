@@ -36,7 +36,7 @@ chapters:
   - tutorial-configfile
   - tutorial-binaryfile
   - tutorial-dialog
- # - tutorial-dragdrop
+  - tutorial-dragdrop
  # - tutorial-http
  # - tutorial-resource
  # - tutorial-gamepad
