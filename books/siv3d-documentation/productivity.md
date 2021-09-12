@@ -18,6 +18,6 @@ Siv3D の開発を便利にするツールの活用法などを紹介します�
 
 ### 出力メッセージを色付けする
 
+Visual Studio の拡張機能「[VSColorOutput](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput)」を使うと、出力ウィンドウ内で "warning" や "error" が含まれているメッセージが色付けされ、警告やエラーを見落としにくくなります。
 
-
-
+![](/images/doc_v6/technique/productivity/vscoloroutput.png)
