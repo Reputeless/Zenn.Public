@@ -38,7 +38,7 @@ chapters:
   - tutorial-dialog
   - tutorial-dragdrop
   - tutorial-http
- # - tutorial-resource
+  - tutorial-resource
  # - tutorial-gamepad
  # - tutorial-image
  # - tutorial-texture-2
