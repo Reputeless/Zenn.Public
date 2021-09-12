@@ -39,13 +39,13 @@ chapters:
   - tutorial-dragdrop
   - tutorial-http
   - tutorial-resource
+ # - tutorial-scene-manager
  # - tutorial-gamepad
  # - tutorial-image
  # - tutorial-texture-2
  # - tutorial-shader2d
  # - tutorial-webcam
  # - tutorial-microphone
- # - tutorial-scene-manager
  # - tutorial-3d
  # - tutorial-shader3d
  # - tutorial-clipboard
