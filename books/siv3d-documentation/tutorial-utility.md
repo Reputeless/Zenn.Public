@@ -406,7 +406,7 @@ void Main()
 ## 18.15 数学定数
 Siv3D には次のような数学定数が用意されています。
 
-| 名前 | 型 | 説明 | 値 (実際の `double` ・ `float` 型より高い精度の桁数で表示) |
+| 名前 | 型 | 説明 | 値 (実際の `double`, `float` 型より高い精度の桁数で表示) |
 |--|--|--|--|
 | `Math::E` | `double` | 自然対数の底 | 2.718281828459045235360287471352662498 |
 | `Math::Log2E` | `double` | 2 を底とする e の対数 | 1.442695040888963407359924681001892137 |
@@ -446,9 +446,25 @@ Siv3D には次のような数学定数が用意されています。
 ## 18.16 エラー
 Siv3D のプログラムでエラーを伝える例外を簡単に送出したい場合、`Error` クラスを使うと便利です。
 
-（Windows 版）Visual Studio において、例外の発生箇所を IDE 上で表示する手順は、[テクニック | 生産性の向上]()を参照してください。
+（Windows 版）Visual Studio において、例外の発生箇所を IDE 上で表示する手順は、[テクニック | 生産性の向上](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/productivity)を参照してください。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Texture texture{ U"aaa.png" };
+
+	if (not texture)
+	{
+		// 例外を送出する
+		throw Error{ U"Failed to load `aaa.png`" };
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
