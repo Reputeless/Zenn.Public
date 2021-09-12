@@ -264,7 +264,7 @@ void Main()
 ```
 
 
-## 29.6 POST リクエスト
+## 29.6 （サンプル）POST リクエスト
 
 ```cpp
 # include <Siv3D.hpp>
