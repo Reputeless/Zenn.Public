@@ -39,7 +39,7 @@ chapters:
   - tutorial-dragdrop
   - tutorial-http
   - tutorial-resource
- # - tutorial-scene-manager
+  - tutorial-scene-manager
  # - tutorial-gamepad
  # - tutorial-image
  # - tutorial-texture-2
