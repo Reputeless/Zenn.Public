@@ -946,7 +946,16 @@ void Main()
 
 
 ## 31.8 （サンプル）シーン管理でゲームを実装する（ファイル分割）
-31.7 のプログラムをファイル分割する場合の構成例です。
+31.7 のプログラムをファイル分割する場合の構成例です。全部で 8 つのファイルに分割します。
+
+- Main.cpp
+- Common.hpp
+- Title.hpp
+- Title.cpp
+- Game.hpp
+- Game.cpp
+- Ranking.hpp
+- Ranking.cpp
 
 ```cpp:Main.cpp
 # include "Common.hpp"

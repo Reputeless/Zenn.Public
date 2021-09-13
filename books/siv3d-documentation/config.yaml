@@ -48,7 +48,6 @@ chapters:
  # - tutorial-microphone
  # - tutorial-3d
  # - tutorial-shader3d
- # - tutorial-clipboard
   - tutorial-release
   - sample-game
   - sample-application
