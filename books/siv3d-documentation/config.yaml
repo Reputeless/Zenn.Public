@@ -42,12 +42,13 @@ chapters:
   - tutorial-scene-manager
   - tutorial-gamepad
  # - tutorial-image
- # - tutorial-texture-2
+ # - tutorial-rendertexture
  # - tutorial-shader2d
- # - tutorial-webcam
- # - tutorial-microphone
  # - tutorial-3d
  # - tutorial-shader3d
+ # - tutorial-webcam
+ # - tutorial-microphone
+ # - tutorial-tcp
   - tutorial-release
   - sample-game
   - sample-application
