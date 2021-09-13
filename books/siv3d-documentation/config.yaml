@@ -41,7 +41,7 @@ chapters:
   - tutorial-resource
   - tutorial-scene-manager
   - tutorial-gamepad
- # - tutorial-image
+  - tutorial-image
  # - tutorial-rendertexture
  # - tutorial-shader2d
  # - tutorial-3d
