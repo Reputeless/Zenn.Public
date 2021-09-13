@@ -1,11 +1,13 @@
 ---
-title: "API リファレンス | Z から始まるヘッダ"
+title: "API リファレンス | Z"
 free: true
 ---
 
 # 1. `<ZIPReader.hpp>`
 
 ## `ZIPReader` クラス
+
+ZIP アーカイブファイルのデータを読み込み、展開するクラスです。
 
 ### メンバ関数
 
@@ -81,13 +83,29 @@ ZIP アーカイブファイルの内容一覧を返します。
 
 **bool extractFiles(StringView pattern, FilePathView targetDirectory) const**
 
+- `pattern` 展開対象のファイルをマッチさせるパターン
+- `targetDirectory`: 展開先のディレクトリ
+- 戻り値: 展開に成功した場合 `true`, それ以外の場合は `false`
+
+指定したパターンにマッチするファイルを、指定したディレクトリにすべて展開します。
+
 ---
 
 **MemoryReader extract(FilePathView filePath) const**
 
+- `filepath` 展開するファイル名
+- 戻り値: 展開されたデータ
+
+指定したファイルを展開し、`MemoryReader` オブジェクトに変換します。
+
 ---
 
 **Blob extractToBlob(FilePathView filePath) const**
+
+- `filepath` 展開するファイル名
+- 戻り値: 展開されたデータ
+
+指定したファイルを展開し、`Blob` オブジェクトに変換します。
 
 ---
 
@@ -112,3 +130,10 @@ void Main()
 	}
 }
 ```
+
+# 2. `<Zlib.hpp>`
+
+## `ZLib::` 名前空間
+
+zlib 形式のデータの圧縮・展開を行う関数群です。Siv3D では `Compressoion::` 名前空間で提供される Zstandard 形式の圧縮・展開の使用が推奨されます。
+
