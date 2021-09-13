@@ -4,7 +4,10 @@ free: true
 ---
 
 # 33. 画像処理
-この章では、画像処理プログラミングを行い、結果をシーンに表示する方法を学びます。
+この章では、画像処理プログラミングのための機能と、その結果をシーンに表示する方法を学びます。
+
+`Texture` クラスで読み込んだ画像データは GPU のメモリ上に配置されるため、C++ プログラムで簡単にアクセスすることができません。一方 `Image` クラスで読み込んだ画像データはメインメモリ上に配置されるため、通常の `Array` や `Grid` のように、C++ プログラムで簡単にアクセスしたり中身を変更したりできます。ただし、`Image` にはシーンに画像を表示する機能は無く、表示する場合は `Texture` もしくは、本章で登場する `DynamicTexture` クラスを使う必要があります。
+
 
 ## 33.1 Image クラスの基本
 Siv3D で画像データを扱うときは `Image` クラスを使うのが便利です。`Image` クラスでは、画像データを二次元配列クラス `Gird` のようなインタフェースで扱えます。
@@ -35,9 +38,41 @@ struct Color
 };
 ```
 
+画像ファイルから `Image` を作成するには、`Image` のコンストラクタ引数に、読み込みたい画像ファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
+
+また、`Texture` のコンストラクタに `Image` を渡すことで、`Image` が保持する画像データからテクスチャを作成することができます。
+
+次のサンプルでは、画像の任意の位置のピクセルカラーを取得し表示します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// 画像ファイルから Image を作成
+	const Image image{ U"example/windmill.png" };
+
+	// Image から　Texture を作成
+	const Texture texture{ image };
+
+	while (System::Update())
+	{
+		const Point pos = Cursor::Pos();
+
+		if (InRange(pos.x, 0, image.width() - 1)
+			&& InRange(pos.y, 0, image.height() - 1))
+		{
+			// マウスカーソルの位置にあるピクセルの色を取得
+			const Color pixelColor = image[pos];
+
+			Rect{ 500, 20, 40 }.draw(pixelColor);
+
+			PutText(U"{}"_fmt(pixelColor), Arg::topLeft(560, 20));
+		}
+
+		texture.draw();
+	}
+}
 ```
 
 
