@@ -13,13 +13,13 @@ ZIP アーカイブファイルのデータを読み込み、展開するクラ�
 
 ---
 
-**ZIPReader()**
+#### ZIPReader()
 
 デフォルトコンストラクタ
 
 ---
 
-**ZIPReader(FilePathView path)**
+#### ZIPReader(FilePathView path)
 
 - `path`: オープンする ZIP アーカイブファイルのパス
 
@@ -27,13 +27,13 @@ ZIP アーカイブファイルのデータを読み込み、展開するクラ�
 
 ---
 
-**~ZIPReader()**
+#### ~ZIPReader()
 
 デストラクタ。ZIP アーカイブファイルをクローズします。
 
 ---
 
-**bool open(FilePathView path)**
+#### bool open(FilePathView path)
 
 - `path`: オープンする ZIP アーカイブファイルのパス
 - 戻り値: オープンに成功した場合 `true`, それ以外の場合は `false`
@@ -42,13 +42,13 @@ ZIP アーカイブファイルをオープンします。すでにオープン�
 
 ---
 
-**void close()**
+#### void close()
 
 ZIP アーカイブファイルをクローズします。
 
 ---
 
-**bool isOpen() const**
+#### bool isOpen() const
 
 - 戻り値: オープンしている場合 `true`, それ以外の場合は `false`
 
@@ -56,7 +56,7 @@ ZIP アーカイブファイルをオープンしているかを返します。
 
 ---
 
-**explicit operator bool() const**
+#### explicit operator bool() const
 
 - 戻り値: オープンしている場合 `true`, それ以外の場合は `false`
 
@@ -64,7 +64,7 @@ ZIP アーカイブファイルをオープンしているかを返します。
 
 ---
 
-**const Array<FilePath>& enumPaths() const**
+#### const Array<FilePath>& enumPaths() const
 
 - ZIP アーカイブファイルの内容一覧
 
@@ -72,7 +72,7 @@ ZIP アーカイブファイルの内容一覧を返します。
 
 ---
 
-**bool extractAll(FilePathView targetDirectory) const**
+#### bool extractAll(FilePathView targetDirectory) const
 
 - `targetDirectory`: 展開先のディレクトリ
 - 戻り値: 展開に成功した場合 `true`, それ以外の場合は `false`
@@ -81,7 +81,7 @@ ZIP アーカイブファイルの内容一覧を返します。
 
 ---
 
-**bool extractFiles(StringView pattern, FilePathView targetDirectory) const**
+#### bool extractFiles(StringView pattern, FilePathView targetDirectory) const
 
 - `pattern` 展開対象のファイルをマッチさせるパターン
 - `targetDirectory`: 展開先のディレクトリ
@@ -91,7 +91,7 @@ ZIP アーカイブファイルの内容一覧を返します。
 
 ---
 
-**MemoryReader extract(FilePathView filePath) const**
+#### MemoryReader extract(FilePathView filePath) const
 
 - `filepath` 展開するファイル名
 - 戻り値: 展開されたデータ
@@ -100,7 +100,7 @@ ZIP アーカイブファイルの内容一覧を返します。
 
 ---
 
-**Blob extractToBlob(FilePathView filePath) const**
+#### Blob extractToBlob(FilePathView filePath) const
 
 - `filepath` 展開するファイル名
 - 戻り値: 展開されたデータ
@@ -139,45 +139,45 @@ zlib 形式のデータの圧縮・展開を行う関数群です。Siv3D では
 
 ---
 
-**constexpr int32 DefaultCompressionLevel = 6**
+#### constexpr int32 DefaultCompressionLevel = 6
 
 デフォルトの zlib 圧縮レベルです。
 
 ---
 
-**constexpr int32 MinCompressionLevel = 1**
+#### constexpr int32 MinCompressionLevel = 1
 
 最低の zlib 圧縮レベルです。圧縮率より速度を優先します。
 
 ---
 
-**constexpr int32 MaxCompressionLevel = 9**
+#### constexpr int32 MaxCompressionLevel = 9
 
 最高の zlib 圧縮レベルです。速度より圧縮率を優先します。
 
 ---
 
-**Blob Compress(const void* data, size_t size, int32 compressionLevel = DefaultCompressionLevel)**
+#### Blob Compress(const void* data, size_t size, int32 compressionLevel = DefaultCompressionLevel)
 
 ---
 
-**bool Compress(const void* data, size_t size, Blob& dst, int32 compressionLevel = DefaultCompressionLevel)**
+#### bool Compress(const void* data, size_t size, Blob& dst, int32 compressionLevel = DefaultCompressionLevel)
 
 ---
 
-**Blob Compress(const Blob& blob, int32 compressionLevel = DefaultCompressionLevel)**
+#### #### Blob Compress(const Blob& blob, int32 compressionLevel = DefaultCompressionLevel)
 
 ---
 
-**bool Compress(const Blob& blob, Blob& dst, int32 compressionLevel = DefaultCompressionLevel)**
+#### bool Compress(const Blob& blob, Blob& dst, int32 compressionLevel = DefaultCompressionLevel)
 
 ---
 
-**Blob Decompress(const void* data, size_t size)**
+#### Blob Decompress(const void* data, size_t size)
 
 ---
 
-**bool Decompress(const void* data, size_t size, Blob& dst)**
+#### bool Decompress(const void* data, size_t size, Blob& dst)
 
 ---
 
