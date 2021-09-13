@@ -14,7 +14,15 @@ free: true
 namespace Config
 {
 	// Web アプリを起動する際に使用する Web ブラウザのパス
+# if SIV3D_PLATFORM(WINDOWS)
+
 	const FilePath BrowserPath = U"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe";
+
+# elif SIV3D_PLATFORM(MACOS)
+
+	const FilePath Browserpath = U"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+
+# endif
 }
 
 // UI オプション
@@ -138,8 +146,8 @@ Array<Game> LoadGames()
 		game.priority = ini.get<int32>(U"Game.priority");
 
 		const String path = game.path = ini[U"Game.path"];
-		game.path = IsURL(path) ? path : (gameDirectory + path);
-		game.isWebApp = (not path.ends_with(U".exe")) && (not path.ends_with(U".app"));
+		game.isWebApp = IsURL(path);
+		game.path = (game.isWebApp ? path : (gameDirectory + path));
 
 		// ゲームのリストに追加
 		games << game;
