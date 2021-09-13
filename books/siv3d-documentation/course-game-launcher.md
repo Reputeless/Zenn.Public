@@ -3,7 +3,7 @@ title: "コース | ゲームランチャー"
 free: true
 ---
 
-ゲーム展示イベント等で複数のゲームを展示する際に活用できるランチャーを作ります。このプログランでは、各ゲームのフォルダから設定ファイルや画像をロードします。Web アプリにも対応します。
+ゲーム展示イベント等で複数のゲームを展示する際に活用できるランチャーを作ります。このプログラムでは、各ゲームのフォルダから設定ファイルや画像をロードします。Web アプリにも対応します。
 
 ## 1. ランチャーのプログラム
 
@@ -20,7 +20,7 @@ namespace Config
 
 # elif SIV3D_PLATFORM(MACOS)
 
-	const FilePath Browserpath = U"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+	const FilePath BrowserPath = U"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 # endif
 }
