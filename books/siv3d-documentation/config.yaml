@@ -48,7 +48,7 @@ chapters:
  # - tutorial-shader3d
  # - tutorial-webcam
  # - tutorial-microphone
- # - tutorial-tcp
+  - tutorial-tcp
   - tutorial-release
   - sample-game
   - sample-application
