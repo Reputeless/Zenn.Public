@@ -133,7 +133,59 @@ void Main()
 
 # 2. `<Zlib.hpp>`
 
-## `ZLib::` 名前空間
+## `Zlib::` 名前空間
 
 zlib 形式のデータの圧縮・展開を行う関数群です。Siv3D では `Compressoion::` 名前空間で提供される Zstandard 形式の圧縮・展開の使用が推奨されます。
+
+---
+
+**constexpr int32 DefaultCompressionLevel = 6**
+
+デフォルトの zlib 圧縮レベルです。
+
+---
+
+**constexpr int32 MinCompressionLevel = 1**
+
+最低の zlib 圧縮レベルです。圧縮率より速度を優先します。
+
+---
+
+**constexpr int32 MaxCompressionLevel = 9**
+
+最高の zlib 圧縮レベルです。速度より圧縮率を優先します。
+
+---
+
+**Blob Compress(const void* data, size_t size, int32 compressionLevel = DefaultCompressionLevel)**
+
+---
+
+**bool Compress(const void* data, size_t size, Blob& dst, int32 compressionLevel = DefaultCompressionLevel)**
+
+---
+
+**Blob Compress(const Blob& blob, int32 compressionLevel = DefaultCompressionLevel)**
+
+---
+
+**bool Compress(const Blob& blob, Blob& dst, int32 compressionLevel = DefaultCompressionLevel)**
+
+---
+
+**Blob Decompress(const void* data, size_t size)**
+
+---
+
+**bool Decompress(const void* data, size_t size, Blob& dst)**
+
+---
+
+#### Blob Decompress(const Blob& blob)
+
+---
+
+#### bool Decompress(const Blob& blob, Blob& dst)
+
+---
 
