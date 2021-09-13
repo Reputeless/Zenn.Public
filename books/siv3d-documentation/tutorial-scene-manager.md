@@ -949,7 +949,6 @@ void Main()
 31.7 のプログラムをファイル分割する場合の構成例です。
 
 ```cpp:Main.cpp
-# include <Siv3D.hpp>
 # include "Common.hpp"
 # include "Title.hpp"
 # include "Game.hpp"
