@@ -40,7 +40,7 @@ chapters:
   - tutorial-http
   - tutorial-resource
   - tutorial-scene-manager
- # - tutorial-gamepad
+  - tutorial-gamepad
  # - tutorial-image
  # - tutorial-texture-2
  # - tutorial-shader2d
