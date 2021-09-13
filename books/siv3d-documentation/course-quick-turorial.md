@@ -15,7 +15,7 @@ Siv3D のプログラムを書くときは、いつも `<Siv3D.hpp>` ヘッダ�
 
 これだけで、Siv3D のすべての機能を使ってプログラムを書けるようになります。  
 
-C++ の経験者であれば、ほかにも `<iostream>` や `<vector>` などの C++ 標準ライブラリヘッダをインクルードしたくなるかもしれませんが、その必要はありません。すでに `<Siv3D.hpp>` の中で、Siv3D プログラミングにおいてよく使われる主要な C++ 標準ライブラリヘッダがインクルードされているためです。また、標準ライブラリの機能の多くが、より便利な Siv3D の関数やクラスで再実装されているため、Siv3D の学習の序盤で C++ 標準ライブラリの関数を使うことはめったにありません。
+C++ の経験者であれば、ほかにも `<iostream>` や `<vector>` などの C++ 標準ライブラリヘッダをインクルードしたくなるかもしれませんが、その必要はありません。すでに `<Siv3D.hpp>` の中で、Siv3D のプログラミングでよく使われる主要な C++ 標準ライブラリヘッダがインクルードされているためです。また、標準ライブラリの機能の多くが、より便利な Siv3D の関数やクラスで再実装されているため、Siv3D の学習の序盤で C++ 標準ライブラリの関数を使うことはめったにありません。
 
 
 ## 1.2 エントリーポイント
@@ -33,7 +33,7 @@ int main()
 ```
 ユーザが実装するプログラムは、このプログラムの `void Main()` 関数です。
 
-事前に初期化処理が完了しているので、`Main` 関数の中で最初から Siv3D の機能を使うことができ、`Main` 関数の実行が終了したら、ロードしたアセットやウィンドウの後片付けを Siv3D が自動的に行ってくれます。
+`Main()` が実行される前に初期化処理が完了しているため、ユーザは `Main()` の中で最初から Siv3D の機能を使うことができ、`Main()` の実行が終了したら、ウィンドウの後片付けなどサブシステムの終了処理を Siv3D が自動的に行ってくれます。
 
 
 ## 1.3 最小限のプログラム
@@ -47,11 +47,11 @@ void Main()
 }
 ```
 
-`Main` 関数は一瞬で終了してしまうので、このプログラムを実行しても、何も起こっていないように見えるでしょう。
+ただし、`Main()` は一瞬で終了してしまうので、このプログラムを実行しても、何も起こっていないように見えるでしょう。
 
 
 ## 1.4 ウィンドウを表示し続ける
-プログラムがすぐに終了してしまうと、ユーザとインタラクションをするアプリケーションが作れません。`Main` 関数がずっと続くように **メインループ** を実装します。次のプログラムを実行するとウィンドウが表示され続けます。
+プログラムがすぐに終了してしまっては、ユーザとインタラクションをするアプリケーションが作れません。`Main()` がずっと続くように **メインループ** を実装します。次のプログラムを実行するとウィンドウが表示され続けます。
 ```cpp
 # include <Siv3D.hpp>
 
@@ -60,23 +60,39 @@ void Main()
 	// メインループ
 	while (System::Update())
 	{
-
+		// ここに書いた内容が毎フレーム実行される
 	}
 }
 ```
-`while` 文によってプログラムが半永久的に続くようになります。くり返しのたびに `System::Update` 関数がウィンドウの表示や音楽の再生、マウスやキーボードの入力情報などを更新するので、グラフィックスの表示やユーザとのやり取りをプログラムできるようになります。
+`while` 文によってプログラムが半永久的に続くようになります。くり返しのたびに `System::Update()` がウィンドウの表示や音楽の再生、マウスやキーボードの入力情報などを更新するので、グラフィックスの表示やユーザとのやり取りをプログラムできるようになります。
 
-`System::Update` は普段は `true` を返すため、メインループはいつまでも続きますが、ウィンドウが閉じられたり、エスケープキーが押されたりするなど、アプリケーションを終了させる特別な **ユーザアクション** が実行されると、以降はずっと `false` を返すようになります。 アプリケーションはこの状態になったら速やかにメインループから抜け、`Main` 関数を終了させる必要があります。といっても上記のプログラムのように書いていれば、自然にこの通りに動作するので心配は不要です。
+`System::Update()` は普段は `true` を返すため、メインループはいつまでも続きますが、ウィンドウが閉じられたり、エスケープキーが押されたりするなど、アプリケーションを終了させる特別な **ユーザアクション** が実行されると、以降はずっと `false` を返すようになります。 アプリケーションはこの状態になったら速やかにメインループから抜け、`Main()` を終了させる必要があります。上記のプログラムのように書いていれば、自然にこの通りに動作します。
 
-デフォルトでは「ウィンドウを閉じる」「エスケープキーを押す」「`System::Exit()` を呼ぶ」の 3 つが、アプリケーションを終了させるためのユーザアクションとして設定されています。この設定は`System::SetTerminationTriggers()` に `UserAction` フラグの組み合わせを渡すことでカスタマイズできます。
+デフォルトでは次の 3 つのユーザアクションが、アプリケーションを終了させる操作として設定されています
+
+- ウィンドウを閉じる
+- エスケープキーを押す
+- `System::Exit()` を呼ぶ
 
 メインループは、特に指定しない限り、使用しているモニターのリフレッシュレートと同じ速度で繰り返されます。一般的なモニタのリフレッシュレートは毎秒 60, 120, または 144 フレームです。
 
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// ウィンドウタイトルに直近のフレームレートを表示
+		Window::SetTitle(Profiler::FPS());
+	}
+}
+```
+
 
 ## 1.5 デバッグ表示
-画面にメッセージを表示してみましょう。Siv3D で最も簡単にテキストや数値を画面に表示できる、デバッグ表示機能 `Print` を使います。
-
-`Print` に向かって、出力の記号 `<<` でテキストを送ると、そのテキストが画面に表示されます。
+画面にメッセージを表示してみましょう。`Print` に向かって、出力の記号 `<<` でテキストを送ると、そのテキストが画面に表示されます。
+![](/images/doc_v6/tutorial/1/1.5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -91,11 +107,12 @@ void Main()
 }
 ```
 
-テキストをプログラムに登場させるときは `" "` で囲みます。Siv3D ではさらに、日本語を扱いやすい UTF-32 という形式でテキストデータを扱うため、`"` の先頭には `U` というプレフィックスを付け、`U"Hello"` のようにします。
+テキストをプログラムに登場させるときは `U" "` で囲みます。Siv3D では UTF-32 という、日本語を扱いやすい形式でテキストデータを扱うため、ダブルクォーテーション `"` の先頭には常に `U` というプレフィックスを付け、`U"Hello"` のようにします。
 
 
 ## 1.6 さまざまな値の表示
-`Print` で出力できるのは文字列だけではありません。Siv3D で「Format 可能」な型であれば何でも出力できます。
+Siv3D で提供される型のほとんどは `Print` で内容を表示できます。
+![](/images/doc_v6/tutorial/1/1.6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -140,7 +157,8 @@ void Main()
 
 
 ## 1.7 デバッグ表示のあふれ
-次のように `Print` をメインループの中で使うと、毎フレーム新しいメッセージが追加されて、古いメッセージを画面の外に追いやります。画面からあふれたメッセージは自動的に消去されます。
+次のように `Print` をメインループの中で使うと、毎フレーム新しいメッセージが追加され、古いメッセージは画面の外に追いやられます。画面外に出た古いメッセージは自動的に消去されます。
+![](/images/doc_v6/tutorial/1/1.7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -160,6 +178,7 @@ void Main()
 
 ## 1.8 デバッグ表示の消去
 `ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。メインループの先頭で `ClearPrint()` すると、現在のフレームで `Print` した内容だけが表示されるようになります。
+![](/images/doc_v6/tutorial/1/1.8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -169,7 +188,8 @@ void Main()
 
 	while (System::Update())
 	{
-		ClearPrint(); // Print したメッセージを消去
+		// Print したメッセージを消去
+		ClearPrint();
 
 		Print << count;
 
@@ -185,18 +205,19 @@ Siv3D でよく使う基本的なデータ型は次のとおりです。
 Siv3D で整数を扱うときは、`int` や `unsigned long long` のような標準の型名の代わりに、`int32` や `uint64` のように明示的なサイズを持つ型名を使います。これらの型名を使うことで、プラットフォーム間での移植性が高まり、一貫性のある読みやすいコードになります。
 
 |型名|説明|
-|--|--|
-|`bool`|ブーリアン型|
-|`int8`|符号付 8-bit 整数型|
-|`uint8`|符号無し 8-bit 整数型|
-|`int16`|符号付 16-bit 整数型|
-|`uint16`|符号無し 16-bit 整数型|
-|`int32`|符号付 32-bit 整数型|
-|`uint32`|符号無し 32-bit 整数型|
-|`int64`|符号付 64-bit 整数型|
-|`uint64`|符号無し 64-bit 整数型|
-|`int128`|符号付 128-bit 整数型|
+|:--:|--|
+|`bool`|ブーリアン型 (`false` または `true`)|
+|`int8`|符号付き 8-bit 整数型 (-128 ～ 127)|
+|`uint8`|符号無し 8-bit 整数型 (0 ～ 255)|
+|`int16`|符号付き 16-bit 整数型 (-32,768 ～ 32,767)|
+|`uint16`|符号無し 16-bit 整数型 (0 ～ 65,535)|
+|`int32`|符号付き 32-bit 整数型 (-2,147,483,648 ～ 2,147,483,647)|
+|`uint32`|符号無し 32-bit 整数型 (0 ～ 4,294,967,295)|
+|`int64`|符号付き 64-bit 整数型 (-9,223,372,036,854,775,808 ～ 9,223,372,036,854,775,807)|
+|`uint64`|符号無し 64-bit 整数型 (0 ～ 18,446,744,073,709,551,615)|
+|`int128`|符号付き 128-bit 整数型|
 |`uint128`|符号無し 128-bit 整数型|
+|`size_t`|オブジェクトのサイズを表現する符号なし 64-bit 整数型 (0 ～ 18,446,744,073,709,551,615)|
 |`BigInt`|任意精度多倍長整数型|
 |`HalfFloat`|半精度浮動小数点数型|
 |`float`|単精度浮動小数点数型|
@@ -215,6 +236,7 @@ Siv3D で整数を扱うときは、`int` や `unsigned long long` のような�
 |`StringView`|所有権を持たない文字列クラス (C++ の `std::string_view` 相当)|
 |`FilePathView`|`StringView` のエイリアス|
 
+![](/images/doc_v6/tutorial/1/1.9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -252,12 +274,41 @@ void Main()
 ```
 
 
-## 1.10 画面の座標系
-ウィンドウ内の黒い部分が **画面** で、Siv3D はこの領域に文字や図形、画像を表示できます。
+## 1.10 `Print` 以外の出力
+`Print` 以外にも、コンソール出力 `Console`, ログ出力 `Logger`, 音声読み上げ出力 `Say` を使えます。
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// コンソール画面に出力
+	Console << U"Hello, Console!";
+
+	// ログに出力 (Visual Studio の場合「出力」ウィンドウ）
+	Logger << U"Hello, Logger!";
+
+	// 必要に応じて読み上げ言語を設定（OS に読み上げエンジンがインストールされていない場合は使えない）
+	TextToSpeech::SetDefaultLanguage(LanguageCode::EnglishUS);
+	//TextToSpeech::SetDefaultLanguage(LanguageCode::Japanese);
+
+	// 音声読み上げ出力
+	Say << U"Hello, Say!";
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+
+## 1.11 画面の座標系
+ウィンドウ内の黒い部分が **画面（シーン）** で、Siv3D はこの領域に文字や図形、画像を表示できます。
 
 画面のサイズは、基本の状態では **幅 800 ピクセル、高さ 600 ピクセル** です。画面上の位置を表す座標系は、一番左上のピクセルを「X 座標 0」「Y 座標 0」を表す `(0, 0)` と表記し、右に進むと X 座標が大きく、下に進むと Y 座標が大きくなります。画面の一番右下のピクセルの座標は `(799, 599)` です。 
 
 `Cursor::Pos()` を使うと、現在のマウスカーソルの座標を `Point` 型で取得できます。`Point` 型の値は X 座標を表す `int32 x` と Y 座標を表す `int32 y` の 2 つの成分を持っています。`Point` 型の値をそのまま丸ごと `Print` に送って表示することもできます。
+![](/images/doc_v6/tutorial/1/1.11.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -280,10 +331,8 @@ void Main()
 # 2. 図形を描く
 
 ## 2.1 円を描く
-画面に図形を描く方法を学びましょう。Siv3D では、図形オブジェクトを作成し、その `draw()` メンバ関数を呼んで描画を行うのが基本的なやり方です。円を描くときは `Circle` を作成し、その `.draw()` を呼びます。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-0.png?raw=true)
-
+シーンに図形を描く方法を学びましょう。Siv3D では、図形オブジェクトを作成し、その `draw()` メンバ関数を呼んで描画を行います。円を描くときは `Circle` を作成し、その `.draw()` を呼びます。
+![](/images/doc_v6/tutorial/2/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -298,11 +347,9 @@ void Main()
 ```
 
 
-## 2.2 X 座標がマウスカーソルと連動する円を描く
-円がマウスカーソルの座標に連動して動くようにしてみましょう。`Circle{}` の最初に指定するパラメータは円の中心の X 座標です。この値をマウスカーソルの X 座標にしてみます。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-2.gif?raw=true)
-
+## 2.2 円の大きさを変える
+`Circle()` の最後に指定するパラメータは円の半径です。この値を大きくすれば、描画される円も大きくなります。
+![](/images/doc_v6/tutorial/2/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -310,19 +357,35 @@ void Main()
 {
 	while (System::Update())
 	{
+		// 中心座標 (400, 300), 半径 100 の円を描く
+		Circle{ 400, 300, 100 }.draw();
+	}
+}
+```
+
+
+## 2.3 X 座標がマウスカーソルと連動する円を描く
+円がマウスカーソルの座標に連動して動くようにしてみましょう。`Circle{}` の最初に指定するパラメータは円の中心の X 座標です。この値をマウスカーソルの X 座標にしてみます。
+![](/images/doc_v6/tutorial/2/3.gif)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 中心座標 (マウスの X 座標, 300), 半径 100 の円を描く
 		Circle{ Cursor::Pos().x, 300, 100 }.draw();
 	}
 }
 ```
 
-`Print` で表示したメッセージはいつまでも画面に残りましたが、それは例外的なルールです。通常、`Print` 以外のすべての描画は `System::Update()` のたびに背景の色でリセットされます。
+前章で、`Print` を使って表示したメッセージはいつまでも画面に残りましたが、それは例外的なルールです。通常、`Print` 以外のすべての描画は `System::Update()` のたびに背景の色でリセットされます。
 
 
-## 2.3 マウスカーソルと連動する円を描く
+## 2.4 マウスカーソルと連動する円を描く
 Siv3D で X 座標、Y 座標 2 つの値を受け取る関数は、多くの場合、1 つの `Point` 型、もしくは `Vec2` 型を受け取る別バージョンの関数（オーバーロード）を提供しているケースがよくあります。`Circle` も、「X 座標」「Y 座標」「半径」の 3 つの引数ではなく、「中心座標 (`Vec2` 型)」「半径」の 2 つの引数を受け取るオーバーロードがあります。これを使って円をマウスカーソルと連動させます。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-3.gif?raw=true)
-
+![](/images/doc_v6/tutorial/2/4.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -330,29 +393,30 @@ void Main()
 {
 	while (System::Update())
 	{
+		// 中心座標 (マウスの X 座標, マウスの Y 座標), 半径 100 の円を描く
 		Circle{ Cursor::Pos(), 100 }.draw();
 	}
 }
 ```
 
 
-## 2.4 色を付ける
+## 2.5 色を付ける
 図形に色を付けたいときは `draw()` 関数に色を渡します。色の指定の方法は大きく 4 通りあります。
 
 | 色の表現               | 値の範囲                                                                                                  |
 |--------------------|-------------------------------------------------------------------------------------------------------|
-| Palette::色名        | [Web カラー](https://ironodata.info/colorscheme/colorname.html) の名前で色を指定  |
+| Palette::色名        | [Web カラー](https://www.w3.org/wiki/CSS/Properties/color/keywords) の名前で色を指定  |
 | ColorF{ r, g, b, a } | 0.0 - 1.0 の範囲で RGBA の各成分を指定 |
 | Color{ r, g, b, a }  | 0 - 255 の整数の範囲で RGBA の各成分を指定 |
 | HSV{ h, s, v, a }    | 色相 `h`, 彩度 `s`, 明度 `v` とアルファ値 `a` の各成分を指定。<br>h は 0.0 - 360.0 (370.0 は 10.0 と同じ). s, v, a は 0.0 - 1.0,の範囲 |
 
-**Palette::色名** は `Palette::Orange`, `Palette::Yellow` のように、RGB 値がわからなくても使えます。
+**Palette::色名** は、`Palette::Orange`, `Palette::Yellow` のように、RGB 値がわからなくても使えます。
 
-**ColorF** は Siv3D で一番使い勝手が良い色の表現形式です。
+**ColorF** は、Siv3D で最も使われる色の表現形式です。
 
-**Color** は `Image` 型の要素で、Siv3D で画像処理をするときに使われる形式です。
+**Color** は、`Image` 型の要素で、Siv3D で画像処理をするときに使われる形式です。
 
-**HSV** は赤っぽい、青っぽいなど色の種類を表す色相 (hue) と、色の鮮やかを表す彩度 (saturation), 色の明るさを表す明度 (value) の 3 要素を使った HSV 色空間で色を表現します。
+**HSV** は、赤っぽい、青っぽいなど色の種類を表す色相 (hue) と、色の鮮やかを表す彩度 (saturation), 色の明るさを表す明度 (value) の 3 要素を使った HSV 色空間で色を表現します。
 
 `ColorF`, `Color`, `HSV` はいずれも **アルファ値** `a` を持ちます。アルファ値は「不透明度」を表し、最大値 (`ColorF`, `HSV` の場合 1.0, `Color` の場合 255) ではまったく透過しませんが、値を小さくするとそれに応じて背景を透過する半透明になり、0 になると完全に透明になります。
 
@@ -371,9 +435,7 @@ void Main()
 | `HSV{ h }`          | `HSV{ h, 1.0, 1.0, 1.0 }`      |
 
 色の付いたいくつかの円を描いてみましょう。`.draw()` に色を指定しなかった場合のデフォルトの色は `Palette::White` (`ColorF{ 1.0, 1.0, 1.0, 1.0 }`) です。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/2-0.gif?raw=true)
-
+![](/images/doc_v6/tutorial/2/5.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -402,16 +464,16 @@ void Main()
 }
 ```
 
-## 2.5 背景の色を変える
-背景の色を変えるには `Scene::SetBackground()` に色を渡します。新しい背景色は、次の `System::Update()` で画面の描画内容をリセットするときから反映されます。背景色は一度設定すると、再度変更されるまで同じ設定が使われます。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-0.gif?raw=true)
-
+## 2.6 背景の色を変える
+シーンの背景色を変えるには `Scene::SetBackground()` に色を渡します。新しい背景色は、それ以降の `System::Update()` で画面の描画内容をリセットするときから反映されます。背景色は一度設定すると、再度変更されるまで同じ設定が使われます。
+![](/images/doc_v6/tutorial/2/6.gif)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	// 背景色を ColorF{ 0.3, 0.6, 1.0 } に設定
 	Scene::SetBackground(ColorF{ 0.3, 0.6, 1.0 });
 
 	while (System::Update())
@@ -421,11 +483,10 @@ void Main()
 }
 ```
 
-## 2.6 背景の色を時間の経過とともに変える
-プログラムの経過時間（秒）を `Scene::Time()` で取得して、時間に応じて背景色の色相を変化させてみましょう。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-1.gif?raw=true)
-
+## 2.7 背景の色を時間の経過とともに変える
+`Scene::Time()` はプログラムの経過時間（秒）を `double` 型の値で返します。これを用いて、時間に応じて背景色の色相を変化させてみましょう。
+![](/images/doc_v6/tutorial/2/7.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -433,16 +494,18 @@ void Main()
 {
 	while (System::Update())
 	{
-		const double hue = (Scene::Time() * 60.0);
+		// 色相 hue = 経過時間 (秒) * 60
+		const double hue = (Scene::Time() * 60);
 
 		Scene::SetBackground(HSV{ hue, 0.6, 1.0 });
 	}
 }
 ```
 
-## 2.7 長方形を描く
-長方形を描くときは `Rect` を作成して `.draw()` します。
 
+## 2.8 長方形を描く
+長方形を描くときは `Rect` を作成して `.draw()` します。
+![](/images/doc_v6/tutorial/2/8.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -460,7 +523,7 @@ void Main()
 		Rect{ Arg::center(400, 300), 80, 40 }.draw(Palette::Pink);
 
 		// マウスカーソルの座標を中心の基準位置にして、幅が 100 の正方形を描く 
-		Rect{ Arg::center(Cursor::Pos()), 100 }.draw(ColorF(1.0, 0.0, 0.0, 0.5));
+		Rect{ Arg::center(Cursor::Pos()), 100 }.draw(ColorF{ 1.0, 0.0, 0.0, 0.5 });
 
 		// 座標や大きさを浮動小数点数 (小数を含む数）で指定したい場合は RectF
 		RectF{ 200.4, 450.3, 390.5, 122.5 }.draw(Palette::Skyblue);
@@ -468,18 +531,14 @@ void Main()
 }
 ```
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/4-0.gif?raw=true)
-
-図形は `draw()` した順番に描画されます。このプログラムでは、マウスカーソルに追従する赤い正方形よりも、画面の下にある水色の大きな長方形が上に来ます。
+図形は `draw()` した順番に描画されます。このプログラムの、マウスカーソルに追従する赤い正方形と画面の下にある水色の大きな長方形を比べると、後者のほうがあとから描画されます。
 
 `Rect` 型は左上の座標と幅、高さをそれぞれ `int32 x`, `int32 y`, `int32 w`, `int32 h` というメンバ変数で表します。整数ではなく浮動小数点数で扱いたい場合は、すべての要素が `double` 型である `RectF` を使います。
 
 
-## 2.8 枠を描く
-図形は、`.draw()` の代わりに `.drawFrame()` することで、枠だけを描けます。`.drawFrame()` の第 1 引数には図形の内側方向への太さを、第 2 引数には外側方向への太さを指定します。図形の `.draw()` や `.drawFrame()` の戻り値はその図形自身なので、`rect.draw().drawFrame()` のように関数を続けて書くこともできます。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/5-0.png?raw=true)
-
+## 2.9 枠を描く
+図形の枠だけを描きたい場合、`.draw()` の代わりに `.drawFrame()` を使います。`.drawFrame()` の第 1 引数には図形の内側方向への太さを、第 2 引数には外側方向への太さを指定します。図形の `.draw()` や `.drawFrame()` の戻り値はその図形自身なので、`rect.draw().drawFrame()` のように関数を続けて書くこともできます。
+![](/images/doc_v6/tutorial/2/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -508,11 +567,9 @@ void Main()
 ```
 
 
-## 2.9 線分を描く
+## 2.10 線分を描く
 始点と終点を指定して線分を描くときは `Line` を作成して `.draw()` します。`.draw()` のパラメータには描画する線分の太さと色を指定します。線分の両端を丸くしたり、点線にしたりするなど、スタイルの変更もできます。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/6-0.png?raw=true)
-
+![](/images/doc_v6/tutorial/2/10.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -542,7 +599,7 @@ void Main()
 ```
 
 
-## 2.10 様々な図形
+## 2.11 様々な図形
 Siv3D にはこれ以外にも様々な図形クラスが用意されていて、複雑な形状を短いコードで記述できます。
 
 |クラス|図形|
@@ -619,7 +676,7 @@ void Main()
 ```
 
 
-## 2.11 グラデーションを描く
+## 2.12 グラデーションを描く
 `Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、グラデーションで塗りつぶすオプションがあります。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/21-0.png?raw=true)
@@ -648,18 +705,26 @@ void Main()
 }
 ```
 
+
 # 3. 画像を描く
 
 ## 3.1 絵文字を描画する
-画面に画像を描きたいときは `Texture` を作成し、`.draw()` または `.drawAt()` します。`Texture` は、画像ファイルから画像データを読み込んで作成したり、プログラムで作成した画像データから作成したり、Siv3D が標準で提供している絵文字やアイコンコレクションから作成することができます。
+シーンに画像を描きたいときは `Texture` を作成し、`.draw()` または `.drawAt()` します。`Texture` は、次のような方法で作成できます。
 
-この章の最初では、絵文字コレクションから好きな絵文字を選んで `Texture` を作成し、それを描画するプログラムを書いてみましょう。`Texture` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Texture` を作成するのは避け、作成が 1 回だけで済むようにしましょう。
+- 画像ファイルから画像データを読み込む
+- プログラムで作成した画像データ (`Image`) から作成する
+- Siv3D が標準で提供する絵文字コレクションから作成する
+- Siv3D が標準で提供するアイコンコレクションから作成する
+
+`Texture` はテクスチャのリソースをデストラクタで自動的に解放するため、リソースの解放処理を明示的に書く必要はありません。
+
+まず最初に、絵文字コレクションから好きな絵文字を選んで `Texture` を作成し、それを描画するプログラムを書いてみましょう。`Texture` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Texture` を作成するのは避け、作成が 1 回だけで済むようにしましょう。
 
 絵文字コレクションから `Texture` を作成するには、`Texture` のコンストラクタ引数に `U"🐈"_emoji` のように絵文字を渡します。
 
 ### Texture::drawAt()
-`.drawAt()` では、テクスチャの中心をどこに据えるかを画面の座標で指定します。絵文字やアイコンを描く場合はこちらが便利です。
-![](https://storage.googleapis.com/zenn-user-upload/sm7023pc2clnnov9plkxf6if40un)
+`.drawAt()` では、テクスチャの中心をどこに据えるかをシーンの座標で指定します。絵文字やアイコンを描く場合はこの指定方法が便利です。
+![](/images/doc_v6/tutorial/8/1.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -673,15 +738,18 @@ void Main()
 		// テクスチャを座標 (0, 0) を中心に描画
 		texture.drawAt(0, 0);
 
-		// テクスチャを画面中央を中心に描画
+		// テクスチャを座標 (200, 200) を中心に描画
+		texture.drawAt(200, 200);
+
+		// テクスチャを、シーン中央を中心にして描画
 		texture.drawAt(Scene::Center());
 	}
 }
 ```
 
 ### Texture::draw()
-`.draw()` では、テクスチャの左上をどこに据えるかを画面の座標で指定します。背景画像や UI などを描くときにはこちらが便利な場合があります。
-![](https://storage.googleapis.com/zenn-user-upload/t49oyggs2p0yo60qtbther221eox)
+`.draw()` では、テクスチャの左上をどこに据えるかをシーンの座標で指定します。背景画像や UI などを描くときにはこの指定方法が便利な場合があります。
+![](/images/doc_v6/tutorial/8/1.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -692,23 +760,27 @@ void Main()
 
 	while (System::Update())
 	{
-		// テクスチャを座標 (0, 0) から描画
-		texture.draw(0, 0);
+		// テクスチャを座標 (400, 0) から描画
+		texture.draw(400, 0);
 
-		// テクスチャを画面中心から描画
+		// 座標を指定しない場合 (0, 0) から描画
+		texture.draw();
+
+		// テクスチャをシーン中心から描画
 		texture.draw(Scene::Center());
 	}
 }
 ```
 
 ### Siv3D で使える絵文字の一覧
-Siv3D で使える絵文字は約 3,600 種類あります。絵文字は [emojipedia](https://emojipedia.org/) の Categories から探すのが便利です。 OpenSiv3D v0.6 はオープンソースの絵文字フォント Noto Color Emoji (Android 11.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
+Siv3D で使える絵文字は約 3,600 種類あります。絵文字を探すときは [emojipedia](https://emojipedia.org/) の Categories から調べるのが便利です。 OpenSiv3D v0.6.0 はオープンソースの絵文字フォント Noto Color Emoji (Android 12.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
+
 
 ## 3.2 テクスチャを拡大縮小して描画する
 
 ### Texture::scaled()
 `Texture::scaled()` に拡大縮小倍率を指定すると、`Texture` にサイズ情報が付加された `TextureRegion` を作成できます。`TextureRegion` は `Texture` のように `.draw()` または `.drawAt()` できます。`Texture` を作成するのと異なり、既存の `Texture` から `TextureRegion` を作成するのは非常に軽い実行時負荷です。サンプルでは示していませんが、縦横で異なる倍率に設定することもできます。
-![](https://storage.googleapis.com/zenn-user-upload/6x2n1gnf7niswi6q2i4i4l16kuz3)
+![](/images/doc_v6/tutorial/8/2.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -734,7 +806,7 @@ void Main()
 
 ### Texture::resized()
 `Texture::resized()` は、拡大縮小後のサイズを倍率ではなくピクセル単位で指定します。Siv3D 標準の絵文字のサイズは幅が 136 ピクセルなので、136 より大きい数を指定すると拡大、小さい数を指定すると縮小表示になります。サンプルでは示していませんが、縦横で異なるサイズに設定することもできます。
-![](https://storage.googleapis.com/zenn-user-upload/8q8tuoga444onyzxg2bo15tsrc5x)
+![](/images/doc_v6/tutorial/8/2.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -758,12 +830,13 @@ void Main()
 }
 ```
 
+
 ## 3.3 テクスチャを回転して描画する
 `Texture::rotated()` または `Texture::rotatedAt()` によって、テクスチャに回転情報を付加した `TexturedQuad` を作成できます。`TexturedQuad` は `Texture` のように `.draw()` または `.drawAt()` できます。`TextureRegion` と同様、`TexturedQuad` を作成するのは非常に軽い実行時負荷です。
 
 ### Texture::rotated()
 テクスチャの中心を軸にして回転します。回転角度はラジアンで指定します。
-![](https://storage.googleapis.com/zenn-user-upload/itswb5hm08lv2ss9x7o70rc3yqsq)
+![](/images/doc_v6/tutorial/8/3.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -781,7 +854,7 @@ void Main()
 
 ### Texture::roatedAt()
 テクスチャ上の指定した座標を軸にして回転します。`Vec2{ 0, 0 }` を指定すればテクスチャの左上が軸になります。回転角度はラジアンで指定します。
-
+![](/images/doc_v6/tutorial/8/3.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -797,9 +870,10 @@ void Main()
 }
 ```
 
+
 ## 3.4 テクスチャを上下・左右反転して描画する
 `Texture::flipped()` で上下反転、`Texture::mirrored()` で左右反転した `TextureRegion` を作成できます。それぞれ、引数をとらずに反転する関数、引数の `bool` 値が `true` のときだけ反転する関数の 2 種類のオーバーロードがあります。
-![](https://storage.googleapis.com/zenn-user-upload/1rwu7czw650kmyvqf9ancnbe0vtj)
+![](/images/doc_v6/tutorial/8/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -815,19 +889,18 @@ void Main()
 		// 左右反転
 		cat.mirrored().drawAt(400, 300);
 
-		// 反転を bool 値で指定するオーバーロード
+		// 反転するかを bool 値で指定するオーバーロード
 		cat.mirrored(false).drawAt(600, 300);
 	}
 }
 ```
 
+
 ## 3.5 アイコンを描画する
 アイコンコレクションから `Texture` を作成するには、`Texture` のコンストラクタ引数にアイコンオブジェクトを渡します。アイコンは全部で約 7,700 種類用意されています。
 
-`Icon` のコンストラクタには、[Font Awesome アイコン一覧](https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free) または [Material Design Icons](https://pictogrammers.github.io/@mdi/font/6.1.95/) で調べられる 16 進数コードに `_icon` を付けた値と、アイコンのサイズ（ピクセル単位）を渡します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/5-0.png?raw=true)
-
+`Texture` のコンストラクタには、[Font Awesome アイコン一覧](https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free) または [Material Design Icons](https://pictogrammers.github.io/@mdi/font/6.1.95/) で調べられる 16 進数コードに `_icon` を付けた値と、アイコンの基本サイズ（ピクセル）を渡します。
+![](/images/doc_v6/tutorial/8/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -836,30 +909,29 @@ void Main()
 	Scene::SetBackground(ColorF{ 0.92 });
 
 	// 歯車 (f013) のアイコン
-	const Texture iconConfig{ 0xf013_icon, 80 };
+	const Texture icon0{ 0xf013_icon, 40 };
 
 	// 南京錠 (f023) のアイコン
-	const Texture iconLock{ 0xf023_icon, 80 };
+	const Texture icon1{ 0xf023_icon, 80 };
 
 	// 拡大鏡 (f00e) のアイコン
-	const Texture iconZoom{ 0xf00e_icon, 80 };
+	const Texture icon2{ 0xf00e_icon, 120 };
 
 	while (System::Update())
 	{
-		iconConfig.drawAt(200, 300, ColorF{ 0.25 });
+		icon0.drawAt(200, 300, ColorF{ 0.25 });
 
-		iconLock.scaled(1.5).drawAt(400, 300, ColorF{ 0.25 });
+		icon1.drawAt(400, 300, ColorF{ 0.25 });
 
-		iconZoom.drawAt(600, 300, ColorF{ 0.25 });
+		icon2.drawAt(600, 300, ColorF{ 0.25 });
 	}
 }
 ```
 
+
 ## 3.6 画像ファイルを読み込んで描画する
 画像ファイルから `Texture` を作成するには、`Texture` のコンストラクタ引数に、読み込みたい画像ファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/6-0.png?raw=true)
-
+![](/images/doc_v6/tutorial/8/6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -883,7 +955,7 @@ void Main()
 ```
 
 ### 対応している画像フォーマット
-OpenSiv3D v0.6 では、8 種類の画像フォーマットの読み込みがサポートされています。
+OpenSiv3D v0.6.0 では、9 種類の画像フォーマットの読み込みがサポートされています。
 
 | フォーマット   | 拡張子             | 対応状況       |
 |----------|-----------------|:----------:|
@@ -895,16 +967,14 @@ OpenSiv3D v0.6 では、8 種類の画像フォーマットの読み込みがサ
 | TGA      | tga             | ✔          |
 | PPM      | ppm/pgm/pbm/pnm | ✔          |
 | WebP     | webp            | ✔          |
+| TIFF     | tif/tiff        | ✔          |
 | JPEG2000 | jp2             | (将来のバージョン) |
 | DDS      | dds             | (将来のバージョン) |
-| TIFF     | tif/tiff        | (将来のバージョン) |
 
 
 ## 3.7 テクスチャの一部を描画する
 テクスチャの全部ではなく、特定の長方形の領域だけを描画したい場合は `Texture::operator()` で、テクスチャ上の描画したい領域を指定して `TextureRegion` を作成します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/8-0.png?raw=true)
-
+![](/images/doc_v6/tutorial/8/8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -929,16 +999,26 @@ void Main()
 
 
 ## 3.8 動画をテクスチャとして扱う
-`VideoTexture` を使うと、動画ファイルを `Texture` のように扱えます。`VideoTexture` は毎フレーム `.advance()` を呼ぶことで再生位置を進めることができます。
+シーンに動画を描きたいときは `VideoTexture` を作成し、`.draw()` または `.drawAt()` します。`VideoTexture` は `Texture` とほぼ同じインタフェースを持ち、動画ファイルを `Texture` のように扱えます。`VideoTexture` は毎フレーム `.advance()` を呼ぶことで再生位置を進めます。Siv3D はバックグラウンドのスレッドで動画の次のフレームの先読みを行っています。
+
+対応する動画フォーマットはプラットフォームによって異なりますが、MP4 ファイルは Windows, macOS, Linux でサポートされています。音声付き動画の音声を再生する方法は OpenSiv3D v0.6.0 では用意されていません。映像のみです。
+
+https://youtu.be/B4WPEdA4vMI
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	// ループする場合は Loop::Yes, ループしない場合は Loop::No
 	const VideoTexture videoTexture{ U"example/video/river.mp4", Loop::Yes };
 
 	while (System::Update())
 	{
+		ClearPrint();
+
+		// 再生位置（秒） / 動画の長さ（秒）
+		Print << videoTexture.posSec() << U" / " << videoTexture.lengthSec();
+
 		// 動画の時間を進める (デフォルトでは Scece::DeltaTime() 秒)
 		videoTexture.advance();
 
@@ -946,7 +1026,7 @@ void Main()
 			.scaled(0.5).draw();
 
 		videoTexture
-			.scaled(0.5)
+			.scaled(0.25)
 			.rotated(Scene::Time() * 30_deg)
 			.drawAt(Cursor::Pos());
 	}
@@ -959,16 +1039,14 @@ void Main()
 ## 4.1 Font
 前章までテキストの表示に使ってきた `Print` は、フォントのサイズや種類、描画位置に自由度がありませんでした。自由にカスタマイズしたフォントを使ってテキストを描きたいときは `Font` を作成し、描画したい内容を `()` でつなげたあと、`.draw()` または `.drawAt()` します。
 
-`Texture` と同じように、`Font` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Font` を作成するのは避け、作成が 1 回だけで済むようにしましょう。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/1-0.png?raw=true)
-
+`Texture` と同じように、`Font` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Font` を作成するのは避け、作成が 1 回だけになるようにしましょう。
+![](/images/doc_v6/tutorial/14/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// サイズ 50 のフォントを作成
+	// 基本サイズ 50 のフォントを作成
 	const Font font{ 50 };
 
 	while (System::Update())
@@ -982,20 +1060,18 @@ void Main()
 		// 文字列以外を渡すと Format される
 		font(Cursor::Pos()).draw(50, 300);
 
-		// 複数渡すと、Format でつなげられる
-		font(123, U"ABC").draw(50, 400);
+		// 複数渡すと、それぞれを Format した文字列をつなげる
+		font(123, U"ABC").draw(50, 400, ColorF{ 0.5, 1.0, 0.5 });
 
-		font(U"{}/{}/{}"_fmt(2020, 12, 31)).draw(50, 500);
+		font(U"{}/{}/{}"_fmt(2021, 12, 31)).draw(50, 500, ColorF{ 1.0, 0.5, 0.0 });
 	}
 }
 ```
 
 
 ## 4.2 改行する
-テキストの中に改行文字 `\n` が含まれていると、そこで改行されます。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/2-0.png?raw=true)
-
+テキストの中に改行文字 `'\n'` が含まれていると、そこで改行されます。
+![](/images/doc_v6/tutorial/14/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1012,25 +1088,23 @@ void Main()
 
 
 ## 4.3 フォントのサイズ
-`Font` のコンストラクタの第一引数にはフォントのサイズを指定します。単位はピクセルです。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/3-0.png?raw=true)
-
+`Font` のコンストラクタの第 1 引数にはフォントの基本サイズを指定します。単位はピクセルです。基本サイズはあとから変更できません。1 つの `Font` からさまざまなサイズのテキストを描く方法はのちほど紹介します。
+![](/images/doc_v6/tutorial/14/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 大きさ 20 のフォント
+	// 基本サイズ 20 のフォント
 	const Font font20{ 20 };
 
-	// 大きさ 40 のフォント
+	// 基本サイズ 40 のフォント
 	const Font font40{ 40 };
 
-	// 大きさ 60 のフォント
+	// 基本サイズ 60 のフォント
 	const Font font60{ 60 };
 
-	// 大きさ 80 のフォント
+	// 基本サイズ 80 のフォント
 	const Font font80{ 80 };
 
 	const String text = U"Hello, Siv3D!";
@@ -1050,55 +1124,81 @@ void Main()
 
 
 ## 4.4 フォントの種類
-Siv3D には異なる太さの 7 種類の書体が同梱されています。`Font` のコンストラクタの第二引数において `Typeface::` で太さを指定することで、それらの書体を利用できます。何も指定しなかった場合 `Typeface::Regular` が選択されます。
+Siv3D には異なる太さの 7 種類の日本語フォントと、5 地域向けの CJK（中国語・韓国語・日本語対応）フォント、白黒絵文字フォント、カラー絵文字フォントが同梱されています。`Font` のコンストラクタにおいて `Typeface::` で書体を指定することで、それらの書体を利用できます。何も指定しなかった場合 `Typeface::Regular` が選択されます。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/4-0.png?raw=true)
 
+|Typeface|説明|
+|--|--|
+|`Typeface::Thin`|細い日本語フォント|
+|`Typeface::Light`|やや細い日本語フォント|
+|`Typeface::Regular`|通常日本語フォント|
+|`Typeface::Medium`|やや太い日本語フォント|
+|`Typeface::Bold`|太い日本語フォント|
+|`Typeface::Heavy`|とても太い日本語フォント|
+|`Typeface::Black`|最も太い日本語フォント|
+|`Typeface::CJK_Regular_JP`|日本語デザインの CJK フォント|
+|`Typeface::CJK_Regular_KR`|韓国語デザインの CJK フォント|
+|`Typeface::CJK_Regular_SC`|簡体字デザインの CJK フォント|
+|`Typeface::CJK_Regular_TC`|台湾繁体字デザインの CJK フォント|
+|`Typeface::CJK_Regular_HK`|香港繁体字デザインの CJK フォント|
+|`Typeface::MonochromeEmoji`|モノクロ絵文字フォント|
+|`Typeface::ColorEmoji`|カラー絵文字フォント|
+
+![](/images/doc_v6/tutorial/14/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 細いフォント
-	const Font fontThin{ 50, Typeface::Thin };
+	const Font fontThin{ 36, Typeface::Thin };
+	const Font fontLight{ 36, Typeface::Light };
+	const Font fontRegular{ 36, Typeface::Regular };
+	const Font fontMedium{ 36, Typeface::Medium };
+	const Font fontBold{ 36, Typeface::Bold };
+	const Font fontHeavy{ 36, Typeface::Heavy };
+	const Font fontBlack{ 36, Typeface::Black };
 
-	// やや細いフォント
-	const Font fontLight{ 50, Typeface::Light };
+	const Font fontJP{ 36, Typeface::CJK_Regular_JP };
+	const Font fontKR{ 36, Typeface::CJK_Regular_KR };
+	const Font fontSC{ 36, Typeface::CJK_Regular_SC };
+	const Font fontTC{ 36, Typeface::CJK_Regular_TC };
+	const Font fontHK{ 36, Typeface::CJK_Regular_HK };
 
-	// 通常のフォント（デフォルト）
-	const Font fontRegular{ 50, Typeface::Regular };
+	const Font fontMono{ 36, Typeface::MonochromeEmoji };
 
-	// やや太いフォント
-	const Font fontMedium{ 50, Typeface::Medium };
+	// カラー絵文字フォントは、サイズの指定が無視される仕様
+	const Font fontEmoji{ 36, Typeface::ColorEmoji };
 
-	// 太いフォント
-	const Font fontBold{ 50, Typeface::Bold };
-
-	// とても太いフォント
-	const Font fontHeavy{ 50, Typeface::Heavy };
-
-	// 非常に太いフォント
-	const Font fontBlack{ 50, Typeface::Black };
-
-	const String text = U"Hello, Siv3D!";
+	const String s0 = U"Hello, Siv3D!";
+	const String s1 = U"こんにちは 你好 안녕하세요 骨曜喝愛遙扇";
+	const String s2 = U"🐈🐕🚀";
 
 	while (System::Update())
 	{
-		fontThin(text).draw(20, 20);
-		fontLight(text).draw(20, 70);
-		fontRegular(text).draw(20, 120);
-		fontMedium(text).draw(20, 170);
-		fontBold(text).draw(20, 220);
-		fontHeavy(text).draw(20, 270);
-		fontBlack(text).draw(20, 320);
+		fontThin(s0).draw(20, 20);
+		fontLight(s0).draw(20, 60);
+		fontRegular(s0).draw(20, 100);
+		fontMedium(s0).draw(20, 140);
+		fontBold(s0).draw(20, 180);
+		fontHeavy(s0).draw(20, 220);
+		fontBlack(s0).draw(20, 260);
+
+		fontJP(s1).draw(20, 300);
+		fontKR(s1).draw(20, 340);
+		fontSC(s1).draw(20, 380);
+		fontTC(s1).draw(20, 420);
+		fontHK(s1).draw(20, 460);
+
+		fontMono(s2).draw(20, 500);
+		fontEmoji(s2).draw(20, 540);
 	}
 }
 ```
 
 
 ## 4.5 フォントファイルからフォントを読み込んで使う
-PC 上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタの第二引数に、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。
-![](https://storage.googleapis.com/zenn-user-upload/d2oeqr5lg8eyt73nizj8p0qamu8y)
+コンピュータ上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタに、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（App フォルダ）を基準とする相対パスか、絶対パスを使用します。リリース用のアプリを作るときには、のちの章で説明する「リソース」パスの使用を推奨します。
+![](/images/doc_v6/tutorial/14/6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1109,21 +1209,22 @@ void Main()
 
 	while (System::Update())
 	{
-		font(U"Hello, Siv3D!").draw(20, 20);
+		font(U"Hello, Siv3D!\nこんにちは！").draw(20, 20);
 	}
 }
 ```
 
 
 ## 4.6 PC にインストールされているフォントを使う
-PC にインストールされているフォントは OS ごとに特殊なフォルダに保存されています。そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、ファイルパスを構築できます。`FileSystem::GetFolderPath()` に渡す `SpecialFolder` の種類と OS によって取得できるパスの対応表は次の通りです。macOS のみ 3 つの戻り値が異なります。
+PC にインストールされているフォントは OS ごとに特殊なフォルダに保存されています。そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、ファイルパスを構築できます。`FileSystem::GetFolderPath()` に渡す `SpecialFolder` の種類と OS によって取得できるパスの対応表は次の通りです。
 
 |                            | Windows             | macOS                  | Linux       |
-|----------------------------|---------------------|------------------------|-------------|
-| SpecialFolder::SystemFonts | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
-| SpecialFolder::LocalFonts  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/ |
-| SpecialFolder::UserFonts   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/ |
+|----------------------------|:---------------------:|:------------------------:|:-------------:|
+| `SpecialFolder::SystemFonts` | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
+| `SpecialFolder::LocalFonts`  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(存在する場合) |
+| `SpecialFolder::UserFonts`   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(存在する場合) |
 
+![](/images/doc_v6/tutorial/14/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1141,7 +1242,15 @@ void Main()
 
 	while (System::Update())
 	{
-		font(U"Hello, Siv3D!").draw(20, 40);
+# if SIV3D_PLATFORM(WINDOWS)
+
+		font(U"Arial").draw(20, 40);
+
+# elif SIV3D_PLATFORM(MACOS)
+
+		font(U"Helvetica").draw(20, 40);
+
+# endif
 	}
 }
 ```
@@ -1152,10 +1261,8 @@ void Main()
 # 5. GUI
 
 ## 5.1 ボタン
-ボタンの表示と入力の取得を実装するときは `SimpleGUI::Button()` 関数を使うと便利です。ボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::Button()` は自身が押されたときに `true` を返します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/9/1-0.gif?raw=true)
-
+ボタンの表示と入力の取得を実装するときは `SimpleGUI::Button()` 関数を使うと便利です。関数にはボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::Button()` は自身が押されたときに `true` を返します。
+![](/images/doc_v6/tutorial/11/1.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1165,17 +1272,17 @@ void Main()
 	{
 		if (SimpleGUI::Button(U"Red", Vec2{ 100, 100 }))
 		{
-			Scene::SetBackground(ColorF{ 0.8, 0.1, 0.1 });
+			Scene::SetBackground(ColorF{ 0.8, 0.2, 0.2 });
 		}
 
 		if (SimpleGUI::Button(U"Green", Vec2{ 100, 150 }))
 		{
-			Scene::SetBackground(ColorF{ 0.1, 0.8, 0.1 });
+			Scene::SetBackground(ColorF{ 0.2, 0.8, 0.2 });
 		}
 
 		if (SimpleGUI::Button(U"Blue", Vec2{ 100, 200 }))
 		{
-			Scene::SetBackground(ColorF{ 0.1, 0.1, 0.8 });
+			Scene::SetBackground(ColorF{ 0.2, 0.2, 0.8 });
 		}
 
 		// ボタンの幅を 200px に指定
@@ -1204,11 +1311,10 @@ void Main()
 }
 ```
 
+
 ## 5.2 スライダー
-スライダーの表示と値の取得を実装するときは `SimpleGUI::Slider()` 関数を使うと便利です。スライダーのテキストや位置、幅、値の範囲などを設定できます。縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。`SimpleGUI::Slider()` と `SimpleGUI::VerticalSlider()` は値が変更されたときに `true` を返します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/9/2-0.gif?raw=true)
-
+スライダーの表示と値の取得を実装するときは `SimpleGUI::Slider()` 関数を使うと便利です。関数にはスライダーのテキストや位置、幅、値の範囲などを設定できます。テキストを持たない縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。`SimpleGUI::Slider()` と `SimpleGUI::VerticalSlider()` は値が変更されたときに `true` を返します。
+![](/images/doc_v6/tutorial/11/2.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1258,10 +1364,8 @@ void Main()
 
 
 ## 5.3 チェックボックス
-チェックボックスの表示と入力の取得を実装するときは `SimpleGUI::CheckBox()` 関数を使うと便利です。チェックボックスのテキストや位置、幅、状態などを設定できます。`SimpleGUI::CheckBox()` は値が変更されたときに `true` を返します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/9/3-0.gif?raw=true)
-
+チェックボックスの表示と入力の取得を実装するときは `SimpleGUI::CheckBox()` 関数を使うと便利です。関数にはチェックボックスのテキストや位置、幅、状態などを設定できます。`SimpleGUI::CheckBox()` は値が変更されたときに `true` を返します。
+![](/images/doc_v6/tutorial/11/3.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1269,37 +1373,35 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-	bool checked1 = false;
-	bool checked2 = true;
+	bool checked0 = false;
+	bool checked1 = true;
+	bool checked2 = false;
 	bool checked3 = false;
 	bool checked4 = false;
 	bool checked5 = false;
-	bool checked6 = false;
 
 	while (System::Update())
 	{
-		SimpleGUI::CheckBox(checked1, U"Label1", Vec2{ 100, 40 });
-		SimpleGUI::CheckBox(checked2, U"Label2", Vec2{ 100, 80 });
-		SimpleGUI::CheckBox(checked3, U"Label3", Vec2{ 100, 120 });
+		SimpleGUI::CheckBox(checked0, U"Label0", Vec2{ 100, 40 });
+		SimpleGUI::CheckBox(checked1, U"Label1", Vec2{ 100, 80 });
+		SimpleGUI::CheckBox(checked2, U"Label2", Vec2{ 100, 120 });
 
 		// 幅 200px
-		SimpleGUI::CheckBox(checked4, U"Label4", Vec2{ 100, 180 }, 200);
+		SimpleGUI::CheckBox(checked3, U"Label3", Vec2{ 100, 180 }, 200 );
 
 		// 無効化
-		SimpleGUI::CheckBox(checked5, U"Label5", Vec2{ 100, 220 }, 200, false);
+		SimpleGUI::CheckBox(checked4, U"Label4", Vec2{ 100, 220 }, 200, false);
 
 		// 幅はテキストに合わせる
-		SimpleGUI::CheckBox(checked6, U"Label6", Vec2{ 100, 260 }, unspecified, false);
+		SimpleGUI::CheckBox(checked5, U"Label5", Vec2{ 100, 260 }, unspecified, false);
 	}
 }
 ```
 
 
 ## 5.4 ラジオボタン
-ラジオボタンの表示と入力の取得を実装するときは `SimpleGUI::RadioButtons()` 関数を使うと便利です。ラジオボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::RadioButtons()` は値が変更されたときに `true` を返します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/9/4-0.gif?raw=true)
-
+ラジオボタンの表示と入力の取得を実装するときは `SimpleGUI::RadioButtons()` 関数を使うと便利です。関数にはラジオボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::RadioButtons()` は値が変更されたときに `true` を返します。
+![](/images/doc_v6/tutorial/11/4.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1312,7 +1414,7 @@ void Main()
 	size_t index4 = 0;
 
 	const Array<String> options = { U"Red", U"Green", U"Blue" };
-	constexpr std::array<ColorF, 3> colors = { ColorF{ 0.8, 0.1, 0.1 }, ColorF{ 0.1, 0.8, 0.1 }, ColorF{ 0.1, 0.1, 0.8 } };
+	constexpr std::array<ColorF, 3> colors = { ColorF{ 0.8, 0.2, 0.2 }, ColorF{ 0.2, 0.8, 0.2 }, ColorF{ 0.2, 0.2, 0.8 } };
 
 	Scene::SetBackground(colors[index1]);
 
@@ -1340,10 +1442,8 @@ void Main()
 
 
 ## 5.5 テキストボックス
-テキストボックスを実装するときは `SimpleGUI::TextBox()` 関数を使うと便利です。テキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストは `TextEditState` 型のオブジェクトによって管理します。`SimpleGUI::TextBox()` は値が変更されたときに `true` を返します。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/9/5-0.gif?raw=true)
-
+テキストボックスを実装するときは `SimpleGUI::TextBox()` 関数を使うと便利です。関数にはテキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストは `TextEditState` 型のオブジェクトによって管理します。`SimpleGUI::TextBox()` はテキストが変更されたときに `true` を返します。
+![](/images/doc_v6/tutorial/11/5.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1351,54 +1451,58 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-	const Font font{ 30, Typeface::Bold };
-
-	TextEditState tes1;
-	TextEditState tes2;
-	tes2.text = U"Siv3D"; // デフォルトの文字列
-	TextEditState tes3;
-	TextEditState tes4;
+	TextEditState te0;
+	TextEditState te1;
+	te1.text = U"Siv3D"; // デフォルトの文字列
+	TextEditState te2;
+	TextEditState te3;
 
 	while (System::Update())
 	{
-		SimpleGUI::TextBox(tes1, Vec2{ 100, 40 });
+		ClearPrint();
+		Print << te0.active; // アクティブかどうか
+		Print << te0.text; // 入力されたテキスト (String)
 
-		// .text でテキストにアクセス、.active でアクティブかどうかの状態にアクセス
-		font(tes1.text).draw(400, 30, tes1.active ? ColorF{ 1.0, 0.0, 0.0 } : ColorF{ 0.25 });
+		SimpleGUI::TextBox(te0, Vec2{ 100, 140 });
 
-		SimpleGUI::TextBox(tes2, Vec2{ 100, 100 });
+		SimpleGUI::TextBox(te1, Vec2{ 100, 200 });
 
-		if (SimpleGUI::Button(U"Clear", Vec2{ 320, 100 }))
+		if (SimpleGUI::Button(U"Clear", Vec2{ 320, 200 }))
 		{
 			// テキストを消去
-			tes2.clear();
+			te1.clear();
 		}
 
 		// 幅 100px, 文字数を 4 文字までに制限
-		SimpleGUI::TextBox(tes3, Vec2{ 100, 160 }, 100, 4);
+		SimpleGUI::TextBox(te2, Vec2{ 100, 260 }, 100, 4);
 
 		// 無効化
-		SimpleGUI::TextBox(tes4, Vec2{ 100, 220 }, 100, 4, false);
+		SimpleGUI::TextBox(te3, Vec2{ 100, 320 }, 100, 4, false);
 	}
 }
 ```
 
 
 ## 5.6 カラーピッカー
-![](https://storage.googleapis.com/zenn-user-upload/s4prwn4uxfeju255i6lklk20c6jj)
+カラーピッカーは `SimpleGUI::ColorPicker()` 関数を使うと便利です。関数にはカラーピッカーの位置、状態などを設定できます。`SimpleGUI::ColorPicker()` は色が変更されたときに `true` を返します。
+![](/images/doc_v6/tutorial/11/7.gif)
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	HSV hsv = Palette::Gray;
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	HSV color0 = Palette::Orange;
+	HSV color1 = Palette::Skyblue;
 
 	while (System::Update())
 	{
-		Scene::SetBackground(hsv);
+		SimpleGUI::ColorPicker(color0, Vec2{ 100, 100 });
+		Rect{ 100, 300, 100 }.draw(color0);
 
-		// カラーピッカー
-		SimpleGUI::ColorPicker(hsv, Vec2{ 20, 20 });
+		SimpleGUI::ColorPicker(color1, Vec2{ 300, 100 }, false);
+		Rect{ 300, 300, 100 }.draw(color1);
 	}
 }
 ```
@@ -1406,8 +1510,8 @@ void Main()
 
 # 6. キーボード入力
 
-## 6.1 キーの入力状態
-キーボードのキーには `Input` 型のオブジェクトが割り当てられています。
+## 6.1 キーの入力状態を調べる
+キーボードのキーには「Key～」と名付けられた `Input` 型の値が割り当てられています。
 
 - A, B, C, ... は `KeyA`, `KeyB`, `KeyC` , ...
 - 1, 2, 3, ... は `Key1`, `Key2`, `Key3`, ...
@@ -1426,19 +1530,15 @@ void Main()
 - コントロールキーは `KeyControl`
 - (macOS) コマンドキーは `KeyCommand`
 - 「,」「.」「/」キーは `KeyComma`, `KeyPeriod`, `KeySlash`
-- 上記以外のキーは `<Siv3D/Keyboard.hpp>` を参照
+- 上記以外のキーは [`<Siv3D/Keyboard.hpp>`](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Keyboard.hpp) を参照
 
-押された瞬間であるかを `.down()`, 押されているかを `.pressed()`, 離された瞬間であるかを `.up()` を使って `bool` 値で取得できます。
+`Input` 型の値はメンバ関数を持ち、押された瞬間であるかを `.down()`, 押されているかを `.pressed()`, 離された瞬間であるかを `.up()` を使って `bool` 値で取得できます。
 
-|          | down | pressed | up |
-|----------|------|---------|----|
-| 押していない   |      |         |    |
-| 押した瞬間    | ✔    | ✔       |    |
-| 押され続けている |      | ✔       |    |
-| 離した瞬間    |      |         | ✔  |
-| 離され続けている |      |         |    |
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/11/1-0.gif?raw=true)
+| 関数 | 押していないとき | 押した瞬間 | 押され続けている | 離した瞬間 | 離され続けている |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| `.down()` | false | **✔ true** | false | false | false |
+| `.pressed()` | false | **✔ true** | **✔ true** | false | false |
+| `.released()` | false | false | false | **✔ true** | false |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1449,7 +1549,7 @@ void Main()
 
 	while (System::Update())
 	{
-		const double delta = (200 * Scene::DeltaTime());
+		const double delta = (Scene::DeltaTime() * 200);
 
 		// 上下左右キーで移動
 		if (KeyLeft.pressed())
@@ -1484,8 +1584,11 @@ void Main()
 ```
 
 
-## 6.2 キーが押されている時間
-`Input::pressedDuration()` は、そのキーが押され続けている時間を `Duration` 型の値で返します。
+## 6.2 キーが押されている時間を調べる
+`Input` の `.pressedDuration()` は、その入力が押され続けている時間を `Duration` 型の値で返します。
+
+押され続けている時間は `.up()` が `true` になるフレームまで有効です。`.up()` されたときに `.pressedDuration()` を調べると、そのキーが離されるまで何秒間押され続けていたかを取得できます。
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1495,14 +1598,21 @@ void Main()
 	{
 		ClearPrint();
 		Print << KeyA.pressedDuration();
+
+		if (1s <= KeySpace.pressedDuration())
+		{
+			Print << U"Space";
+		}
 	}
 }
 ```
+
 
 ## 6.3 複数のキーの組み合わせ
 
 ### A または B
 `|` を使って複数のキーを組み合わせると、そのいずれかが押されているかどうかを判定できます。
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1512,6 +1622,7 @@ void Main()
 	{
 		ClearPrint();
 
+		// [スペース] または [エンター] が押されている
 		if ((KeySpace | KeyEnter).pressed())
 		{
 			Print << U"KeySpace / KeyEnter";
@@ -1522,6 +1633,7 @@ void Main()
 
 ### A を押しながら B
 `+` を使って 2 つのキーを組み合わせると、左のキーが押されながら、右のキーが押されたかどうかを判定できます。
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1529,7 +1641,9 @@ void Main()
 {
 	while (System::Update())
 	{
-		if ((KeyControl + KeyC).down() || (KeyCommand + KeyC).down())
+		// [Ctrl + C] または [Command + C] が押された
+		if ((KeyControl + KeyC).down()
+			|| (KeyCommand + KeyC).down())
 		{
 			Print << U"Ctrl + C / Command + C";
 		}
@@ -1539,10 +1653,9 @@ void Main()
 
 
 ## 6.4 テキスト入力
-`TextInput::UpdateText()` に `String` 型の変数を渡すことで、テキスト入力を処理できます。
+`TextInput::UpdateText()` に `String` 型の変数を渡すことで、テキスト入力を処理できます。`TextInput::GetEditingText()` は未変換の文字入力を取得できます。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/11/5-0.gif?raw=true)
-
+![](/images/doc_v6/tutorial/16/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1552,16 +1665,19 @@ void Main()
 
 	String text;
 
-	const Rect area{ 50, 50, 700, 300 };
+	constexpr Rect area{ 50, 50, 700, 300 };
 
 	while (System::Update())
 	{
 		// キーボードからテキストを入力
 		TextInput::UpdateText(text);
 
+		// 未変換の文字入力を取得
+		const String editingText = TextInput::GetEditingText();
+
 		area.draw(ColorF{ 0.3 });
 
-		font(text).draw(area.stretched(-20));
+		font(text + U'|' + editingText).draw(area.stretched(-20));
 	}
 }
 ```
@@ -1570,11 +1686,9 @@ void Main()
 # 7. マウス入力
 
 ## 7.1 マウスカーソルの座標
-マウスカーソルの座標は `Cursor::Pos()` を使うと `Point` 型で取得できます。シーンが拡大縮小されている場合には、`Cursor::PosF()` を使うと `Vec2` 型で取得できます。
+マウスカーソルの座標は `Cursor::Pos()` を使うと `Point` 型で取得できます。シーンが実ウィンドウサイズと異なる (チュートリアル 15 参照) 場合、`Cursor::PosF()` を使うと `Vec2` 型で小数点数以下の座標も取得できます。
 
-`Cursor::Pos()` で取得できるマウスカーソル座標は、直前の `System::Update()` の呼び出し時点での座標のため、実際画面に見えているマウスカーソルよりも古い座標を示す場合があります。
-
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/1-0.gif?raw=true)
+`Cursor::Pos()` で取得できるマウスカーソル座標は、最後の `System::Update()` の呼び出し時点での座標のため、実際画面に見えているマウスカーソルよりも古い座標を示す場合があります。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1583,6 +1697,10 @@ void Main()
 {
 	while (System::Update())
 	{
+		ClearPrint();
+		Print << Cursor::Pos();
+		Print << Cursor::PosF();
+
 		Circle{ Cursor::Pos(), 50 }.draw(Palette::Skyblue);
 	}
 }
@@ -1590,10 +1708,11 @@ void Main()
 
 
 ## 7.2 マウスカーソルの移動量
-直前のフレームからのマウスカーソルの移動量は `Cursor::Delta()` を使うと `Point` 型で取得できます。シーンが拡大縮小されている場合には、`Cursor::DeltaF()` を使うと `Vec2` 型で取得できます。
+1 フレーム前のマウスカーソル座標は `Cursor::PreviousPos()` / `Cursor::PreviousPosF()` で取得できます。1 フレーム前からのマウスカーソルの移動量は `Cursor::Delta()` / `Cursor::DeltaF()` で取得できます。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/2-0.gif?raw=true)
+`Cursor::Delta() == (Cursor::Pos() - Cursor::PreviousPos())` です。
 
+![](/images/doc_v6/tutorial/17/2.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1611,7 +1730,7 @@ void Main()
 			// 移動量分だけ円を移動
 			circle.moveBy(Cursor::Delta());
 		}
-	
+
 		if (circle.leftClicked()) // 円を左クリックしたら
 		{
 			grab = true;
@@ -1631,32 +1750,30 @@ void Main()
 }
 ```
 
-図形の `.moveBy()` 関数は、与えられた x, y 成分だけ自身の座標を移動します。一方で似たような名前の `.movedBy()` 関数は、与えられた x, y 成分だけ座標を移動した新しい図形を返し、自身の座標は変更しません。
+図形の `.moveBy()` 関数は、与えられた x, y 成分だけ自身の座標を移動します。似たような名前の `.movedBy()` 関数は、与えられた x, y 成分だけ座標を移動した新しい図形を返し、自身の座標は変更しません。
 
 
 ## 7.3 マウスのボタンの入力状態
-マウスのボタンには、以下の `Input` 型のオブジェクトが割り当てられています。
+マウスのボタンには、以下の `Input` 型の値が割り当てられています。
 
 | 定数      | 対応するボタン |
 |---------|---------|
-| MouseL  | 左ボタン    |
-| MouseR  | 右ボタン    |
-| MouseM  | 中央ボタン   |
-| MouseX1 | 拡張ボタン 1 |
-| MouseX2 | 拡張ボタン 2 |
-| MouseX3 | 拡張ボタン 3 |
-| MouseX4 | 拡張ボタン 4 |
-| MouseX5 | 拡張ボタン 5 |
+| `MouseL`  | 左ボタン    |
+| `MouseR`  | 右ボタン    |
+| `MouseM`  | 中央ボタン   |
+| `MouseX1` | 拡張ボタン 1 |
+| `MouseX2` | 拡張ボタン 2 |
+| `MouseX3` | 拡張ボタン 3 |
+| `MouseX4` | 拡張ボタン 4 |
+| `MouseX5` | 拡張ボタン 5 |
 
-前章のキーボードのキーと同様に、押された瞬間であるかを `.down()`, 押されているかを `.pressed()`, 離された瞬間であるかを `.up()` を使って `bool` 値で取得できます。
+チュートリアル 16 のキーボードと同様に、押された瞬間であるかを `.down()`, 押されているかを `.pressed()`, 離された瞬間であるかを `.up()` を使って `bool` 値で取得できます。
 
-|          | down | pressed | up |
-|----------|------|---------|----|
-| 押していない   |      |         |    |
-| 押した瞬間    | ✔    | ✔       |    |
-| 押され続けている |      | ✔       |    |
-| 離した瞬間    |      |         | ✔  |
-| 離され続けている |      |         |    |
+| 関数 | 押していないとき | 押した瞬間 | 押され続けている | 離した瞬間 | 離され続けている |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| `.down()` | false | **✔ true** | false | false | false |
+| `.pressed()` | false | **✔ true** | **✔ true** | false | false |
+| `.released()` | false | false | false | **✔ true** | false |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1673,11 +1790,13 @@ void Main()
 }
 ```
 
+
 ## 7.4 マウスホイールの回転量
 直前のフレームからのマウスホイールのスクロール量は、`Mouse::Wheel()` によって `double` 型で取得できます。水平ホイールのスクロール量は、`Mouse::WheelH()` によって `double` 型で取得できます。
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/5-0.gif?raw=true)
+マウスホイールのスクロール量はフレームレートに依存しないため、`Scene::Delta()` で調整する必要はありません。
 
+![](/images/doc_v6/tutorial/17/7.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1687,11 +1806,19 @@ void Main()
 
 	while (System::Update())
 	{
-		pos.y -= Mouse::Wheel() * 10;
+		ClearPrint();
 
-		pos.x += Mouse::WheelH() * 10;
+		// マウスホイールのスクロール量
+		Print << Mouse::Wheel();
+
+		// マウスの水平ホイールのスクロール量
+		Print << Mouse::WheelH();
+
+		pos.y -= (Mouse::Wheel() * 10);
+		pos.x += (Mouse::WheelH() * 10);
 
 		RectF{ Arg::center = pos, 200 }.draw();
 	}
 }
 ```
+

@@ -306,6 +306,7 @@ void Main()
 }
 ```
 
+
 ## 1.10 `Print` 以外の出力
 `Print` 以外にも、コンソール出力 `Console`, ログ出力 `Logger`, 音声読み上げ出力 `Say` を使えます。
 ```cpp
