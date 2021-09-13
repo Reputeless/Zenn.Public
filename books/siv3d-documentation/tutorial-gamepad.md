@@ -161,7 +161,7 @@ void Main()
 
 
 ## 32.2 Joy-Con の入力を扱う
-PC に接続されている Nintendo Switch の Joy-Con の情報は `JoyConL` または `JoyConR` を通して取得できます。
+PC に接続されている Nintendo Switch の Joy-Con の情報を、`JoyConL` または `JoyConR` を通して取得できます。
 
 ```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6
@@ -233,7 +233,7 @@ void Main()
 
 
 ## 32.3 Pro コントローラーの入力を扱う
-PC に接続されている Nintendo Switch の Pro コントローラーの情報は `ProController` を通して取得できます。
+PC に接続されている Nintendo Switch の Pro コントローラーの情報を、`ProController` を通して取得できます。
 
 ```cpp
 # include <Siv3D.hpp>
