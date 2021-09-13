@@ -378,17 +378,17 @@ Games/ (ホームディレクトリ)
   ...
 ```
 
-## 3. `launcher_info.ini` の書式
-ゲームの情報や操作に使うデバイスを記述します。  
+## 3. launcher_info.ini の書式
+ゲームの情報や、操作に使うデバイスを記述します。  
 
 :::message
-	macOS の場合、実行ファイルのパスはアプリフォルダ `Game.app` ではなく `Game.app/Contents/MacOS/Game` のように実際の実行ファイルの場所を指定します。
+macOS の場合、実行ファイルのパスはアプリフォルダ `Game.app` ではなく `Game.app/Contents/MacOS/Game` のように実際の実行ファイルの場所を指定します。
 :::
 
 ```
 [Game]
 title = タイトル
-path = 実行ファイルまたはページのパス（Game.exe, Geme.html, https://example.com/）
+path = 実行ファイルまたは URL（Game.exe, https://example.com/）
 image = ランチャーのタイルに表示する画像のパス（相対パス）
 desc = 説明文（\n で改行)
 staff = 開発スタッフ
