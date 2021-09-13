@@ -308,6 +308,7 @@ void Main()
 
 `Grid` クラスは、実質的には次のような構造です。
 ```cpp
+// 説明のため簡略化
 template <class Type>
 class Grid
 {
@@ -317,7 +318,7 @@ class Grid
 };
 ```
 
-`Grid` 型の変数 `grid` に対する、インデックスによる要素へのアクセス `grid[y][x] = value;` は、内部では `grid.m_data[y * m_width + x] = value;` になります。また、`Point` 型の値 `pos` による `grid[pos] = value;` は、`grid.m_data[pos.y * m_width + pos.x] = value;` になります。
+`Grid` 型の変数 `grid` に対する、インデックスによる要素へのアクセス `grid[y][x] = value;` は、内部では `m_data[y * m_width + x] = value;` になります。また、`Point` 型の値 `pos` による `grid[pos] = value;` は、`m_data[pos.y * m_width + pos.x] = value;` になります。
 
 
 ### 6.2.1 Grid の基本
