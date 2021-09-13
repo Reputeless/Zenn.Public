@@ -306,6 +306,20 @@ void Main()
 ## 6.2 二次元配列
 方眼紙のように区切ったマップの情報や、スプレッドシートのように、二次元配列が必要な情報を扱うときには `Grid<Type>` クラステンプレートを使います。`Grid` を使うことで、動的な二次元配列を便利に効率的に扱えます。`Grid` の内部では 1 つの `Array` ですべての要素を連続的に保持しています。
 
+`Grid` クラスは、実質的には次のような構造です。
+```cpp
+template <class Type>
+class Grid
+{
+	Array<Type> m_data;
+	size_t m_width;
+	size_t m_height;
+};
+```
+
+`Grid` 型の変数 `grid` に対する、インデックスによる要素へのアクセス `grid[y][x] = value;` は、内部では `grid.m_data[y * m_width + x] = value;` になります。また、`Point` 型の値 `pos` による `grid[pos] = value;` は、`grid.m_data[pos.y * m_width + pos.x] = value;` になります。
+
+
 ### 6.2.1 Grid の基本
 
 `.size()` はグリッドのサイズを `Size` 型（`Point` 型のエイリアス）で返します。サイズの X 成分、Y 成分は `.width()`, `.height()` に対応します。
