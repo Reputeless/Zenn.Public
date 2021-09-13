@@ -3,6 +3,10 @@ title: "API リファレンス | Z"
 free: true
 ---
 
+:::message
+将来追加予定の API リファレンスのテンプレートページです。
+:::
+
 # 1. `<ZIPReader.hpp>`
 
 ## `ZIPReader` クラス
