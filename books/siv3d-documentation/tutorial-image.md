@@ -275,7 +275,7 @@ void Main()
 
 | 処理 | 結果の例 | 自身を変更するメンバ関数 | 結果を返すメンバ関数 |
 |--|:--:|--|--|
-|色の反転|![](/images/doc_v6/tutorial/33/7.1.png)|`negate`|`negated`|
+|色の反転|![](/images/doc_v6/tutorial/33/7.1.png =200x)|`negate`|`negated`|
 |グレイスケール化|![](/images/doc_v6/tutorial/33/7.2.png)|`grayscale`|`grayscaled`|
 |セピアカラー|![](/images/doc_v6/tutorial/33/7.3.png)|`sepia`|`sepiaed`|
 |ポスタライズ|![](/images/doc_v6/tutorial/33/7.4.png)|`posterize`|`posterized`|
