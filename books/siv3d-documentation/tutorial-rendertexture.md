@@ -11,7 +11,7 @@ free: true
 
 `RenderTexture` を作成し、`ScopedRenderTarget2D` オブジェクトのコンストラクタにレンダーテクスチャを渡すと、`ScopedRenderTarget2D` オブジェクトのスコープが有効な間、図形やテクスチャ、フォントがそのレンダーテクスチャに描画されます（**レンダーターゲット（描画先）の変更**）。描画されたレンダーテクスチャは、レンダーターゲットから解除されたあとにテクスチャとして描画に転用できます。`RenderTexture` は `Texture` と同じ描画系のメンバ関数を持ちます。
 
-図形やテクスチャ、フォントの `.draw()` による描画は、前章で扱った `Image` への書き込み (`.paint()` や `.overwrite()`) と異なり、GPU 上で実行されるため圧倒的に高速です。これまでのさまざまな描画関数やレンダーステートも使えるため、柔軟でもあります。
+図形やテクスチャ、フォントの `.draw()` による描画は、前章で扱った `Image` への書き込み (`.paint()` や `.overwrite()`) と異なり、GPU 上で実行されるため圧倒的に高速です。これまで学んだあらゆる描画関数やレンダーステートも使えるため、柔軟でもあります。
 
 `RenderTexture` は `.clear(color)` によって、保持している画像データを指定した色にクリアできます。クリアをしない場合、それまで描いた内容の上に新しい内容を重ねて描くことになります。
 
@@ -23,7 +23,7 @@ void Main()
 	const Texture emoji{ U"🐈"_emoji };
 
 	// レンダーテクスチャ
-	RenderTexture renderTexture{ 200, 200, Palette::White };
+	const RenderTexture renderTexture{ 200, 200, Palette::White };
 
 	while (System::Update())
 	{
@@ -56,7 +56,7 @@ void Main()
 {
 	const Texture emoji{ U"🐈"_emoji };
 
-	RenderTexture renderTexture{ 200, 200, Palette::White };
+	const RenderTexture renderTexture{ 200, 200, Palette::White };
 
 	while (System::Update())
 	{
@@ -78,9 +78,53 @@ void Main()
 
 
 ## 34.2 マルチサンプル・レンダーテクスチャ
+`RenderTexture` への描画では、通常のシーンへの描画と異なり、マルチサンプル・アンチエイリアシングが有効にならないので、斜めの線を含む図形を描画した際にジャギーが生じます。`MSRenderTexture` を使うと、マルチサンプル・アンチエイリアシングを有効にして描画できます。ただし、`MSRenderTexture` に描画された結果を描画で使う際には、
+- `Graphics2D::Flush()` によってその時点までの描画処理をすべて実行（フラッシュ）して `MSRenderTexture` の内容を確定する
+- `MSRenderTexture` の `.resolve()` によって、`MSRenderTexture` 内のマルチサンプル・テクスチャを、描画で使用可能な通常のテクスチャに変換（リゾルブ）する
+
+という 2 つの手順が必要になります。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	// レンダーテクスチャ
+	const RenderTexture renderTexture{ 200, 200, Palette::White };
+
+	// マルチサンプル・レンダーテクスチャ
+	const MSRenderTexture msRenderTexture{ 200, 200, Palette::White };
+
+	while (System::Update())
+	{
+		// レンダーテクスチャ
+		{
+			const ScopedRenderTarget2D target{ renderTexture.clear(Palette::Black) };
+
+			Rect(Arg::center(100, 100), 80)
+				.rotated(Scene::Time() * 30_deg).draw();
+		}
+
+		// マルチサンプル・レンダーテクスチャ
+		{
+			const ScopedRenderTarget2D target{ msRenderTexture.clear(Palette::Black) };
+
+			Rect(Arg::center(100, 100), 80)
+				.rotated(Scene::Time() * 30_deg).draw();
+		}
+
+		// 2D 描画をフラッシュ
+		Graphics2D::Flush();
+
+		// マルチサンプル・テクスチャをリゾルブ
+		msRenderTexture.resolve();
+
+		renderTexture.draw(100, 0);
+		msRenderTexture.draw(400, 0);
+	}
+}
 ```
 
 
