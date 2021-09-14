@@ -137,11 +137,15 @@ void Main()
 
 `from` のテクスチャの内容を `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません。
 
+---
+
 #### void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
 - `from`: 入力テクスチャ
 - `to`: 出力テクスチャ
 
 `from` のテクスチャの内容を拡大縮小して `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なるテクスチャでなければなりません。ダウンサンプルと言う名前が付いていますが、拡大にも使えます。
+
+---
 
 #### void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
 - `from`: 入力テクスチャ

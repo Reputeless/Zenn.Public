@@ -88,6 +88,7 @@ void Main()
 ## 33.2 プログラムで画像を作成する
 `Image` のコンストラクタに幅、高さ、色を渡して、画像を作成することができます。
 
+![](/images/doc_v6/tutorial/33/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -129,6 +130,7 @@ void Main()
 ## 33.3 ピクセルを編集する
 `Image` が持つ画像データの幅は `.width()`, 高さは `.height()`, 幅と高さは `.size()` で取得できます。次のようなループで、`Image` 内のすべてのピクセルにアクセスできます。
 
+![](/images/doc_v6/tutorial/33/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -190,6 +192,7 @@ void Main()
 ## 33.4 range-based for
 range-based for を使って、すべてのピクセルにアクセスすることもできます。
 
+![](/images/doc_v6/tutorial/33/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -324,6 +327,7 @@ void Main()
 ## 33.8 画像に図形を書き込む
 `Circle` や `Line`, `Rect` などの図形型を、メンバ関数 `.paint()` および `.overwrite()` を使って `Image` に書き込むことができます。`.paint()` はアルファ値に応じて色をブレンドします。`.overwrite()` は引数で指定した色をそのまま書き込むため、処理が高速です。また、次のサンプル星形のように、画像外にはみ出した部分は書き込まれません。
 
+![](/images/doc_v6/tutorial/33/8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -366,6 +370,7 @@ void Main()
 
 `Image` は `Texture` のように絵文字やアイコンもロードできます。
 
+![](/images/doc_v6/tutorial/33/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -402,6 +407,7 @@ void Main()
 
 ### 33.10.1 絵文字を書き込む
 
+![](/images/doc_v6/tutorial/33/10.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -432,6 +438,7 @@ void Main()
 
 `Image` の `.fill(color)` は、その色で画像を塗りつぶすメンバ関数です。
 
+![](/images/doc_v6/sample/application/sketch.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -490,6 +497,7 @@ void Main()
 ## 33.11 画像にテキストを書き込む
 画像にテキストを書き込むには、`Font` から各文字の画像を `BitmapGlyph` 型で取得し、その画像をチュートリアル 14.19 の自由描画の要領で書き込みます、
 
+![](/images/doc_v6/tutorial/33/11.png)
 ```cpp
 # include <Siv3D.hpp>
 
