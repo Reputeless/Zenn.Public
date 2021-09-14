@@ -273,7 +273,7 @@ void Main()
 ## 33.7 画像処理
 `Image` には様々な画像処理関数が用意されています。どの画像処理も、自身を変更するメンバ関数と、画像処理後の結果を返すメンバ関数の 2 種類があります。
 
-| 処理 | 結果の例 | 自身を変更するメンバ関数 / 結果を返すメンバ関数 |
+| 処理 | 結果の画像の例 | 自身を変更するメンバ関数 / 結果を返すメンバ関数 |
 |--|:--:|--|
 |色の反転|![](/images/doc_v6/tutorial/33/7.1.png)|`negate` / `negated`|
 |グレイスケール化|![](/images/doc_v6/tutorial/33/7.2.png)|`grayscale` / `grayscaled`|
@@ -356,22 +356,182 @@ void Main()
 
 
 ## 33.9 画像に画像を書き込む
-`Image` を別の `Image` に書き込むことができます。書き込みの対象を自分自身にすることはできません。
+`Image` を別の `Image` に書き込むことができます。書き込みの対象を自分自身にすることはできません。書き込みに使うメンバ関数は次の通りです。
+
+| メンバ関数 | アルファブレンド | 書き込み先のアルファ値の更新 |
+|--|--|--|
+|`.paint()`<br>`.paintAt()`| ✔ | |
+|`.stamp()`<br>`.stampAt()`| ✔ | 大きいほう |
+|`.overwrite()`<br>`.overwriteAt()`| | ✔ |
+
+`Image` は `Texture` のように絵文字やアイコンもロードできます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Image image{ 600, 600, Palette::White };
+
+	const Image windmillImage{ U"example/windmill.png" };
+	const Image catImage{ U"🐈"_emoji };
+
+	windmillImage.overwrite(image, 40, 40);
+
+	// 透過ピクセルに対する paint / stamp / overwrite の違い
+	Rect{ 100, 400, 400, 40 }.overwrite(image, Color{ 255, 0 });
+	catImage.paintAt(image, 150, 400);
+	catImage.stampAt(image, 300, 400);
+	catImage.overwriteAt(image, 450, 400);
+
+	const Texture texture{ image };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
+```
+
+## 33.10 内容を更新できるテクスチャ
+ペイントアプリのように、`Image` をプログラムの実行中に頻繁に変更し、その結果をシーンに描きたい場合、`Image` の内容を変更するたびに新しい `Texture` を作成するのは非常に大きなコストです。そのような用途では、`DynamicTexture` を 1 度だけ作成し、その中身だけを更新するのが効率的です。。
+
+`DynamicTexture` は `Texture` のメンバ関数に加え、`.fill(image)` メンバ関数を持ちます。`.fill()` は、`DynamicTexture` が空の場合は `image` で新しいテクスチャを作成し、既にデータを持っている場合はその内容を `image` で置き換えます。このとき新旧の画像データの縦横サイズは一致している必要があります。`DynamicTexture` の `.fill()` は、既に保持しているデータを上書きするだけなので、新しく `Texture` を作成するよりも圧倒的に効率的です。
+
+## 33.10.1 絵文字を書き込む
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Image image{ 600, 600, Palette::White };
+	const Image emoji{ U"😃"_emoji };
+
+	DynamicTexture dtexture{ image };
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			emoji.paintAt(image, Cursor::Pos());
+
+			// DynamicTexture の中身を Image で更新
+			dtexture.fill(image);
+		}
+
+		dtexture.draw();
+	}
+}
+```
+
+## 33.10.2 線を書き込む
+次のようなプログラムでペイントアプリが作れます。
+
+`Image` の `.fill(color)` は、その色で画像を塗りつぶします。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// キャンバスのサイズ
+	constexpr Size canvasSize{ 600, 600 };
+
+	// ペンの太さ
+	constexpr int32 thickness = 8;
+
+	// ペンの色
+	constexpr Color penColor = Palette::Orange;
+
+	// 書き込み用の画像データを用意
+	Image image{ canvasSize, Palette::White };
+
+	// 表示用のテクスチャ（内容を更新するので DynamicTexture）
+	DynamicTexture texture{ image };
+
+	while (System::Update())
+	{
+		if (MouseL.pressed())
+		{
+			// 書き込む線の始点は直前のフレームのマウスカーソル座標
+			// （初回はタッチ操作時の座標のジャンプを防ぐため、現在のマウスカーソル座標にする）
+			const Point from = (MouseL.down() ? Cursor::Pos() : Cursor::PreviousPos());
+
+			// 書き込む線の終点は現在のマウスカーソル座標
+			const Point to = Cursor::Pos();
+
+			// image に線を書き込む
+			Line{ from, to }.overwrite(image, thickness, penColor);
+
+			// 書き込み終わった image でテクスチャを更新
+			texture.fill(image);
+		}
+
+		// 描いたものを消去するボタンが押されたら
+		if (SimpleGUI::Button(U"Clear", Vec2{ 640, 40 }, 120))
+		{
+			// 画像を白で塗りつぶす
+			image.fill(Palette::White);
+
+			// 塗りつぶし終わった image でテクスチャを更新
+			texture.fill(image);
+		}
+
+		// テクスチャを表示
+		texture.draw();
+	}
+}
 ```
 
 
-## 33.10 画像にテキストを書き込む
+## 33.11 画像にテキストを書き込む
+画像にテキストを描くには、文字を `BitmapGlyph` で取得し、その画像をチュートリアル 14.19 の自由描画の要領で書き込みます、
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Image image{ 600, 600, Palette::White };
+
+	const Font font{ 60, Typeface::Bold };
+	{
+		const String text = U"Hello, Siv3D!\nこんにちは。";
+		constexpr Vec2 basePos{ 20, 20 };
+		Vec2 penPos{ basePos };
+
+		for (const auto& ch : text)
+		{
+			// 改行文字なら
+			if (ch == U'\n')
+			{
+				// ペンの X 座標をリセット
+				penPos.x = basePos.x;
+
+				// ペンの Y 座標をフォントの高さ分進める
+				penPos.y += font.height();
+
+				continue;
+			}
+
+			const BitmapGlyph bitmapGlyph = font.renderBitmap(ch);
+
+			// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
+			// .asPoint() は Vec2 を Point に変換する関数
+			bitmapGlyph.image.paint(image, (penPos + bitmapGlyph.getOffset()).asPoint(), Palette::Seagreen);
+
+			// ペンの X 座標を文字の幅の分進める
+			penPos.x += bitmapGlyph.xAdvance;
+		}
+	}
+
+	const Texture texture{ image };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
 ```
 
-
-## 33.11 内容を更新できるテクスチャ
-
-```cpp
-
-```
