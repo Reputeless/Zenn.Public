@@ -42,7 +42,7 @@ chapters:
   - tutorial-scene-manager
   - tutorial-gamepad
   - tutorial-image
- # - tutorial-rendertexture
+  - tutorial-rendertexture
  # - tutorial-shader2d
  # - tutorial-3d
  # - tutorial-shader3d
