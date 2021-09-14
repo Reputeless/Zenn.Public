@@ -322,13 +322,41 @@ void Main()
 
 
 ## 33.8 画像に図形を書き込む
+`Circle` や `Line`, `Rect` などの図形型を、メンバ関数 `.paint()` および `.overwrite()` を使って `Image` に書き込むことができます。`.paint()` はアルファ値に応じて色をブレンドします。`.overwrite()` は引数で指定した色をそのまま書き込むため、処理が高速です。また、次のサンプル星形のように、画像外にはみ出した部分は書き込まれません。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Image image{ 600, 600, Palette::White };
+
+	Circle{ 100, 100, 100 }.overwrite(image, Palette::Orange);
+
+	Rect{ 150, 150, 300, 200 }.paint(image, ColorF{ 0.0, 1.0, 0.5, 0.5 });
+
+	Line{ 100, 400, 400, 200 }.overwrite(image, 10, Palette::Seagreen);
+
+	// Shape2D には .paint() / .overwrite() が無いので、.asPolygon() で Polygon 型にする
+	Shape2D::Star(200, Vec2{ 500, 200 }).asPolygon().overwrite(image, Palette::Yellow);
+
+	// 透明の穴をあける
+	Rect{ 400, 400, 50 }.overwrite(image, ColorF{ 1.0, 0.0 });
+
+	image.save(U"tutorial2.png");
+
+	const Texture texture{ image };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
 ```
 
 
 ## 33.9 画像に画像を書き込む
+`Image` を別の `Image` に書き込むことができます。書き込みの対象を自分自身にすることはできません。
 
 ```cpp
 
