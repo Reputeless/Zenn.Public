@@ -129,6 +129,35 @@ void Main()
 
 
 ## 34.3 レンダーテクスチャに対する便利な操作
+レンダーテクスチャを使う、次のような高速な画像処理機能が提供されています。
+
+#### void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
+- `from`: 入力テクスチャ
+- `to`: 出力テクスチャ
+
+`from` のテクスチャの内容を `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません。
+
+#### void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
+- `from`: 入力テクスチャ
+- `to`: 出力テクスチャ
+
+`from` のテクスチャの内容を拡大縮小して `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なるテクスチャでなければなりません。ダウンサンプルと言う名前が付いていますが、拡大にも使えます。
+
+#### void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
+- `from`: 入力テクスチャ
+- `internalBuffer`: 中間テクスチャ
+- `to`: 出力テクスチャ
+
+`from` のテクスチャに縦方向と横方向のガウスブラーをかけて `to` に描画します。`from`, `internalBuffer`, `to` はいずれも有効なテクスチャで、領域のサイズが同じでなければなりません。`from` と `to` は同じテクスチャにできます。
+
+### 34.3.1 ダウンサンプリング
+
+```cpp
+
+```
+
+
+### 34.3.2 ガウスぼかし
 
 ```cpp
 
