@@ -157,13 +157,164 @@ void Main()
 ### 34.3.1 ダウンサンプリング
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Texture texture{ U"example/windmill.png" };
+
+	// 縦、横が 3 分の 1 サイズのレンダーテクスチャ
+	const RenderTexture renderTexture{ texture.size() / 3 };
+
+	// ダウンサンプリング
+	Shader::Downsample(texture, renderTexture);
+
+	while (System::Update())
+	{
+		renderTexture.draw();
+	}
+}
 ```
 
-
-### 34.3.2 ガウスぼかし
+### 34.3.2 ガウスぼかしをかける
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Texture texture{ U"example/windmill.png" };
+	const RenderTexture internalTexture{ texture.size() };
+	const RenderTexture renderTexture{ texture.size() };
+
+	Shader::GaussianBlur(texture, internalTexture, renderTexture);
+
+	while (System::Update())
+	{
+		renderTexture.draw();
+	}
+}
 ```
 
+
+## 34.4 部分的に強力なガウスぼかしをかける
+ガウスぼかし → 縮小をくり返し、最終結果を拡大描画することで、強いガウスぼかしを実現できます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// ウィンドウを 1280x720 にリサイズ
+	Window::Resize(1280, 720);
+
+	// bay.jpg は 2560x1440 なのでサイズを小さくしてロード
+	const Texture texture{ Image{ U"example/bay.jpg" }.scale(1280, 720) };
+
+	// ぼかしを適用する領域のサイズ
+	constexpr Size blurAreaSize{ 480, 320 };
+
+	// ガウスぼかしの中間で使うレンダーテクスチャを用意
+	const RenderTexture gaussianA1{ blurAreaSize }, gaussianB1{ blurAreaSize };
+	const RenderTexture gaussianA4{ blurAreaSize / 4 }, gaussianB4{ blurAreaSize / 4 };
+	const RenderTexture gaussianA8{ blurAreaSize / 8 }, gaussianB8{ blurAreaSize / 8 };
+
+	while (System::Update())
+	{
+		const Point cursorPos = Cursor::Pos();
+
+		// 背景画像のうちぼかしを適用する領域
+		const Rect blurArea{ cursorPos, blurAreaSize };
+
+		// [オリジナル]->[ガウスぼかし]->[1/4サイズ]->[ガウスぼかし]->[1/8サイズ]->[ガウスぼかし]
+		Shader::GaussianBlur(texture(blurArea), gaussianB1, gaussianA1);
+		Shader::Downsample(gaussianA1, gaussianA4);
+		Shader::GaussianBlur(gaussianA4, gaussianB4, gaussianA4);
+		Shader::Downsample(gaussianA4, gaussianA8);
+		Shader::GaussianBlur(gaussianA8, gaussianB8, gaussianA8);
+
+		// 背景を描画
+		texture.draw();
+
+		// ガウスぼかし後のテクスチャを RoundRect に貼り付けて描画
+		RoundRect{ cursorPos, blurAreaSize, 40 }(gaussianA8.resized(blurAreaSize)).draw();
+	}
+}
+```
+
+
+## 34.5 2D ライトブルーム
+ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawScene()
+{
+	Circle{ 680, 40, 20 }.draw();
+	Rect{ Arg::center(680, 110), 30 }.draw();
+	Triangle{ 680, 180, 40 }.draw();
+
+	Circle{ 740, 40, 20 }.draw(HSV{ 0 });
+	Rect{ Arg::center(740, 110), 30 }.draw(HSV{ 120 });
+	Triangle{ 740, 180, 40 }.draw(HSV{ 240 });
+
+	Circle{ 50, 200, 300 }.drawFrame(4);
+	Circle{ 550, 450, 200 }.drawFrame(4);
+
+	TextureAsset(U"light").drawAt(Scene::Center());
+
+	for (auto i : step(12))
+	{
+		const double angle = (i * 30_deg + Scene::Time() * 5_deg);
+		const Vec2 pos = OffsetCircular{ Scene::Center(), 200, angle };
+		Circle{ pos, 8 }.draw(HSV{ i * 30 });
+	}
+}
+
+void Main()
+{
+	TextureAsset::Register(U"light", U"💡"_emoji);
+
+	constexpr Size sceneSize{ 800, 600 };
+	const RenderTexture gaussianA1{ sceneSize }, gaussianB1{ sceneSize };
+	const RenderTexture gaussianA4{ sceneSize / 4 }, gaussianB4{ sceneSize / 4 };
+	const RenderTexture gaussianA8{ sceneSize / 8 }, gaussianB8{ sceneSize / 8 };
+
+	bool lightBloom = true;
+
+	while (System::Update())
+	{
+		// 通常のシーン描画
+		DrawScene();
+
+		{
+			// ガウスぼかし用テクスチャにもう一度シーンを描く
+			{
+				const ScopedRenderTarget2D target{ gaussianA1.clear(ColorF{ 0.0 }) };
+				const ScopedRenderStates2D blend{ BlendState::Additive };
+				DrawScene();
+			}
+
+			// オリジナルサイズのガウスぼかし (A1)
+			// A1 を 1/4 サイズにしてガウスぼかし (A4)
+			// A4 を 1/2 サイズにしてガウスぼかし (A8)
+			Shader::GaussianBlur(gaussianA1, gaussianB1, gaussianA1);
+			Shader::Downsample(gaussianA1, gaussianA4);
+			Shader::GaussianBlur(gaussianA4, gaussianB4, gaussianA4);
+			Shader::Downsample(gaussianA4, gaussianA8);
+			Shader::GaussianBlur(gaussianA8, gaussianB8, gaussianA8);
+		}
+
+		if (lightBloom)
+		{
+			const ScopedRenderStates2D blend{ BlendState::Additive };
+			gaussianA1.resized(sceneSize).draw(ColorF{ 0.1 });
+			gaussianA4.resized(sceneSize).draw(ColorF{ 0.4 });
+			gaussianA8.resized(sceneSize).draw(ColorF{ 0.8 });
+		}
+
+		SimpleGUI::CheckBox(lightBloom, U"lightBloom", Vec2{ 20,20 });
+	}
+}
+```
