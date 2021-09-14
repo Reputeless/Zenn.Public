@@ -43,7 +43,7 @@ chapters:
   - tutorial-gamepad
   - tutorial-image
   - tutorial-rendertexture
- # - tutorial-shader2d
+  - tutorial-shader2d
  # - tutorial-3d
  # - tutorial-shader3d
  # - tutorial-webcam

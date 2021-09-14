@@ -15,6 +15,7 @@ free: true
 
 `RenderTexture` は `.clear(color)` によって、保持している画像データを指定した色にクリアできます。クリアをしない場合、それまで描いた内容の上に新しい内容を重ねて描くことになります。
 
+![](/images/doc_v6/tutorial/34/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -78,12 +79,15 @@ void Main()
 
 
 ## 34.2 マルチサンプル・レンダーテクスチャ
-`RenderTexture` への描画では、通常のシーンへの描画と異なり、マルチサンプル・アンチエイリアシングが有効にならないので、斜めの線を含む図形を描画した際にジャギーが生じます。`MSRenderTexture` を使うと、マルチサンプル・アンチエイリアシングを有効にして描画できます。ただし、`MSRenderTexture` に描画された結果を描画で使う際には、
+`RenderTexture` への描画では、通常のシーンへの描画と異なり、マルチサンプル・アンチエイリアシングが有効にならないため、斜めの線を含む図形を描画した際にジャギーが生じてしまいます。`MSRenderTexture` を使うと、マルチサンプル・アンチエイリアシングを有効にして描画できます。
+
+`MSRenderTexture` に描画された結果を描画で使う際には、
 - `Graphics2D::Flush()` によってその時点までの描画処理をすべて実行（フラッシュ）して `MSRenderTexture` の内容を確定する
 - `MSRenderTexture` の `.resolve()` によって、`MSRenderTexture` 内のマルチサンプル・テクスチャを、描画で使用可能な通常のテクスチャに変換（リゾルブ）する
 
 という 2 つの手順が必要になります。
 
+![](/images/doc_v6/tutorial/34/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -156,6 +160,7 @@ void Main()
 
 ### 34.3.1 ダウンサンプリング
 
+![](/images/doc_v6/tutorial/34/3.1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -178,6 +183,7 @@ void Main()
 
 ### 34.3.2 ガウスぼかしをかける
 
+![](/images/doc_v6/tutorial/34/3.2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -197,9 +203,10 @@ void Main()
 ```
 
 
-## 34.4 部分的に強力なガウスぼかしをかける
+## 34.4 （サンプル）部分的に強力なガウスぼかしをかける
 ガウスぼかし → 縮小をくり返し、最終結果を拡大描画することで、強いガウスぼかしを実現できます。
 
+![](/images/doc_v6/tutorial/34/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -243,9 +250,10 @@ void Main()
 ```
 
 
-## 34.5 2D ライトブルーム
+## 34.5 （サンプル）2D ライトブルーム
 ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます。
 
+![](/images/doc_v6/tutorial/34/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
