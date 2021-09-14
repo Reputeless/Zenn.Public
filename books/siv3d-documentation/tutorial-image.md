@@ -85,24 +85,136 @@ void Main()
 ```
 
 
-## 33.2
+## 33.2 プログラムで画像を作成する
+`Image` のコンストラクタに幅、高さ、色を渡して、画像を作成することができます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Image image{ 400, 300, Color{ 63, 127, 255 } };
+
+	const Texture texture{ image };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
+```
+
+なお、上記のプログラムでは、メインループ中に使われない `image` がメモリを消費したままなので、次のようにすることが望ましいです。
+
+```cpp
+# include <Siv3D.hpp>
+
+Image MakeImage()
+{
+	return Image{ 400, 300, Color{ 63, 127, 255 } };
+}
+
+void Main()
+{
+	const Texture texture{ MakeImage() };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
 ```
 
 
-## 33.3
+## 33.3 ピクセルを編集する
+`Image` が持つ画像データの幅は `.width()`, 高さは `.height()`, 幅と高さを `.size()` で取得できます。次のようなループで、`Image` 内のすべてのピクセルにアクセスできます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+Image MakeImage()
+{
+	Image image{ 400, 300 };
+
+	for (int32 y = 0; y < image.height(); ++y)
+	{
+		for (int32 x = 0; x < image.width(); ++x)
+		{
+			image[y][x] = ColorF{ (x / 399.0), (y / 299.0), 1.0 };
+		}
+	}
+
+	return image;
+}
+
+void Main()
+{
+	const Texture texture{ MakeImage() };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
+```
+
+次のように `step(Size)` を使って、ループを 1 つにまとめることもできます。
+
+```cpp
+# include <Siv3D.hpp>
+
+Image MakeImage()
+{
+	Image image{ 400, 300 };
+
+	for (auto p : step(image.size()))
+	{
+		image[p] = ColorF{ (p.x / 399.0), (p.y / 299.0), 1.0 };
+	}
+
+	return image;
+}
+
+void Main()
+{
+	const Texture texture{ MakeImage() };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
 ```
 
 
-## 33.4
+## 33.4 range-based for
+range-based for を使って、すべてのピクセルにアクセスすることもできます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+Image MakeImage()
+{
+	Image image{ U"example/windmill.png" };
+
+	for (auto& pixel : image)
+	{
+		// R 成分と B 成分を入れ替える
+		std::swap(pixel.r, pixel.b);
+	}
+
+	return image;
+}
+
+void Main()
+{
+	const Texture texture{ MakeImage() };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
 ```
 
 
