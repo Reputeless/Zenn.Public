@@ -50,6 +50,7 @@ chapters:
  # - tutorial-microphone
   - tutorial-tcp
   - tutorial-release
+  - tutorial-next
   - sample-game
   - sample-application
   - sample-visual
