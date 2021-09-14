@@ -270,10 +270,53 @@ void Main()
 ```
 
 
-## 33.7
+## 33.7 画像処理
+`Image` には様々な画像処理関数が用意されています。どの画像処理も、自身を変更するメンバ関数と、画像処理後の結果を返すメンバ関数の 2 種類があります。
+
+| 処理 | 結果の例 | 自身を変更するメンバ関数 | 結果を返すメンバ関数 |
+|--|:--:|--|--|
+|色の反転|![](/images/doc_v6/tutorial/33/7.1.png)|`negate`|`negated`|
+|グレイスケール化|![](/images/doc_v6/tutorial/33/7.2.png)|`grayscale`|`grayscaled`|
+|セピアカラー|![](/images/doc_v6/tutorial/33/7.3.png)|`sepia`|`sepiaed`|
+|ポスタライズ|![](/images/doc_v6/tutorial/33/7.4.png)|`posterize`|`posterized`|
+|明度レベル変更|![](/images/doc_v6/tutorial/33/7.5.png)|`brighten`|`brightened`|
+|左右反転|![](/images/doc_v6/tutorial/33/7.6.png)|`mirror`|`mirrored`|
+|上下反転|![](/images/doc_v6/tutorial/33/7.7.png)|`flip`|`flipped`|
+|90° 回転|![](/images/doc_v6/tutorial/33/7.8.png)|`rotate90`|`rotated90`|
+|180° 回転|![](/images/doc_v6/tutorial/33/7.9.png)|`rotate180`|`rotated180`|
+|270° 回転|![](/images/doc_v6/tutorial/33/7.10.png)|`rotate270`|`rotated270`|
+|ガンマ補正|![](/images/doc_v6/tutorial/33/7.11.png)|`gammaCorrect`|`gammaCorrected`|
+|二値化|![](/images/doc_v6/tutorial/33/7.12.png)|`threshold`|`thresholded`|
+|大津の手法による二値化|![](/images/doc_v6/tutorial/33/7.13.png)|`threshold_Otsu`|`thresholded_Otsu`|
+|適応的二値化|![](/images/doc_v6/tutorial/33/7.14.png)|`adaptiveThreshold`|`adaptiveThresholded`|
+|モザイク|![](/images/doc_v6/tutorial/33/7.15.png)|`mosaic`|`mosaiced`|
+|拡散|![](/images/doc_v6/tutorial/33/7.25.png)|`spread`|`spreaded`|
+|ブラー|![](/images/doc_v6/tutorial/33/7.16.png)|`blur`|`blurred`|
+|メディアんブラー|![](/images/doc_v6/tutorial/33/7.17.png)|`medianBlur`|`medianBlurred`|
+|ガウスぼかし|![](/images/doc_v6/tutorial/33/7.18.png)|`gaussianBlur`|`gaussianBlurred`|
+|バイラテラルフィルタ|![](/images/doc_v6/tutorial/33/7.19.png)|`bilateralFilter`|`bilateralFiltered`|
+|膨張|![](/images/doc_v6/tutorial/33/7.20.png)|`dilate`|`dilated`|
+|収縮|![](/images/doc_v6/tutorial/33/7.21.png)|`erode`|`eroded`|
+|拡大縮小|![](/images/doc_v6/tutorial/33/7.22.png)|`scale`|`scaled`|
+|周囲に枠を加える|![](/images/doc_v6/tutorial/33/7.23.png)|`border`|`bordered`|
+|任意角度の回転|![](/images/doc_v6/tutorial/33/7.24.png)||`rotated`|
+|正方形での切り抜き|![](/images/doc_v6/tutorial/33/7.26.png)||`squareClipped`|
+
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Image image{ U"example/windmill.png" };
+
+	const Texture texture{ image.grayscaled() };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
 ```
 
 
