@@ -149,7 +149,107 @@ void Main()
 ```
 
 
-## 22.4 （サンプル）上昇する文字
+## 22.4 エフェクトの一時停止と速度変更、消去
+`Effect` の `.pause()` でエフェクトの更新を一時停止、`.resume()` 再開、`.setSpeed(double)` でスピードの変更、`.clear()` でアクティブなエフェクトをすべて消去できます。
+
+
+```cpp
+# include <Siv3D.hpp>
+
+struct RingEffect : IEffect
+{
+	Vec2 m_pos;
+
+	explicit RingEffect(const Vec2& pos)
+		: m_pos{ pos } {}
+
+	bool update(double t) override
+	{
+		Circle{ m_pos, (t * 100) }.drawFrame(4);
+
+		return (t < 1.0);
+	}
+};
+
+void Main()
+{
+	Effect effect;
+
+	// 出現間隔（秒）
+	constexpr double spawnTime = 0.15;
+
+	// 蓄積された時間（秒）
+	double accumulator = 0.0;
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"Active effects: {}"_fmt(effect.num_effects());
+		Print << U"speed: {}"_fmt(effect.getSpeed());
+
+		if (not effect.isPaused())
+		{
+			accumulator += (Scene::DeltaTime() * effect.getSpeed());
+		}
+
+		// 蓄積時間が出現間隔を超えたら
+		if (spawnTime <= accumulator)
+		{
+			accumulator -= spawnTime;
+
+			effect.add<RingEffect>(Cursor::Pos());
+		}
+
+		effect.update();
+
+		if (effect.isPaused())
+		{
+			if (SimpleGUI::Button(U"Resume", Vec2{ 600, 20 }, 100))
+			{
+				// エフェクトの更新を再開
+				effect.resume();
+			}
+		}
+		else
+		{
+			if (SimpleGUI::Button(U"Pause", Vec2{ 600, 20 }, 100))
+			{
+				// エフェクトの更新を一時停止
+				effect.pause();
+			}
+		}
+
+		if (SimpleGUI::Button(U"x2.0", Vec2{ 600, 60 }, 100))
+		{
+			// 2.0 倍速に
+			effect.setSpeed(2.0);
+		}
+
+		if (SimpleGUI::Button(U"x1.0", Vec2{ 600, 100 }, 100))
+		{
+			// 1.0 倍速に
+			effect.setSpeed(1.0);
+		}
+
+		if (SimpleGUI::Button(U"x0.5", Vec2{ 600, 140 }, 100))
+		{
+			// 0.5 倍速に
+			effect.setSpeed(0.5);
+		}
+
+		if (SimpleGUI::Button(U"Clear", Vec2{ 600, 180 }, 100))
+		{
+			// 発生中のエフェクトをすべて消去
+			effect.clear();
+		}
+	}
+}
+```
+
+この章では扱いませんが、より大量のパーティクルを効率的に制御したい場合は、`ParticleSystem2D` を使うと便利です。
+
+
+## 22.5 （サンプル）上昇する文字
 フォントを使ったエフェクトの例です。
 
 ```cpp
@@ -197,7 +297,7 @@ void Main()
 ```
 
 
-## 22.5 （サンプル）飛び散る破片
+## 22.6 （サンプル）飛び散る破片
 一つのエフェクトで複数の図形を描く例です。
 
 ```cpp
@@ -256,7 +356,7 @@ void Main()
 ```
 
 
-## 22.6 （サンプル）飛び散る星
+## 22.7 （サンプル）飛び散る星
 複雑な制御を行うエフェクトの例です。
 
 ```cpp
@@ -335,7 +435,7 @@ void Main()
 ```
 
 
-## 22.7 （サンプル）泡のようなエフェクト
+## 22.8 （サンプル）泡のようなエフェクト
 時間差で図形を登場させる、高度な制御を行うエフェクトの例です。
 
 ```cpp
@@ -412,7 +512,7 @@ void Main()
 ```
 
 
-## 22.8 （サンプル）クリック時のエフェクト
+## 22.9 （サンプル）クリック時のエフェクト
 1 つのエフェクトでたくさんの描画を行う例です。
 
 ```cpp
@@ -538,101 +638,151 @@ void Main()
 ```
 
 
-## 22.9 エフェクトの一時停止と速度変更、消去
-`Effect` の `.pause()` でエフェクトの更新を一時停止、`.resume()` 再開、`.setSpeed(double)` でスピードの変更、`.clear()` でアクティブなエフェクトをすべて消去できます。
 
+## 22.10 （サンプル）エフェクトの再帰
+エフェクトの中でエフェクトを発生させる例です。
 
 ```cpp
 # include <Siv3D.hpp>
 
-struct RingEffect : IEffect
-{
-	Vec2 m_pos;
+// 重力加速度
+constexpr Vec2 Gravity{ 0, 240 };
 
-	explicit RingEffect(const Vec2& pos)
-		: m_pos{ pos } {}
+// 火花の状態
+struct Fire
+{
+	// 初速
+	Vec2 v0;
+
+	// 色相のオフセット
+	double hueOffset;
+
+	// スケーリング
+	double scale;
+
+	// 破裂するまでの時間
+	double nextFireSec;
+
+	// 破裂して子エフェクトを作成したか
+	bool hasChild = false;
+};
+
+// 火花エフェクト
+struct Firework : IEffect
+{
+	// 火花の個数
+	static constexpr int32 FireCount = 12;
+
+	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにすること
+	const Effect& m_parent;
+
+	// 花火の中心座標
+	Vec2 m_center;
+
+	// 火の状態
+	std::array<Fire, FireCount> m_fires;
+
+	// 何世代目？ [0, 1, 2]
+	int32 m_n;
+
+	Firework(const Effect& parent, const Vec2& center, int32 n, const Vec2& v0)
+		: m_parent{ parent }
+		, m_center{ center }
+		, m_n{ n }
+	{
+		for (auto i : step(FireCount))
+		{
+			const double angle = (i * 30_deg + Random(-10_deg, 10_deg));
+			const double speed = (60.0 - m_n * 15) * Random(0.9, 1.1) * (IsEven(i) ? 0.5 : 1.0);
+			m_fires[i].v0 = Circular{ speed, angle } + v0;
+			m_fires[i].hueOffset = Random(-10.0, 10.0) + (IsEven(i) ? 15 : 0);
+			m_fires[i].scale = Random(0.8, 1.2);
+			m_fires[i].nextFireSec = Random(0.7, 1.0);
+		}
+	}
 
 	bool update(double t) override
 	{
-		Circle{ m_pos, (t * 100) }.drawFrame(4);
+		for (const auto& fire : m_fires)
+		{
+			const Vec2 pos = m_center + fire.v0 * t + 0.5 * t * t * Gravity;
+			pos.asCircle((10 - (m_n * 3)) * ((1.5 - t) / 1.5) * fire.scale)
+				.draw(HSV{ 10 + m_n * 120.0 + fire.hueOffset, 0.6, 1.0 - m_n * 0.2 });
+		}
 
-		return (t < 1.0);
+		if (m_n < 2) // 0, 1 世代目なら
+		{
+			for (auto& fire : m_fires)
+			{
+				if (!fire.hasChild && (fire.nextFireSec <= t))
+				{
+					// 子エフェクトを作成
+					const Vec2 pos = m_center + fire.v0 * t + 0.5 * t * t * Gravity;
+					m_parent.add<Firework>(m_parent, pos, (m_n + 1), fire.v0 + (t * Gravity));
+					fire.hasChild = true;
+				}
+			}
+		}
+
+		return (t < 1.5);
+	}
+};
+
+// 打ち上げエフェクト
+struct FirstFirework : IEffect
+{
+	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにすること
+	const Effect& m_parent;
+
+	// 打ち上げ位置
+	Vec2 m_start;
+
+	// 打ち上げ初速
+	Vec2 m_v0;
+
+	FirstFirework(const Effect& parent, const Vec2& start, const Vec2& v0)
+		: m_parent{ parent }
+		, m_start{ start }
+		, m_v0{ v0 } {}
+
+	bool update(double t) override
+	{
+		const Vec2 pos = m_start + m_v0 * t + 0.5 * t * t * Gravity;
+		Circle{ pos, 6 }.draw();
+		Line{ m_start, pos }.draw(LineStyle::RoundCap, 8, ColorF{ 0.0 }, ColorF{ 1.0 - (t / 0.6) });
+
+		if (t < 0.6)
+		{
+			return true;
+		}
+		else
+		{
+			// 終了間際に子エフェクトを作成
+			const Vec2 velocity = m_v0 + t * Gravity;
+			m_parent.add<Firework>(m_parent, pos, 0, velocity);
+			return false;
+		}
 	}
 };
 
 void Main()
 {
+	Window::Resize(1280, 720);
 	Effect effect;
-
-	// 出現間隔（秒）
-	constexpr double spawnTime = 0.15;
-
-	// 蓄積された時間（秒）
-	double accumulator = 0.0;
 
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << U"Active effects: {}"_fmt(effect.num_effects());
-		Print << U"speed: {}"_fmt(effect.getSpeed());
+		Scene::Rect().draw(Arg::top(0.0), Arg::bottom(0.2, 0.1, 0.4));
 
-		if (not effect.isPaused())
+		if (MouseL.down())
 		{
-			accumulator += (Scene::DeltaTime() * effect.getSpeed());
+			effect.add<FirstFirework>(effect, Cursor::Pos(), Vec2{ 0, -500 });
 		}
 
-		// 蓄積時間が出現間隔を超えたら
-		if (spawnTime <= accumulator)
 		{
-			accumulator -= spawnTime;
-
-			effect.add<RingEffect>(Cursor::Pos());
-		}
-
-		effect.update();
-
-		if (effect.isPaused())
-		{
-			if (SimpleGUI::Button(U"Resume", Vec2{ 600, 20 }, 100))
-			{
-				// エフェクトの更新を再開
-				effect.resume();
-			}
-		}
-		else
-		{
-			if (SimpleGUI::Button(U"Pause", Vec2{ 600, 20 }, 100))
-			{
-				// エフェクトの更新を一時停止
-				effect.pause();
-			}
-		}
-
-		if (SimpleGUI::Button(U"x2.0", Vec2{ 600, 60 }, 100))
-		{
-			// 2.0 倍速に
-			effect.setSpeed(2.0);
-		}
-
-		if (SimpleGUI::Button(U"x1.0", Vec2{ 600, 100 }, 100))
-		{
-			// 1.0 倍速に
-			effect.setSpeed(1.0);
-		}
-
-		if (SimpleGUI::Button(U"x0.5", Vec2{ 600, 140 }, 100))
-		{
-			// 0.5 倍速に
-			effect.setSpeed(0.5);
-		}
-
-		if (SimpleGUI::Button(U"Clear", Vec2{ 600, 180 }, 100))
-		{
-			// 発生中のエフェクトをすべて消去
-			effect.clear();
+			const ScopedRenderStates2D blend{ BlendState::Additive };
+			effect.update();
 		}
 	}
 }
 ```
-
-この章では扱いませんが、より大量のパーティクルを効率的に制御したい場合は、`ParticleSystem2D` を使うと便利です。
