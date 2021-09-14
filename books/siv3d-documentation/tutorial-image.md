@@ -310,6 +310,7 @@ void Main()
 {
 	const Image image{ U"example/windmill.png" };
 
+	// ガウスぼかしした画像からテクスチャを作成
 	const Texture texture{ image.grayscaled() };
 
 	while (System::Update())
@@ -320,28 +321,28 @@ void Main()
 ```
 
 
-## 33.8
+## 33.8 画像に図形を書き込む
 
 ```cpp
 
 ```
 
 
-## 33.9
+## 33.9 画像に画像を書き込む
 
 ```cpp
 
 ```
 
 
-## 33.10
+## 33.10 画像にテキストを書き込む
 
 ```cpp
 
 ```
 
 
-## 33.11
+## 33.11 内容を更新できるテクスチャ
 
 ```cpp
 
