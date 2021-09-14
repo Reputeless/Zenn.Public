@@ -13,6 +13,7 @@ free: true
 
 `Effect` は、時間ベースのアニメーションを簡単に作れるため、ゲームの演出などで重宝します。次のプログラムは、クリックした場所に、1 秒間、時間とともに大きくなる輪を発生させるエフェクトを実装したものです。
 
+https://youtu.be/JUbMZpp_Dvc
 ```cpp
 # include <Siv3D.hpp>
 
@@ -103,7 +104,7 @@ void Main()
 ## 22.3 イージングをエフェクトで使う
 チュートリアル 03 に出てきたイージングと組み合わせると、洗練された動きを作れます。
 
-
+https://youtu.be/lIwKICPVXSw
 ```cpp
 # include <Siv3D.hpp>
 
@@ -152,7 +153,7 @@ void Main()
 ## 22.4 エフェクトの一時停止と速度変更、消去
 `Effect` の `.pause()` でエフェクトの更新を一時停止、`.resume()` 再開、`.setSpeed(double)` でスピードの変更、`.clear()` でアクティブなエフェクトをすべて消去できます。
 
-
+https://youtu.be/WXjlARCyEsI
 ```cpp
 # include <Siv3D.hpp>
 
@@ -252,6 +253,7 @@ void Main()
 ## 22.5 （サンプル）上昇する文字
 フォントを使ったエフェクトの例です。
 
+https://youtu.be/43fpvinM1Cg
 ```cpp
 # include <Siv3D.hpp>
 
@@ -300,6 +302,7 @@ void Main()
 ## 22.6 （サンプル）飛び散る破片
 一つのエフェクトで複数の図形を描く例です。
 
+https://youtu.be/ZsHe_SWgvI0
 ```cpp
 # include <Siv3D.hpp>
 
@@ -359,6 +362,7 @@ void Main()
 ## 22.7 （サンプル）飛び散る星
 複雑な制御を行うエフェクトの例です。
 
+https://youtu.be/6MuUUy9uBQQ
 ```cpp
 # include <Siv3D.hpp>
 
@@ -438,6 +442,7 @@ void Main()
 ## 22.8 （サンプル）泡のようなエフェクト
 時間差で図形を登場させる、高度な制御を行うエフェクトの例です。
 
+https://youtu.be/LqAx1rrtHj0
 ```cpp
 # include <Siv3D.hpp>
 
@@ -515,6 +520,7 @@ void Main()
 ## 22.9 （サンプル）クリック時のエフェクト
 1 つのエフェクトでたくさんの描画を行う例です。
 
+https://youtu.be/9hN4_yLG0No
 ```cpp
 # include <Siv3D.hpp>
 
@@ -642,6 +648,7 @@ void Main()
 ## 22.10 （サンプル）エフェクトの再帰
 エフェクトの中でエフェクトを発生させる例です。
 
+https://youtu.be/2sGu1TM_tXo
 ```cpp
 # include <Siv3D.hpp>
 
@@ -767,7 +774,6 @@ struct FirstFirework : IEffect
 
 void Main()
 {
-	Window::Resize(1280, 720);
 	Effect effect;
 
 	while (System::Update())
@@ -776,7 +782,7 @@ void Main()
 
 		if (MouseL.down())
 		{
-			effect.add<FirstFirework>(effect, Cursor::Pos(), Vec2{ 0, -500 });
+			effect.add<FirstFirework>(effect, Cursor::Pos(), Vec2{ 0, -400 });
 		}
 
 		{
