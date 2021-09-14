@@ -104,7 +104,7 @@ void Main()
 }
 ```
 
-なお、上記のプログラムでは、メインループ中に使われない `image` がメモリを消費したままなので、次のようにすることが望ましいです。
+なお、`Texture` のコンストラクタに `Image` を渡したときには、画像データが `Texture` にコピーされるので、`Texture` を作成したあとで `Image` を破棄しても問題ありません。上記のプログラムでは、メインループ中に使われない `image` がメモリを消費したままなので、次のようにするとメモリ消費量を減らせます。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -127,7 +127,7 @@ void Main()
 
 
 ## 33.3 ピクセルを編集する
-`Image` が持つ画像データの幅は `.width()`, 高さは `.height()`, 幅と高さを `.size()` で取得できます。次のようなループで、`Image` 内のすべてのピクセルにアクセスできます。
+`Image` が持つ画像データの幅は `.width()`, 高さは `.height()`, 幅と高さは `.size()` で取得できます。次のようなループで、`Image` 内のすべてのピクセルにアクセスできます。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -218,10 +218,55 @@ void Main()
 ```
 
 
-## 33.6
+## 33.5 画像を保存する
+`Image` の画像データを画像ファイルとして保存するには `.save(path)` を使います。画像の保存形式は、`path` の拡張子から自動的に適切なものが選択されます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Image image{ U"example/windmill.png" };
+
+	for (auto& pixel : image)
+	{
+		std::swap(pixel.r, pixel.b);
+	}
+
+	// 画像を保存
+	image.save(U"tutorial1.png");
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+
+## 33.6 ダイアログでファイル名を指定して画像を保存する
+`Image` の画像データを、ダイアログでファイル名を指定して画像ファイルとして保存するには `.saveWithDialog()` を使います。`.save()`　同様、画像の保存形式は、`path` の拡張子から自動的に適切なものが選択されます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Image image{ U"example/windmill.png" };
+
+	for (auto& pixel : image)
+	{
+		std::swap(pixel.r, pixel.b);
+	}
+
+	// ダイアログでファイル名を指定して画像を保存
+	image.saveWithDialog();
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
