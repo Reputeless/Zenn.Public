@@ -5,7 +5,7 @@ free: true
 
 簡単なグラフ（ネットワーク）を描画するプログラムを作る学習コースです。
 
-# 1. 背景を設定
+## 1. 背景を設定
 基本画面を作ります。背景を白や黒以外の好きな色に設定しましょう。
 ![](https://storage.googleapis.com/zenn-user-upload/hwmdcjcszha6yoqyuus1brbwhn64)
 ```cpp
@@ -24,7 +24,7 @@ void Main()
 ```
 
 
-# 2. ノードクラス
+## 2. ノードクラス
 ID と中心座標を持つ、ノード用のクラスを作ります。
 ```cpp
 # include <Siv3D.hpp>
@@ -54,7 +54,7 @@ void Main()
 ```
 
 
-# 3. ノード描画関数
+## 3. ノード描画関数
 `Node` クラスに、ノードの円を描画するメンバ関数 `.drawNode()` を追加します。
 ![](https://storage.googleapis.com/zenn-user-upload/rn1i8021bj1quh9doqc22el5267v)
 ```cpp
@@ -90,7 +90,7 @@ void Main()
 ```
 
 
-# 4. ノードのラベルを描画
+## 4. ノードのラベルを描画
 `Node` クラスに、ノードのラベルを描画するメンバ関数 `.drawLabel()` を追加します。
 ![](https://storage.googleapis.com/zenn-user-upload/cchrps91fnp8pmkimepjs7505bxy)
 ```cpp
@@ -136,7 +136,7 @@ void Main()
 ```
 
 
-# 5. ノードに影を付ける
+## 5. ノードに影を付ける
 `Circle::drawShadow(offset, blur, spread, color)` を使って、ノードの影を描きます。
 ![](https://storage.googleapis.com/zenn-user-upload/bv9rb9nclrqefc24kt314e6b5yeh)
 ```cpp
@@ -180,7 +180,7 @@ void Main()
 ```
 
 
-# 6. 複数のノード
+## 6. 複数のノード
 ハッシュテーブル `HashTable<NodeID, Node>` に複数のノードを用意し、描画します。
 ![](https://storage.googleapis.com/zenn-user-upload/7yr5l325lxbt6ts6d5f4k4saxoct)
 ```cpp
@@ -234,7 +234,7 @@ void Main()
 ```
 
 
-# 7. ノードとのインタラクション（マウスオーバー）
+## 7. ノードとのインタラクション（マウスオーバー）
 ノードの上にマウスカーソルが重なっているとき、マウスカーソルを手のアイコンにします。
 ```cpp
 # include <Siv3D.hpp>
@@ -302,7 +302,7 @@ void Main()
 ```
 
 
-# 8. ノードとのインタラクション（選択）
+## 8. ノードとのインタラクション（選択）
 ノードをクリックしたとき、そのノードの番号を取得します。
 ![](https://storage.googleapis.com/zenn-user-upload/pugjadrr6z774eiyjogizwp60t56)
 ```cpp
@@ -387,7 +387,7 @@ void Main()
 ```
 
 
-# 9. アクティブなノードの可視化
+## 9. アクティブなノードの可視化
 アクティブなノードを違う色で表示するようにします。
 ![](https://storage.googleapis.com/zenn-user-upload/9f26irwt5jbcqwbm746uumx5unie)
 ```cpp
@@ -483,7 +483,7 @@ void Main()
 ```
 
 
-# 10. ノードとのインタラクション（移動）
+## 10. ノードとのインタラクション（移動）
 アクティブなノードをマウスでドラッグして移動できるようにします。
 ![](https://storage.googleapis.com/zenn-user-upload/2undsn0zirkxaac7xq1fpry70ne0)
 ```cpp
@@ -584,7 +584,7 @@ void Main()
 ```
 
 
-# 11. エッジクラス
+## 11. エッジクラス
 始点と終点の `NodeID` を持つ `Edge` クラスを作ります。
 ```cpp
 # include <Siv3D.hpp>
@@ -696,7 +696,7 @@ void Main()
 ```
 
 
-# 12. エッジの描画
+## 12. エッジの描画
 2 つのノードの間に線を引く関数を実装します。
 ![](https://storage.googleapis.com/zenn-user-upload/yoz9qwtmt1wrx9ouh2u9q6dxgh0n)
 ```cpp
@@ -820,7 +820,7 @@ void Main()
 ```
 
 
-# 13. エッジを矢印にする
+## 13. エッジを矢印にする
 `Line::drawArrow(thickness, headSize, color)` を使うと矢印を描けます。
 ![](https://storage.googleapis.com/zenn-user-upload/vdv0gdjy7ppk6k6pjc4fjnjolhk8)
 ```cpp
@@ -943,7 +943,7 @@ void Main()
 ```
 
 
-# 14. 2D カメラの利用
+## 14. 2D カメラの利用
 `Transformer2D` を使うと、描画やマウスカーソルの座標に一律にアフィン変換を適用して、視点の移動や拡大ができます。  
 このアフィン変換を簡単に制御してくれる `Camera2D` 機能を利用します。  
 カメラはマウスの右クリックやホイール、WASD↑↓キーで操作できます。
@@ -1080,8 +1080,8 @@ void Main()
 ```
 
 
-# 15. 拡大してもきれいなフォント
-カメラでラベルを拡大表示すると、ビットマップフォントの文字が粗く表示されてしまいます。これを避けるために、文字を [MSDF](https://github.com/Chlumsky/msdfgen#readme) という方式でレンダリングするようにします。
+## 15. 拡大してもきれいなフォント
+カメラでラベルを拡大表示すると、ビットマップフォントの文字が粗く表示されてしまいます。これを避けるために、文字を MSDF 方式でレンダリングするようにします。
 ![](https://storage.googleapis.com/zenn-user-upload/53hycxbw7gzs9ucnocoduoom0i60)
 ```cpp
 # include <Siv3D.hpp>
@@ -1213,9 +1213,9 @@ void Main()
 ```
 
 
-# 改造してみよう
+## 改造してみよう
 
-## エッジをベジェ曲線に
+### エッジをベジェ曲線に
 ![](https://storage.googleapis.com/zenn-user-upload/r1cvevd2iiahapwx8bd97mivc1p9)
 ```cpp
 void DrawEdge(const Node& from, const Node& to)
@@ -1227,7 +1227,7 @@ void DrawEdge(const Node& from, const Node& to)
 }
 ```
 
-## アクティブなノードをかっこよく表示
+### アクティブなノードをかっこよく表示
 ![](https://storage.googleapis.com/zenn-user-upload/qa4or1vq1hviqj18i3fbx1j6rt0r)
 ```cpp
 void drawNodeActive() const
