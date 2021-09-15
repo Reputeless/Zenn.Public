@@ -18,6 +18,7 @@ PC に接続されているマイクの一覧を `System::EnumerateMicrophones()
 | `Array<uint32> sampleRates` | 対応するサンプルレートの一覧 |
 | `uint32 preferredSampleRate` | 推奨サンプルレート |
 
+![](/images/doc_v6/tutorial/39/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -39,6 +40,7 @@ void Main()
 ## 39.2 マイクから波形情報を得る
 `Microphone` クラスを通して、マイクに入力された音声波形やその分析結果を取得できます。
 
+![](/images/doc_v6/tutorial/39/2.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -110,6 +112,7 @@ void Main()
 
 ## 39.3 マイクからの入力波形のスペクトラムを表示する
 
+![](/images/doc_v6/tutorial/39/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
