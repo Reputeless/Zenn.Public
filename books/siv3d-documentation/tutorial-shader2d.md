@@ -324,7 +324,7 @@ void Main()
 ## 35.3 カスタムシェーダを適用する
 `ScopedCustomShader2D` オブジェクトのコンストラクタに、ロードしたピクセルシェーダを渡すと、そのオブジェクトのスコープが有効な間、2D グラフィックスがそのカスタムピクセルシェーダを使用して描画されます。
 
-次のサンプルプログラムでは、カスタムシェーダを使用していますが、シェーダプログラムの内容はデフォルトのシェーダと同じであるため、通常の描画と同じ結果になります。
+次のサンプルプログラムでは、カスタムシェーダを使用していますが、シェーダプログラムの内容はデフォルトのシェーダと同じであるため、通常の描画と同じ描画結果になります。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -365,14 +365,66 @@ void Main()
 
 ## 35.4 R 成分と B 成分の入れ替え
 
-```cpp
+次のプログラムでは、テクスチャの R 成分と B 成分を入れ替えて描画するカスタムピクセルシェーダを使用します。
 
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Texture windmill{ U"example/windmill.png" };
+	const PixelShader ps = HLSL{ U"example/shader/hlsl/rgb_to_bgr.hlsl", U"PS" }
+		| GLSL{ U"example/shader/glsl/rgb_to_bgr.frag", {{U"PSConstants2D", 0}} };
+
+	if (not ps)
+	{
+		throw Error{ U"Failed to load a shader file" };
+	}
+
+	while (System::Update())
+	{
+		{
+			// R と B を入れ替えるピクセルシェーダを開始
+			const ScopedCustomShader2D shader{ ps };
+			windmill.draw(10, 10);
+		}
+	}
+}
 ```
 
 ## 35.5 (Windows) コンパイル済みシェーダを作成・使用する
+`Platform::Windows::Shader::CompileHLSLToFile()` 関数を使うと、HLSL ファイルをあらかじめコンパイルすることができます。コンパイル済みのシェーダファイルは PixelShader でそのまま読み込むことができ、実行時の処理を削減することができます。Windows 向けに、カスタムシェーダを使用するアプリケーションをリリースするときは、すべてのシェーダをコンパイル済みにしておくことを推奨します。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	// コンパイル済み HLSL シェーダを作って保存する（1 度だけ作成すれば OK）
+	if (not Platform::Windows::CompileHLSLToFile(U"example/shader/hlsl/rgb_to_bgr.hlsl", U"rgb_to_bgr.ps", ShaderStage::Pixel, U"PS"))
+	{
+		throw Error{ U"Failed to save a shader file" };
+	}
+
+	const Texture windmill{ U"example/windmill.png" };
+
+	// コンパイル済みの HLSL シェーダをロード
+	const PixelShader ps = HLSL{ U"rgb_to_bgr.ps" };
+
+	if (not ps)
+	{
+		throw Error{ U"Failed to load a shader file" };
+	}
+
+	while (System::Update())
+	{
+		{
+			// R と B を入れ替えるピクセルシェーダを開始
+			const ScopedCustomShader2D shader{ ps };
+			windmill.draw(10, 10);
+		}
+	}
+}
 ```
 
 
