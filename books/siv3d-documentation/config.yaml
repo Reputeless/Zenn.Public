@@ -44,10 +44,10 @@ chapters:
   - tutorial-image
   - tutorial-rendertexture
   - tutorial-shader2d
-  - tutorial-3d
+ # - tutorial-3d
  # - tutorial-shader3d
- # - tutorial-webcam
- # - tutorial-microphone
+  - tutorial-webcam
+  - tutorial-microphone
   - tutorial-tcp
   - tutorial-release
   - tutorial-next
