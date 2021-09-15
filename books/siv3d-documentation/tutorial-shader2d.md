@@ -34,16 +34,14 @@ void Main()
 ## 35.1 デフォルトのシェーダ
 カスタムのシェーダプログラムを書く前に、デフォルト使われている図形およびテクスチャ描画のシェーダプログラムを見てみましょう。これらを書き換えることで、容易にシェーダをカスタマイズできます。
 
-### 図形やテクスチャを描くときに使われるデフォルトのシェーダ
-
-#### HLSL
+### HLSL
 
 ```hlsl:example/shader/hlsl/default2d.hlsl
 //
 //	Textures
 //
-Texture2D		g_texture0 : register(t0);
-SamplerState	g_sampler0 : register(s0);
+Texture2D g_texture0 : register(t0);
+SamplerState g_sampler0 : register(s0);
 
 namespace s3d
 {
@@ -52,9 +50,9 @@ namespace s3d
 	//
 	struct VSInput
 	{
-		float2 position	: POSITION;
-		float2 uv		: TEXCOORD0;
-		float4 color	: COLOR0;
+		float2 position : POSITION;
+		float2 uv : TEXCOORD0;
+		float4 color : COLOR0;
 	};
 
 	//
@@ -62,9 +60,9 @@ namespace s3d
 	//
 	struct PSInput
 	{
-		float4 position	: SV_POSITION;
-		float4 color	: COLOR0;
-		float2 uv		: TEXCOORD0;
+		float4 position : SV_POSITION;
+		float4 color : COLOR0;
+		float2 uv : TEXCOORD0;
 	};
 
 	//
@@ -100,9 +98,9 @@ cbuffer PSConstants2D : register(b0)
 s3d::PSInput VS(s3d::VSInput input)
 {
 	s3d::PSInput result;
-	result.position	= s3d::Transform2D(input.position, g_transform);
-	result.color	= input.color * g_colorMul;
-	result.uv		= input.uv;
+	result.position = s3d::Transform2D(input.position, g_transform);
+	result.color = input.color * g_colorMul;
+	result.uv = input.uv;
 	return result;
 }
 
@@ -119,7 +117,7 @@ float4 PS_Texture(s3d::PSInput input) : SV_TARGET
 }
 ```
 
-#### GLSL
+### GLSL
 
 頂点シェーダ
 ```glsl:example/shader/glsl/default2d.vert
