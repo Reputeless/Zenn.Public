@@ -10,7 +10,7 @@ free: true
 
 次のサンプルでは、Arduino UNO の LED の点灯/消灯を PC から制御し、1 バイトの数値データをやり取りするサンプルを示します。
 
-### Arduino UNO 側のコード
+#### Arduino UNO 側のコード
 
 ```c
 void setup()
@@ -56,7 +56,7 @@ void loop()
 }
 ```
 
-### PC 側のコード
+#### PC 側のコード
 
 ```cpp
 # include <Siv3D.hpp>
@@ -130,7 +130,7 @@ void Main()
 
 ### 1.2 複数バイトのデータを送る
 
-### Arduino UNO 側のコード
+#### Arduino UNO 側のコード
 Arduino UNO では `int` 型は 2 バイトです。
 
 ```c
@@ -158,7 +158,7 @@ void loop()
 }
 ```
 
-### PC 側のコード
+#### PC 側のコード
 
 ```cpp
 # include <Siv3D.hpp>
