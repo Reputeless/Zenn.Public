@@ -326,6 +326,7 @@ void Main()
 
 次のサンプルプログラムでは、カスタムシェーダを使用していますが、シェーダプログラムの内容はデフォルトのシェーダと同じであるため、通常の描画と同じ描画結果になります。
 
+![](/images/doc_v6/tutorial/35/3.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -367,6 +368,7 @@ void Main()
 
 次のプログラムでは、テクスチャの R 成分と B 成分を入れ替えて描画するカスタムピクセルシェーダを使用します。
 
+![](/images/doc_v6/tutorial/35/4.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -395,6 +397,7 @@ void Main()
 ## 35.5 (Windows) コンパイル済みシェーダを作成・使用する
 Windows 版では、`Platform::Windows::Shader::CompileHLSLToFile()` 関数を使うと、HLSL ファイルをあらかじめコンパイルすることができます。コンパイル済みのシェーダファイルは PixelShader でそのまま読み込むことができ、実行時の処理を削減することができます。Windows 向けに、カスタムシェーダを使用するアプリケーションをリリースするときは、すべてのシェーダをコンパイル済みにしておくことを推奨します。
 
+![](/images/doc_v6/tutorial/35/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -431,6 +434,7 @@ void Main()
 ## 35.6 RGB シフト
 RGB 成分ごとに UV 座標をずらすカスタムピクセルシェーダのサンプルです。
 
+![](/images/doc_v6/tutorial/35/6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -460,6 +464,7 @@ void Main()
 ## 35.7 グレイスケール化
 グレイスケール化するカスタムピクセルシェーダのサンプルです。
 
+![](/images/doc_v6/tutorial/35/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -489,6 +494,7 @@ void Main()
 ## 35.8 ポスタライズ
 ポスタライズ効果をかけるカスタムピクセルシェーダのサンプルです。
 
+![](/images/doc_v6/tutorial/35/8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -524,6 +530,7 @@ C++ プログラムでは、`ConstantBuffer<>` クラステンプレートで定
 
 次のサンプルは、定数バッファに設定された値をもとに渦巻効果でテクスチャを描画するカスタムピクセルシェーダを使う例です。
 
+![](/images/doc_v6/tutorial/35/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -568,6 +575,7 @@ void Main()
 ## 35.10 Poisson-Disk Sampling
 Poisson-Disk Sampling をおこなうカスタムピクセルシェーダのサンプルです。
 
+![](/images/doc_v6/tutorial/35/10.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -625,6 +633,7 @@ void Main()
 
 次のサンプルは、1 回の `.draw()` で 2 つのテクスチャの内容をブレンドして表示するカスタムシェーダを使う例です。
 
+![](/images/doc_v6/tutorial/35/11.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -657,6 +666,7 @@ void Main()
 ## 35.12 テクスチャによるマスク処理
 レンダーテクスチャにリンゴの形のマスク画像を描き、そのマスク画像に基づいて風車の写真を切り抜いて描くサンプルです。
 
+![](/images/doc_v6/tutorial/35/12.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -710,6 +720,7 @@ void Main()
 ## 35.13 GPU 上でのライフゲームシミュレーション
 ライフゲームをピクセルシェーダで実行するサンプルです。
 
+![](/images/doc_v6/tutorial/35/13.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -774,6 +785,7 @@ void Main()
 ## 35.14 GPU 上でのライフゲームシミュレーション (Camera2D 使用)
 35.13 のプログラムに、Camera2D を組み込んだサンプルです。
 
+![](/images/doc_v6/tutorial/35/14.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -851,6 +863,7 @@ void Main()
 ## 35.15 ゲーム画面に後処理としてシェーダを適用する
 レンダーテクスチャにゲームのグラフィックスを描画し、そのテクスチャをシーンに描画する際にシェーダを適用することで、ゲーム画面全体に後処理としてカスタムピクセルシェーダを適用するサンプルです。
 
+![](/images/doc_v6/tutorial/35/15.png)
 ```cpp
 # include <Siv3D.hpp>
 
