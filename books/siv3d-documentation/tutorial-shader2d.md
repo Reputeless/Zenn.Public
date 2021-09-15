@@ -44,7 +44,7 @@ void Main()
 
 
 ### HLSL
-`VS()` が、デフォルトの頂点シェーダ関数です。入力 `s3d::VSInput` を受け取り、定数バッファ `VSConstants2D` の座標変換情報と乗算カラーを適用した結果を `s3d::PSInput` 型で返します。
+HLSL は 1 つのファイルに複数のシェーダ関数をまとめて記述できます。`default2d.hlsl` の `VS()` が、デフォルトの頂点シェーダ関数です。入力 `s3d::VSInput` を受け取り、定数バッファ `VSConstants2D` の座標変換情報と乗算カラーを適用した結果を `s3d::PSInput` 型で返します。
 
 `PS_Shape()` が、デフォルトの図形描画用ピクセルシェーダ関数です。入力 `s3d::PSInput` を受け取り、出力するピクセルの RGBA カラー (`float4` 型) を求めます。
 
@@ -288,6 +288,36 @@ PixelShader ps = HLSL{ ... } | GLSL{ ... } | ESSL{ ... };
 // （Windows でしか実行しないプログラムでの書き方）
 // HLSL を読み込んでピクセルシェーダを作成
 PixelShader ps = HLSL{ ... };
+```
+
+Direct3D と OpenGL 環境の両方をサポートするプログラムで、デフォルトのシェーダ 3 つを読み込むプログラムは次のようになります。
+
+`HLSL{}` は、ファイルパスとエントリーポイントとなる関数の名前、`GLSL{}` は、ファイル名と定数バッファの名前とスロットインデックスの組の配列を記述します。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const VertexShader vs2D = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"VS" }
+		| GLSL{ U"example/shader/glsl/default2d.vert", {{U"VSConstants2D", 0}} };
+
+	const PixelShader ps2DShape = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"PS_Shape" }
+		| GLSL{ U"example/shader/glsl/default2d_shape.frag", {{U"PSConstants2D", 0}} };
+
+	const PixelShader ps2DTexture = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"PS_Texture" }
+		| GLSL{ U"example/shader/glsl/default2d_texture.frag", {{U"PSConstants2D", 0}} };
+
+	if ((not vs2D) || (not ps2DShape) || (not ps2DTexture))
+	{
+		throw Error{ U"Failed to load shader files" };
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 
 
