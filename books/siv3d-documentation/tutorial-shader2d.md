@@ -290,9 +290,9 @@ PixelShader ps = HLSL{ ... } | GLSL{ ... } | ESSL{ ... };
 PixelShader ps = HLSL{ ... };
 ```
 
-Direct3D と OpenGL 環境の両方をサポートするプログラムで、デフォルトのシェーダ 3 つを読み込むプログラムは次のようになります。
+`HLSL{}` は、ファイルパスとエントリーポイントとなる関数の名前、`GLSL{}` は、ファイル名と定数バッファ（定義済み定数バッファを含む）の名前とスロットインデックスの組の配列を記述します。
 
-`HLSL{}` は、ファイルパスとエントリーポイントとなる関数の名前、`GLSL{}` は、ファイル名と定数バッファの名前とスロットインデックスの組の配列を記述します。
+Direct3D と OpenGL 環境の両方をサポートするアプリケーションで、デフォルトのシェーダ 3 つを読み込むプログラムは次のようになります。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -322,20 +322,54 @@ void Main()
 
 
 ## 35.3 カスタムシェーダを適用する
+`ScopedCustomShader2D` オブジェクトのコンストラクタに、ロードしたピクセルシェーダを渡すと、そのオブジェクトのスコープが有効な間、2D グラフィックスがそのカスタムピクセルシェーダを使用して描画されます。
+
+次のサンプルプログラムでは、カスタムシェーダを使用していますが、シェーダプログラムの内容はデフォルトのシェーダと同じであるため、通常の描画と同じ結果になります。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const VertexShader vs2D = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"VS" }
+		| GLSL{ U"example/shader/glsl/default2d.vert", {{U"VSConstants2D", 0}} };
+
+	const PixelShader ps2DShape = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"PS_Shape" }
+		| GLSL{ U"example/shader/glsl/default2d_shape.frag", {{U"PSConstants2D", 0}} };
+
+	const PixelShader ps2DTexture = HLSL{ U"example/shader/hlsl/default2d.hlsl", U"PS_Texture" }
+		| GLSL{ U"example/shader/glsl/default2d_texture.frag", {{U"PSConstants2D", 0}} };
+
+	if ((not vs2D) || (not ps2DShape) || (not ps2DTexture))
+	{
+		return;
+	}
+
+	const Texture texure{ U"example/windmill.png" };
+
+	while (System::Update())
+	{
+		{
+			const ScopedCustomShader2D shader{ vs2D, ps2DShape };
+			Circle{ 600, 400, 100 }.draw(Palette::Orange);
+		}
+
+		{
+			const ScopedCustomShader2D shader{ vs2D, ps2DTexture };
+			texure.draw();
+		}
+	}
+}
+```
+
+
+## 35.4 R 成分と B 成分の入れ替え
 
 ```cpp
 
 ```
 
-
-## 35.4 (Windows) コンパイル済みシェーダを作成・使用する
-
-```cpp
-
-```
-
-
-## 35.5 R 成分と B 成分の入れ替え
+## 35.5 (Windows) コンパイル済みシェーダを作成・使用する
 
 ```cpp
 
