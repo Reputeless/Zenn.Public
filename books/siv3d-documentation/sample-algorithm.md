@@ -130,7 +130,7 @@ void Main()
 ```
 
 
-### 長方形詰込み
+## 長方形詰込み
 
 ```cpp
 # include <Siv3D.hpp>
@@ -210,7 +210,9 @@ void Main()
 }
 ```
 
-### ボロノイ図
+## ボロノイ図
+
+### ボロノイ図の生成
 
 ```cpp
 # include <Siv3D.hpp>
@@ -251,10 +253,83 @@ void Main()
 }
 ```
 
+### ボロノイ図・ドロネー図の動的な生成
 
-### ナビメッシュ
+```cpp
+# include <Siv3D.hpp>
 
-#### Polygon からナビメッシュを作成
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.99 });
+	const Rect rect{ 50, 50, Scene::Size() - Size{ 100, 100 } };
+
+	Subdivision2D subdiv{ rect };
+
+	// ドロネー三角形分割の三角形リスト
+	Array<Triangle> triangles;
+
+	// ボロノイ図の情報のリスト
+	Array<VoronoiFacet> facets;
+
+	// facets を長方形でクリップし Polygon に変換したリスト
+	Array<Polygon> facetPolygons;
+
+	while (System::Update())
+	{
+		const Vec2 pos = Cursor::Pos();
+
+		// 長方形上をクリックしたら
+		if (rect.leftClicked())
+		{
+			// 点を追加
+			subdiv.addPoint(pos);
+
+			// ドロネー三角形分割の計算
+			subdiv.calculateTriangles(triangles);
+
+			// ボロノイ図の計算
+			subdiv.calculateVoronoiFacets(facets);
+
+			// 長方形の範囲外をクリップ
+			facetPolygons = facets.map([rect](const VoronoiFacet& f)
+			{
+				return Geometry2D::And(Polygon{ f.points }, rect).front();
+			});
+		}
+
+		rect.draw(ColorF{ 0.75 });
+
+		for (auto [i, facetPolygon] : Indexed(facetPolygons))
+		{
+			facetPolygon.draw(HSV{ (i * 25.0), 0.65, 0.8 }).drawFrame(3, ColorF{ 0.25 });
+		}
+
+		for (const auto& triangle : triangles)
+		{
+			triangle.drawFrame(2.5, ColorF{ 0.9 });
+		}
+
+		for (const auto& facet : facets)
+		{
+			Circle{ facet.center, 6 }.drawFrame(5).draw(ColorF{ 0.25 });
+		}
+
+		// 現在のマウスカーソルから最短距離にある点を探す
+		if (const auto nearestVertexID = subdiv.findNearest(pos))
+		{
+			const Vec2 nearestVertex = subdiv.getVertex(nearestVertexID.value());
+			Line{ pos, nearestVertex }.draw(LineStyle::RoundDot, 5, ColorF{ 0.6 });
+			Circle{ nearestVertex, 16 }.drawFrame(3.5);
+		}
+	}
+}
+```
+
+
+## ナビメッシュ
+
+### Polygon からナビメッシュを作成
 
 ```cpp
 # include <Siv3D.hpp>
@@ -294,7 +369,7 @@ void Main()
 ```
 
 
-#### 移動者の半径
+### 移動者の半径
 大きい agent が細い道を通れないことを確認するサンプルです。
 
 ```cpp
@@ -383,9 +458,9 @@ void Main()
 ```
 
 
-### 2D 計算幾何
+## 2D 計算幾何
 
-#### Spline2D の曲率取得
+### Spline2D の曲率取得
 
 ```cpp
 # include <Siv3D.hpp>
@@ -452,7 +527,7 @@ void Main()
 }
 ```
 
-#### LineString の総距離と、スタート地点から指定した距離にある点
+### LineString の総距離と、スタート地点から指定した距離にある点
 
 ```cpp
 # include <Siv3D.hpp>
@@ -496,7 +571,7 @@ void Main()
 }
 ```
 
-#### ハウスドルフ距離
+### ハウスドルフ距離
 
 ```cpp
 # include <Siv3D.hpp>
@@ -546,7 +621,7 @@ void Main()
 }
 ```
 
-#### 図形の重なる領域
+### 図形の重なる領域
 
 ```cpp
 # include <Siv3D.hpp>
@@ -573,7 +648,7 @@ void Main()
 }
 ```
 
-#### 図形の引き算
+### 図形の引き算
 
 ```cpp
 # include <Siv3D.hpp>
@@ -600,7 +675,7 @@ void Main()
 }
 ```
 
-#### 点群の凸包
+### 点群の凸包
 
 ```cpp
 # include <Siv3D.hpp>
@@ -632,7 +707,7 @@ void Main()
 }
 ```
 
-#### Polygon の凸包
+### Polygon の凸包
 
 ```cpp
 # include <Siv3D.hpp>
@@ -653,7 +728,7 @@ void Main()
 }
 ```
 
-#### Polygon の拡張
+### Polygon の拡張
 
 ```cpp
 # include <Siv3D.hpp>
@@ -682,7 +757,7 @@ void Main()
 }
 ```
 
-#### Polygon の太らせ、細らせ
+### Polygon の太らせ、細らせ
 
 ```cpp
 # include <Siv3D.hpp>
@@ -713,6 +788,110 @@ void Main()
 
 		starBase1.drawFrame(2, Palette::Yellow);
 		starBase2.drawFrame(2, Palette::Yellow);
+	}
+}
+```
+
+### 不正な Polygon 頂点の自動修正
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const Font font{ 20, Typeface::Bold };
+
+	Array<Vec2> points;
+	Array<Polygon> solvedPolygons;
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			points << Cursor::Pos();
+
+			// 頂点列から適切な Polygon を作成
+			solvedPolygons = Polygon::Correct(points, {});
+		}
+		else if (MouseR.down())
+		{
+			points.clear();
+			solvedPolygons.clear();
+		}
+
+		for (auto [i, point] : Indexed(points))
+		{
+			Circle{ point, 5 }.draw();
+			Line{ points[i], points[(i + 1) % points.size()] }
+			.drawArrow(2, Vec2{ 20, 20 }, Palette::Orange);
+		}
+
+		font(points).draw(Rect{ 20, 20, 600, 720 });
+
+		{
+			const Transformer2D transformer{ Mat3x2::Translate(640, 0) };
+
+			font(solvedPolygons).draw(Rect{ 20, 20, 600, 720 });
+
+			for (auto [i, solvedPolygon] : Indexed(solvedPolygons))
+			{
+				const HSV color{ (i * 40.0), 0.7, 1.0 };
+				solvedPolygon.draw(color);
+
+				const auto& outer = solvedPolygon.outer();
+
+				for (auto [k, point] : Indexed(outer))
+				{
+					const Vec2 begin = outer[k];
+					const Vec2 end = outer[(k + 1) % outer.size()];
+					const Vec2 v = (end - begin).normalized();
+					const Vec2 c = (begin + end) / 2;
+					const Vec2 oc = c + v.rotated(-90_deg) * 10;
+					Line{ oc - v * 20, oc + v * 20 }
+						.drawArrow(2, Vec2{ 10, 10 }, color);
+				}
+			}
+		}
+	}
+}
+```
+
+
+## 数式処理
+`Eval()` に数式を渡すと、`double` 型の精度での計算結果を返します。`EvalOpt()` は戻り値の型が `Optional<double>` で、数式にエラーがある場合は `none` を返します。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Font font{ 30, Typeface::Bold };
+
+	TextEditState te;
+
+	Optional<double> result = 0.0;
+
+	while (System::Update())
+	{
+		// 数式を入力するテキストボックス
+		if (SimpleGUI::TextBox(te, Vec2{ 20, 20 }, 700))
+		{
+			// 結果を取得（エラーの場合 none）
+			result = EvalOpt(te.text);
+		}
+
+		if (result)
+		{
+			font(result.value()).draw(Rect{ 20, 100, 760, 500 }, ColorF{ 0.25 });
+		}
+		else
+		{
+			font(U"Error").draw(20, 100, ColorF{ 0.25 });
+		}
 	}
 }
 ```
