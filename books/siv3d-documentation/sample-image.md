@@ -6,6 +6,7 @@ free: true
 ## GrabCut による背景分離
 右クリックで背景部分を指示し、左クリックで前景部分を指示します。
 
+https://youtu.be/VfhFdJOdWw0
 ```cpp
 # include <Siv3D.hpp>
 
