@@ -1,11 +1,38 @@
 ---
-title: "S から始まるヘッダ"
+title: "API リファレンス | S"
 free: true
 ---
 
-# 1. `<Shape2D.hpp>`
+:::message
+将来追加予定の API リファレンスのテンプレートページです。
+:::
 
-## 1.1 円形のような正方形（Squircle) を描画する
+# 17. `<ScreenCapture.hpp>`
+
+## 17.1 スクリーンショット保存のショートカットキーをカスタマイズする
+デフォルトは `{ KeyPrintScreen, KeyF12 }` です。
+
+```cpp
+#include <Siv3D.hpp>
+
+void Main()
+{
+	// PrintScreen または (Ctrl + P) キーでスクリーンショットを保存
+	ScreenCapture::SetShortcutKeys({ KeyPrintScreen, (KeyControl + KeyP) });
+
+	const Font font{ 40 };
+
+	while (System::Update())
+	{
+		font(Scene::FrameCount()).drawAt(Scene::Center());
+	}
+}
+```
+
+
+# 29. `<Shape2D.hpp>`
+
+## 29.1 円形のような正方形（Squircle) を描画する
 
 ```cpp
 # include <Siv3D.hpp>
@@ -60,9 +87,9 @@ void Main()
 ```
 
 
-# 2. `<SVG.hpp>`
+# 52. `<SVG.hpp>`
 
-## 2.1 SVG ファイルから `Texture` を作成
+## 52.1 SVG ファイルから `Texture` を作成
 
 ```cpp
 # include <Siv3D.hpp>
@@ -87,7 +114,7 @@ void Main()
 		{
 			texture.draw(i * 200.0, 20);
 
-			PutText(U"{}"_fmt(texture.size()), Vec2{ i * 200 + 60, 40 });
+			PutText(U"{}"_fmt(texture.size()), Vec2{ (i * 200 + 60), 40 });
 		}
 	}
 }
