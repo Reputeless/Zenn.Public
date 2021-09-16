@@ -114,3 +114,23 @@ void Main()
 ```
 
 
+# 7. `<Circle.hpp>`
+
+## `Circle` クラス
+
+
+## 7.1 中心の色と外周の色を指定し、グラデーションで円を描画
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 中心が黄色、外周が黒
+		Circle{ Scene::Center(), 400 }.draw(Palette::Yellow, Palette::Black);
+	}
+}
+```
+
