@@ -5,6 +5,8 @@ free: true
 
 クリックで画面上に円を配置していくプログラムを作ります。
 
+https://youtu.be/Tq6O_d1cASQ
+
 ## 1. 基本のプログラム
 左クリックされるたびに、`Array<Circle>` に `Circle` 型の要素を追加していきます。  
 `Array<Circle>` の各要素には範囲 `for` でアクセスします。
