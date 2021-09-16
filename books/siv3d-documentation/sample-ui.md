@@ -5,6 +5,7 @@ free: true
 
 ## 点線で囲まれた長方形
 
+![](/images/doc_v6/sample/ui/dotted-box.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -29,6 +30,7 @@ void Main()
 
 ## プルダウンメニュー
 
+![](/images/doc_v6/sample/ui/pulldown.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -183,7 +185,6 @@ void Main()
 	while (System::Update())
 	{
 		pulldown.update();
-
 		pulldown.draw();
 	}
 }
