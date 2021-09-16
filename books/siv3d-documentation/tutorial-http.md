@@ -48,7 +48,7 @@ void Main()
 次のようにレスポンスのステータス行とヘッダーを取得できます。
 
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -86,7 +86,7 @@ void Main()
 `AsyncHTTPTask` の `.isReady()` が `true` になったあとに `.getResponse()` でレスポンスを取得すると、それ以降 `.isReady()` は `false` を返します。
 
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {

@@ -164,7 +164,7 @@ void Main()
 PC に接続されている Nintendo Switch の Joy-Con の情報を、`JoyConL` または `JoyConR` を通して取得できます。
 
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -185,7 +185,7 @@ void Main()
 		// Joy-Con (L) を取得
 		if (const auto joy = JoyConL(0))
 		{
-			joy.drawAt(Vec2(640 - 300, 450), scale, -90_deg - angle, covered);
+			joy.drawAt(Vec2{ 640 - 300, 450 }, scale, -90_deg - angle, covered);
 
 			if (auto d = joy.povD8())
 			{

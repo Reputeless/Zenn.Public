@@ -107,7 +107,7 @@ void Main()
 		{
 			const ScopedRenderTarget2D target{ renderTexture.clear(Palette::Black) };
 
-			Rect(Arg::center(100, 100), 80)
+			Rect{ Arg::center(100, 100), 80 }
 				.rotated(Scene::Time() * 30_deg).draw();
 		}
 
@@ -115,7 +115,7 @@ void Main()
 		{
 			const ScopedRenderTarget2D target{ msRenderTexture.clear(Palette::Black) };
 
-			Rect(Arg::center(100, 100), 80)
+			Rect{ Arg::center(100, 100), 80 }
 				.rotated(Scene::Time() * 30_deg).draw();
 		}
 

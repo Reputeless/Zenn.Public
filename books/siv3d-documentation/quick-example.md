@@ -307,7 +307,7 @@ void Main()
 		SimpleGUI::CheckBoxAt(showGrid, U"Grid", Vec2{ 700, 320 }, 170);
 
 		// フィールド上でのセルの編集
-		if (Rect(0, 0, 599).mouseOver())
+		if (Rect{ 0, 0, 599 }.mouseOver())
 		{
 			const Point target = (Cursor::Pos() / 10 + Point{ 1, 1 });
 
@@ -347,7 +347,7 @@ void Main()
 			}
 		}
 
-		if (Rect(0, 0, 599).mouseOver())
+		if (Rect{ 0, 0, 599 }.mouseOver())
 		{
 			Cursor::RequestStyle(CursorStyle::Hidden);
 			Rect{ Cursor::Pos() / 10 * 10, 10 }.draw(Palette::Orange);

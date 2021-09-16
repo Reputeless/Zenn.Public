@@ -304,7 +304,7 @@ void Main()
 		}
 
 		// ストッパーを無くす
-		if (stopper && SimpleGUI::Button(U"Go", Vec2(1100, 20)))
+		if (stopper && SimpleGUI::Button(U"Go", Vec2{ 1100, 20 }))
 		{
 			// ストッパーを破棄
 			stopper.release();

@@ -873,7 +873,7 @@ void Main()
 JSON で配列にアクセスする方法は 2 通りあります。
 
 ```cpp
-# include <Siv3D.hpp> // OpenSiv3D v0.6
+# include <Siv3D.hpp>
 
 JSON MakeJSON()
 {
