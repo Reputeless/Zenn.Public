@@ -4,7 +4,7 @@ free: true
 ---
 
 :::message
-将来追加予定の API リファレンスのテンプレートページです。
+将来追加予定の API リファレンスの仮ページです。
 :::
 
 # 17. `<ScreenCapture.hpp>`
