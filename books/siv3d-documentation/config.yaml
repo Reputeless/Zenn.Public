@@ -57,6 +57,7 @@ chapters:
   - sample-algorithm
   - sample-ui
   - sample-image
+  - sample-2d-physics
   - sample-device
   - community
   - event
