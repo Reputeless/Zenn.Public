@@ -9,7 +9,7 @@ free: true
 
 ## 1. 格子を表示する
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 class GameBoard
@@ -59,7 +59,7 @@ void Main()
 
 ## 2. マウスオーバーしたセルを強調表示
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 class GameBoard
@@ -133,7 +133,7 @@ void Main()
 ## 3. 〇 と × を表示
 セルに書き込まれたマークを `Grid<int32>` で管理し、書き込まれたセルはマークを表示します。
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 class GameBoard
@@ -246,7 +246,7 @@ void Main()
 ## 4. クリックでマークを置けるようにする
 空白のセルをクリックしたときに、交互に 〇 と × のマークを書き込めるようにします。
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 class GameBoard
@@ -380,7 +380,7 @@ void Main()
 ## 5. ゲーム盤を移動させる
 `Transofrmer2D` で、2D 描画座標とマウスカーソル座標をシフトし、ゲームの盤面を画面の中心に移動させます。
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 class GameBoard
@@ -507,7 +507,7 @@ void Main()
 	{
 		{
 			// 2D 描画とマウスカーソル座標を移動
-			Transformer2D tr(Mat3x2::Translate(offset), true);
+			const Transformer2D transformer{ Mat3x2::Translate(offset), TransformCursor::Yes };
 
 			gameBoard.update();
 
@@ -521,7 +521,7 @@ void Main()
 ## 6. ゲーム終了判定
 残りの空白セルが 0 になるか、マークがつながったらゲームを終了し、つながったラインを表示します。
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 // マークがつながったかを返す関数
@@ -748,7 +748,7 @@ void Main()
 ## 7. ゲーム終了後にリセットできるようにする
 ゲームが終了すると「Reset」ボタンが現れ、ゲームをリセットできるようにします。
 
-```C++
+```cpp
 # include <Siv3D.hpp>
 
 // 3 つのマークがつながったかを返す関数
