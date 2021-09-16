@@ -736,7 +736,8 @@ void Main()
 			const ColorF color = HSV{ penPos.x };
 
 			// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
-			glyph.texture.draw(penPos + glyph.getOffset(), color);
+			// FontMethod がビットマップ方式の場合に限り、Math::Round() で整数座標にすると品質が向上
+			glyph.texture.draw(Math::Round(penPos + glyph.getOffset()), color);
 
 			// ペンの X 座標を文字の幅の分進める
 			penPos.x += glyph.xAdvance;

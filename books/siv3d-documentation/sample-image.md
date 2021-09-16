@@ -151,3 +151,86 @@ void Main()
 }
 ```
 
+
+## 画像の一部の矩形領域への画像処理
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Image image{ U"example/windmill.png" };
+	DynamicTexture texture{ image };
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			// Image 内の指定領域をガウスぼかし
+			image(Cursor::Pos().movedBy(-30, -30), 60, 60)
+				.gaussianBlur(25);
+
+			texture.fill(image);
+		}
+
+		texture.draw();
+	}
+}
+```
+
+
+## 画像のアフィン変換・射影変換
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const Image image1{ U"🐤"_emoji };
+	const Image image2{ U"example/windmill.png" };
+
+	const Texture texture1{ image1 };
+	const Texture texture2{ image2 };
+
+	// 画像をアフィン変換
+	const Mat3x2 mat = Mat3x2::Rotate(50_deg, image1.size() / 2.0);
+	const Texture texture1t{ image1.warpAffine(mat) };
+
+	// 画像を射影変換
+	const Quad q{ Vec2{ 0, 80 }, Vec2{ 400, 0 }, Vec2{ 400, 300 }, Vec2{ 0, 220 } };
+	const Texture texture2t{ image2.warpPerspective(q) };
+
+	while (System::Update())
+	{
+		texture1.draw(0, 0);
+		texture2.draw(0, 200);
+
+		texture1t.draw(600, 0).drawFrame(1, 0);
+		texture2t.draw(600, 200).drawFrame(1, 0);
+	}
+}
+```
+
+
+## 動画編集
+動画を読み込んで画像処理を適用し、別の動画ファイルとして保存するサンプルです。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	VideoReader reader{ U"example/video/river.mp4" };
+	VideoWriter writer{ U"output.mp4", reader.getSize(), reader.getFPS() };
+	Image frame;
+
+	for (size_t i = 0; i < reader.getFrameCount(); ++i)
+	{
+		Console << U"{} フレーム目"_fmt(i);
+		reader.readFrame(frame);
+		writer.writeFrame(frame.grayscale());
+	}
+}
+```
