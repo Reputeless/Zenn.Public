@@ -29,7 +29,7 @@ void Main()
 		if (MouseL.down())
 		{
 			// 配列に円を追加
-			circles << Circle(Cursor::Pos(), circleR);
+			circles << Circle{ Cursor::Pos(), circleR };
 		}
 
 		// 配列内の円を描画
@@ -325,7 +325,7 @@ private:
 	// Item を格納する配列
 	Array<Item> m_items;
 
-    // エフェクト
+	// エフェクト
 	Effect m_effect;
 };
 
