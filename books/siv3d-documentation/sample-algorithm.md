@@ -7,6 +7,7 @@ free: true
 
 ### 半径による探索と k 近傍法による探索
 
+https://youtu.be/N-SvStkMcrk
 ```cpp
 # include <Siv3D.hpp>
 
@@ -132,6 +133,7 @@ void Main()
 
 ## 長方形詰込み
 
+https://youtu.be/Ue6fdIf9VRA
 ```cpp
 # include <Siv3D.hpp>
 
@@ -213,7 +215,7 @@ void Main()
 ## ボロノイ図
 
 ### ボロノイ図の生成
-
+![](/images/doc_v6/sample/algorithm/voro.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -255,6 +257,7 @@ void Main()
 
 ### ボロノイ図・ドロネー図の動的な生成
 
+https://youtu.be/dNcQ953-JJU
 ```cpp
 # include <Siv3D.hpp>
 
@@ -331,6 +334,7 @@ void Main()
 
 ### Polygon からナビメッシュを作成
 
+https://youtu.be/RSDZlDs2IFQ
 ```cpp
 # include <Siv3D.hpp>
 
@@ -371,6 +375,7 @@ void Main()
 
 ### 2D マップの動的な生成と、現在地や目的地の変更
 
+https://youtu.be/Y6_turio2pE
 ```cpp
 # include <Siv3D.hpp>
 
@@ -491,6 +496,7 @@ void Main()
 ### 移動者の半径
 大きい agent が細い道を通れないことを確認するサンプルです。
 
+https://youtu.be/-pc7GGg3gFI
 ```cpp
 # include <Siv3D.hpp>
 
@@ -581,6 +587,7 @@ void Main()
 
 ### Spline2D の曲率取得
 
+https://youtu.be/BMUod9VWbgI
 ```cpp
 # include <Siv3D.hpp>
 
@@ -648,6 +655,7 @@ void Main()
 
 ### LineString の総距離と、スタート地点から指定した距離にある点
 
+https://youtu.be/f18dwkDLApI
 ```cpp
 # include <Siv3D.hpp>
 
@@ -691,7 +699,7 @@ void Main()
 ```
 
 ### ハウスドルフ距離
-
+![](/images/doc_v6/sample/algorithm/hausdorf.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -741,7 +749,7 @@ void Main()
 ```
 
 ### 図形の重なる領域
-
+![](/images/doc_v6/sample/algorithm/and.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -753,7 +761,7 @@ void Main()
 	{
 		const Rect rect{ Arg::center = Cursor::Pos(), 300, 100 };
 
-		star.draw(ColorF{ Palette::Yellow, 0.3 });
+		star.drawFrame(2, Palette::Yellow);
 
 		rect.draw(ColorF{ 1.0, 0.8 });
 
@@ -768,7 +776,7 @@ void Main()
 ```
 
 ### 図形の引き算
-
+![](/images/doc_v6/sample/algorithm/subtract.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -795,7 +803,7 @@ void Main()
 ```
 
 ### 点群の凸包
-
+![](/images/doc_v6/sample/algorithm/convexhull-points.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -827,7 +835,7 @@ void Main()
 ```
 
 ### Polygon の凸包
-
+![](/images/doc_v6/sample/algorithm/convexhull-polygon.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -848,7 +856,7 @@ void Main()
 ```
 
 ### Polygon の拡張
-
+![](/images/doc_v6/sample/algorithm/append.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -877,7 +885,7 @@ void Main()
 ```
 
 ### Polygon の太らせ、細らせ
-
+![](/images/doc_v6/sample/algorithm/buffer.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -912,7 +920,7 @@ void Main()
 ```
 
 ### 不正な Polygon 頂点の自動修正
-
+![](/images/doc_v6/sample/algorithm/correct.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -981,6 +989,7 @@ void Main()
 ## 数式処理
 `Eval()` に数式を渡すと、`double` 型の精度での計算結果を返します。`EvalOpt()` は戻り値の型が `Optional<double>` で、数式にエラーがある場合は `none` を返します。
 
+![](/images/doc_v6/sample/algorithm/eval.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1016,7 +1025,7 @@ void Main()
 ```
 
 ## 六角形タイル
-
+![](/images/doc_v6/sample/algorithm/hex.gif)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -1096,6 +1105,7 @@ void Main()
 
 ### 2D マップの可視領域
 
+https://youtu.be/-zmV9a3kLxs
 ```cpp
 # include <Siv3D.hpp>
 
