@@ -227,22 +227,119 @@ void Main()
 ## 36.5 各辺が軸に沿った直方体を描く
 直方体を描くときは `Box` を作成し、その `.draw()` を呼びます。`Box` は各辺が X, Y, Z 軸に沿った向きに作成されます。回転した直方体を作成したい場合は、のちの節で登場する `OrientedBox` を使います。
 
-```cpp
+`Box::FromPoints(p0, p1)` を使うと、2 点を対角線とする `Box` を作成できます。こちらのほうが、中心・大きさ指定よりも直感的な場合もあるでしょう。
 
+![](/images/doc_v6/tutorial/36/5.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			// 中心 (0,2,0) 各辺の長さが 4 のボックスにテクスチャ woodTexture を貼って描画
+			Box{ Vec3{0, 2, 0}, 4 }.draw(woodTexture);
+
+			for (auto i : Range(-4, 4))
+			{
+				Box{ (i * 4), 2, 8, 1, 4, 1 }.draw(HSV{ i * 20 }.removeSRGBCurve());
+			}
+
+			// 2 点を指定して直方体を作成
+			Box::FromPoints(Vec3{ -8, 2, -8 }, Vec3{ 0, 0, -12 }).draw();
+			Box::FromPoints(Vec3{ 0, 2, -8 }, Vec3{ 4, 0, -16 }).draw();
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.6 円柱を描く
 円柱を描くときは `Cylinder` を作成し、その `.draw()` を呼びます。
 
+![](/images/doc_v6/tutorial/36/6.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			// 中心 (0,2,0) 半径 2, 高さが 4 の円柱にテクスチャ woodTexture を貼って描画
+			Cylinder{ Vec3{0, 2, 0}, 2, 4 }.draw(woodTexture);
+
+			for (auto i : Range(-4, 4))
+			{
+				// 2 点を指定して円柱を作成
+				Cylinder{ Vec3{ (i * 4), (8 + i), 8}, Vec3{(i * 4), 0, 8}, 1 }
+					.draw(HSV{ i * 20 }.removeSRGBCurve());
+			}
+
+			// 2 点を指定して円柱を作成
+			Cylinder{ Vec3{-8, 0.5, -8}, Vec3{8, 4, -4}, 0.5 }.draw();
+			Cylinder{ Vec3{ 8, 0.25, -8 }, Vec3{8, 0, -8}, 4 }.draw(Linear::Palette::Gray);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.7 デバッグ用 3D カメラ
+`DebugCamera3D` は 3D 空間におけるカメラの移動を補助してくれるクラスです。カメラの動きをプログラムで制御する場合はのちの節で登場する `BasicCamera3D` を使いますが、テスト中は 3D 空間を自在に移動できると便利です。
+
+`DebugCamera3D` のコンストラクタには、3D シーンを描くレンダーテクスチャのサイズ、カメラの縦方向の視野角 `verticalFog`, カメラ（目）の初期位置 `eyePosition`, （オプションで）注目点 `focusPosition` などを指定できます。
 
 ![](/images/doc_v6/tutorial/36/7a.png)
+
+`DebugCamera3D` の `.update(speed)` は、W, A, S, D, E, X, 矢印キー、シフト、コントロールキーの入力に基づいて、カメラの位置と注目点を更新します。次のようなプログラムで、カメラの位置、注目点を表示してみます。
+
+![](/images/doc_v6/tutorial/36/7b.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -413,3 +510,16 @@ void Main()
 
 ```
 
+
+## 36.25 ビルボードを描く
+
+```cpp
+
+```
+
+
+## 36.26 動画を描く
+
+```cpp
+
+```
