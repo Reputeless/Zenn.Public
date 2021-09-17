@@ -63,7 +63,7 @@ Windows 版の OpenSiv3D SDK のインストーラのサイズは 120 MB 未満�
 Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニティ Slack](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/community) で質問しましょう。匿名で質問したい場合は BBS も利用できます。毎月オンラインで開催される Siv3D 実装会では、Siv3D の熱心なユーザ達や Siv3D の作者と、Discord 上で雑談や技術的な相談をすることができます。Twitter では定期的に #Siv3D, #OpenSiv3D ハッシュタグを巡回しています。ユーザコミュニティが、作品の宣伝やシェアに協力してくれるでしょう。OSS (オープンソースソフトウェア) 開発に貢献したい学生に対して、Siv3D を練習場にしてサポートするプログラムも毎年実施しています。
 
 ### 🌐 Web ブラウザ上で動く（試験的）
-現在試験的に提供される Web 版 ([OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)) を使うと、Siv3D で作った C++ アプリケーションを、WebGL2 をサポートするモダンな Web ブラウザ上で実行可能な JavaScript に変換できます。スマホやタブレットから、多くの人があたなの作品を体験できます。
+現在試験的に提供される Web 版 ([OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)) を使うと、Siv3D で作った C++ アプリケーションを、WebGL2 をサポートするモダンな Web ブラウザ上で実行可能なプログラムに変換できます。スマホやタブレットから、多くの人があたなの作品を体験できます。
 
 
 ## 1.3 Siv3D の制約
