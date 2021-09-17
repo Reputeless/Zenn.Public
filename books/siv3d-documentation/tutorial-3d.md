@@ -183,7 +183,6 @@ void Main()
 	Window::Resize(1280, 720);
 	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
 	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
-	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
 	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
 	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
 
@@ -219,7 +218,7 @@ void Main()
 }
 ```
 
-（補足）: 次のように、ラスタライザーステートで若干の深度バイアスを付加したり、カメラの `nearClip` を大きくしたりする緩和法もあります。
+（補足）: 次のように、ラスタライザーステートで深度バイアスを付加したり、カメラの `nearClip` を大きくしたり（デフォルトは `0.2`) する緩和法もあります。
 ```cpp
 # include <Siv3D.hpp>
 
@@ -434,6 +433,8 @@ void Main()
 `DebugCamera3D` は 3D 空間におけるカメラの移動を補助してくれるクラスです。カメラの動きをプログラムで制御する場合はのちの節で登場する `BasicCamera3D` を使いますが、開発中は 3D 空間を自在に移動できると便利です。
 
 `DebugCamera3D` のコンストラクタには、3D シーンを描くレンダーテクスチャのサイズ、カメラの縦方向の視野角 `verticalFog`, カメラ（目）の位置 `eyePosition` の初期設定、（オプションで）注目点 `focusPosition` の初期設定などを指定できます。
+
+このサンプルでは扱いませんが、カメラの上方向を示す `upVector` や、この距離よりカメラに近い物体を表示しない `nearClip` などのパラメータもあります。
 
 ![](/images/doc_v6/tutorial/36/8a.png)
 
@@ -711,120 +712,237 @@ void Main()
 
 | 関数 | 形状 | UV 座標 |
 |--|--|:--:|
-|``|  |  |
-|``|  |  |
-|``|  |  |
-|``|  |  |
-|``|  |  |
-|``|  |  |
-|``|  |  |
-|``|  |  |
-|``|  |  |
+|Billboard| ビルボード（のちの節）用の有限平面 |✔|
+|OneSidedPlane| 片面の有限平面 |✔|
+|TwoSidedPlane| 両面の有限平面 |✔|
+|Box| 直方体 |✔|
+|Sphere| 球 |✔|
+|SubdividedSphere| 頂点数に対する品質が良い球 |  |
+|Disc| 円板 |✔|
+|Cylinder| 円柱 |✔|
+|Cone| 円錐 |✔|
+|Pyramid| 四角錐 |✔|
+|Torus| トーラス |✔|
+|Hemisphere| 半球 |✔|
+|Tetrahedron| 正四面体 |  |
+|Octahedron| 正八面体 |  |
+|Dodecahedron| 正十二面体 |  |
+|Icosahedron| 正二十面体 |  |
+|Grid| グリッド状の有限平面 |✔|
+
+このサンプルでは扱いませんが、自身で用意した頂点およびインデックス配列を `MeshData` に格納し、そこから `Mesh` を作成することができます。
+
+![](/images/doc_v6/tutorial/36/13a.png)
+
+![](/images/doc_v6/tutorial/36/13b.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	const Mesh oneSidedPlane{ MeshData::OneSidedPlane(Vec2{ 6,2 }) };
+	const Mesh twoSidedPlane{ MeshData::TwoSidedPlane(Vec2{ 4,3 }) };
+	const Mesh box{ MeshData::Box(Vec3{ 6, 2, 2 }) };
+	const Mesh sphere8{ MeshData::Sphere(3, 8u) };
+	const Mesh sphere24{ MeshData::Sphere(3, 24u) };
+
+	const Mesh subdivSphere2{ MeshData::SubdividedSphere(3, 2u) };
+	const Mesh subdivSphere3{ MeshData::SubdividedSphere(3, 3u) };
+	const Mesh subdivSphere4{ MeshData::SubdividedSphere(3, 4u) };
+	const Mesh disc8{ MeshData::Disc(3, 8u) };
+	const Mesh disc16{ MeshData::Disc(3, 16u) };
+
+	const Mesh cylinder6{ MeshData::Cylinder(Vec3{0,0,0}, 3, 4, 6u) };
+	const Mesh cylinder24{ MeshData::Cylinder(Vec3{0,0,0}, 3, 4, 24u) };
+	const Mesh cone6{ MeshData::Cone(Vec3{0,0,0}, 3, 4, 6u) };
+	const Mesh cone24{ MeshData::Cone(Vec3{0,0,0}, 3, 4, 24u) };
+	const Mesh pyramid{ MeshData::Pyramid(3.0, 3.0) };
+
+	const Mesh torus{ MeshData::Torus(3.0, 0.6) };
+	const Mesh hemisphere{ MeshData::Hemisphere(3.0) };
+	const Mesh tetrahedron{ MeshData::Tetrahedron(3.0) };
+	const Mesh octahedron{ MeshData::Octahedron(3.0) };
+	const Mesh dodecahedron{ MeshData::Dodecahedron(3.0) };
+
+	const Mesh icosahedron{ MeshData::Icosahedron(3.0) };
+	const Mesh grid{ MeshData::Grid(Vec2{4.0,2.0}, 10, 5, Vec2{2, 1}) };
+
+	bool wireframe = false;
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			const ScopedRenderStates3D rastetrizer{ (wireframe ? RasterizerState::WireframeCullNone : RasterizerState::Default3D) };
+
+			oneSidedPlane.draw(-16, 0, 16, uvChecker);
+			twoSidedPlane.draw(-8, 0, 16, uvChecker);
+			box.draw(0, 0, 16, uvChecker);
+			sphere8.draw(8, 0, 16, uvChecker);
+			sphere24.draw(16, 0, 16, uvChecker);
+
+			subdivSphere2.draw(-16, 0, 8, uvChecker);
+			subdivSphere3.draw(-8, 0, 8, uvChecker);
+			subdivSphere4.draw(0, 0, 8, uvChecker);
+			disc8.draw(8, 0, 8, uvChecker);
+			disc16.draw(16, 0, 8, uvChecker);
+
+			cylinder6.draw(-16, 0, 0, uvChecker);
+			cylinder24.draw(-8, 0, 0, uvChecker);
+			cone6.draw(0, 0, 0, uvChecker);
+			cone24.draw(8, 0, 0, uvChecker);
+			pyramid.draw(16, 0, 0, uvChecker);
+
+			torus.draw(-16, 0, -8, uvChecker);
+			hemisphere.draw(-8, 0, -8, uvChecker);
+			tetrahedron.draw(0, 0, -8, uvChecker);
+			octahedron.draw(8, 0, -8, uvChecker);
+			dodecahedron.draw(16, 0, -8, uvChecker);
+
+			icosahedron.draw(-16, 0, -16, uvChecker);
+			grid.draw(-8, 0, -16, uvChecker);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		SimpleGUI::CheckBox(wireframe, U"wireframe", Vec2{ 20,20 });
+	}
+}
+```
+
+## 36.14 メッシュを座標して描画する
+`Mesh` の `.draw()` には回転 `Quaternion` や、3D の座標変換行列 `Mat4x4` 型を渡して、座標変換を適用して描画することができます。
 
 ```cpp
 
 ```
 
 
-## 36.14 座標変換行列を適用する
+## 36.15 一括して座標変換行列を適用する
+`Transformer3D` は、描画座標に対して、回転・拡大縮小、座標移動などの座標変換を適用できる機能です。`Transformer2D` の 3D 版です。
+
+座標変換行列は `Mat4x4` 型によって定義し、`Transformer3D` オブジェクトのコンストラクタに値を設定します。オブジェクトのスコープが有効な間、その行列による座標変換が 3D 描画に適用されます。
+
+`Transformer3D` の座標変換行列は `Transformer2D` のように重ねがけできます。個別の `.draw()` でも回転や座標変換行列を指定している場合、`Transformer3D` による座標変換のあとに、それらが適用されます。
 
 ```cpp
 
 ```
 
 
-## 36.15 カメラをプログラムで制御する
+## 36.16 カメラをプログラムで制御する
+`BasicCamera3D` は、プログラムだけで制御する 3D カメラです。
 
 ```cpp
 
 ```
 
 
-## 36.16 環境光を変更する
+## 36.17 環境光を変更する
+**環境光**は、どの物体のどの面にも等しく照らされる光源です。現実において、太陽や照明の方向を直接向いていない面でも、床や壁からの反射によって真っ暗にはならず、それなりに明るく見える現象を大雑把に再現する光源です。
+
+`Graphics3D::SetGlobalAmbientColor(color)` で設定します。デフォルトでは `ColorF{ 0.5 }` です。
 
 ```cpp
 
 ```
 
 
-## 36.17 太陽の明るさを変更する
+## 36.18 太陽の明るさを変更する
 
 ```cpp
 
 ```
 
 
-## 36.18 太陽の方向を変更する
+## 36.19 太陽の方向を変更する
 
 ```cpp
 
 ```
 
 
-## 36.19 透過を扱う
+## 36.20 透過を扱う
 
 ```cpp
 
 ```
 
 
-## 36.20 半透明を扱う
+## 36.21 半透明を扱う
 
 ```cpp
 
 ```
 
 
-## 36.21 ワイヤフレームで描画する
+## 36.22 ワイヤフレームで描画する
 
 ```cpp
 
 ```
 
 
-## 36.22 テクスチャを繰り返す
+## 36.23 テクスチャを繰り返す
 
 ```cpp
 
 ```
 
 
-## 36.23 円柱座標系
+## 36.24 円柱座標系
 
 ```cpp
 
 ```
 
 
-## 36.24 球面座標系
+## 36.25 球面座標系
 
 ```cpp
 
 ```
 
 
-## 36.25 3D モデルを描く
+## 36.26 3D モデルを描く
 
 ```cpp
 
 ```
 
 
-## 36.26 3D モデルを動かす
+## 36.27 3D モデルを動かす
 
 ```cpp
 
 ```
 
 
-## 36.27 ビルボードを描く
+## 36.28 ビルボードを描く
 
 ```cpp
 
 ```
 
 
-## 36.28 動画を描く
+## 36.29 動画を描く
 
 ```cpp
 
