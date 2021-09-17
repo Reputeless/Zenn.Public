@@ -5,6 +5,7 @@ published: true # falseだと下書き
 price: 0
 chapters:
   - introduction
+  - whats-new
   - requirements
   - setup
   - hello-siv3d
@@ -65,7 +66,6 @@ chapters:
   - sponsor
   - productivity
   - mascot
-  - whats-new
   - build
   - course-circles
   - course-tic-tac-toe
