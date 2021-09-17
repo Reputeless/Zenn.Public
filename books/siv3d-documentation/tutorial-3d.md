@@ -23,8 +23,24 @@ free: true
   - https://docs.unity3d.com/ja/2018.4/Manual/LinearRendering-LinearOrGammaWorkflow.html
 
 
-## 36.1 3D を描く準備
-Siv3D における標準的な 3D 描画の基本のコードは次の通りです。
+## 36.1 3D 描画の基本
+Siv3D における基本的な 3D 描画のコードは次の通りです。
+
+3D シーンを描く `MSRenderTexture` を `TextureFormat::R8G8B8A8_Unorm_SRGB` フォーマットで用意します。合わせて、3D オブジェクトの前後関係による隠面消去をおこなうために `HasDepth::Yes` を指定し、深度バッファを持たせます。
+
+このレンダーテクスチャをクリアするときに使う色 `backgroundColor` は、最終的にモニタに表示されてほしい色から sRGB カーブを除去した色を用意します。
+
+3D シーンの描画で使われるテクスチャ `uvChecker` は、内容がガンマ色空間なので、`TextureDesc::MippedSRGB` を指定します。
+
+`DebugCamera3D` は 3D 空間におけるカメラの位置と視線方向を決めるために使います。詳しくはのちの節で説明します。`.update()` を呼ぶと、キーボード入力を使ってカメラの位置や向きを変更できます。
+
+`Graphics3D::SetCameraTransform()` でカメラの設定を終えたら、`ScopedRenderTarget3D` に 3D 描画用のレンダーテクスチャを設定し、3D 描画の処理を記述します。次のサンプルでは床、ボックス、球、円柱の 4 つの形状を描いています。3D 形状のクラスについてはのちの節で説明します。
+
+3D 描画が終わったら、`ScopedRenderTarget3D` のスコープを終わらせ、`renderTexture` をレンダーターゲットから解除させます。
+
+`renderTexture` はマルチサンプル・レンダーテクスチャであるため、描画結果を利用する前にリゾルブが必要です（チュートリアル 34.2 参照）。`Graphics3D::Flush()` によってその時点までの 3D 描画処理をすべて実行（フラッシュ）して `MSRenderTexture` の内容を確定し、`.resolve()` `によって、MSRenderTexture` 内のマルチサンプル・テクスチャを、描画で利用可能なテクスチャに変換（リゾルブ）します。
+
+最後に `Shader::LinearToScreen(renderTexture)` によって、3D 描画の結果が格納されたレンダーテクスチャの内容を、リニア色空間からガンマ色空間への補正 (sRGB カーブの付加) を行いつつ、シーンに転送します。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -43,7 +59,7 @@ void Main()
 	// 3D シーンを描く、マルチサンプリング対応レンダーテクスチャ
 	// リニア色空間のレンダリング用に TextureFormat::R8G8B8A8_Unorm_SRGB
 	// 奥行きの比較のための深度バッファも使うので HasDepth::Yes
-	// マルチサンプル・テクスチャなので、描画内容を使う前に resolve() が必要
+	// マルチサンプル・レンダーテクスチャなので、描画内容を使う前に resolve() が必要
 	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
 
 	// 3D シーンのデバッグ用カメラ
@@ -91,5 +107,40 @@ void Main()
 		}
 	}
 }
+```
+
+
+## 36.2 
+
+```cpp
+
+```
+
+
+## 36.3 
+
+```cpp
+
+```
+
+
+## 36.4 
+
+```cpp
+
+```
+
+
+## 36.5 
+
+```cpp
+
+```
+
+
+## 36.6
+
+```cpp
+
 ```
 
