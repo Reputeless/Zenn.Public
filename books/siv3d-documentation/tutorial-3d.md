@@ -124,10 +124,6 @@ Siv3D では上方向が +Y, 右方向が +X, 奥行き方向が +Z になる次
 
 画像ファイル `"example/texture/uv.png"` は各辺小さいマス目が 64 個あるため、一辺の大きさが 64 の床に貼ることで、1 マスが 3D 空間での座標 1 に相当し、3D 空間での物の配置を確認するデバッグ用途に便利に使えます。
 
-:::message
-異なる床を、同じ面を共有するように配置すると、Z-fighting によりノイズ模様が生じることがあります。平面が一致しないよう 3D 形状を配置する必要があります。
-:::
-
 ![](/images/doc_v6/tutorial/36/3.png)
 ```cpp
 # include <Siv3D.hpp>
@@ -175,10 +171,110 @@ void Main()
 ```
 
 
-## 36.4 球を描く
-球を描くときは `Sphere` を作成し、その `.draw()` を呼びます。
+## 36.4 Z-fighting
+異なる物体を、同じ面領域を共有または非常に接近するように配置すると、Z-fighting によりノイズ模様が生じることがあります。領域面が重なるように配置するのを避けるか、どうしても必要な場合は、あとから描く面をわずかに浮かして 3D 物体を配置します。
 
 ![](/images/doc_v6/tutorial/36/4.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			Plane{ Vec3{ -16, 0, 0}, 12 }.draw(Linear::Palette::Red);
+
+			// ごくわずかに浮かす
+			Plane{ Vec3{ 0, 0.0001, 0}, 12 }.draw(Linear::Palette::Red);
+
+			// 浮かす
+			Plane{ Vec3{ 16, 0.01, 0}, 12 }.draw(Linear::Palette::Red);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
+```
+
+（補足）: 次のように、ラスタライザーステートで若干の深度バイアスを付加したり、カメラの `nearClip` を大きくしたりする緩和法もあります。
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+	constexpr double nearClip = 2.0;
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 }, Vec3{0,0,0}, Vec3{0,1,0}, nearClip };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			{
+				RasterizerState r = RasterizerState::Default3D;
+				r.depthBias = 100;
+				const ScopedRenderStates3D rasterizer{ r };
+
+				Plane{ Vec3{ -16, 0, 0}, 12 }.draw(Linear::Palette::Red);
+			}
+
+			Plane{ Vec3{ 0, 0.0001, 0}, 12 }.draw(Linear::Palette::Red);
+
+			Plane{ Vec3{ 16, 0.01, 0}, 12 }.draw(Linear::Palette::Red);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
+```
+
+
+## 36.5 球を描く
+球を描くときは `Sphere` を作成し、その `.draw()` を呼びます。
+
+![](/images/doc_v6/tutorial/36/5.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -228,12 +324,12 @@ void Main()
 ```
 
 
-## 36.5 各辺が軸に沿った直方体を描く
+## 36.6 各辺が軸に沿った直方体を描く
 直方体を描くときは `Box` を作成し、その `.draw()` を呼びます。`Box` は各辺が X, Y, Z 軸に沿った向きに作成されます。回転した直方体を作成したい場合は、のちの節で登場する `OrientedBox` を使います。
 
 `Box::FromPoints(p0, p1)` を使うと、2 点を対角線とする `Box` を作成できます。こちらのほうが、中心・大きさ指定よりも直感的な場合もあるでしょう。
 
-![](/images/doc_v6/tutorial/36/5.png)
+![](/images/doc_v6/tutorial/36/6.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -281,10 +377,10 @@ void Main()
 ```
 
 
-## 36.6 円柱を描く
+## 36.7 円柱を描く
 円柱を描くときは `Cylinder` を作成し、その `.draw()` を呼びます。
 
-![](/images/doc_v6/tutorial/36/6.png)
+![](/images/doc_v6/tutorial/36/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -334,16 +430,16 @@ void Main()
 ```
 
 
-## 36.7 デバッグ用 3D カメラ
+## 36.8 デバッグ用 3D カメラ
 `DebugCamera3D` は 3D 空間におけるカメラの移動を補助してくれるクラスです。カメラの動きをプログラムで制御する場合はのちの節で登場する `BasicCamera3D` を使いますが、開発中は 3D 空間を自在に移動できると便利です。
 
 `DebugCamera3D` のコンストラクタには、3D シーンを描くレンダーテクスチャのサイズ、カメラの縦方向の視野角 `verticalFog`, カメラ（目）の位置 `eyePosition` の初期設定、（オプションで）注目点 `focusPosition` の初期設定などを指定できます。
 
-![](/images/doc_v6/tutorial/36/7a.png)
+![](/images/doc_v6/tutorial/36/8a.png)
 
 `DebugCamera3D` の `.update(speed)` は、W, A, S, D, E, X, 矢印キー、シフト、コントロールキーの入力とカメラの移動の速さ `speed` に基づいて、カメラの位置と注目点を更新します。次のようなプログラムで、カメラの位置、注目点を表示してみます。
 
-![](/images/doc_v6/tutorial/36/7b.png)
+![](/images/doc_v6/tutorial/36/8b.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -395,12 +491,12 @@ void Main()
 ```
 
 
-## 36.8 回転付きの直方体を描く
+## 36.9 回転付きの直方体を描く
 3D 空間における回転は `Quaternion` 型を使って表現します。`Quaternion::RotateX(angle)` は X 軸に沿った angle の回転を表現する `Quaternion` を作成します。`Quaternion` は `*` 演算子によって合成することができます。
 
 回転情報付きの直方体は `OrientedBox` を使って表現します。これは `Box` に `Quaternion` が追加されたものです。
 
-![](/images/doc_v6/tutorial/36/8.png)
+![](/images/doc_v6/tutorial/36/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -454,10 +550,10 @@ void Main()
 ```
 
 
-## 36.9 3D の線分を描く
+## 36.10 3D の線分を描く
 3D の線分を描く場合は、`Line3D` を作成して `.draw()` します。太さは指定できず、つねに 1 です。
 
-![](/images/doc_v6/tutorial/36/9.png)
+![](/images/doc_v6/tutorial/36/10.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -503,10 +599,10 @@ void Main()
 ```
 
 
-## 36.10 円板を描く
+## 36.11 円板を描く
 円板を描くには `Disc` を作成して `.draw()` します。
 
-![](/images/doc_v6/tutorial/36/10.png)
+![](/images/doc_v6/tutorial/36/11.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -552,10 +648,10 @@ void Main()
 ```
 
 
-## 36.11 円錐を描く
+## 36.12 円錐を描く
 円錐を描くには `Cone` を作成して `.draw()` します。
 
-![](/images/doc_v6/tutorial/36/11.png)
+![](/images/doc_v6/tutorial/36/12.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -608,7 +704,7 @@ void Main()
 ```
 
 
-## 36.12 複雑な 3D 形状を描く
+## 36.13 複雑な 3D 形状を描く
 より複雑な形状を描くには、`Mesh` を作成して `.draw()` します。`Mesh` は 2D 描画における `Polygon` のように、様々な方法で作成できます。
 
 次のような `MeshData::` の関数を使うと、よく使われる形状の `Mesh` を作成できます（`Polygon` と `Shape2D::` の関係に似ています）。一部の形状は UV 座標がすべて (0, 0) なので、テクスチャをマッピングしても一色になります。そのような形状は、のちの章で説明する Tri-Planar シェーダを使うと、自然にテクスチャをマッピングできます。
@@ -630,105 +726,105 @@ void Main()
 ```
 
 
-## 36.13 座標変換行列を適用する
+## 36.14 座標変換行列を適用する
 
 ```cpp
 
 ```
 
 
-## 36.14 カメラをプログラムで制御する
+## 36.15 カメラをプログラムで制御する
 
 ```cpp
 
 ```
 
 
-## 36.15 環境光を変更する
+## 36.16 環境光を変更する
 
 ```cpp
 
 ```
 
 
-## 36.16 太陽の明るさを変更する
+## 36.17 太陽の明るさを変更する
 
 ```cpp
 
 ```
 
 
-## 36.17 太陽の方向を変更する
+## 36.18 太陽の方向を変更する
 
 ```cpp
 
 ```
 
 
-## 36.18 透過を扱う
+## 36.19 透過を扱う
 
 ```cpp
 
 ```
 
 
-## 36.19 半透明を扱う
+## 36.20 半透明を扱う
 
 ```cpp
 
 ```
 
 
-## 36.20 ワイヤフレームで描画する
+## 36.21 ワイヤフレームで描画する
 
 ```cpp
 
 ```
 
 
-## 36.21 テクスチャを繰り返す
+## 36.22 テクスチャを繰り返す
 
 ```cpp
 
 ```
 
 
-## 36.22 円柱座標系
+## 36.23 円柱座標系
 
 ```cpp
 
 ```
 
 
-## 36.23 球面座標系
+## 36.24 球面座標系
 
 ```cpp
 
 ```
 
 
-## 36.24 3D モデルを描く
+## 36.25 3D モデルを描く
 
 ```cpp
 
 ```
 
 
-## 36.25 3D モデルを動かす
+## 36.26 3D モデルを動かす
 
 ```cpp
 
 ```
 
 
-## 36.26 ビルボードを描く
+## 36.27 ビルボードを描く
 
 ```cpp
 
 ```
 
 
-## 36.27 動画を描く
+## 36.28 動画を描く
 
 ```cpp
 
