@@ -916,33 +916,325 @@ void Main()
 
 `Transformer3D` の座標変換行列は `Transformer2D` のように重ねがけできます。個別の `.draw()` でも回転や座標変換行列を指定している場合、`Transformer3D` による座標変換のあとに、それらが適用されます。
 
+![](/images/doc_v6/tutorial/36/15.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture earthTexture{ U"example/texture/earth.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	const Mesh plane{ MeshData::TwoSidedPlane(4) };
+	const Mesh torus{ MeshData::Torus(1.0, 0.2, 32u, 24u) };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			const Transformer3D transformer{ Mat4x4::RotateZ(t * 20_deg) };
+
+			plane.draw(Vec3{ -8, 0, 0 }, Quaternion::RotateX(t * -20_deg), uvChecker);
+
+			{
+				const Transformer3D transform2{ Mat4x4::RotateY(t * -40_deg) };
+				Sphere{3}.draw(earthTexture);
+			}
+
+			torus.draw(Mat4x4::RotateX(t * 90_deg).translated(8, 0, 0));
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.16 カメラをプログラムで制御する
 `BasicCamera3D` は、プログラムだけで制御する 3D カメラです。
 
-```cpp
+### 36.16.1 BasicCamera3D の基本
+自動的にカメラを動かします。
 
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+	Vec3 eyePosition{ 0, 16, -32 };
+	Vec3 focusPosition{ 0, 2, 0 };
+
+	BasicCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 0, 16, -32 }, Vec3{ 0, 16, -32 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+		eyePosition.x = (Math::Sin(t * 30_deg) * 20.0);
+		focusPosition.x = eyePosition.x;
+
+		ClearPrint();
+		Print << U"eyePositon: {:.1f}"_fmt(eyePosition);
+		Print << U"focusPosition: {:.1f}"_fmt(focusPosition);
+
+		// 位置・注目点情報を更新
+		camera.setView(eyePosition, focusPosition);
+
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw(ColorF{ 0.4, 0.8, 0.6 }.removeSRGBCurve());
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
+```
+
+### 36.16.2 キーによるカメラ移動
+W, A, S, D, ←, → キーで `BasicCamera3D` を制御します。
+
+![](/images/doc_v6/tutorial/36/16.2.png)
+```cpp
+# include <Siv3D.hpp>
+
+Vec3 GetDirection(double angle)
+{
+	const Vec2 dir = Circular{ 1.0, angle };
+	return{ dir.x, 0.0, -dir.y };
+}
+
+Vec3 GetFocusPosition(const Vec3& eyePosition, double angle)
+{
+	return (eyePosition + GetDirection(angle));
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+	Vec3 eyePosition{ 0, 2, -16 };
+	double angle = 0_deg;
+	BasicCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 0, 16, -32 }, GetFocusPosition(eyePosition, angle) };
+
+	while (System::Update())
+	{
+		ClearPrint();
+		const double deltaTime = Scene::DeltaTime();
+		const double speed = (deltaTime * 2.0);
+
+		if (KeyW.pressed())
+		{
+			eyePosition += (GetDirection(angle) * speed);
+		}
+
+		if (KeyA.pressed())
+		{
+			eyePosition += (GetDirection(angle - 90_deg) * speed);
+		}
+
+		if (KeyS.pressed())
+		{
+			eyePosition += (-GetDirection(angle) * speed);
+		}
+
+		if (KeyD.pressed())
+		{
+			eyePosition += (GetDirection(angle + 90_deg) * speed);
+		}
+
+		if (KeyLeft.pressed())
+		{
+			angle -= (deltaTime * 30_deg);
+
+			if (angle < 0_deg)
+			{
+				angle += 360_deg;
+			}
+		}
+
+		if (KeyRight.pressed())
+		{
+			angle += (deltaTime * 30_deg);
+
+			if (360_deg < angle)
+			{
+				angle -= 360_deg;
+			}
+		}
+
+		// 位置・注目点情報を更新
+		camera.setView(eyePosition, GetFocusPosition(eyePosition, angle));
+		Print << U"angle: {:.1f}°"_fmt(Math::ToDegrees(angle));
+		Print << U"direction: {:.2f}"_fmt(GetDirection(angle));
+		Print << U"eyePositon: {:.1f}"_fmt(camera.getEyePosition());
+		Print << U"focusPosition: {:.1f}"_fmt(camera.getFocusPosition());
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw(ColorF{ 0.4, 0.8, 0.6 }.removeSRGBCurve());
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.17 環境光を変更する
 **環境光**は、どの物体のどの面にも等しく照らされる光源です。現実において、太陽や照明の方向を直接向いていない面でも、床や壁からの反射によって真っ暗にはならず、それなりに明るく見える現象を大雑把に再現する光源です。
 
-`Graphics3D::SetGlobalAmbientColor(color)` で設定します。デフォルトでは `ColorF{ 0.5 }` です。
+`Graphics3D::SetGlobalAmbientColor(color)` で設定します。デフォルトの環境光は `Graphics3D::DefaultGlobalAmbientColor` で定義されている `ColorF{ 0.5, 0.5, 0.5 }` です。
 
+![](/images/doc_v6/tutorial/36/17.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	ColorF ambientColor = Graphics3D::DefaultGlobalAmbientColor;
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 環境光を設定
+		Graphics3D::SetGlobalAmbientColor(ambientColor);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw();
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		SimpleGUI::Slider(U"R: {:.2f}"_fmt(ambientColor.r), ambientColor.r, Vec2{ 20, 20 });
+		SimpleGUI::Slider(U"G: {:.2f}"_fmt(ambientColor.g), ambientColor.g, Vec2{ 20, 60 });
+		SimpleGUI::Slider(U"B: {:.2f}"_fmt(ambientColor.b), ambientColor.b, Vec2{ 20, 100 });
+	}
+}
 ```
 
 
-## 36.18 太陽の明るさを変更する
+## 36.18 太陽光の色を変更する
+**太陽光** は指定した方向から照らされる平行光源で、現実世界での太陽を再現します。物体上において、太陽の方向を向く面は 100% の太陽光で照らされ、太陽光に対して 90 度になるまで徐々に明るさが減少していき、90 度以上では太陽光の影響を受けなくなります。
 
+`Graphics3D::SetSunColor(color)` で太陽光の色を設定します。デフォルトの太陽光の色は `Graphics3D::DefaultSunColor` で定義されている `ColorF{ 1.0, 1.0, 1.0 }` です。
+
+![](/images/doc_v6/tutorial/36/18.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	ColorF ambientColor = Graphics3D::DefaultGlobalAmbientColor;
+	ColorF sunColor = Graphics3D::DefaultSunColor;
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 環境光を設定
+		Graphics3D::SetGlobalAmbientColor(ambientColor);
+
+		// 太陽光の色を設定
+		Graphics3D::SetSunColor(sunColor);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw();
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		SimpleGUI::Headline(U"Ambient", Vec2{ 20, 20 });
+		SimpleGUI::Slider(U"R: {:.2f}"_fmt(ambientColor.r), ambientColor.r, Vec2{ 20, 60 });
+		SimpleGUI::Slider(U"G: {:.2f}"_fmt(ambientColor.g), ambientColor.g, Vec2{ 20, 100 });
+		SimpleGUI::Slider(U"B: {:.2f}"_fmt(ambientColor.b), ambientColor.b, Vec2{ 20, 140 });
+
+		SimpleGUI::Headline(U"Sun", Vec2{ 240, 20 });
+		SimpleGUI::Slider(U"R: {:.2f}"_fmt(sunColor.r), sunColor.r, Vec2{ 240, 60 });
+		SimpleGUI::Slider(U"G: {:.2f}"_fmt(sunColor.g), sunColor.g, Vec2{ 240, 100 });
+		SimpleGUI::Slider(U"B: {:.2f}"_fmt(sunColor.b), sunColor.b, Vec2{ 240, 140 });
+	}
+}
 ```
 
 
