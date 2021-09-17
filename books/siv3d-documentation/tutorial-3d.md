@@ -538,7 +538,7 @@ void Main()
 
 
 ## 36.9 回転付きの直方体を描く
-3D 空間における回転は `Quaternion` 型を使って表現します。`Quaternion::RotateX(angle)` は X 軸に沿った angle の回転を表現する `Quaternion` を作成します。`Quaternion` は `*` 演算子によって合成することができます。
+3D 空間における回転は `Quaternion` 型を使って表現します。`Quaternion::RotateX(angle)` は、X 軸に沿った角度 `angle` の回転を表現する `Quaternion` を作成します。`Quaternion` は `*` 演算子によって合成することができます。
 
 回転情報付きの直方体は `OrientedBox` を使って表現します。これは `Box` に `Quaternion` が追加されたものです。
 
