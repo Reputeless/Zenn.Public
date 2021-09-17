@@ -124,6 +124,10 @@ Siv3D では上方向が +Y, 右方向が +X, 奥行き方向が +Z になる次
 
 画像ファイル `"example/texture/uv.png"` は各辺小さいマス目が 64 個あるため、一辺の大きさが 64 の床に貼ることで、1 マスが 3D 空間での座標 1 に相当し、3D 空間での物の配置を確認するデバッグ用途に便利に使えます。
 
+:::message
+異なる床を、同じ面を共有するように配置すると、Z-fighting によりノイズ模様が生じることがあります。平面が一致しないよう 3D 形状を配置する必要があります。
+:::
+
 ![](/images/doc_v6/tutorial/36/3.png)
 ```cpp
 # include <Siv3D.hpp>
@@ -340,7 +344,6 @@ void Main()
 `DebugCamera3D` の `.update(speed)` は、W, A, S, D, E, X, 矢印キー、シフト、コントロールキーの入力とカメラの移動の速さ `speed` に基づいて、カメラの位置と注目点を更新します。次のようなプログラムで、カメラの位置、注目点を表示してみます。
 
 ![](/images/doc_v6/tutorial/36/7b.png)
-
 ```cpp
 # include <Siv3D.hpp>
 
@@ -392,35 +395,235 @@ void Main()
 ```
 
 
-## 36.8 各辺が軸に沿っていない直方体を描く
+## 36.8 回転付きの直方体を描く
+3D 空間における回転は `Quaternion` 型を使って表現します。`Quaternion::RotateX(angle)` は X 軸に沿った angle の回転を表現する `Quaternion` を作成します。`Quaternion` は `*` 演算子によって合成することができます。
 
+回転情報付きの直方体は `OrientedBox` を使って表現します。これは `Box` に `Quaternion` が追加されたものです。
+
+![](/images/doc_v6/tutorial/36/8.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			// 中心 (0,2,0) 各辺の長さが 4, Y 軸に沿って回転した
+			// ボックスにテクスチャ woodTexture を貼って描画
+			OrientedBox{ Vec3{0, 2, 0}, 4, Quaternion::RotateY(t * 30_deg) }.draw(woodTexture);
+
+			for (auto i : Range(-4, 4))
+			{
+				// 回転の乗算で複数の回転を合成できる
+				const Quaternion orientation = (Quaternion::RotateZ(i * 20_deg) * Quaternion::RotateX(t * 30_deg));
+
+				OrientedBox{ Vec3{ (i * 4), 2, 8}, 1, 4, 1, orientation }
+					.draw(HSV{ i * 20 }.removeSRGBCurve());
+			}
+
+			OrientedBox{ Vec3{ 0, 4, -8 }, 1, 8, 1, Quaternion::RotateZ(t * 60_deg) }.draw();
+			OrientedBox{ Vec3{ 0, 4, -8 }, 8, 1, 1, Quaternion::RotateZ(t * 60_deg) }.draw();
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.9 3D の線分を描く
+3D の線分を描く場合は、`Line3D` を作成して `.draw()` します。太さは指定できず、つねに 1 です。
 
+![](/images/doc_v6/tutorial/36/9.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			Line3D{ Vec3{0, 0, 0}, Vec3{0, 8, 0} }.draw(ColorF{ 0.25 }.removeSRGBCurve());
+
+			for (auto z : Range(-4, 4))
+			{
+				Line3D{ Vec3{-8, 4, (z * 4)}, Vec3{8, 4, (z * 4)} }.draw(Linear::Palette::Red);
+			}
+
+			Line3D{ Vec3{8, 4, 16}, Vec3{-8, 4, -16} }.draw();
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.10 円板を描く
+円板を描くには `Disc` を作成して `.draw()` します。
 
+![](/images/doc_v6/tutorial/36/10.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			// 中心 (0,0.01,0), 半径 4 の円板を描く
+			Disc{ Vec3{0, 0.01, 0}, 4 }.draw(woodTexture);
+
+			for (auto i : Range(-4, 4))
+			{
+				Disc{ Vec3{ (i * 4), (4 + i + 0.01), 8}, 2 }.draw(HSV{ i * 20 }.removeSRGBCurve());
+			}
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.11 円錐を描く
+円錐を描くには `Cone` を作成して `.draw()` します。
 
+![](/images/doc_v6/tutorial/36/11.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			// 底面の中心 (0,0.0,0), 半径 4, 高さ 4 の円錐を描く
+			Cone{ Vec3{0, 0.0, 0}, 4, 4 }.draw(woodTexture);
+
+			for (auto i : Range(-4, 4))
+			{
+				Cone{ Vec3{ (i * 4), 0.0, 8}, 2, (6.0 + i) }.draw(HSV{ i * 20 }.removeSRGBCurve());
+			}
+
+			// from と to を結ぶ 3D の矢印を描く
+			const Vec3 from{ -8, 2, -6 }, to{ 4, 6, -4 };
+			const Vec3 v = (to - from).normalize();
+			const Vec3 headPos = (from + v * (to.distanceFrom(from) - 2.0));
+			Cylinder{ from, headPos, 0.2 }.draw(Linear::Palette::Lightgreen);
+			Cone{ headPos, to, 0.5 }.draw(Linear::Palette::Lightgreen);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
 ## 36.12 複雑な 3D 形状を描く
+より複雑な形状を描くには、`Mesh` を作成して `.draw()` します。`Mesh` は 2D 描画における `Polygon` のように、様々な方法で作成できます。
+
+次のような `MeshData::` の関数を使うと、よく使われる形状の `Mesh` を作成できます（`Polygon` と `Shape2D::` の関係に似ています）。一部の形状は UV 座標がすべて (0, 0) なので、テクスチャをマッピングしても一色になります。そのような形状は、のちの章で説明する Tri-Planar シェーダを使うと、自然にテクスチャをマッピングできます。
+
+| 関数 | 形状 | UV 座標 |
+|--|--|:--:|
+|``|  |  |
+|``|  |  |
+|``|  |  |
+|``|  |  |
+|``|  |  |
+|``|  |  |
+|``|  |  |
+|``|  |  |
+|``|  |  |
 
 ```cpp
 
@@ -476,49 +679,56 @@ void Main()
 ```
 
 
-## 36.20 テクスチャを繰り返す
+## 36.20 ワイヤフレームで描画する
 
 ```cpp
 
 ```
 
 
-## 36.21 円柱座標系
+## 36.21 テクスチャを繰り返す
 
 ```cpp
 
 ```
 
 
-## 36.22 球面座標系
+## 36.22 円柱座標系
 
 ```cpp
 
 ```
 
 
-## 36.23 3D モデルを描く
+## 36.23 球面座標系
 
 ```cpp
 
 ```
 
 
-## 36.24 3D モデルを動かす
+## 36.24 3D モデルを描く
 
 ```cpp
 
 ```
 
 
-## 36.25 ビルボードを描く
+## 36.25 3D モデルを動かす
 
 ```cpp
 
 ```
 
 
-## 36.26 動画を描く
+## 36.26 ビルボードを描く
+
+```cpp
+
+```
+
+
+## 36.27 動画を描く
 
 ```cpp
 
