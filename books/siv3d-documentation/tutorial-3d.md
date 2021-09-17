@@ -40,6 +40,7 @@ Siv3D における基本的な 3D 描画のコードは次の通りです。
 
 最後に `Shader::LinearToScreen(renderTexture)` によって、3D 描画の結果が格納されたレンダーテクスチャの内容を、リニア色空間からガンマ色空間への補正 (sRGB カーブの付加) を行いつつ、シーンに転送します。
 
+![](/images/doc_v6/tutorial/36/1.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -108,8 +109,9 @@ void Main()
 ```
 
 
-## 36.2 
+## 36.2 3D 空間の座標系
 
+![](/images/doc_v6/tutorial/36/2.png)
 ```cpp
 
 ```
