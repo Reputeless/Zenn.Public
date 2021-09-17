@@ -447,7 +447,6 @@ void Main()
 void Main()
 {
 	Window::Resize(1280, 720);
-
 	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
 	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
 	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
@@ -490,6 +489,52 @@ void Main()
 	}
 }
 ```
+
+タッチ操作をしたい環境のために、キーボードの代わりにタッチ操作でデバッグカメラを操作する関数 `.updateTouchUI(uiPos, uiScale, speed)`, `.drawTouchUI(uiPos, uiScale)` が用意されています。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// UI 操作でデバッグカメラの更新 (カメラの移動スピード: 4.0)
+		camera.updateTouchUI(Vec2{ 20, 460 }, 1.0, 4.0);
+
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw(ColorF{ 0.4, 0.8, 0.6 }.removeSRGBCurve());
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		// カメラコントロール用の UI を表示
+		camera.drawTouchUI(Vec2{ 20, 460 }, 1.0);
+	}
+}
+```
+
 
 
 ## 36.9 回転付きの直方体を描く
@@ -708,7 +753,7 @@ void Main()
 ## 36.13 複雑な 3D 形状を描く
 より複雑な形状を描くには、`Mesh` を作成して `.draw()` します。`Mesh` は 2D 描画における `Polygon` のように、様々な方法で作成できます。
 
-次のような `MeshData::` の関数を使うと、よく使われる形状の `Mesh` を作成できます（`Polygon` と `Shape2D::` の関係に似ています）。一部の形状は UV 座標がすべて (0, 0) なので、テクスチャをマッピングしても一色になります。そのような形状は、のちの章で説明する Tri-Planar シェーダを使うと、自然にテクスチャをマッピングできます。
+次のような `MeshData::` の関数を使うと、よく使われる形状の `Mesh` を作成できます（`Polygon` と `Shape2D::` の関係に似ています）。一部の形状は UV 座標がすべて (0, 0) なので、テクスチャをマッピングしてもテクスチャの左上のピクセルカラー一色になります。そのような形状は、のちの章で説明する Tri-Planar シェーダを使って自然にテクスチャをマッピングできます。
 
 | 関数 | 形状 | UV 座標 |
 |--|--|:--:|
