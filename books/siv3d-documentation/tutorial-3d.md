@@ -1239,76 +1239,270 @@ void Main()
 
 
 ## 36.19 太陽の方向を変更する
+太陽光がどの方向から来ているかを、`Graphics3D::SetSunDirection(sunDirection)` で設定できます。太陽の方向は、長さが 1 の方向ベクトルで設定します。例えば、真上から照らされている場合は `Vec3{ 0.0, 1.0, 0.0 }` です。
+
+![](/images/doc_v6/tutorial/36/19.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	ColorF ambientColor = Graphics3D::DefaultGlobalAmbientColor;
+	ColorF sunColor = Graphics3D::DefaultSunColor;
+	double direction = 90_deg;
+	double elevation = 45_deg;
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 環境光を設定
+		Graphics3D::SetGlobalAmbientColor(ambientColor);
+
+		// 太陽光の色を設定
+		Graphics3D::SetSunColor(sunColor);
+
+		// 太陽の方向を設定
+		const Vec3 sunDirection = Spherical{ 1.0, (90_deg - elevation), (-direction +90_deg) };
+		Graphics3D::SetSunDirection(sunDirection);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw();
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+
+			// 太陽の方向を赤い線分で可視化
+			Line3D{ Vec3{0, 2, 0}, (Vec3{0,2,0} + sunDirection * 5) }.draw(Linear::Palette::Red);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		SimpleGUI::Headline(U"Ambient", Vec2{ 20, 20 });
+		SimpleGUI::Slider(U"R: {:.2f}"_fmt(ambientColor.r), ambientColor.r, Vec2{ 20, 60 });
+		SimpleGUI::Slider(U"G: {:.2f}"_fmt(ambientColor.g), ambientColor.g, Vec2{ 20, 100 });
+		SimpleGUI::Slider(U"B: {:.2f}"_fmt(ambientColor.b), ambientColor.b, Vec2{ 20, 140 });
+
+		SimpleGUI::Headline(U"Sun", Vec2{ 240, 20 });
+		SimpleGUI::Slider(U"R: {:.2f}"_fmt(sunColor.r), sunColor.r, Vec2{ 240, 60 });
+		SimpleGUI::Slider(U"G: {:.2f}"_fmt(sunColor.g), sunColor.g, Vec2{ 240, 100 });
+		SimpleGUI::Slider(U"B: {:.2f}"_fmt(sunColor.b), sunColor.b, Vec2{ 240, 140 });
+
+		SimpleGUI::Headline(U"Sun Direction", Vec2{ 240, 20 });
+		SimpleGUI::Slider(U"d: {:.0f}°"_fmt(Math::ToDegrees(direction)), direction, 0_deg, 360_deg, Vec2{ 460, 60 });
+		SimpleGUI::Slider(U"e: {:.1f}°"_fmt(Math::ToDegrees(elevation)), elevation, 0_deg, 90_deg, Vec2{ 460, 100 });
+	}
+}
+```
+
+## 36.20 半透明や透過を扱う
+一般に、3D 描画で透過を扱うことは難しいです。Siv3D では、3D 描画のデフォルトのブレンドステートにおいて、透過はオフになっています。
+
+3D 描画で半透明や透過を扱うには次のいずれかの方法を使います。
+
+1. `BlendState::Default2D` を設定する
+2. `BlendState::Default2D` を設定し、3D オブジェクトを奥のものから順に描く
+3. `BlendState::OpaqueAlphaToCoverage` を設定する（マルチサンプル・レンダーテクスチャのみ有効）
+
+1 の欠点は、透過するオブジェクトでも深度バッファへの書き込みを行うため、手前にある透過物体のあとに、奥の物体を書くと、透過部分も隠面処理が実行されてしまうことです。
+![](/images/doc_v6/tutorial/36/20a.png)
+
+この問題は 2 のように、3D オブジェクトを描く順番をカメラから遠いもの→近いものに並び替えることで回避できます。
+![](/images/doc_v6/tutorial/36/20b.png)
+
+しかし木の葉のように複雑に入り組んだものを並び替えるのは難しい場合があります。その場合は 3 の AlphaToCoverage を利用すると、描画順が正しくなくても、ある程度 2 に近い結果を得ることができます。
+![](/images/doc_v6/tutorial/36/20c.png)
+
+3D 描画のレンダーステートの設定は、`ScopedRenderStates3D` を使います。
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawLargeWall()
+{
+	Box{ 0,4,8,32,8,1 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+}
+
+void DrawMiddleWall()
+{
+	Box{ 0,3,6,32,6,1 }.draw(ColorF{ 0.6, 0.4, 0.8, 0.6 }.removeSRGBCurve());
+}
+
+void DrawLeftBox(const Texture& emoji)
+{
+	Box{ -8,2,0,4 }.draw(emoji);
+}
+
+void DrawSphere()
+{
+	Sphere{ 0,2,0,4 }.draw(ColorF{ 0.2, 0.6, 1.0, 0.5 }.removeSRGBCurve());
+}
+
+void DrawRightBox(const Texture& emoji)
+{
+	Box{ 8,2,0,4 }.draw(emoji, ColorF{ 1.0, 0.7 });
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture emoji{ U"🐈"_emoji, TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	size_t index = 0;
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		if (index == 0)
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			DrawLargeWall();
+			DrawLeftBox(emoji);
+			DrawSphere();
+			DrawRightBox(emoji);
+			DrawMiddleWall();
+		}
+		else if (index == 1)
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			DrawLargeWall();
+			{
+				const ScopedRenderStates3D blend{ BlendState::Default2D };
+				DrawLeftBox(emoji);
+				DrawSphere();
+				DrawRightBox(emoji);
+				DrawMiddleWall();
+			}
+		}
+		else if (index == 2)
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			DrawLargeWall();
+			{
+				const ScopedRenderStates3D blend{ BlendState::Default2D };
+				DrawMiddleWall();
+
+				if (0 < camera.getEyePosition().x)
+				{
+					DrawLeftBox(emoji);
+					DrawSphere();
+					DrawRightBox(emoji);
+				}
+				else
+				{
+					DrawRightBox(emoji);
+					DrawSphere();
+					DrawLeftBox(emoji);
+				}
+			}
+		}
+		else 
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			DrawLargeWall();
+			{
+				const ScopedRenderStates3D blend{ BlendState::OpaqueAlphaToCoverage };
+				DrawLeftBox(emoji);
+				DrawSphere();
+				DrawRightBox(emoji);
+				DrawMiddleWall();
+			}
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		SimpleGUI::RadioButtons(index,
+			{ U"Default",
+			  U"BlendState::Default2D",
+			  U"BlendState::Default2D + sort by distance",
+			  U"BlendState::OpaqueAlphaToCoverage"
+			}, Vec2{ 20, 20 });
+	}
+}
+```
+
+
+## 36.21 ワイヤフレームで描画する
+`ScopedRenderStates3D` オブジェクトのコンストラクタに `RasterizerState::WireframeCullNone` を渡すと、形状を構成する三角形のワイヤフレームのみが描画されるようになります。
 
 ```cpp
 
 ```
 
 
-## 36.20 透過を扱う
+## 36.22 テクスチャを繰り返す
 
 ```cpp
 
 ```
 
 
-## 36.21 半透明を扱う
+## 36.23 円柱座標系
 
 ```cpp
 
 ```
 
 
-## 36.22 ワイヤフレームで描画する
+## 36.24 球面座標系
 
 ```cpp
 
 ```
 
 
-## 36.23 テクスチャを繰り返す
+## 36.25 3D モデルを描く
 
 ```cpp
 
 ```
 
 
-## 36.24 円柱座標系
+## 36.26 3D モデルを動かす
 
 ```cpp
 
 ```
 
 
-## 36.25 球面座標系
+## 36.27 ビルボードを描く
 
 ```cpp
 
 ```
 
 
-## 36.26 3D モデルを描く
-
-```cpp
-
-```
-
-
-## 36.27 3D モデルを動かす
-
-```cpp
-
-```
-
-
-## 36.28 ビルボードを描く
-
-```cpp
-
-```
-
-
-## 36.29 動画を描く
+## 36.28 動画を描く
 
 ```cpp
 
