@@ -302,6 +302,29 @@ void Main()
 }
 ```
 
+### 6.1.10 map 処理
+各要素に関数を適用した結果の配列を得たい場合は `.map(f)` を使います。
+
+![](/images/doc_v6/tutorial/6/1.10.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> values = { 1, 2, 3, 4, 5 };
+
+	// 各要素に 0.1 をかけた結果の配列を作成
+	Array<double> results = values.map([](int32 n){ return (n * 0.1); });
+
+	Print << results;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
 
 ## 6.2 二次元配列
 方眼紙のように区切ったマップの情報や、スプレッドシートのように、二次元配列が必要な情報を扱うときには `Grid<Type>` クラステンプレートを使います。`Grid` を使うことで、動的な二次元配列を便利に効率的に扱えます。`Grid` の内部では 1 つの `Array` ですべての要素を連続的に保持しています。
