@@ -131,7 +131,6 @@ Siv3D では上方向が +Y, 右方向が +X, 奥行き方向が +Z になる次
 void Main()
 {
 	Window::Resize(1280, 720);
-
 	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
 	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
 	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
