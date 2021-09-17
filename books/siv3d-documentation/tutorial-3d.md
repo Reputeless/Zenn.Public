@@ -110,140 +110,305 @@ void Main()
 
 
 ## 36.2 3D 空間の座標系
+Siv3D では上方向が +Y, 右方向が +X, 奥行き方向が +Z になる次のような 3D 空間の座標系を採用しています。
 
 ![](/images/doc_v6/tutorial/36/2.png)
-```cpp
 
+3D 座標の表現には `Vec3` 型を使います。`Vec3` は `double` 型の要素 `x`, `y`, `z` をメンバ変数として持ちます。
+
+
+## 36.3 床を描く
+3D シーンに図形を描く方法を学びましょう。Siv3D では、3D 形状オブジェクトを作成し、その `.draw()` メンバ関数を呼んで描画を行います。床を描くときは `Plane` を作成し、その `.draw()` を呼びます。
+
+`.draw()` の引数には、色かテクスチャを指定できます。指定しなかった場合白色で描かれます。`Linear::Palette::` 名前空間のパレットは、通常の `Plaette::` をリニア色空間に補正した色定数なので、`.removeSRGBCurve()` を省略できます。半透明を扱う方法はのちの節で説明します。
+
+画像ファイル `"example/texture/uv.png"` は各辺小さいマス目が 64 個あるため、一辺の大きさが 64 の床に貼ることで、1 マスが 3D 空間での座標 1 に相当し、3D 空間での物の配置を確認するデバッグ用途に便利に使えます。
+
+![](/images/doc_v6/tutorial/36/3.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			// 中心 (0,0,0) 一辺の幅が 64 の平面にテクスチャ uvChecker を貼って描画
+			Plane{ 64 }.draw(uvChecker);
+
+			// 中心　(-8,2,0), 一辺の幅が 8 の床を黄色 (sRGB カーブ除去済み）で描画
+			Plane{ Vec3{ -8, 2, 0 }, 8 }.draw(Linear::Palette::Yellow);
+
+			Plane{ Vec3{ -8, 4, 0 }, 6 }.draw(Linear::Palette::Orange);
+
+			Plane{ Vec3{ -8, 6, 0 }, 4 }.draw(Linear::Palette::Red);
+
+			Plane{ Vec3{ 8, 2, 8 }, 16, 8 }.draw(ColorF{ 0.2, 0.3, 0.4 }.removeSRGBCurve());
+
+			Plane{ Vec3{ 8, 2, -8 }, 16 }.draw(uvChecker);
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
-## 36.3 デバッグ用 3D カメラ
+## 36.4 球を描く
+球を描くときは `Sphere` を作成し、その `.draw()` を呼びます。
 
+![](/images/doc_v6/tutorial/36/4.png)
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const Texture earthTexture{ U"example/texture/earth.jpg", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			Plane{ 64 }.draw(uvChecker);
+
+			// 中心 (0,2,0) 半径が 2 の球にテクスチャ earthTexture を貼って描画
+			Sphere{ 0, 2, 0, 2 }.draw(earthTexture);
+
+			for (auto i : Range(-4, 4))
+			{
+				Sphere{ (i * 4), 1, 8, 1 }.draw(HSV{ i * 20 }.removeSRGBCurve());
+			}
+
+			for (auto i : Range(-4, 4))
+			{
+				Sphere{ (i * 4), 1, -8, 0.5 }.draw(ColorF{ 0.5 + i * 0.125 }.removeSRGBCurve());
+			}
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
 ```
 
 
-## 36.4 平面を描く
-
-```cpp
-
-```
-
-
-## 36.5 球を描く
-
-```cpp
-
-```
-
-
-## 36.6 直方体を描く
-
-```cpp
-
-```
-
-
-## 36.7 円柱を描く
-
-```cpp
-
-```
-
-
-## 36.8
-
-```cpp
-
-```
-
-
-## 36.9
-
-```cpp
-
-```
-
-
-## 36.10
-
-```cpp
-
-```
-
-
-## 36.11
-
-```cpp
-
-```
-
-
-## 36.12
-
-```cpp
-
-```
-
-
-## 36.13
-
-```cpp
-
-```
-
-
-## 36.14
-
-```cpp
-
-```
-
-
-## 36.15
-
-```cpp
-
-```
-
-
-## 36.16
-
-```cpp
-
-```
-
-
-## 36.17
-
-```cpp
-
-```
-
-
-## 36.18
-
-```cpp
-
-```
-
-
-## 36.19
-
-```cpp
-
-```
-
-
-## 36.20
+## 36.5 各辺が軸に沿った直方体を描く
+直方体を描くときは `Box` を作成し、その `.draw()` を呼びます。`Box` は各辺が X, Y, Z 軸に沿った向きに作成されます。回転した直方体を作成したい場合は、のちの節で登場する `OrientedBox` を使います。
 
 ```cpp
 
 ```
 
 
-## 36.21
+## 36.6 円柱を描く
+円柱を描くときは `Cylinder` を作成し、その `.draw()` を呼びます。
+
+```cpp
+
+```
+
+
+## 36.7 デバッグ用 3D カメラ
+
+![](/images/doc_v6/tutorial/36/7a.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+	// 3D シーンのデバッグ用カメラ
+	// 縦方向の視野角 30°, カメラの位置 (10, 16, -32)
+	// 前後移動: [W][S], 左右移動: [A][D], 上下移動: [E][X], 注視点移動: アローキー, 加速: [Shift][Ctrl]
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// デバッグカメラの更新 (カメラの移動スピード: 2.0)
+		camera.update(2.0);
+
+		// カメラの状態を表示
+		Print << U"eyePositon: {:.1f}"_fmt(camera.getEyePosition());
+		Print << U"focusPosition: {:.1f}"_fmt(camera.getFocusPosition());
+		Print << U"verticalFOV: {:.1f}°"_fmt(Math::ToDegrees(camera.getVerticlaFOV()));
+
+		// 3D シーンにカメラを設定
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			Box{ -8,2,0,4 }.draw(ColorF{ 0.8, 0.6, 0.4 }.removeSRGBCurve());
+			Sphere{ 0,2,0,2 }.draw(ColorF{ 0.4, 0.8, 0.6 }.removeSRGBCurve());
+			Cylinder{ 8, 2, 0, 2, 4 }.draw(ColorF{ 0.6, 0.4, 0.8 }.removeSRGBCurve());
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
+```
+
+
+## 36.8 各辺が軸に沿っていない直方体を描く
+
+```cpp
+
+```
+
+
+## 36.9 3D の線分を描く
+
+```cpp
+
+```
+
+
+## 36.10 円板を描く
+
+```cpp
+
+```
+
+
+## 36.11 円錐を描く
+
+```cpp
+
+```
+
+
+## 36.12 複雑な 3D 形状を描く
+
+```cpp
+
+```
+
+
+## 36.13 座標変換行列を適用する
+
+```cpp
+
+```
+
+
+## 36.14 カメラをプログラムで制御する
+
+```cpp
+
+```
+
+
+## 36.15 環境光を変更する
+
+```cpp
+
+```
+
+
+## 36.16 太陽の明るさを変更する
+
+```cpp
+
+```
+
+
+## 36.17 太陽の方向を変更する
+
+```cpp
+
+```
+
+
+## 36.18 透過を扱う
+
+```cpp
+
+```
+
+
+## 36.19 半透明を扱う
+
+```cpp
+
+```
+
+
+## 36.20 テクスチャを繰り返す
+
+```cpp
+
+```
+
+
+## 36.21 円柱座標系
+
+```cpp
+
+```
+
+
+## 36.22 球面座標系
+
+```cpp
+
+```
+
+
+## 36.23 3D モデルを描く
+
+```cpp
+
+```
+
+
+## 36.24 3D モデルを動かす
 
 ```cpp
 
