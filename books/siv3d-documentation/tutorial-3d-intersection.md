@@ -142,7 +142,7 @@ void Main()
 
 3D カメラの `.screenToRay(cursorPos)` メンバ関数を使うと、マウスカーソルのレイを作成できます。マウスカーソルのレイの `origin` はカメラの `eyePosition` と一致します。そこからマウスカーソルの方向に向く `direction` を計算し、`Ray` を作成します。
 
-次のサンプルは 3D 空間上の各種形状とマウスカーソル
+次のサンプルでは、3D 空間上の各種形状とマウスカーソルのレイの交差判定を可視化します。
 
 ![](/images/doc_v6/tutorial/38/3.png)
 ```cpp
@@ -216,8 +216,8 @@ void Main()
 ```
 
 
-## 38.4 手前で交差する物体の取得
-レイは無限遠に伸びるため、複数の形状と交差する場合があります。`Ray` の `.intersects()` で得られる距離情報を調べ、最も近いものが最初に交差する形状であると判定します。
+## 38.4 最も手前で交差する物体の取得
+レイは無限遠に伸びるため、複数の形状と交差する場合があります。`Ray` の `.intersects()` で得られる距離情報を調べ、最も近いものが最初に交差する形状です。
 
 ![](/images/doc_v6/tutorial/38/4.png)
 ```cpp
@@ -392,7 +392,7 @@ void Main()
 
 
 ## 38.6 Mesh の境界ボリューム
-`Mesh` は `.boundingSphere()` で境界球を、`.boundingBox()` で境界ボックスを返します。
+`Mesh` は境界ボリューム情報を内部に保存していて、`.boundingSphere()` で境界球を、`.boundingBox()` で境界ボックスを返します。
 
 ![](/images/doc_v6/tutorial/38/6.png)
 ```cpp
@@ -439,7 +439,7 @@ void Main()
 
 
 ## 38.7 モデルの境界ボリューム
-`Model` は `.boundingSphere()` で境界球を、`.boundingBox()` で境界ボックスを返します。また、`ModelObject` はメンバ変数に `boundingSphere` と `boundingBox` を持ちます。
+`Model` は境界ボリューム情報を内部に保存していて、`.boundingSphere()` で境界球を、`.boundingBox()` で境界ボックスを返します。また、`ModelObject` はメンバ変数に `boundingSphere` と `boundingBox` を持ちます。
 
 ![](/images/doc_v6/tutorial/38/7.png)
 ```cpp
