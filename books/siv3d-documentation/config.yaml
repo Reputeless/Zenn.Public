@@ -47,7 +47,7 @@ chapters:
   - tutorial-shader2d
   - tutorial-3d
   - tutorial-3d-2
-#  - tutorial-3d-intersection
+  - tutorial-3d-intersection
   - tutorial-microphone-webcam
   - tutorial-tcp
   - tutorial-release
