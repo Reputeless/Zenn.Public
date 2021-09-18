@@ -3,7 +3,7 @@ title: "OpenSiv3D v0.6.0 のアップデート内容"
 free: true
 ---
 
-以前のバージョンは OpenSiv3D v0.4.3 です。
+OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をまとめています。
 
 # OpenSiv3D v0.6.0 のアップデート内容
 
