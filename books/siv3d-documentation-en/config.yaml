@@ -1,7 +1,7 @@
-title: "Siv3D Reference v0.6.0 (English)"
-summary: "WIP"
+title: "Siv3D Reference v0.6.0 [English] (WIP)"
+summary: "(WIP)\n日本語: https://zenn.dev/reputeless/books/siv3d-documentation"
 topics: ["cpp", "siv3d", "game", "gamedev"] # トピック（5つまで）
-published: false # falseだと下書き
+published: true # falseだと下書き
 price: 0
 chapters:
   - introduction
