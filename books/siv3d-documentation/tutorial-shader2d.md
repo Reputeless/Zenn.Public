@@ -132,7 +132,7 @@ float4 PS_Texture(s3d::PSInput input) : SV_TARGET
 ```
 
 ### GLSL
-GLSL では、1 つのファイルに 1 つのシェーダ関数を実装します。`default2d.vert` の `VS()` が、デフォルトの頂点シェーダ関数です。VSInput の形式で入力座標を受け取り、定数バッファ `VSConstants2D` の座標変換情報と乗算カラーを適用した結果を `VSOutput` の形式で出力します。
+GLSL では、1 つのファイルに 1 つのシェーダ関数を実装します。`default2d.vert` の `main()` が、デフォルトの頂点シェーダ関数です。VSInput の形式で入力座標を受け取り、定数バッファ `VSConstants2D` の座標変換情報と乗算カラーを適用した結果を `VSOutput` の形式で出力します。
 
 `default2d_shape.frag` の `main()` が、デフォルトの図形描画用ピクセルシェーダ関数です。PSInput 形式で入力を受け取り、出力するピクセルの RGBA カラー (`vec4` 型) を `FragColor` に書き込みます。
 
