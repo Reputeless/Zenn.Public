@@ -1,5 +1,5 @@
 ---
-title: "イントロダクション"
+title: "Introduction"
 free: true
 ---
 

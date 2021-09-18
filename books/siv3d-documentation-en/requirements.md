@@ -1,5 +1,5 @@
 ---
-title: "開発に必要な環境、動作に必要な環境"
+title: "System Requirements"
 free: true
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "開発を始める（SDK のインストール）"
+title: "Getting Started (Installing Siv3D SDK)"
 free: true
 ---
 
