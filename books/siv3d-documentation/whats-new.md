@@ -11,6 +11,8 @@ OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をま
 
 # OpenSiv3D v0.6.0 のアップデート内容
 
+[サンプルコード、画像・動画での紹介](https://zenn.dev/reputeless/scraps/f2e28f40ba44f174d87a)
+
 ## 新機能
 
 ### Featured
