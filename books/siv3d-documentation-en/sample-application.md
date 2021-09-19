@@ -1524,7 +1524,6 @@ void Main()
 	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 16, 12, -24 } };
 
 	TextEditState te;
-	String expression;
 
 	while (System::Update())
 	{
