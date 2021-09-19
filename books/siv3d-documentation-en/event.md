@@ -9,7 +9,7 @@ Siv3D の開発者やユーザが集まって、プログラムや技術につ�
 - ハッシュタグ [#OpenSiv3D実装会](https://twitter.com/search?q=%23OpenSiv3D%E5%AE%9F%E8%A3%85%E4%BC%9A&src=typed_query&f=live)
 - 毎月 1～2 回開催
 - 最近は Discord で実施
-  - 参加方法: Siv3D ユーザコミュニティ Slack の # open-siv3d チャンネルに Discord の招待 URL
+  - 参加方法: Siv3D ユーザコミュニティ Slack の #openspace チャンネルに Discord の招待 URL
   - オフラインで開催していたときの履歴: [OpenSiv3D 実装会](https://siv3d.github.io/ja-jp/community/dev-day/)
 
 Discord の通話やテキストチャットで参加でき、途中参加退出自由です。
