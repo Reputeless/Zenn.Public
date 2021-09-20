@@ -206,3 +206,59 @@ s
 - 
 - 
 
+## コントリビューション
+### コミッタ―
+（敬称略）
+- [nokotan](https://github.com/nokotan)
+  - Web 版開発を全面的に担当
+- [Ebishu-0309](https://github.com/Ebishu-0309)
+  - `Geometry2D::` に多数の関数を実装
+  - `Shape2D::Squircle()`
+  - コードの改善
+- [taotao54321](https://github.com/taotao54321)
+  - `Grid` の修正
+  - コードの改善
+- [sthairno](https://github.com/sthairno)
+  - Linux 版の IME 処理改善
+- [itakawa](https://github.com/itakawa) 
+  - Siv3D くん .obj ファイル提供
+- [Luke256](https://github.com/Luke256)
+  - コードの改善
+- [YASAI03](https://github.com/YASAI03)
+  - HTTP クライアント機能 `SimpleHTTP` の提案・実装
+- [falrnd](https://github.com/falrnd)
+  - `Geometry2D` の交差判定の改善
+- [yurkth](https://github.com/yurkth)
+  - `GeoJSON` 関連の機能を提案・実装
+- [ianCK](https://github.com/ianCK)
+  - コードの改善
+- [lriki](https://github.com/lriki)
+  - Siv3D くんドット絵素材の提供
+- [Ryoga-exe](https://github.com/Ryoga-exe)
+  - `Color::gamma()` のバグ修正
+- [sivboard](https://github.com/sivboard)
+  - スクリプト機能の実装追加とバグ修正
+- [agehama](https://github.com/agehama)
+  - PPM 画像読み込みのバグ修正
+- [kurokoji](https://github.com/kurokoji)
+  - Linux 版 MessageBox の追加
+- [ichi-raven](https://github.com/ichi-raven)
+  - コードの改善
+- [azaika](https://github.com/azaika)
+  - `JSON` クラスの設計・実装
+- [take-cheeze](https://github.com/take-cheeze)
+  - GitHub Actions を使った CI の整備
+
+### OpenSiv3D Challenge 参加者
+- #01 統計関数
+  - 白坂, マキア, fal_rnd
+- #03 Shape2D::Heart
+  - 野菜ジュース, てゃいの
+- #04 2D 図形の交差判定
+  - Ebishu, fal_rnd, きつねび
+- #05 Squircle
+  - Ebishu, Ryoga.exe
+- #07 国と都市
+  - torin (yurkth)
+- #10 OutlineGlyph to Array<Polygon>
+  - Ebishu, fal_rnd
