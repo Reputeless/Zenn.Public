@@ -116,7 +116,7 @@ OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をま
 - `Heterogeneous lookup` により、文字列リテラルや `StringView` で `HashTable` や `HashSet` のルックアップをする際の実行時性能が向上しました
 - ファイルの読み書き、画像ファイルや音声ファイルのロードが高速になりました
 - `Parse` / `ParseOpt` / `ParseOr` の速度を改善しました
-- 
+- (執筆中）
 - 
 - 
 - 
@@ -125,11 +125,11 @@ OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をま
 ## ユーザビリティ向上
 - インライン関数が .hpp ファイルから .ipp ファイルに移され、ヘッダファイルが読みやすくなりました
 - Windows 版のプロジェクトがデフォルトでプリコンパイル済みファイルを使用するようになり、ビルドが高速化しました
-- 
+- (執筆中）
 - 
 - 
 
-s
+
 ## 仕様変更
 - bool 型の関数パラメータの多くが、名前の付いた YesNo 型に置き換えられ、コードの可読性が向上しました
 - `Optional` 型が C++ 標準の `std::optional` に近い動作をするよう改善されました
@@ -158,7 +158,7 @@ s
 - `Image` の最大サイズを 1 辺 8192px → 16384px に拡張しました
 - ConstantBuffer サイズ 16 × N バイト制約が撤廃されました
 - 並列実行に関する機能は `SIV3D_CONCURRENT` マクロを定義しなくても使えるようになりました
-- 
+- (執筆中）
 - 
 - 
 - 
@@ -179,7 +179,7 @@ s
 - Windows の `MakeDragDrop()` の不具合を修正しました
 - PPM 画像読み込みの不具合を修正しました
 - プラットフォームごとの乱数の再現性の改善しました
-- 
+- (執筆中）
 - 
 - 
 - 
@@ -213,7 +213,7 @@ s
   - Web 版開発を全面的に担当
 - [Ebishu-0309](https://github.com/Ebishu-0309)
   - `Geometry2D::` に多数の関数を実装
-  - `Shape2D::Squircle()`
+  - `Shape2D::Squircle()` の実装
   - コードの改善
 - [taotao54321](https://github.com/taotao54321)
   - `Grid` の修正
@@ -222,6 +222,8 @@ s
   - Linux 版の IME 処理改善
 - [itakawa](https://github.com/itakawa) 
   - Siv3D くん .obj ファイル提供
+- [take-cheeze](https://github.com/take-cheeze)
+  - GitHub Actions を使った CI の整備
 - [Luke256](https://github.com/Luke256)
   - コードの改善
 - [YASAI03](https://github.com/YASAI03)
@@ -246,8 +248,6 @@ s
   - コードの改善
 - [azaika](https://github.com/azaika)
   - `JSON` クラスの設計・実装
-- [take-cheeze](https://github.com/take-cheeze)
-  - GitHub Actions を使った CI の整備
 
 ### OpenSiv3D Challenge 参加者
 - #01 統計関数
