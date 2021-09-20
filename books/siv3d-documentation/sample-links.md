@@ -3,7 +3,7 @@ title: "サンプル集 | サンプルリンク集"
 free: true
 ---
 
-### [OpenSiv3D サンプル](https://scrapbox.io/voidproc-siv3d-examples/OpenSiv3D%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB)
+### [OpenSiv3D サンプル](https://scrapbox.io/voidproc-siv3d-examples/)
 [@voidproc](https://twitter.com/voidproc) さんが執筆されている OpenSiv3D のサンプル集です。
 
 ![](/images/doc_v6/sample/links/voidproc.png)
