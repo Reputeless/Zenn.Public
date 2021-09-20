@@ -327,7 +327,7 @@ void Main()
 
 
 ## 37.6 動画を描く
-`VideoTexture` の作成時の `TextrueDesc` に `SRGB` を指定することで、3D 描画でも動画をテクスチャとして扱うことができます。
+`VideoTexture` の作成時の `TextureDesc` に `SRGB` を指定することで、3D 描画でも動画をテクスチャとして扱うことができます。
 
 ![](/images/doc_v6/tutorial/37/6.jpg)
 ```cpp
