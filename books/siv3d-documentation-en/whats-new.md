@@ -1,5 +1,5 @@
 ---
-title: "リリースノート"
+title: "Release Notes"
 free: true
 ---
 

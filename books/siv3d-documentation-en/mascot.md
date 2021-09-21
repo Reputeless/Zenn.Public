@@ -1,9 +1,9 @@
 ---
-title: "マスコットキャラクター (Siv3D くん)"
+title: "Mascot (Siv3D-kun)"
 free: true
 ---
 
-# Siv3D くん
+# Siv3D-kun
 Siv3D の公式マスコットキャラクター「Siv3D くん」  
 2015 年に公募を実施し、9 件の応募から [灰色](https://www.pixiv.net/users/2177957) さんのデザインが選ばれました。
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/mascot/siv3d-kun.png?raw=true)

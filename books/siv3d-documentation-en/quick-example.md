@@ -1,5 +1,5 @@
 ---
-title: "最初に動かす 15 のサンプルプログラム"
+title: "Featured examples"
 free: true
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "コミュニティ | Siv3D のイベントに参加する"
+title: "Community | Siv3D のイベントに参加する"
 free: true
 ---
 

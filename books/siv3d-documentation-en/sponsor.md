@@ -1,9 +1,9 @@
 ---
-title: "コミュニティ | Siv3D のスポンサーになる"
+title: "Community | Becoming a sponsor"
 free: true
 ---
 
-# Siv3D スポンサー
+# Siv3D sponsors
 
 [GitHub Sponsors](https://github.com/sponsors/Reputeless) を通して、Siv3D のスポンサーになることができます。スポンサー期間中には次のような特典があります。
 
@@ -18,7 +18,7 @@ free: true
 Siv3D のオープンソース開発を継続・加速させ、Siv3D 作品制作も捗るメリットがあります。ぜひご検討ください。
 
 
-## 現在のスポンサー
+## List of Siv3D sponsors
 
 |Sponsor tier| |
 |--|--|

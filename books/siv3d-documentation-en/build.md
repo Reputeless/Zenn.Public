@@ -1,5 +1,5 @@
 ---
-title: "Siv3D SDK を自前ビルドする手順"
+title: "Compiling from source"
 free: true
 ---
 

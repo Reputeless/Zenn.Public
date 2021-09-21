@@ -1,5 +1,5 @@
 ---
-title: "トラブルシューティング | 実行時編"
+title: "Troubleshooting | 実行時編"
 free: true
 ---
 

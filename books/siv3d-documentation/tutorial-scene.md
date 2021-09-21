@@ -472,9 +472,9 @@ void Main()
 
 
 ## 15.13 モニタの情報を得る
-接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使います。結果は `Array<Monitor>` 型で得られます。
+接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使います。結果は `Array<MonitorInfo>` 型で得られます。
 
-`Monitor` 型のメンバ変数は次の通りです。
+`MonitorInfo` 型のメンバ変数は次の通りです。
 
 | 変数 | 説明 |
 |--|--|
@@ -495,7 +495,7 @@ void Main()
 void Main()
 {
 	// 接続されているモニタの情報一覧を取得
-	const Array<Monitor> monitors = System::EnumerateMonitors();
+	const Array<MonitorInfo> monitors = System::EnumerateMonitors();
 
 	for (const auto& monitor : monitors)
 	{
