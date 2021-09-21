@@ -59,7 +59,7 @@ OpenSiv3D v0.6 で開発されたアプリケーションを実行するには�
 |--|--|
 | OS | macOS Mojave / Catalina / Big Sur |
 | CPU | Intel 製の CPU |
-| GPU | OpenGL 4.1 サポート |
+| Graphics | OpenGL 4.1 compatible hardware |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 
 - Apple Silicon は将来のバージョンでサポートが追加されます 
@@ -70,7 +70,7 @@ OpenSiv3D v0.6 で開発されたアプリケーションを実行するには�
 |--|--|
 | OS | Ubuntu 20.04 LTS |
 | CPU | Intel もしくは AMD 製の CPU |
-| GPU | OpenGL 4.1 サポート |
+| Graphics | OpenGL 4.1 compatible hardware |
 
 ## 2.4 Web
 Web 版は現在試験的な実装が提供されています。  
