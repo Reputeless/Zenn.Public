@@ -309,10 +309,8 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-	// RocknRollOne-Regular.ttf をロードして使う
 	const Font font{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf" };
 
-	// RocknRollOne-Regular.ttf をロードして使う
 	const Font fontB{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
 
 	const String text = U"Hello, Siv3D! こんにちは。";
