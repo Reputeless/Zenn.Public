@@ -14,16 +14,16 @@ OpenSiv3D v0.6 でプログラミングをするには、プラットフォー�
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | [Microsoft Visual C++ 2019 16.11](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
+| 開発環境 | [Microsoft Visual C++ 2019 16.11](https://visualstudio.microsoft.com/downloads/)<br>(Install "Desktop development with C++" from the Visual Studio Installer) |
 
 ## 1.2 macOS
 |  |  |
 |--|--|
 | OS | macOS Mojave / Catalina / Big Sur |
 | CPU | Intel 製の CPU |
-| GPU | OpenGL 4.1 サポート |
+| Graphics | OpenGL 4.1 compatible hardware |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
-| 開発環境 | Xcode 11.3 以降<br>(Big Sur の場合は Xcode 12.5 以降) |
+| 開発環境 | Xcode 11.3 以降<br>(Big Sur requires Xcode 12.5 or newer) |
 
 - Apple Silicon は将来のバージョンでサポートが追加されます 
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
@@ -33,12 +33,12 @@ OpenSiv3D v0.6 でプログラミングをするには、プラットフォー�
 |--|--|
 | OS | Ubuntu 20.04 LTS |
 | CPU | Intel もしくは AMD 製の CPU |
-| GPU | OpenGL 4.1 サポート |
+| Graphics | OpenGL 4.1 compatible hardware |
 | 開発環境 | GCC 9.3.0<br>Boost 1.71.0 - 1.73.0 |
 
 ## 1.4 Web
 Web 版は現在試験的な実装が提供されています。  
-最新の情報は [OpenSiv3D for Web プロジェクトページ](https://siv3d.kamenokosoft.com/ja/index) を確認してください。  
+最新の情報は [OpenSiv3D for Web プロジェクトページ](https://siv3d.kamenokosoft.com/index) を確認してください。  
 将来のバージョンで公式サポート対象に含まれる予定です。
 
 
@@ -74,7 +74,7 @@ OpenSiv3D v0.6 で開発されたアプリケーションを実行するには�
 
 ## 2.4 Web
 Web 版は現在試験的な実装が提供されています。  
-最新の情報は [OpenSiv3D for Web プロジェクトページ](https://siv3d.kamenokosoft.com/ja/index) を確認してください。  
+最新の情報は [OpenSiv3D for Web プロジェクトページ](https://siv3d.kamenokosoft.com/index) を確認してください。  
 将来のバージョンで公式サポート対象に含まれる予定です。
 
 
@@ -85,7 +85,7 @@ Windows 7 や Windows 8.1, Windows 10 のパソコンで Siv3D プログラミ�
 
 ### 手順
 
-https://visualstudio.microsoft.com/ja/downloads/ から **「Visual Studio 2019 コミュニティ」** を選択してインストーラをダウンロードし、実行します。
+https://visualstudio.microsoft.com/downloads/ から **「Visual Studio 2019 コミュニティ」** を選択してインストーラをダウンロードし、実行します。
 
 インストーラを実行すると、インストールするプログラミング言語や開発ツールを選択する次のような画面が出てきます。インストール項目の選択画面から **「C++ によるデスクトップ開発」** を選択します（右側の「インストールの詳細」に表示される項目は Visual Studio のバージョンによって異なるため、気にする必要はありません）。
 
