@@ -1,17 +1,35 @@
 ---
-title: "OpenSiv3D v0.6.0 のアップデート内容"
+title: "リリースノート"
 free: true
 ---
 
-OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をまとめています。
+# v0.6.1
+
+## 新機能
+- SDF / MSDF テクスチャ描画時のパラメータを簡単に指定できる `Graphics2D::SetSDFParameters(const TextStyle&)`, `Graphics2D::SetMSDFParameters(const TextStyle&)` を追加しました ([#647](https://github.com/Siv3D/OpenSiv3D/issues/647))
+
+## ユーザビリティ向上
+- Windows 版のプロジェクトで発生していたビルド時の IntelliSense の警告を 2 件抑制しました ([#643](https://github.com/Siv3D/OpenSiv3D/issues/643))
+- ドキュメンテーションを追加しました
+
+## 仕様変更
+- `Monitor` は `MonitorInfo` に名前が変更されました ([#649](https://github.com/Siv3D/OpenSiv3D/issues/649))
+- `UUID` は `UUIDValue` に名前が変更されました
+
+## 不具合・バグ修正
+- v0.6.0 において、Windows 版でタッチ操作をしたときに左クリックと判定されにくくなっていた不具合を修正しました ([#645](https://github.com/Siv3D/OpenSiv3D/issues/645))
+- v0.6.0 において、`<Siv3D/Windows/Windows.hpp>` をインクルードするとコンパイルエラーになっていた問題を修正しました ([#644](https://github.com/Siv3D/OpenSiv3D/issues/644))
+- v0.6.0 において、`Platform::Windows::GetHWND()` が実装されていなかった問題を修正しました ([#646](https://github.com/Siv3D/OpenSiv3D/issues/646))
+- `MathParser` に空の文字列を渡したときに例外を投げないようにしました ([#641](https://github.com/Siv3D/OpenSiv3D/issues/641))
+
+
+# v0.6.0
+
+[サンプルコード、画像・動画での紹介](https://zenn.dev/reputeless/scraps/f2e28f40ba44f174d87a)
 
 :::message
 非常に多くの更新があるため、現在も執筆中です。
 :::
-
-# OpenSiv3D v0.6.0 のアップデート内容
-
-[サンプルコード、画像・動画での紹介](https://zenn.dev/reputeless/scraps/f2e28f40ba44f174d87a)
 
 ## 新機能
 
@@ -101,6 +119,7 @@ OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をま
 - スクリプト機能を大幅に改善しました
 - 2D 図形の交差判定をより多くの組み合わせに対応しました
 - 多くの 3D 形状のクラスを追加しました
+- Linux 版の IMEの挙動を改善しました 
 - (執筆中）
 -
 -
@@ -201,7 +220,7 @@ OpenSiv3D v0.4.3 → OpenSiv3D v0.6.0 のおもなアップデート内容をま
 - 2D 物理演算は cm をデフォルトの単位に変更しました
 - `Glyph` 単位での描画の方法が変更されました
 - Windows 版は `<Siv3D.hpp>` のプリコンパイル済みを全てのソースファイルで自動でインクルードするようになりました。Main.cpp にある `# include <Siv3D.hpp>` は実質的には無意味です。`# define NO_S3D_USING` が必要な場合はプリコンパイル済みヘッダ作成用ヘッダ `stdafx.h` で行ってください
-- 
+- `Audio` は `Wave` と互換の形式でデータを保持しなくなりました。`.getWave()` は `.getSamples()` に置き換わりました。`GlobalAudio::BusGetSamples()` も利用できます
 - 
 - 
 - 
