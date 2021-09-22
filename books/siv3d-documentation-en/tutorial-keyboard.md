@@ -34,7 +34,7 @@ free: true
 |:--:|:--:|:--:|:--:|:--:|:--:|
 | `.down()` | false | **✔ true** | false | false | false |
 | `.pressed()` | false | **✔ true** | **✔ true** | false | false |
-| `.released()` | false | false | false | **✔ true** | false |
+| `.up()` | false | false | false | **✔ true** | false |
 
 ```cpp
 # include <Siv3D.hpp>
