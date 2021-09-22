@@ -1157,6 +1157,43 @@ int main()
 dog cat bird apple 
 ```
 
+`itFirst`, `itLast` にリバースイテレータを使う、次のような短い書き方も可能です。通常のソートと誤読しないよう注意しましょう。
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <functional> // std::greater のため
+
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 0, 2, 4, 6, 3, 9, 8, 7 };
+	// 大きい順にソート
+	std::sort(numbers.rbegin(), numbers.rend());
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+	std::cout << '\n';
+
+	std::cout << "---\n";
+
+	std::vector<std::string> words = { "bird", "cat", "dog", "apple" };
+	// 大きい順にソート
+	std::sort(words.rbegin(), words.rend());
+	for (const auto& word : words)
+	{
+		std::cout << word << ' ';
+	}
+	std::cout << '\n';
+}
+```
+```txt:出力
+9 8 7 6 5 4 3 2 1 0 
+---
+dog cat bird apple 
+```
+
 ## 4.3 上位 N 個までを求めるソートをする
 ![](https://storage.googleapis.com/zenn-user-upload/piahsffvr41zhkm6b79507xvo7e0)
 - `std::partial_sort(itFirst, itMiddle, itLast)` は、範囲 `[itFirst, itLast)` にある要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、それ以降についてはソートが未完了のままにすることで、`std::sort(itFirst, itLast)` より計算回数を少なくします
