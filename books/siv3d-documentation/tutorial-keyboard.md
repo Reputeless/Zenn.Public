@@ -28,9 +28,9 @@ free: true
 - 「,」「.」「/」キーは `KeyComma`, `KeyPeriod`, `KeySlash`
 - 上記以外のキーは [`<Siv3D/Keyboard.hpp>`](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Keyboard.hpp) を参照
 
-`Input` 型の値はメンバ関数を持ち、押された瞬間であるかを `.down()`, 押されているかを `.pressed()`, 離された瞬間であるかを `.up()` を使って `bool` 値で取得できます。
+`Input` 型の値はメンバ関数を持ち、押した瞬間であるかを `.down()`, 押し続けているかを `.pressed()`, 離した瞬間であるかを `.up()` を使って `bool` 値で取得できます。
 
-| 関数 | 押していないとき | 押した瞬間 | 押され続けている | 離した瞬間 | 離され続けている |
+| 関数 | 押していないとき | 押した瞬間 | 押し続けている | 離した瞬間 | 離し続けている |
 |:--:|:--:|:--:|:--:|:--:|:--:|
 | `.down()` | false | **✔ true** | false | false | false |
 | `.pressed()` | false | **✔ true** | **✔ true** | false | false |
