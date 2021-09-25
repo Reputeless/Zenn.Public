@@ -258,7 +258,7 @@ void Main()
 
 
 ## 17.10 (Windows 版) マウスカーソルの移動を制限する
-Windows 版では、`` を呼ぶとマウスカーソルが移動できる領域をウィンドウのクライアント領域上に制限できます。制限を解除するには `` を呼びます。
+Windows 版では、`Cursor::ClipToWindow(true)` を呼ぶとマウスカーソルが移動できる領域をウィンドウのクライアント領域上に制限できます。制限を解除するには `Cursor::ClipToWindow(false)` を呼びます。
 
 ```cpp
 # include <Siv3D.hpp>
