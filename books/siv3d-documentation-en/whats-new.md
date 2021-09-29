@@ -3,6 +3,17 @@ title: "Release Notes"
 free: true
 ---
 
+# v0.6.2
+
+## パフォーマンス向上
+- Windows 版でアプリケーションの起動を高速化しました ([#650](https://github.com/Siv3D/OpenSiv3D/issues/650), [#651](https://github.com/Siv3D/OpenSiv3D/issues/651))
+- メモリ / VRAM の消費量を削減しました ([#648](https://github.com/Siv3D/OpenSiv3D/issues/648))
+
+## 不具合・バグ修正
+- Windows 版で重い描画処理を行ったときに v0.4.3 よりもフレームレートが低下することがあった問題を修正しました ([#652](https://github.com/Siv3D/OpenSiv3D/issues/652))
+- Windows 版、プロジェクトテンプレートの stdafx.h を Header Files フィルタに移動しました ([#653](https://github.com/Siv3D/OpenSiv3D/issues/653))
+
+
 # v0.6.1
 
 ## 新機能
@@ -177,6 +188,7 @@ free: true
 - `Image` の最大サイズを 1 辺 8192px → 16384px に拡張しました
 - ConstantBuffer サイズ 16 × N バイト制約が撤廃されました
 - 並列実行に関する機能は `SIV3D_CONCURRENT` マクロを定義しなくても使えるようになりました
+- High DPI ウィンドウがデフォルトになり、`SIV3D_WINDOWS_HIGH_DPI` マクロは廃止されました
 - (執筆中）
 - 
 - 
@@ -198,6 +210,7 @@ free: true
 - Windows の `MakeDragDrop()` の不具合を修正しました
 - PPM 画像読み込みの不具合を修正しました
 - プラットフォームごとの乱数の再現性の改善しました
+- QR コード生成の不具合を修正しました
 - (執筆中）
 - 
 - 
