@@ -37,7 +37,7 @@ void Main()
 			.scaled(0.5).draw();
 
 		videoTexture
-			.scaled(0.25)
+			.scaled(0.5)
 			.rotated(Scene::Time() * 30_deg)
 			.drawAt(Cursor::Pos());
 	}

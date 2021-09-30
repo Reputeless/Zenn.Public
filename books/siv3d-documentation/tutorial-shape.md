@@ -409,7 +409,7 @@ void Main()
 		// RectF(100, 100, 200, 100) の角を 10px 丸めた角丸長方形
 		RoundRect{ 100, 100, 200, 100, 10 }.draw();
 
-		// RectF(Arg::center(400, 300), 200, 100) の角を 5px 丸めた角丸長方形
+		// RectF(Arg::center(400, 300), 200, 80) の角を 5px 丸めた角丸長方形
 		RoundRect{ Arg::center(400, 300), 200, 80, 5 }.draw(Palette::Skyblue);
 
 		// 長方形 rect の角を 40px 丸めた角丸長方形
@@ -636,7 +636,7 @@ void Main()
 
 
 ## 2.21 矢印を描く
-`Line` には単方向の矢印を描く `.drawArrow()` と、両方向の矢印を描く `.drawDoubleHeadedArro()` メンバ関数があります。いずれも第 1 引数には線の幅、第 2 引数には三角形の幅と高さを指定します。単方向矢印は、`Line` の始点から終点方向を向きます。
+`Line` には単方向の矢印を描く `.drawArrow()` と、両方向の矢印を描く `.drawDoubleHeadedArrow()` メンバ関数があります。いずれも第 1 引数には線の幅、第 2 引数には三角形の幅と高さを指定します。単方向矢印は、`Line` の始点から終点方向を向きます。
 ![](/images/doc_v6/tutorial/2/21.png)
 ```cpp
 # include <Siv3D.hpp>
