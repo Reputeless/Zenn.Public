@@ -95,8 +95,7 @@ Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/includ
 ![](/images/doc_v6/manual/envvariable.png)
 
 ## 4.3 Deploying the OpenSiv3D project template (ZIP)
-
-Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
+Download the project template for Visual Studio [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (File size: 63 MB), and place it **without extracting it** in the folder `Documents/Visual Studio 2019/Templates/ProjectTemplates/`, which is created in the Documents folder when you install Visual Studio 2019. 
 
 ![](/images/doc_v6/manual/projecttemplate.png)
 
