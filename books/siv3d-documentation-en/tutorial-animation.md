@@ -1,5 +1,5 @@
 ---
-title: "チュートリアル 03 | 動きを作る"
+title: "Tutorial 03 | Making Animation"
 free: true
 ---
 
