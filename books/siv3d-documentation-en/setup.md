@@ -61,13 +61,13 @@ Linux 版は SDK 形式での配布が無いため。コードを自前でビル
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
-## 3.2 依存パッケージをインストールする
+## 3.2 Installing the dependent packages
 次を参考に必要なパッケージをインストールします。  
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
 Boost ライブラリについては 1.71.0 / 1.72.0 / 1.73.0 のみサポートしています。それより新しいバージョンではビルドエラーが発生します（将来サポート予定）。
 
-## 3.3 OpenSiv3D ライブラリをビルドする
+## 3.3 Building the OpenSiv3D library
 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します。 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 
@@ -76,25 +76,25 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
 
-# 4. Manually installing the Siv3D SDK
-Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールすることができます。
+# 4. Manually installing the Siv3D SDK (Windows)
+If you have trouble with the SDK installer in Windows, you can manually install the Siv3D SDK.
 
-## 4.1 OpenSiv3D ヘッダ・ライブラリのダウンロードと配置
+## 4.1 Getting the Siv3D SDK
 
-[OpenSiv3D_SDK_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_SDK_0.6.2.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します。
+Download and extract [OpenSiv3D_SDK_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_SDK_0.6.2.zip) (File size: 88 MB), and place the contents in your documents folder as follows:
 
 - `.../Documents/OpenSiv3D_SDK_0.6.2/include`
 - `.../Documents/OpenSiv3D_SDK_0.6.2/lib`
 
-## 4.2 ヘッダ・ライブラリフォルダのパスを環境変数に設定
+## 4.2 Setting the SDK folder path to the environment variable
 
-ユーザー環境変数 `SIV3D_0_6_2` を新規作成し、4.1 で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
+Create a new environment variable `SIV3D_0_6_2` and set the path to the SDK folder (the parent folder of `include/` and `lib/` placed in 4.1).
 
-例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2` を環境変数 `SIV3D_0_6_2` に設定します。
+Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2` to the environment variable `SIV3D_0_6_2`.
 
 ![](/images/doc_v6/manual/envvariable.png)
 
-## 4.3 OpenSiv3D プロジェクトテンプレート (ZIP) の配置
+## 4.3 Deploying the OpenSiv3D project template (ZIP)
 
 Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
 
