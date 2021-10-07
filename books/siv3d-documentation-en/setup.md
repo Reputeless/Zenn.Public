@@ -1,5 +1,5 @@
 ---
-title: "Getting Started (Installing Siv3D SDK)"
+title: "Getting Started (Installing the Siv3D SDK)"
 free: true
 ---
 
@@ -7,7 +7,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 
 # 1. Getting Started with Siv3D in Windows
 
-## 1.1 Installing Siv3D SDK
+## 1.1 Installing the Siv3D SDK
 
 - **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
 - インストーラが自動的に以下のことを行います
@@ -100,8 +100,8 @@ Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.2.zip](http
 
 ![](/images/doc_v6/manual/projecttemplate.png)
 
-以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動してください。
+That's it. Reboot your PC to ensure that the environment variables are applied.
 
 ---
 
-次のページでは、Siv3D の基本のサンプルプログラムをカスタマイズする方法を紹介します。
+In the next page, you will learn how to customize the Hello Siv3D program.
