@@ -86,13 +86,17 @@ Windows において OpenSiv3D インストーラが正常に実行されない�
 
 ## 4.2 ヘッダ・ライブラリフォルダのパスを環境変数に設定
 
-ユーザー環境変数 `SIV3D_0_6_2` を新規作成し、OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
+ユーザー環境変数 `SIV3D_0_6_2` を新規作成し、4.1 で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
 
 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2` を環境変数 `SIV3D_0_6_2` に設定します。
+
+![](/images/doc_v6/manual/envvariable.png)
 
 ## 4.3 OpenSiv3D プロジェクトテンプレート (ZIP) の配置
 
 Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
+
+![](/images/doc_v6/manual/projecttemplate.png)
 
 以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動してください。
 
