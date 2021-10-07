@@ -1,5 +1,5 @@
 ---
-title: "チュートリアル 01 | Siv3D の基本"
+title: "Tutorial 01 | Basics"
 free: true
 ---
 

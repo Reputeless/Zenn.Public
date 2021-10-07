@@ -1,5 +1,5 @@
 ---
-title: "はじめての Siv3D プログラミング"
+title: "Hello Siv3D Program"
 free: true
 ---
 

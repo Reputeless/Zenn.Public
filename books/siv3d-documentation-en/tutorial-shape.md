@@ -1,5 +1,5 @@
 ---
-title: "チュートリアル 02 | 図形を描く"
+title: "Tutorial 02 | Drawing Shapes"
 free: true
 ---
 
