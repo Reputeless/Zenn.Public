@@ -7,7 +7,7 @@ free: true
 
 ## 1.1 SDK のインストール
 
-- **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)** をダウンロードして実行します
+- **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
 - インストーラが自動的に以下のことを行います
   - SDK のコピー（デフォルトではドキュメントフォルダ）
   - SDK のパスへのユーザ環境変数の設定
@@ -16,6 +16,10 @@ free: true
 
 > OpenSiv3D SDK を削除するには、Windows の設定からアンインストールします。
 > ![](/images/doc_v6/manual/uninstall.png)
+
+::: message
+インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールして Siv3D を始める」の方法で SDK をインストールしてください。
+:::
 
 ## 1.2 Siv3D アプリのビルド
 
@@ -82,19 +86,13 @@ Windows において OpenSiv3D インストーラが正常に実行されない�
 
 ## 4.2 ヘッダ・ライブラリフォルダのパスを環境変数に設定
 
-ユーザー環境変数
-
-- v0.6.2 の場合: `SIV3D_0_6_2` 
-
-を新規作成し、OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
+ユーザー環境変数 `SIV3D_0_6_2` を新規作成し、OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
 
 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2` を環境変数 `SIV3D_0_6_2` に設定します。
 
 ## 4.3 OpenSiv3D プロジェクトテンプレート (ZIP) の配置
 
-Visual Studio 用プロジェクトテンプレート
-
-- [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダ作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に入れます。
+Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
 
 以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動してください。
 
