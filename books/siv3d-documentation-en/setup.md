@@ -3,6 +3,8 @@ title: "Getting Started (Installing Siv3D SDK)"
 free: true
 ---
 
+Windows および macOS では 30 秒程度で Siv3D を始める準備が完了します。
+
 # 1. Windows で Siv3D を始める
 
 ## 1.1 SDK のインストール
@@ -74,7 +76,7 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
 
-# 4. Windows で SDK を手動インストールして Siv3D を始める
+# 4. Windows で SDK を手動インストールする
 Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールすることができます。
 
 ## 4.1 OpenSiv3D ヘッダ・ライブラリのダウンロードと配置
