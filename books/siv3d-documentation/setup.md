@@ -53,7 +53,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 # 3. Linux で Siv3D を始める
 
-Linux 版は SDK 形式での配布が無いため。コードを自前でビルドするところから始めます。
+Linux 版は SDK 形式での配布が無いため、ライブラリを自前でビルドするところから始めます。
 
 ## 3.1 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手する
 

@@ -3,57 +3,55 @@ title: "Getting Started (Installing the Siv3D SDK)"
 free: true
 ---
 
-Windows および macOS では 30 秒程度で Siv3D を始める準備が完了します。
+You will be ready to start Siv3D in about 30 seconds on Windows and macOS.
 
 # 1. Getting Started with Siv3D in Windows
 
 ## 1.1 Installing the Siv3D SDK
 
-- **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
-- インストーラが自動的に以下のことを行います
-  - SDK のコピー（デフォルトではドキュメントフォルダ）
-  - SDK のパスへのユーザ環境変数の設定
-  - Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2019\Templates\ProjectTemplates\`)
-  - アンインストーラの登録
+- Download and run **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)**.
+- The installer will automatically do the following:
+  - Copy SDK folder (The default location is `Documents`).
+  - Set a user environment variable "SIV3D_0_6_2" with the path to the SDK folder.
+  - Copy the Visual Studio project template for the Siv3D project (The default location is `Documents\Visual Studio 2019\Templates\ProjectTemplates\`).
+  - Register an uninstaller.
 
-> OpenSiv3D SDK を削除するには、Windows の設定からアンインストールします。
+> If you want to uninstall OpenSiv3D SDK, click "Uninstall" in the Apps & features pane.
 > ![](/images/doc_v6/manual/uninstall.png)
 
 ::: message
-インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールして Siv3D を始める」の方法で SDK をインストールしてください。
+If the installer fails to run, please install the SDK manually as described in "4. Manually Installing the SDK (Windows)" on this page.
 :::
 
 ## 1.2 Building your first application with Siv3D
 
 https://www.youtube.com/watch?v=O0XtvulXSOk
 
-1. Visual Studio 2019 のスタート画面で **新しいプロジェクトの作成** をクリックします。
-1. プロジェクト テンプレートのリストから **OpenSiv3D** を選択し、**次へ** を押します (⚠️表示されない場合は[こちら](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/troubleshooting-setup))
-1. プロジェクト名と保存場所を入力し（任意）、**作成** を押します
-1. サンプルプログラム (Main.cpp) が最初から用意されています
-1. **ビルド** メニューからプロジェクトをビルドします
-1. **デバッグ** メニューの **デバッグの開始** でビルドしたプログラムを実行します
+1. Lanuch Visual Studio 2019 and open a **New Project Dialog** by clicking **Create a new project**.
+1. Select **OpenSiv3D(X.X.X)** project and then click **Next**. (⚠️If the project template is not shown, [see the trouble shooting](https://zenn.dev/reputeless/books/siv3d-documentation-en/viewer/troubleshooting-setup))
+1. Type a name for the project and click **OK** to create the project.
+1. On the **Build** menu, click **Build Solution**.
+1. On the **Debug** menu, click **Start Debugging**.
 
 # 2. Getting Started with Siv3D in macOS
 
 ## 2.1 Downloading the Siv3D project template
 
-- **[OpenSiv3D v0.6.2 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.2_macOS.zip)** をダウンロードしてファイルを展開します
+- Download and extract **[OpenSiv3D v0.6.2 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.2_macOS.zip)**
 
-- macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
+- (On macOS Catalina or later) Move the SDK folder into `User/Applications` folder to prevent a file access permissions dialog from being displayed when your program launches. Some folders such as `User/Desktop` and `User/Downloads` require an access permission for every build.
 
 ## 2.2 Building your first application with Siv3D
-1. プロジェクトファイル `examples/empty/empty.xcodeproj` を Xcode で開きます
-1. サンプルプログラム (Main.cpp) が最初から用意されています
-1. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
-1. macOS Catalina 以降でファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`ユーザ/アプリケーション` フォルダ以下へ移動させることで回避できます
+1. Open the project file `examples/empty/empty.xcodeproj` in Xcode.
+1. Click **Run button ▶️** to build and run the application.
+1. (On macOS Catalina or later) A file access permissions dialog can be inactivated by placing the project folder under `User/Applications` folder.
 
 > 新しいプロジェクトを増やしたい場合は、プロジェクトテンプレートフォルダ内にある `empty` フォルダを同じ階層にコピーしてください。  
 > Xcode 用のプロジェクトジェネレータは将来提供される予定です。
 
 # 3. Getting Started with Siv3D in Linux
 
-Linux 版は SDK 形式での配布が無いため。コードを自前でビルドするところから始めます。
+The Linux version is not distributed in SDK format, so you will need to build the library yourself.
 
 ## 3.1 Getting the latest source code from the official OpenSiv3D repository
 
@@ -76,7 +74,7 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
 
-# 4. Manually installing the Siv3D SDK (Windows)
+# 4. Manually Installing the Siv3D SDK (Windows)
 If you have trouble with the SDK installer in Windows, you can manually install the Siv3D SDK.
 
 ## 4.1 Getting the Siv3D SDK

@@ -1,5 +1,5 @@
 ---
-title: "Featured examples"
+title: "Featured Examples"
 free: true
 ---
 
