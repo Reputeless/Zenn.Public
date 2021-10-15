@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 18 | 便利な関数"
+title: "Tutorial 18 | Utility Functions"
 free: true
 ---
 
-# 18. 便利な関数
+# 18. Utility Functions
 この章では、Siv3D プログラミングに役立つ小さな便利関数や機能を学びます。
 
 ## 18.1 最小値、最大値

@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 21 | 2D レンダーステート"
+title: "Tutorial 21 | 2D Render States"
 free: true
 ---
 
-# 21. 2D レンダーステート
+# 21. 2D Render States
 この章では、2D 描画の設定をカスタマイズして、表現の幅を広げる方法を学びます。
 
 ## 21.1 加算ブレンドで描く

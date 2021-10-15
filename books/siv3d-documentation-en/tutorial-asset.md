@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 20 | アセット管理"
+title: "Tutorial 20 | Asset Management"
 free: true
 ---
 
-# 20. アセット管理
+# 20. Asset Management
 この章では、プログラムのあらゆるところから `Texture`, `Font`, `Audio` などのアセットデータにアクセスできる機能を学びます。
 
 ## 20.1 アセット管理の概要

@@ -1,5 +1,5 @@
 ---
-title: "Compiling from source"
+title: "Compiling From Source"
 free: true
 ---
 

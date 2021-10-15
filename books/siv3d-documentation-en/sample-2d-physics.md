@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | 2D 物理演算"
+title: "Samples | 2D Physics"
 free: true
 ---
 
