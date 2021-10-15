@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | 外部デバイスとの連携"
+title: "Samples | Devices"
 free: true
 ---
 

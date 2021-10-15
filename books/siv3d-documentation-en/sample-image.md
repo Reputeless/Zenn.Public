@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | 画像処理"
+title: "Samples | Image Processing"
 free: true
 ---
 

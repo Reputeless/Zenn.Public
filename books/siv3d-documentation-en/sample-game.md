@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | ゲーム"
+title: "Samples | Game"
 free: true
 ---
 

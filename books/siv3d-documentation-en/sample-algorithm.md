@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | アルゴリズムとデータ構造"
+title: "Samples | Algorithms and Data Structures"
 free: true
 ---
 

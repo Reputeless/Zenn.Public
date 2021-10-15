@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | サンプルリンク集"
+title: "Samples | External Web Sites"
 free: true
 ---
 

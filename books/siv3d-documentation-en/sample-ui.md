@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | UI"
+title: "Samples | UI"
 free: true
 ---
 

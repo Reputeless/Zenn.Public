@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | アプリ"
+title: "Samples | Application"
 free: true
 ---
 

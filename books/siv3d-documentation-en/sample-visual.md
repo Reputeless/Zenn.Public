@@ -1,5 +1,5 @@
 ---
-title: "サンプル集 | ビジュアル表現"
+title: "Samples | Graphics"
 free: true
 ---
 
