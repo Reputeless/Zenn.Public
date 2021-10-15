@@ -1,9 +1,9 @@
 ---
-title: "Community | Siv3D のコミュニティに参加する"
+title: "Community | Joining the Siv3D Community"
 free: true
 ---
 
-# 1. Siv3D User Community Slack
+# 1. Slack Workspace for Siv3D User Community
 Siv3D ユーザのためのグループチャットです。目的別のチャンネル（チャットルーム）が用意され、Siv3D について話したり、質問をしたり、自分の作品を紹介したりできます。Siv3D 本体の開発に興味のある方のためのチャンネルもあり、開発状況をいちはやく共有するほか、新機能の共同開発も行っています。閲覧のみや無言も OK で、いつでも勝手に退会可能です。現在 500 人以上が登録しています。
 
 - [Siv3D ユーザコミュニティ Slack に参加する](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM) 
