@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 05 | 文字列クラス"
+title: "Tutorial 05 | String"
 free: true
 ---
 
-# 5. 文字列クラス
+# 5. String
 この章では、Siv3D の文字列クラス `String` の基本的な使い方を学びます。
 
 ## 5.1 文字列クラス

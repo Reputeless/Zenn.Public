@@ -3,7 +3,7 @@ title: "Tutorial 03 | Making Animation"
 free: true
 ---
 
-# 3. 動きを作る
+# 3. Making Animation
 この章では、「動き」の表現に役立つ Siv3D の機能を学びます。
 
 ## 3.1 経過時間を使ったアニメーション

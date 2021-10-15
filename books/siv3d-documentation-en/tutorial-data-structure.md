@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 06 | データ構造"
+title: "Tutorial 06 | Data Structure"
 free: true
 ---
 
-# 6. データ構造
+# 6. Data Structure
 この章では、Siv3D でゲームやアプリケーションを実装するうえで重要な、次のようなデータ構造を学びます。
 - 動的配列
 - 二次元配列

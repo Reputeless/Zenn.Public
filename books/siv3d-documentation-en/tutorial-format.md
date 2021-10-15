@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 10 | 文字列と数値の変換"
+title: "Tutorial 10 | Formatting and Parsing"
 free: true
 ---
 
-# 10. 文字列と数値の変換
+# 10. Formatting and Parsing
 この章では、数値データを文字列に変換する方法と、文字列を数値データに変換する方法を学びます。
 
 ## 10.1 数値から文字列への変換

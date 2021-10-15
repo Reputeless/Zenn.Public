@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 07 | あたり判定"
+title: "Tutorial 07 | 2D Geometry Intersection"
 free: true
 ---
 
-# 7. あたり判定
+# 7. 2D Geometry Intersection
 この章では、マウスカーソル vs 図形や、図形 vs 図形の交差判定を処理する方法を学びます。
 
 ## 7.1 マウスオーバー

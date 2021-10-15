@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 13 | 日付と時刻、時間"
+title: "Tutorial 13 | Date and Time"
 free: true
 ---
 
-# 13. 日付と時刻、時間
+# 13. Date and Time
 この章では、日付、時刻、時間の計算や表示に関する機能を学びます。
 
 ## 13.1 時間

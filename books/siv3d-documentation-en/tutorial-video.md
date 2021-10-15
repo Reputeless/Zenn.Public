@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 09 | 動画を描く"
+title: "Tutorial 09 | Drawing Videos"
 free: true
 ---
 
-# 9. 動画を描く
+# 9. Drawing Videos
 この章では、動画や GIF アニメーションをシーンに描く方法を学びます。
 
 

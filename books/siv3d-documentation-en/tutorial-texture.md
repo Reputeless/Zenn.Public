@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 08 | 画像を描く"
+title: "Tutorial 08 | Drawing Images"
 free: true
 ---
 
-# 8. 画像を描く
+# 8. Drawing Images
 この章では、絵文字やアイコン、画像ファイルから読み込んだ画像をシーンに描く方法を学びます。
 
 ## 8.1 絵文字を描画する

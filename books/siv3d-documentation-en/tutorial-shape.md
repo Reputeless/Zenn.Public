@@ -3,7 +3,7 @@ title: "Tutorial 02 | Drawing Shapes"
 free: true
 ---
 
-# 2. 図形を描く
+# 2. Drawing Shapes
 
 この章では、色や図形を表現するクラスを学び、それらを使ってシーンに図形を描きます。
 

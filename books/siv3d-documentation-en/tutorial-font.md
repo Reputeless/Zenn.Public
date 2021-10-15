@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 14 | フォントを使う"
+title: "Tutorial 14 | Drawing Text"
 free: true
 ---
 
-# 14. フォントを使う
+# 14. Drawing Text
 この章では、フォントを使って様々なスタイルのテキストを描く方法を学びます。
 
 ## 14.1 Font

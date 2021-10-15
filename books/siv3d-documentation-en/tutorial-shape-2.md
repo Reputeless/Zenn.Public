@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 04 | 図形を描く（発展）"
+title: "Tutorial 04 | Drawing Shapes (Advanced)"
 free: true
 ---
 
-# 4. 図形を描く（発展）
+# 4. Drawing Shapes (Advanced)
 この章では、ここまでの内容の振り返りとして、発展的な 2D グラフィックスを描きます。  
 新しい Siv3D の機能や文法は登場しません。
 

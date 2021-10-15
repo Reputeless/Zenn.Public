@@ -1,5 +1,5 @@
 ---
-title: "チュートリアル 11 | GUI"
+title: "Tutorial 11 | GUI"
 free: true
 ---
 
