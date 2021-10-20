@@ -1,9 +1,9 @@
 ---
-title: "Community | Siv3D のイベントに参加する"
+title: "Community | Siv3D Events"
 free: true
 ---
 
-## 1. OpenSiv3D 実装会
+## 1. OpenSiv3D JISSOUKAI
 Siv3D の開発者やユーザが集まって、プログラムや技術について質問・相談したり、ドキュメントやテストを作ったり、新機能を提案・議論・実装したり、Siv3D で何かを作ったりするイベントです。2020 年以降はオンラインで開催されています。
 
 - ハッシュタグ [#OpenSiv3D実装会](https://twitter.com/search?q=%23OpenSiv3D%E5%AE%9F%E8%A3%85%E4%BC%9A&src=typed_query&f=live)
@@ -25,7 +25,7 @@ OpenSiv3D の新機能を作るいくつかのチャレンジ課題の中から�
 - [OpenSiv3D Challenge 2021](https://zenn.dev/reputeless/scraps/79865055750784)
 
 
-## 3. Siv3D 勉強会
+## 3. Siv3D Study Meeting
 音や画像を使った楽しいプログラミングを体験しながら、ゲームやアプリの開発に役立つ基本的な Siv3D の知識を学ぶイベントです。Siv3D の開発者に直接意見を伝えたり、質問を聞ける機会でもあります。
 
 勉強会を開催したい方は DM またはメールでご相談ください。学校または無料のプログラミング教室へは、10 人以上の参加者が集まる見込みであれば無償でオンライン講師をいたします。

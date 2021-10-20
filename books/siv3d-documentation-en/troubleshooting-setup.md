@@ -1,5 +1,5 @@
 ---
-title: "Troubleshooting | インストール編"
+title: "Troubleshooting Installation Issues"
 free: true
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Troubleshooting | 実行時編"
+title: "Troubleshooting Applications"
 free: true
 ---
 
