@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 38 | 3D の交差判定"
+title: "Tutorial 38 | 3D Geometry Intersection"
 free: true
 ---
 
-# 38. 3D の交差判定
+# 38. 3D Geometry Intersection
 この章では、3D 空間における交差判定の方法を学びます。
 
 ## 38.1 3D 形状の交差
