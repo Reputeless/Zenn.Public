@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 29 | HTTP クライアント"
+title: "Tutorial 29 | HTTP Client"
 free: true
 ---
 
-# 29. HTTP クライアント
+# 29. HTTP Client
 この章では、ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
 
 URL を Siv3D のプログラムで表現するときは、`String` 型のエイリアス（別名）である `URL` 型を使うとコードが読みやすくなります。

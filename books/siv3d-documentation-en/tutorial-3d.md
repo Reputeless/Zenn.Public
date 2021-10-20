@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 36 | 3D 形状を描く"
+title: "Tutorial 36 | Drawing 3D Geometries"
 free: true
 ---
 
-# 36. 3D 形状を描く
+# 36. Drawing 3D Geometries
 この章では、3D 空間に形状を描画する方法を学びます。
 
 ![](/images/doc_v6/tutorial/36/0.png)

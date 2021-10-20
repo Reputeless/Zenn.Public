@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 41 | アプリの公開"
+title: "Tutorial 41 | Releasing Your Application"
 free: true
 ---
 
-# 41. アプリの公開
+# 41. Releasing Your Application
 この章では、作成したアプリケーションを配布するための手順を学びます。
 
 ## 41.1 さまざまなユーザ環境に対応できるかチェックする

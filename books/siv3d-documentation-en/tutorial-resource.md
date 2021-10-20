@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 30 | リソースファイルの埋め込み"
+title: "Tutorial 30 | Embedding Resource Files"
 free: true
 ---
 
-# 30. リソースファイルの埋め込み
+# 30. Embedding Resource Files
 この章では、アプリケーションの実行ファイルに画像や音声などのファイルを埋め込んで、それをプログラムで読み込む方法を学びます。
 
 ## 30.1 リソースファイル埋め込みの基本

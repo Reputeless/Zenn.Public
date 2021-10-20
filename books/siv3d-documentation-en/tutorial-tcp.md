@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 40 | TCP 通信"
+title: "Tutorial 40 | TCP Connections"
 free: true
 ---
 
-# 40. TCP 通信
+# 40. TCP Connections
 この章では、TCP 通信を使ったネットワークプログラミングの方法を学びます。
 
 ## 40.1 （サンプル）1 対 1 の TCP 通信

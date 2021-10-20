@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 39 | マイクや Web カメラを使う"
+title: "Tutorial 39 | Microphones and Webcams"
 free: true
 ---
 
-# 39. マイクを使う
+# 39. Microphones and Webcams
 この章では、パソコンに内蔵・接続されたマイクや Web カメラから音声波形や映像を取得し、プログラムで活用する方法を学びます。
 
 ## 39.1 接続されているマイクを列挙する

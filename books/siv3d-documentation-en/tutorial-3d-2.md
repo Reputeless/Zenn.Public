@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 37 | 3D 形状を描く（発展）"
+title: "Tutorial 37 | Drawing 3D Geometries (Advanced)"
 free: true
 ---
 
-# 37. 3D 形状を描く（発展）
+# 37. Drawing 3D Geometries (Advanced)
 この章では、3D 空間にモデルデータやを描画する方法や、3D 描画でカスタムシェーダを使う方法などを学びます。
 
 ## 37.1 3D モデルを描く

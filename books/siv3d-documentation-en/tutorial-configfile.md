@@ -1,9 +1,9 @@
 ---
-title: "チュートリアル 25 | 設定ファイル"
+title: "Tutorial 25 | Configuration File"
 free: true
 ---
 
-# 25. 設定ファイル
+# 25. Configuration File
 この章では、CSV, INI, JSON, TOML, XML などの設定ファイルを読み書きする方法を学びます。OpenSiv3D v0.6.2 では次のようなファイル形式の読み書きに対応しています。
 
 | ファイル形式 | 読み込みクラス | 書き出しクラス |
