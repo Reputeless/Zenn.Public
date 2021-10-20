@@ -1,5 +1,5 @@
 title: "Siv3D Reference v0.6.2 [English]"
-summary: "Siv3D is a modern C++ framework for visualization and interaction in 2D/3D games, media art, visualizers, simulators, etc.\n\n◆ Supported Version\nOpenSiv3D v0.6.2\nhttps://github.com/Siv3D/OpenSiv3D\n\n◆ 日本語\nhttps://zenn.dev/reputeless/books/siv3d-documentation"
+summary: "Siv3D is a modern C++ framework for visualization and interaction in 2D/3D games, media art, visualizers, simulators, etc.\n\n◆ Supported Version\nOpenSiv3D v0.6.2\nhttps://github.com/Siv3D/OpenSiv3D\n\n◆ 日本語\nhttps://zenn.dev/reputeless/books/siv3d-documentation\n\n◆ Contribute to the translation\nhttps://github.com/Reputeless/Zenn.Public/tree/main/books/siv3d-documentation-en"
 topics: ["cpp", "siv3d", "game", "gamedev"] # トピック（5つまで）
 published: true # falseだと下書き
 price: 0
