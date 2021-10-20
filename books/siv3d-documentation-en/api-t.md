@@ -1,5 +1,5 @@
 ---
-title: "API リファレンス | T"
+title: "API Reference | T"
 free: true
 ---
 
