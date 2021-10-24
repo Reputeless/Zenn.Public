@@ -24,5 +24,5 @@ Siv3D のオープンソース開発を継続・加速させ、Siv3D 作品制�
 |--|--|
 |🌳 Gold |[TOMOAKI12345](https://github.com/TOMOAKI12345)<br>[デジタルライフ](https://lifedigitalwiki.org/ja/)|
 |🌴 Silver |[sknjpn](https://twitter.com/sknjpn)|
-|🌷 Bronze |アゲハマ, anonymous 😀, minachun, Fuyutsubaki, anonymous 😊, anonymous 🐝, anonymous 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, totono, おおやま|
+|🌷 Bronze |アゲハマ, anonymous 😀, minachun, Fuyutsubaki, anonymous 😊, anonymous 🐝, anonymous 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, totono, おおやま, MEATANDMEAT|
 
