@@ -164,8 +164,6 @@ void Main()
 
 	while (System::Update())
 	{
-		const double t = Scene::Time();
-
 		const double s = (Periodic::Triangle0_1(0.5s) * 20);
 
 		Circle{ center, 120 }.draw(sunColor);
