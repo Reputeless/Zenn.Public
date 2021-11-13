@@ -14,7 +14,7 @@ OpenSiv3D v0.6 でプログラミングをするには、プラットフォー�
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | [Microsoft Visual C++ 2019 16.11](https://visualstudio.microsoft.com/downloads/)<br>(Install "Desktop development with C++" from the Visual Studio Installer) |
+| 開発環境 | [Microsoft Visual C++ 2019 16.11 or 2022 17.0](https://visualstudio.microsoft.com/downloads/)<br>(Install "Desktop development with C++" from the Visual Studio Installer) |
 
 ## 1.2 macOS
 |  |  |
@@ -85,7 +85,7 @@ Windows 7 や Windows 8.1, Windows 10 のパソコンで Siv3D プログラミ�
 
 ### 手順
 
-https://visualstudio.microsoft.com/downloads/ から **「Visual Studio 2019 コミュニティ」** を選択してインストーラをダウンロードし、実行します。
+https://visualstudio.microsoft.com/downloads/ から **「Visual Studio 2022 コミュニティ」** を選択してインストーラをダウンロードし、実行します。
 
 インストーラを実行すると、インストールするプログラミング言語や開発ツールを選択する次のような画面が出てきます。インストール項目の選択画面から **「C++ によるデスクトップ開発」** を選択します（右側の「インストールの詳細」に表示される項目は Visual Studio のバージョンによって異なるため、気にする必要はありません）。
 

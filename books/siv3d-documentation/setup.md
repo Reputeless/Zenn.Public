@@ -13,7 +13,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 - インストーラが自動的に以下のことを行います
   - SDK のコピー（デフォルトではドキュメントフォルダ）
   - SDK のパスへのユーザ環境変数の設定
-  - Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2019\Templates\ProjectTemplates\`)
+  - Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2019\Templates\ProjectTemplates\` および `ドキュメント\Visual Studio 2022\Templates\ProjectTemplates\`)
   - アンインストーラの登録
 
 > OpenSiv3D SDK を削除するには、Windows の設定からアンインストールします。
@@ -27,7 +27,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 
 https://www.youtube.com/watch?v=O0XtvulXSOk
 
-1. Visual Studio 2019 のスタート画面で **新しいプロジェクトの作成** をクリックします。
+1. Visual Studio のスタート画面で **新しいプロジェクトの作成** をクリックします。
 1. プロジェクト テンプレートのリストから **OpenSiv3D** を選択し、**次へ** を押します (⚠️表示されない場合は[こちら](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/troubleshooting-setup))
 1. プロジェクト名と保存場所を入力し（任意）、**作成** を押します
 1. サンプルプログラム (Main.cpp) が最初から用意されています

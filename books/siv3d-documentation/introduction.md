@@ -72,7 +72,7 @@ Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニ�
 ## 1.3 Siv3D の制約
 
 ### 最新の C++ コンパイラが必要
-Siv3D は最新の C++ を活用するため、モダンな C++ コンパイラが必要です。Windows の場合は無料で利用できる [Visual Studio 2019 コミュニティの最新版](https://visualstudio.microsoft.com/ja/downloads/)、macOS では最新に近い世代の Xcode が必須の開発環境となっています。Windows XP や 32-bit OS などの古い実行環境では利用できません。
+Siv3D は最新の C++ を活用するため、モダンな C++ コンパイラが必要です。Windows の場合は無料で利用できる [Visual Studio コミュニティの最新版](https://visualstudio.microsoft.com/ja/downloads/)、macOS では最新に近い世代の Xcode が必須の開発環境となっています。Windows XP や 32-bit OS などの古い実行環境では利用できません。
 
 ### すでに書かれた C++ プログラムに後付けできない
 多数のサブシステムを協調させて制御するために、Siv3D はプログラムのエントリーポイント (`int main()`, Windows の場合 `WinMain()`) やウィンドウハンドルなどを独自に管理します。そのため、既存の C++ アプリケーションのプログラムにあとから Siv3D を乗せることはできません。主従関係を逆にして、Siv3D のプログラムに対して、追加のプログラムやライブラリを乗せるようにしましょう。

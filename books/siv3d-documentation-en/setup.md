@@ -13,7 +13,7 @@ You will be ready to start Siv3D in about 30 seconds on Windows and macOS.
 - The installer will automatically do the following:
   - Copy SDK folder (The default location is `Documents`).
   - Set a user environment variable "SIV3D_0_6_2" with the path to the SDK folder.
-  - Copy the Visual Studio project template for the Siv3D project (The default location is `Documents\Visual Studio 2019\Templates\ProjectTemplates\`).
+  - Copy the Visual Studio project template for the Siv3D project (The default locations are `Documents\Visual Studio 2019\Templates\ProjectTemplates\` and `Documents\Visual Studio 2022\Templates\ProjectTemplates\`).
   - Register an uninstaller.
 
 > If you want to uninstall OpenSiv3D SDK, click "Uninstall" in the Apps & features pane.
@@ -27,7 +27,7 @@ If the installer fails to run, please install the SDK manually as described in "
 
 https://www.youtube.com/watch?v=O0XtvulXSOk
 
-1. Lanuch Visual Studio 2019 and open a **New Project Dialog** by clicking **Create a new project**.
+1. Lanuch Visual Studio and open a **New Project Dialog** by clicking **Create a new project**.
 1. Select **OpenSiv3D(X.X.X)** project and then click **Next**. (⚠️If the project template is not shown, [see the trouble shooting](https://zenn.dev/reputeless/books/siv3d-documentation-en/viewer/troubleshooting-setup))
 1. Type a name for the project and click **OK** to create the project.
 1. On the **Build** menu, click **Build Solution**.

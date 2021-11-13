@@ -550,7 +550,6 @@ void Main()
 - `NotoSansCJK-Regular.ttc.zstdcmp` や `NotoSansJP-Regular.otf.zstdcmp` の代替にできる、最低限必要なグリフを格納したフォント `engine/font/min/siv3d-min.woff` を追加しました ([#682](https://github.com/Siv3D/OpenSiv3D/issues/682))
 - Windows 版インストーラの対応言語を増やしました ([#671](https://github.com/Siv3D/OpenSiv3D/issues/671))
 
-
 ## 仕様変更
 - Web 版で通常と同じメインループが書けるようになったため、`SIV3D_MAINLOOP_BEGIN` を削除しました ([#674](https://github.com/Siv3D/OpenSiv3D/issues/674))
 - macOS 版と Linux 版において、ログは `std::cout` ではなく `std::clog` および `std::cerr` に出力するようにしました ([#630](https://github.com/Siv3D/OpenSiv3D/issues/630))
