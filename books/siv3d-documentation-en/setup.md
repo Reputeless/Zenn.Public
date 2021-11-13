@@ -9,7 +9,7 @@ You will be ready to start Siv3D in about 30 seconds on Windows and macOS.
 
 ## 1.1 Installing the Siv3D SDK
 
-- Download and run **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)**.
+- Download and run **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)**.
 - The installer will automatically do the following:
   - Copy SDK folder (The default location is `Documents`).
   - Set a user environment variable "SIV3D_0_6_2" with the path to the SDK folder.
@@ -37,7 +37,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 ## 2.1 Downloading the Siv3D project template
 
-- Download and extract **[OpenSiv3D v0.6.2 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.2_macOS.zip)**
+- Download and extract **[OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip)**
 
 - (On macOS Catalina or later) Move the SDK folder into `User/Applications` folder to prevent a file access permissions dialog from being displayed when your program launches. Some folders such as `User/Desktop` and `User/Downloads` require an access permission for every build.
 
@@ -79,21 +79,21 @@ If you have trouble with the SDK installer in Windows, you can manually install 
 
 ## 4.1 Getting the Siv3D SDK
 
-Download and extract [OpenSiv3D_SDK_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_SDK_0.6.2.zip) (File size: 88 MB), and place the contents in your documents folder as follows:
+Download and extract [OpenSiv3D_SDK_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_SDK_0.6.3.zip) (File size: 88 MB), and place the contents in your documents folder as follows:
 
-- `.../Documents/OpenSiv3D_SDK_0.6.2/include`
-- `.../Documents/OpenSiv3D_SDK_0.6.2/lib`
+- `.../Documents/OpenSiv3D_SDK_0.6.3/include`
+- `.../Documents/OpenSiv3D_SDK_0.6.3/lib`
 
 ## 4.2 Setting the SDK folder path to the environment variable
 
 Create a new environment variable `SIV3D_0_6_2` and set the path to the SDK folder (the parent folder of `include/` and `lib/` placed in 4.1).
 
-Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2` to the environment variable `SIV3D_0_6_2`.
+Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` to the environment variable `SIV3D_0_6_2`.
 
 ![](/images/doc_v6/manual/envvariable.png)
 
 ## 4.3 Deploying the OpenSiv3D project template (ZIP)
-Download the project template for Visual Studio [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (File size: 63 MB), and place it **without extracting it** in the folder `Documents/Visual Studio 2019/Templates/ProjectTemplates/`, which is created in the Documents folder when you install Visual Studio 2019. 
+Download the project template for Visual Studio [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (File size: 63 MB), and place it **without extracting it** in the folder `Documents/Visual Studio 2019/Templates/ProjectTemplates/`, which is created in the Documents folder when you install Visual Studio 2019. 
 
 ![](/images/doc_v6/manual/projecttemplate.png)
 

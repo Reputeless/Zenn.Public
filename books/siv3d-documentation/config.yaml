@@ -1,5 +1,5 @@
-title: "Siv3D リファレンス v0.6.2"
-summary: "◆ 内容\n2D/3D ゲーム、メディアアート、ビジュアライザ、シミュレータなど、可視化やインタラクションに関わるプログラムを、驚くほど短い、楽しく簡単なコードで書けるモダンな C++ フレームワーク Siv3D のリファレンスです。\n\n◆ 対応バージョン\nOpenSiv3D v0.6.2\nhttps://github.com/Siv3D/OpenSiv3D"
+title: "Siv3D リファレンス v0.6.3"
+summary: "◆ 内容\n2D/3D ゲーム、メディアアート、ビジュアライザ、シミュレータなど、可視化やインタラクションに関わるプログラムを、驚くほど短い、楽しく簡単なコードで書けるモダンな C++ フレームワーク Siv3D のリファレンスです。\n\n◆ 対応バージョン\nOpenSiv3D v0.6.3\nhttps://github.com/Siv3D/OpenSiv3D"
 topics: ["cpp", "siv3d", "game", "gamedev"] # トピック（5つまで）
 published: true # falseだと下書き
 price: 0

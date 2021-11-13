@@ -9,7 +9,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 
 ## 1.1 SDK のインストール
 
-- **[OpenSiv3D v0.6.2 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.2_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
+- **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
 - インストーラが自動的に以下のことを行います
   - SDK のコピー（デフォルトではドキュメントフォルダ）
   - SDK のパスへのユーザ環境変数の設定
@@ -38,7 +38,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 ## 2.1 プロジェクトテンプレートのダウンロード
 
-- **[OpenSiv3D v0.6.2 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.2_macOS.zip)** をダウンロードしてファイルを展開します
+- **[OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip)** をダウンロードしてファイルを展開します
 
 - macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
 
@@ -81,22 +81,22 @@ Windows において OpenSiv3D インストーラが正常に実行されない�
 
 ## 4.1 OpenSiv3D ヘッダ・ライブラリのダウンロードと配置
 
-[OpenSiv3D_SDK_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_SDK_0.6.2.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します。
+[OpenSiv3D_SDK_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_SDK_0.6.3.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します。
 
-- `.../Documents/OpenSiv3D_SDK_0.6.2/include`
-- `.../Documents/OpenSiv3D_SDK_0.6.2/lib`
+- `.../Documents/OpenSiv3D_SDK_0.6.3/include`
+- `.../Documents/OpenSiv3D_SDK_0.6.3/lib`
 
 ## 4.2 ヘッダ・ライブラリフォルダのパスを環境変数に設定
 
 ユーザー環境変数 `SIV3D_0_6_2` を新規作成し、4.1 で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
 
-例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.2` を環境変数 `SIV3D_0_6_2` に設定します。
+例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_2` に設定します。
 
 ![](/images/doc_v6/manual/envvariable.png)
 
 ## 4.3 OpenSiv3D プロジェクトテンプレート (ZIP) の配置
 
-Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.2.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.2/OpenSiv3D_0.6.2.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
+Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
 
 ![](/images/doc_v6/manual/projecttemplate.png)
 

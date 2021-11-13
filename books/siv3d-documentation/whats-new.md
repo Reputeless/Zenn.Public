@@ -3,6 +3,577 @@ title: "リリースノート"
 free: true
 ---
 
+# v0.6.3
+
+## 新機能
+- Visual Studio 2022 に対応しました ([#683](https://github.com/Siv3D/OpenSiv3D/issues/683))
+- SimpleGUI にリストボックスを追加しました ([#659](https://github.com/Siv3D/OpenSiv3D/issues/659))
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	ListBoxState ls1{
+		{
+			U"北海道", U"青森県", U"岩手県", U"宮城県", U"秋田県", U"山形県", U"福島県", U"茨城県",
+			U"栃木県", U"群馬県", U"埼玉県", U"千葉県", U"東京都", U"神奈川県", U"新潟県", U"富山県",
+			U"石川県", U"福井県", U"山梨県", U"長野県", U"岐阜県", U"静岡県", U"愛知県", U"三重県",
+			U"滋賀県", U"京都府", U"大阪府", U"兵庫県", U"奈良県", U"和歌山県", U"鳥取県", U"島根県",
+			U"岡山県", U"広島県", U"山口県", U"徳島県", U"香川県", U"愛媛県", U"高知県", U"福岡県",
+			U"佐賀県", U"長崎県", U"熊本県", U"大分県", U"宮崎県", U"鹿児島県", U"沖縄県",
+		}
+	};
+
+	ListBoxState ls2{
+		{
+			U"吾輩は猫である（1905年1月 - 1906年8月、『ホトトギス』/1905年10月 - 1907年5月、大倉書店・服部書店）",
+			U"坊っちゃん（1906年4月、『ホトトギス』/1907年、春陽堂刊『鶉籠』収録）",
+			U"草枕（1906年9月、『新小説』/『鶉籠』収録）",
+			U"二百十日（1906年10月、『中央公論』/『鶉籠』収録）",
+			U"野分（1907年1月、『ホトトギス』/1908年、春陽堂刊『草合』収録）",
+			U"虞美人草（1907年6月 - 10月、『朝日新聞』/1908年1月、春陽堂）",
+			U"坑夫（1908年1月 - 4月、『朝日新聞』/『草合』収録）",
+			U"三四郎（1908年9 - 12月、『朝日新聞』/1909年5月、春陽堂）",
+			U"それから（1909年6 - 10月、『朝日新聞』/1910年1月、春陽堂）",
+			U"門（1910年3月 - 6月、『朝日新聞』/1911年1月、春陽堂）",
+			U"彼岸過迄（1912年1月 - 4月、『朝日新聞』/1912年9月、春陽堂）",
+			U"行人（1912年12月 - 1913年11月、『朝日新聞』/1914年1月、大倉書店）",
+			U"こゝろ（1914年4月 - 8月、『朝日新聞』/1914年9月、岩波書店）",
+			U"道草（1915年6月 - 9月、『朝日新聞』/1915年10月、岩波書店）",
+			U"明暗（1916年5月 - 12月、『朝日新聞』/1917年1月、岩波書店）",
+		}
+	};
+
+	ls2.selectedItemIndex = 3;
+
+	ListBoxState ls3 = ls2;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::ListBox(ls1, Vec2{ 20, 20 }, 120, 156) && ls1.selectedItemIndex)
+		{
+
+		}
+
+		if (SimpleGUI::ListBox(ls2, Vec2{ 180, 20 }, 240, 156, false) && ls2.selectedItemIndex)
+		{
+
+		}
+
+		if (SimpleGUI::ListBox(ls3, Vec2{ 20, 200 }, 1020, 480) && ls3.selectedItemIndex)
+		{
+
+		}
+	}
+}
+```
+- 同梱する Color Emoji を更新し、Unicode 14.0 の絵文字を扱えるようにしました ([#694](https://github.com/Siv3D/OpenSiv3D/issues/694))
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.4, 0.5, 0.6 });
+
+	const Texture e0{ U"🫠"_emoji };
+	const Texture e1{ U"🫣"_emoji };
+	const Texture e2{ U"🫡"_emoji };
+	const Texture e3{ U"🫥"_emoji };
+	const Texture e4{ U"🫵"_emoji };
+	const Texture e5{ U"🧌"_emoji };
+	const Texture e6{ U"🪸"_emoji };
+	const Texture e7{ U"🪺"_emoji };
+	const Texture e8{ U"🫘"_emoji };
+	const Texture e9{ U"🫙"_emoji };
+	const Texture e10{ U"🫧"_emoji };
+	const Texture e11{ U"🛞"_emoji };
+
+	while (System::Update())
+	{
+		e0.drawAt(100, 100);
+		e1.drawAt(300, 100);
+		e2.drawAt(500, 100);
+		e3.drawAt(700, 100);
+		e4.drawAt(100, 300);
+		e5.drawAt(300, 300);
+		e6.drawAt(500, 300);
+		e7.drawAt(700, 300);
+		e8.drawAt(100, 500);
+		e9.drawAt(300, 500);
+		e10.drawAt(500, 500);
+		e11.drawAt(700, 500);
+	}
+}
+```
+- GUI フォントに、デフォルトでアイコンフォントへのフォールバックを追加しました。SimpleGUI のテキストで `U"\U000F0493 Setting"` のようにアイコンコードを使ってアイコンを表示できます ([#698](https://github.com/Siv3D/OpenSiv3D/issues/698))
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	double volume = 1.0;
+
+	while (System::Update())
+	{
+		SimpleGUI::Button(U"\U000F1677 ゆっくり", Vec2{ 20, 20 }, 160);
+		SimpleGUI::Button(U"\U000F0907 いそいで", Vec2{ 20, 60 }, 160);
+		SimpleGUI::Button(U"\U000F0493 設定", Vec2{ 20, 100 }, 160);
+		SimpleGUI::Slider(0.5 < volume ? U"\U000F057E"
+			: 0.0 < volume ? U"\U000F0580" : U"\U000F0581", volume, Vec2{ 20, 140 }, 30, 130);
+	}
+}
+```
+- Windows 版の `System::EnumerateMonitors()` において、より区別しやすいモニターの名前を取得するようにしました ([#695](https://github.com/Siv3D/OpenSiv3D/issues/695))
+- 文字を 3D の Mesh で表現するための `MeshGlyph` クラスを追加しました ([#680](https://github.com/Siv3D/OpenSiv3D/issues/680))
+```cpp
+# include <Siv3D.hpp>
+
+class Font3D
+{
+public:
+
+	Font3D() = default;
+
+	SIV3D_NODISCARD_CXX20
+	explicit Font3D(const Font& font)
+		: m_font{ font } {}
+
+	[[nodiscard]]
+	Array<MeshGlyph> getGlyphs(StringView s) const
+	{
+		Array<MeshGlyph> results;
+
+		for (auto ch : s)
+		{
+			auto it = m_table.find(ch);
+
+			if (it == m_table.end())
+			{
+				it = m_table.emplace(ch, m_font.createMesh(ch)).first;
+			}
+
+			results << it->second;
+		}
+
+		return results;
+	}
+
+	void drawCylindricalInner(StringView s, const Vec3& center, double r, double scale, double startAngle, const ColorF& color) const
+	{
+		const double perimeter = (r * Math::TwoPi);
+		double penPosX = 0.0;
+		startAngle += 90_deg;
+
+		for (auto meshGlyph : getGlyphs(s))
+		{
+			penPosX += (meshGlyph.xOffset * scale);
+
+			if (meshGlyph.mesh)
+			{
+				const double angle = (penPosX / perimeter) * 360_deg;
+				const Quaternion q = Quaternion::RotateY(-90_deg + angle - startAngle);
+				const Vec3 pos = Cylindrical{ r, (-180_deg - angle + startAngle), 0.0 } + center;
+				const Mat4x4 mat = Mat4x4::Translate(-meshGlyph.xOffset, 0, 0)
+					.scaled(scale)
+					.rotated(q)
+					.translated(pos);
+				meshGlyph.mesh.draw(mat, color);
+			}
+
+			penPosX += (meshGlyph.xAdvance - meshGlyph.xOffset) * scale;
+		}
+	}
+
+	void drawCylindricalOuter(StringView s, const Vec3& center, double r, double scale, double startAngle, const ColorF& color) const
+	{
+		const double perimeter = (r * Math::TwoPi);
+		double penPosX = 0.0;
+		startAngle += 90_deg;
+
+		for (auto meshGlyph : getGlyphs(s))
+		{
+			penPosX += (meshGlyph.xOffset * scale);
+
+			if (meshGlyph.mesh)
+			{
+				const double angle = (penPosX / perimeter) * 360_deg;
+				const Quaternion q = Quaternion::RotateY(90_deg - angle - startAngle);
+				const Vec3 pos = Cylindrical{ r, (180_deg + angle + startAngle), 0.0 } + center;
+				const Mat4x4 mat = Mat4x4::Translate(-meshGlyph.xOffset, 0, 0)
+					.scaled(scale)
+					.rotated(q)
+					.translated(pos);
+				meshGlyph.mesh.draw(mat, color);
+			}
+
+			penPosX += (meshGlyph.xAdvance - meshGlyph.xOffset) * scale;
+		}
+	}
+
+private:
+
+	Font m_font;
+
+	mutable HashTable<char32, MeshGlyph> m_table;
+};
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.5, 0.6, 0.6 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+	const Font3D font3D{ Font{ 60 } };
+
+	while (System::Update())
+	{
+		const double t = Scene::Time();
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			Graphics3D::SetGlobalAmbientColor(Graphics3D::DefaultGlobalAmbientColor);
+			Graphics3D::SetSunColor(ColorF{ 0.75 });
+
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+			Plane{ 64 }.draw(uvChecker);
+			Cylinder{ Vec3{0,0,0}, Vec3{0, 16, 0}, 5.6 }.draw(ColorF{ 0.25 }.removeSRGBCurve());
+
+			// 3D Text Circle
+			{
+				// 両面描画、ライティング無効化
+				const ScopedRenderStates3D rasterizer{ RasterizerState::SolidCullNone, BlendState::Additive };
+				Graphics3D::SetGlobalAmbientColor(ColorF{ 1.0 });
+				Graphics3D::SetSunColor(ColorF{ 0.0 });
+
+				font3D.drawCylindricalOuter(DateTime::Now().format(U"HH:mm:ss"), Vec3{ 0, 11.5, 0 }, 6 * 1.2, 3.0 * 1.2, (t * -25_deg), ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(DateTime::Now().format(U"HH:mm:ss"), Vec3{ 0, 11.5, 0 }, 6 * 1.2, 3.0 * 1.2, (t * -25_deg) + 180_deg, ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"Monday, September 27, 2021", Vec3{ 0, 10, 0 }, 6 * 1.2, 1.2 * 1.2, (t * -50_deg), ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
+
+				font3D.drawCylindricalOuter(U"NIKKEI 225 30,248.81 +609.41", Vec3{ 0, 8, 0 }, 6, 1.0, (t * -72_deg), ColorF{ 0.6, 1.0, 0.8 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"HANG SENG 24,192,16 -318.82", Vec3{ 0, 7, 0 }, 6, 1.0, (t * -62_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"SHANGHAI 3,613.07 -29.15", Vec3{ 0, 6, 0 }, 6, 1.0, (t * -58_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"FTSE 7,051.48 -26.87", Vec3{ 0, 5, 0 }, 6, 1.0, (t * -70_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"CAC 6,638.46 -63.52", Vec3{ 0, 4, 0 }, 6, 1.0, (t * -60_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"DAX 15,531.75 -112.22", Vec3{ 0, 3, 0 }, 6, 1.0, (t * -66_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"NASDAQ 15,047.70 -4.54", Vec3{ 0, 2, 0 }, 6, 1.0, (t * -68_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+
+				font3D.drawCylindricalOuter(U"NIKKEI 225 30,248.81 +609.41", Vec3{ 0, 8, 0 }, 6, 1.0, (t * -72_deg) + 180_deg, ColorF{ 0.6, 1.0, 0.8 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"HANG SENG 24,192,16 -318.82", Vec3{ 0, 7, 0 }, 6, 1.0, (t * -62_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"SHANGHAI 3,613.07 -29.15", Vec3{ 0, 6, 0 }, 6, 1.0, (t * -58_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"FTSE 7,051.48 -26.87", Vec3{ 0, 5, 0 }, 6, 1.0, (t * -70_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"CAC 6,638.46 -63.52", Vec3{ 0, 4, 0 }, 6, 1.0, (t * -60_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"DAX 15,531.75 -112.22", Vec3{ 0, 3, 0 }, 6, 1.0, (t * -66_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"NASDAQ 15,047.70 -4.54", Vec3{ 0, 2, 0 }, 6, 1.0, (t * -68_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+			}
+		}
+
+		// 3D シーンを 2D シーンに描画
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+	}
+}
+```
+- Windows 版において、Leap Motion デバイスをサポートしました ([#677](https://github.com/Siv3D/OpenSiv3D/issues/677))
+```cpp
+// Ultraleap SDK をインストールし、プロジェクトのプロパティの
+// 1. インクルード ディレクトリに
+// C:\Program Files\Ultraleap\LeapSDK\include を追加。
+// 2. ライブラリ ディレクトリに
+// C:\Program Files\Ultraleap\LeapSDK\lib\x64 を追加。
+// 3. App フォルダに LeapC.dll をコピー。
+
+# include <Siv3D.hpp>
+
+inline constexpr double HandScale = 0.08;
+
+void DrawSphere(uint32 handID, const Vec3& pos)
+{
+	Sphere{ (pos * HandScale), (6 * HandScale) }
+	.draw(HSV{ handID * 60 }.removeSRGBCurve());
+}
+
+void DrawCylinder(const Vec3& from, const Vec3& to)
+{
+	Cylinder{ (from * HandScale), (to * HandScale), (3 * HandScale) }.draw();
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
+	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 0, 32, -32 } };
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	size_t trackingModeIndex = 0;
+	bool showInfo = true;
+	Leap::Connection leap{ Leap::TrackingMode::Desktop };
+
+	if (not leap)
+	{
+		throw Error{ U"Leap device not found" };
+	}
+
+	while (System::Update())
+	{
+		leap.update();
+
+		camera.update(2.0);
+		Graphics3D::SetCameraTransform(camera);
+
+		// 3D 描画
+		{
+			const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+
+			if (trackingModeIndex == 0)
+			{
+				Plane{ 64 }.draw(uvChecker);
+
+				const double z = 6;
+
+				for (auto x : Range(-2, 2))
+				{
+					Cylinder{ (x * 6.0), 4, z, 2, 8 }.draw(ColorF{ 0.8 }.removeSRGBCurve());
+				}
+
+				for (auto x : Range(-8, 8))
+				{
+					const Box box{ (x * 2), 10, z, 1.8, 1, 10 };
+					bool intersect = false;
+
+					for (const auto& hand : leap.getHands())
+					{
+						for (auto fingerIndex : step(5))
+						{
+							for (auto boneIndex : Range(1, 3))
+							{
+								const Vec3 to = hand.fingerBone(fingerIndex, boneIndex).to;
+								const Sphere sphere{ (to * HandScale), (6 * HandScale) };
+
+								if (sphere.intersects(box))
+								{
+									intersect = true;
+									break;
+								}
+							}
+
+							if (intersect)
+							{
+								break;
+							}
+						}
+
+						if (intersect)
+						{
+							break;
+						}
+					}
+
+					box.draw(HSV{ (x * 40), (intersect ? 0.8 : 0.15), 1.0 }.removeSRGBCurve());
+				}
+			}
+
+			for (const auto& hand : leap.getHands())
+			{
+				const auto handID = hand.id();
+
+				for (auto fingerIndex : step(5))
+				{
+					for (auto boneIndex : step(4))
+					{
+						const Vec3 from = hand.fingerBone(fingerIndex, boneIndex).from;
+						const Vec3 to = hand.fingerBone(fingerIndex, boneIndex).to;
+
+						if (fingerIndex == 4 && boneIndex == 0)
+						{
+							DrawSphere(handID, from);
+						}
+
+						DrawSphere(handID, to);
+
+						if ((fingerIndex != 0 && fingerIndex != 4) && boneIndex == 0)
+						{
+							continue;
+						}
+
+						DrawCylinder(from, to);
+					}
+				}
+
+				DrawSphere(handID, hand.palmPosition());
+				DrawCylinder(hand.fingerBone(0, 0).from, hand.fingerBone(1, 1).from);
+				DrawCylinder(hand.fingerBone(1, 1).from, hand.fingerBone(2, 1).from);
+				DrawCylinder(hand.fingerBone(2, 1).from, hand.fingerBone(3, 1).from);
+				DrawCylinder(hand.fingerBone(3, 1).from, hand.fingerBone(4, 1).from);
+				DrawCylinder(hand.fingerBone(0, 0).from, hand.fingerBone(4, 0).from);
+			}
+		}
+
+		{
+			Graphics3D::Flush();
+			renderTexture.resolve();
+			Shader::LinearToScreen(renderTexture);
+		}
+
+		if (SimpleGUI::RadioButtons(trackingModeIndex, { U"Desktop", U"Head-mounted", U"Screentop" }, Vec2{ 20,20 }))
+		{
+			leap.setTrackingMode(static_cast<Leap::TrackingMode>(trackingModeIndex));
+
+			if (trackingModeIndex == 0)
+			{
+				camera = DebugCamera3D{ renderTexture.size(), 30_deg, Vec3{ 0, 32, -32 } };
+			}
+			else if (trackingModeIndex == 1)
+			{
+				camera = DebugCamera3D{ renderTexture.size(), 30_deg, Vec3{ 0, 32, -24 }, Vec3{ 0, 0, 8 } };
+			}
+			else
+			{
+				camera = DebugCamera3D{ renderTexture.size(), 30_deg, Vec3{ 0, 32, -56 }, Vec3{ 0, 0, -24 } };
+			}
+		}
+
+		SimpleGUI::CheckBox(showInfo, U"showInfo", Vec2{ 20, 140 });
+
+		if (showInfo)
+		{
+			for (const auto& hand : leap.getHands())
+			{
+				const Vec2 palmPos = camera.worldToScreenPoint(hand.palmPosition() * HandScale).xy();
+
+				String ext;
+				for (auto fingerIndex : step(5))
+				{
+					ext << (hand.isExtended(fingerIndex) ? U'1' : U'0');
+				}
+
+				const String state = U"pinchDistance: {:.2f}\ngrabAngle: {:.2f}\npinchStrength: {:.2f}\ngrabStrength: {:.2f}\nfingers:{}"_fmt(
+					hand.pinchDistance(), hand.grabAngle(), hand.pinchStrength(), hand.grabStrength(), ext);
+
+				font(hand.isLeftHand() ? U"L" : U"R")
+					.draw(TextStyle::Outline(0.15, ColorF{ 0.0 }), 100, Arg::rightCenter = palmPos.movedBy(-20, 0));
+
+				font(state)
+					.draw(30, Arg::leftCenter = palmPos, ColorF{ 0.15 });
+			}
+		}
+	}
+}
+```
+- `Math::Tau` や `0.5_tau` など、2π を表す定数 τ に対応しました ([#673](https://github.com/Siv3D/OpenSiv3D/issues/673))
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Print << Math::Pi;
+	Print << Math::Tau;
+
+	Print << Math::PiF;
+	Print << Math::TauF;
+
+	Print << 0.5_pi;
+	Print << 0.5_tau;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+- 異なる種類どうしの `Optional` の比較演算ができるようになりました ([#670](https://github.com/Siv3D/OpenSiv3D/issues/670))
+- `BigFloat` に `.isNan()`, `.isInf()` メンバ関数を追加しました ([#669](https://github.com/Siv3D/OpenSiv3D/issues/669))
+- `Array`, `Optional`, `BigInt`, `BigFloat` に三方比較演算子を実装しました ([#658](https://github.com/Siv3D/OpenSiv3D/issues/658))
+- `String`, `StringView`, `UUIDValue` に三方比較演算子を実装しました ([#664](https://github.com/Siv3D/OpenSiv3D/issues/664))
+- `DrawableText::regionBase()` のオーバーロードを追加しました ([#666](https://github.com/Siv3D/OpenSiv3D/issues/666))
+- Windows 版において、リフレッシュレート以上の頻度でキーボード入力を取得できる関数 `Platform::Windows::Keyboard::GetEvents()` を追加しました ([#662](https://github.com/Siv3D/OpenSiv3D/issues/662))
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	uint64 eventIndex = 0;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Clear", Vec2{ 680, 20 }))
+		{
+			ClearPrint();
+		}
+
+		for (const auto& event : Platform::Windows::Keyboard::GetEvents())
+		{
+			if (eventIndex < event.eventIndex)
+			{
+				Print << event.timeMillisec << U": " << Input { InputDeviceType::Keyboard, event.code }.name() << (event.down ? U" down (event)" : U" up (event)");
+
+				eventIndex = event.eventIndex;
+			}
+		}
+
+		/*
+		for (const auto& key : Keyboard::GetAllInputs())
+		{
+			if (key.down())
+			{
+				Print << Time::GetMillisec() << U": " << key.name() << U" down";
+			}
+			else if (key.up())
+			{
+				Print << Time::GetMillisec() << U": " << key.name() << U" up";
+			}
+		}
+		*/
+	}
+}
+```
+
+
+## パフォーマンス向上
+- スクリプトエンジンの初期化を遅延させ、スクリプト機能を使わない場合のアプリケーション初期化にかかる時間を短縮しました（数十ミリ秒） ([#657](https://github.com/Siv3D/OpenSiv3D/issues/657))
+- GLSL シェーダファイルのライセンス記述を簡素化し、ファイルサイズを少し削減しました ([#687](https://github.com/Siv3D/OpenSiv3D/issues/687))
+- `HalfFloat` のメンバ関数を constexpr にしました ([#689](https://github.com/Siv3D/OpenSiv3D/pull/689))
+
+## ユーザビリティ向上
+- `NotoEmoji-Regular.ttf` をエンジンリソースに含まなくてもエンジンを初期化できるようにしました ([#684](https://github.com/Siv3D/OpenSiv3D/issues/684))
+- `NotoSansCJK-Regular.ttc.zstdcmp` や `NotoSansJP-Regular.otf.zstdcmp` の代替にできる、最低限必要なグリフを格納したフォント `engine/font/min/siv3d-min.woff` を追加しました ([#682](https://github.com/Siv3D/OpenSiv3D/issues/682))
+- Windows 版インストーラの対応言語を増やしました ([#671](https://github.com/Siv3D/OpenSiv3D/issues/671))
+
+## 仕様変更
+- Web 版で通常と同じメインループが書けるようになったため、`SIV3D_MAINLOOP_BEGIN` を削除しました ([#674](https://github.com/Siv3D/OpenSiv3D/issues/674))
+- macOS 版と Linux 版において、ログは `std::cout` ではなく `std::clog` および `std::cerr` に出力するようにしました ([#630](https://github.com/Siv3D/OpenSiv3D/issues/630))
+- `engine` および `example` フォルダの更新 ([#686](https://github.com/Siv3D/OpenSiv3D/issues/686))
+
+## 不具合・バグ修正
+- `DrawableText::draw(double, Arg:: ...)` や `DrawableText::region(double, Arg ...)` の位置が正しくなかったバグを修正しました ([#665](https://github.com/Siv3D/OpenSiv3D/issues/665))
+- Windows 版において`Window::IsToggleFullscreenEnabled()` が常に `false` を返すバグを修正しました ([#699](https://github.com/Siv3D/OpenSiv3D/issues/699))
+- `HalfFloat{ 0.0f } == HalfFloat{ -0.0f }` が `false` になるバグを修正しました ([#660](https://github.com/Siv3D/OpenSiv3D/issues/660))
+- `CircularBase<float, Oclock>` 使用時に発生する警告を解消しました ([#667](https://github.com/Siv3D/OpenSiv3D/issues/667))
+
+
+## コントリビューション
+### コミッタ―
+（敬称略）
+- [nokotan](https://github.com/nokotan)
+  - **Web 版を更新**
+- [tetsurom](https://github.com/tetsurom)
+  - `HalfFloat` の実装改善
+  - `Optional` の実装改善
+  - `BigFloat` の実装改善
+  - 各種クラスへの三方比較演算子の実装
+
+
 # v0.6.2
 
 ## パフォーマンス向上

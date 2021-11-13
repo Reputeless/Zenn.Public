@@ -1440,13 +1440,6 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
-struct MeshGlyph
-{
-	Mesh mesh;
-	double xAdvance = 0.0;
-	double xOffset = 0.0;
-};
-
 class Font3D
 {
 public:
@@ -1455,8 +1448,7 @@ public:
 
 	SIV3D_NODISCARD_CXX20
 	explicit Font3D(const Font& font)
-		: m_font{ font }
-		, m_scale{ 1.0 / m_font.height() } {}
+		: m_font{ font } {}
 
 	[[nodiscard]]
 	Array<MeshGlyph> getGlyphs(StringView s) const
@@ -1469,7 +1461,7 @@ public:
 
 			if (it == m_table.end())
 			{
-				it = m_table.emplace(ch, CreateMeshGlyph(m_font, ch, m_scale)).first;
+				it = m_table.emplace(ch, m_font.createMesh(ch)).first;
 			}
 
 			results << it->second;
@@ -1534,61 +1526,7 @@ private:
 
 	Font m_font;
 
-	double m_scale = 1.0;
-
 	mutable HashTable<char32, MeshGlyph> m_table;
-
-	[[nodiscard]]
-	static constexpr Float3 FromFloat2(const Float2& pos) noexcept
-	{
-		return{ pos.x, -pos.y, 0.0f };
-	}
-
-	[[nodiscard]]
-	static MeshData FromPolygons(const MultiPolygon& polygons)
-	{
-		Array<Vertex3D> vertices;
-		Array<TriangleIndex32> indices;
-
-		Vertex3D v;
-		v.normal = Float3{ 0.0f, 0.0f, -1.0f };
-		v.tex = Float2{ 0.0f,0.0f };
-
-		uint32 indexOffset = 0;
-
-		for (const auto& polygon : polygons)
-		{
-			for (const auto& point : polygon.vertices())
-			{
-				v.pos = FromFloat2(point);
-				vertices << v;
-			}
-
-			for (const auto& t : polygon.indices())
-			{
-				indices.emplace_back((indexOffset + t.i0), (indexOffset + t.i1), (indexOffset + t.i2));
-			}
-
-			indexOffset = static_cast<uint32>(vertices.size());
-		}
-
-		return{ std::move(vertices), std::move(indices) };
-	}
-
-	[[nodiscard]]
-	static MeshGlyph CreateMeshGlyph(const Font& font, char32 ch, double scale)
-	{
-		const PolygonGlyph polygonGlyph = font.renderPolygon(ch);
-		const double offsetX = (polygonGlyph.polygons.computeBoundingRect().w + polygonGlyph.getBase().x);
-		const MultiPolygon polygons = polygonGlyph.polygons.movedBy(polygonGlyph.getBase()).scaled(scale);
-
-		return
-		{
-			Mesh{ FromPolygons(polygons) },
-			(polygonGlyph.xAdvance * scale),
-			(offsetX * 0.5 * scale),
-		};
-	}
 };
 
 void Main()
@@ -1598,7 +1536,7 @@ void Main()
 	const Texture uvChecker{ U"example/texture/uv.png", TextureDesc::MippedSRGB };
 	const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
 	DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
-	const Font3D font3D{ Font{ 60 }};
+	const Font3D font3D{ Font{ 60 } };
 
 	while (System::Update())
 	{
@@ -1622,25 +1560,25 @@ void Main()
 				Graphics3D::SetGlobalAmbientColor(ColorF{ 1.0 });
 				Graphics3D::SetSunColor(ColorF{ 0.0 });
 
-				font3D.drawCylindricalOuter(DateTime::Now().format(U"HH:mm:ss"), Vec3{ 0, 11.5, 0 }, 6 * 1.2, 3.2 * 1.2, (t * -25_deg), ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(DateTime::Now().format(U"HH:mm:ss"), Vec3{ 0, 11.5, 0 }, 6 * 1.2, 3.2 * 1.2, (t * -25_deg) + 180_deg, ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"Monday, September 27, 2021", Vec3{0, 10, 0}, 6 * 1.2, 1.5 * 1.2, (t * -50_deg), ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(DateTime::Now().format(U"HH:mm:ss"), Vec3{ 0, 11.5, 0 }, 6 * 1.2, 3.0 * 1.2, (t * -25_deg), ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(DateTime::Now().format(U"HH:mm:ss"), Vec3{ 0, 11.5, 0 }, 6 * 1.2, 3.0 * 1.2, (t * -25_deg) + 180_deg, ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"Monday, September 27, 2021", Vec3{ 0, 10, 0 }, 6 * 1.2, 1.2 * 1.2, (t * -50_deg), ColorF{ 1.0, 0.98, 0.9 }.removeSRGBCurve());
 
-				font3D.drawCylindricalOuter(U"NIKKEI 225 30,248.81 +609.41", Vec3{ 0, 8, 0 }, 6, 1.5, (t * -72_deg), ColorF{ 0.6, 1.0, 0.8 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"HANG SENG 24,192,16 -318.82", Vec3{ 0, 7, 0 }, 6, 1.5, (t * -62_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"SHANGHAI 3,613.07 -29.15", Vec3{ 0, 6, 0 }, 6, 1.5, (t * -58_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"FTSE 7,051.48 -26.87", Vec3{ 0, 5, 0 }, 6, 1.5, (t * -70_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"CAC 6,638.46 -63.52", Vec3{ 0, 4, 0 }, 6, 1.5, (t * -60_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"DAX 15,531.75 -112.22", Vec3{ 0, 3, 0 }, 6, 1.5, (t * -66_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"NASDAQ 15,047.70 -4.54", Vec3{ 0, 2, 0 }, 6, 1.5, (t * -68_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"NIKKEI 225 30,248.81 +609.41", Vec3{ 0, 8, 0 }, 6, 1.0, (t * -72_deg), ColorF{ 0.6, 1.0, 0.8 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"HANG SENG 24,192,16 -318.82", Vec3{ 0, 7, 0 }, 6, 1.0, (t * -62_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"SHANGHAI 3,613.07 -29.15", Vec3{ 0, 6, 0 }, 6, 1.0, (t * -58_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"FTSE 7,051.48 -26.87", Vec3{ 0, 5, 0 }, 6, 1.0, (t * -70_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"CAC 6,638.46 -63.52", Vec3{ 0, 4, 0 }, 6, 1.0, (t * -60_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"DAX 15,531.75 -112.22", Vec3{ 0, 3, 0 }, 6, 1.0, (t * -66_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"NASDAQ 15,047.70 -4.54", Vec3{ 0, 2, 0 }, 6, 1.0, (t * -68_deg), ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
 
-				font3D.drawCylindricalOuter(U"NIKKEI 225 30,248.81 +609.41", Vec3{ 0, 8, 0 }, 6, 1.5, (t * -72_deg) + 180_deg, ColorF{ 0.6, 1.0, 0.8 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"HANG SENG 24,192,16 -318.82", Vec3{ 0, 7, 0 }, 6, 1.5, (t * -62_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"SHANGHAI 3,613.07 -29.15", Vec3{ 0, 6, 0 }, 6, 1.5, (t * -58_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"FTSE 7,051.48 -26.87", Vec3{ 0, 5, 0 }, 6, 1.5, (t * -70_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"CAC 6,638.46 -63.52", Vec3{ 0, 4, 0 }, 6, 1.5, (t * -60_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"DAX 15,531.75 -112.22", Vec3{ 0, 3, 0 }, 6, 1.5, (t * -66_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
-				font3D.drawCylindricalOuter(U"NASDAQ 15,047.70 -4.54", Vec3{ 0, 2, 0 }, 6, 1.5, (t * -68_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"NIKKEI 225 30,248.81 +609.41", Vec3{ 0, 8, 0 }, 6, 1.0, (t * -72_deg) + 180_deg, ColorF{ 0.6, 1.0, 0.8 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"HANG SENG 24,192,16 -318.82", Vec3{ 0, 7, 0 }, 6, 1.0, (t * -62_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"SHANGHAI 3,613.07 -29.15", Vec3{ 0, 6, 0 }, 6, 1.0, (t * -58_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"FTSE 7,051.48 -26.87", Vec3{ 0, 5, 0 }, 6, 1.0, (t * -70_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"CAC 6,638.46 -63.52", Vec3{ 0, 4, 0 }, 6, 1.0, (t * -60_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"DAX 15,531.75 -112.22", Vec3{ 0, 3, 0 }, 6, 1.0, (t * -66_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
+				font3D.drawCylindricalOuter(U"NASDAQ 15,047.70 -4.54", Vec3{ 0, 2, 0 }, 6, 1.0, (t * -68_deg) + 180_deg, ColorF{ 1.0, 0.6, 0.6 }.removeSRGBCurve());
 			}
 		}
 
