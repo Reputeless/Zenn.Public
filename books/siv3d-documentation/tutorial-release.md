@@ -140,7 +140,9 @@ Windows では　`Resource.rc` から該当ファイルをコメントアウト�
 | `engine/font/mplus/mplus-1p-bold.ttf.zstdcmp` | `Typeface::Bold` を使用していない場合 |
 | `engine/font/mplus/mplus-1p-heavy.ttf.zstdcmp` | `Typeface::Heavy` を使用していない場合 |
 | `engine/font/mplus/mplus-1p-black.ttf.zstdcmp` | `Typeface::Black` を使用していない場合 |
+| `engine/font/noto-emoji/noto-cjk/NotoSansCJK-Regular.ttc.zstdcmp` | ASCII 文字以外のテキスト表示をしない場合 (v0.6.3 以降) |
 | `engine/font/noto-emoji/NotoColorEmoji.ttf.zstdcmp` | `Typeface::ColorEmoji` や `Emoji` を使用していない場合 |
+| `engine/font/noto-emoji/NotoEmoji-Regular.ttf.zstdcmp` | `Typeface::MonochromeEmoji` や `Print` 内での絵文字を使用していない場合 (v0.6.3 以降) |
 | `engine/font/fontawesome/fontawesome-brands.otf.zstdcmp` | `Typeface::Icon_Awesome_Brand` や `Icon` を使用していない場合 |
 | `engine/font/fontawesome/fontawesome-solid.otf.zstdcmp` | `Typeface::Icon_Awesome_Solid` や `Icon` を使用していない場合 |
 | `engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp` | `Typeface::Icon_MaterialDesign` や `Icon` を使用していない場合 |
