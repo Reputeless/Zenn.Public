@@ -5,7 +5,7 @@ free: true
 
 You will be ready to start Siv3D in about 30 seconds on Windows and macOS.
 
-# 1. Getting Started with Siv3D in Windows
+# 1. Windows
 
 ## 1.1 Installing the Siv3D SDK
 
@@ -33,7 +33,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 1. On the **Build** menu, click **Build Solution**.
 1. On the **Debug** menu, click **Start Debugging**.
 
-# 2. Getting Started with Siv3D in macOS
+# 2. macOS
 
 ## 2.1 Downloading the Siv3D project template
 
@@ -49,7 +49,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 > 新しいプロジェクトを増やしたい場合は、プロジェクトテンプレートフォルダ内にある `empty` フォルダを同じ階層にコピーしてください。  
 > Xcode 用のプロジェクトジェネレータは将来提供される予定です。
 
-# 3. Getting Started with Siv3D in Linux
+# 3. Linux
 
 The Linux version is not distributed in SDK format, so you will need to build the library yourself.
 
