@@ -213,7 +213,7 @@ void Main()
 	{
 		U"[←] [→] [Space]",
 		U"[A] [D] [W]",
-		U"[←]/[A] [→][D] [Space]/[W]"
+		U"[←]/[A] [→]/[D] [Space]/[W]"
 	};
 
 	const Texture texture{ U"🐥"_emoji };
