@@ -12,7 +12,7 @@ You will be ready to start Siv3D in about 30 seconds on Windows and macOS.
 - Download and run **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)**.
 - The installer will automatically do the following:
   - Copy SDK folder (The default location is `Documents`).
-  - Set a user environment variable "SIV3D_0_6_2" with the path to the SDK folder.
+  - Set a user environment variable "SIV3D_0_6_3" with the path to the SDK folder.
   - Copy the Visual Studio project template for the Siv3D project (The default locations are `Documents\Visual Studio 2019\Templates\ProjectTemplates\` and `Documents\Visual Studio 2022\Templates\ProjectTemplates\`).
   - Register an uninstaller.
 
@@ -86,9 +86,9 @@ Download and extract [OpenSiv3D_SDK_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/
 
 ## 4.2 Setting the SDK folder path to the environment variable
 
-Create a new environment variable `SIV3D_0_6_2` and set the path to the SDK folder (the parent folder of `include/` and `lib/` placed in 4.1).
+Create a new environment variable `SIV3D_0_6_3` and set the path to the SDK folder (the parent folder of `include/` and `lib/` placed in 4.1).
 
-Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` to the environment variable `SIV3D_0_6_2`.
+Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` to the environment variable `SIV3D_0_6_3`.
 
 ![](/images/doc_v6/manual/envvariable.png)
 

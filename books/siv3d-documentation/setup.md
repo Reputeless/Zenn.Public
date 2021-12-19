@@ -88,9 +88,9 @@ Windows において OpenSiv3D インストーラが正常に実行されない�
 
 ## 4.2 ヘッダ・ライブラリフォルダのパスを環境変数に設定
 
-ユーザー環境変数 `SIV3D_0_6_2` を新規作成し、4.1 で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
+ユーザー環境変数 `SIV3D_0_6_3` を新規作成し、4.1 で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します。
 
-例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_2` に設定します。
+例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_3` に設定します。
 
 ![](/images/doc_v6/manual/envvariable.png)
 
