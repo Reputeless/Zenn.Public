@@ -7,7 +7,16 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 
 # 1. Windows で Siv3D を始める
 
-## 1.1 SDK のインストール
+## 1.1 必要な環境
+|  |  |
+|--|--|
+| OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit)<br>Windows 11 |
+| CPU | Intel もしくは AMD 製の CPU |
+| 映像出力 | モニタなど、何らかの映像出力装置があること |
+| 音声出力 | 何らかの音声出力装置があること |
+| 開発環境 | [Microsoft Visual C++ 2019 16.11 または 2022 17.0](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
+
+## 1.2 SDK のインストール
 
 - **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
 - インストーラが自動的に以下のことを行います
@@ -23,7 +32,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールして Siv3D を始める」の方法で SDK をインストールしてください。
 :::
 
-## 1.2 Siv3D アプリのビルド
+## 1.3 Siv3D アプリのビルド
 
 https://www.youtube.com/watch?v=O0XtvulXSOk
 
@@ -36,13 +45,25 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 # 2. macOS で Siv3D を始める
 
-## 2.1 プロジェクトテンプレートのダウンロード
+## 2.1 必要な環境
+|  |  |
+|--|--|
+| OS | macOS Mojave / Catalina / Big Sur |
+| CPU | Intel 製の CPU |
+| GPU | OpenGL 4.1 サポート |
+| 映像出力 | モニタなど、何らかの映像出力装置があること |
+| 開発環境 | Xcode 11.3 以降<br>(Big Sur の場合は Xcode 12.5 以降) |
+
+- Apple Silicon は将来のバージョンでサポートが追加されます 
+- 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
+
+## 2.2 プロジェクトテンプレートのダウンロード
 
 - **[OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip)** をダウンロードしてファイルを展開します
 
 - macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
 
-## 2.2 Siv3D アプリのビルド
+## 2.3 Siv3D アプリのビルド
 1. プロジェクトファイル `examples/empty/empty.xcodeproj` を Xcode で開きます
 1. サンプルプログラム (Main.cpp) が最初から用意されています
 1. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
@@ -55,23 +76,31 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 
 Linux 版は SDK 形式での配布が無いため、ライブラリを自前でビルドするところから始めます。
 
-## 3.1 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手する
+## 3.1 必要な環境
+|  |  |
+|--|--|
+| OS | Ubuntu 20.04 LTS |
+| CPU | Intel もしくは AMD 製の CPU |
+| GPU | OpenGL 4.1 サポート |
+| 開発環境 | GCC 9.3.0<br>Boost 1.71.0 - 1.73.0 |
+
+## 3.2 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手する
 
 [OpenSiv3D 公式リポジトリの main ブランチ](https://github.com/Siv3D/OpenSiv3D) が、最新の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8)
 
-## 3.2 依存パッケージをインストールする
+## 3.3 依存パッケージをインストールする
 次を参考に必要なパッケージをインストールします。  
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
-Boost ライブラリについては 1.71.0 / 1.72.0 / 1.73.0 のみサポートしています。それより新しいバージョンではビルドエラーが発生します（将来サポート予定）。
+Boost ライブラリについては 1.71.0 / 1.72.0 / 1.73.0 のみサポートしています。それより新しいバージョンではビルドエラーが発生します（将来サポート予定）。GCC のバージョンも 9.3.0 が必要で、それより新しいバージョンは現在サポートしていません。
 
-## 3.3 OpenSiv3D ライブラリをビルドする
+## 3.4 OpenSiv3D ライブラリをビルドする
 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します。 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 
-## 3.4 OpenSiv3D アプリをビルドする
+## 3.5 OpenSiv3D アプリをビルドする
 次を参考に Siv3D アプリをビルドします。 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
