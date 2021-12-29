@@ -62,10 +62,8 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
 
 ## 2.2 プロジェクトテンプレートのダウンロード
-
-- **[OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip)** をダウンロードしてファイルを展開します
-
-- macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
+1. **[OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip)** をダウンロードしてファイルを展開します
+1. macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
 
 ## 2.3 Siv3D アプリのビルド
 1. プロジェクトファイル `examples/empty/empty.xcodeproj` を Xcode で開きます
