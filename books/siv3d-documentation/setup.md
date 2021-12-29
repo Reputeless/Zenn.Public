@@ -27,8 +27,10 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 - アンインストーラの登録
 :::
 
-> OpenSiv3D SDK を削除するには、Windows の設定からアンインストールします。
-> ![](/images/doc_v6/manual/uninstall.png)
+:::details OpenSiv3D SDK を削除するには
+Windows の設定からアンインストールします。
+![](/images/doc_v6/manual/uninstall.png)
+:::
 
 ::: message
 インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールして Siv3D を始める」の方法で SDK をインストールしてください。
