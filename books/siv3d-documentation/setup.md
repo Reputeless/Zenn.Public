@@ -22,7 +22,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 2. 実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します
 
 ::: message
-インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールして Siv3D を始める」の方法で SDK をインストールしてください。
+インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールする」の方法で SDK をインストールしてください。
 :::
 
 :::details インストーラが自動的に行うこと
@@ -94,21 +94,22 @@ Linux 版は SDK 形式での配布が無いため、ライブラリを自前で
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8 =400x)
 
-## 3.3 依存パッケージをインストールする
-次を参考に必要なパッケージをインストールします。  
+## 3.3 OpenSiv3D をビルドする
+1. 次を参考に、必要な依存パッケージをインストールします  
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
+:::message
 Boost ライブラリについては 1.71.0 / 1.72.0 / 1.73.0 のみサポートしています。それより新しいバージョンではビルドエラーが発生します（将来サポート予定）。GCC のバージョンも 9.3.0 が必要で、それより新しいバージョンは現在サポートしていません。
+:::
 
-## 3.4 OpenSiv3D ライブラリをビルドする
-次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します。 
+2. 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
-
-## 3.5 OpenSiv3D アプリをビルドする
-次を参考に Siv3D アプリをビルドします。 
+3. 次を参考に Siv3D アプリをビルドします 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
+:::message
 デフォルトの Main.cpp は「すぐ終了する空のプログラム」になっているため、リファレンスのサンプルなどで上書きしてください。
+:::
 
 
 # 4. Windows で SDK を手動インストールする
