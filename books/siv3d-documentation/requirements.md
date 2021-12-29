@@ -81,7 +81,7 @@ Web 版は現在試験的な実装が提供されています。
 # 3. 開発環境のインストールガイド
 
 ## 3.1 Visual Studio のインストール (Windows)
-Windows 7 や Windows 8.1, Windows 10 のパソコンで Siv3D プログラミングをする場合は「Visual Studio Community 2019（ビジュアル・スタジオ・コミュニティ 2019）」を使うのが便利です。これは世界中のプロフェッショナルのソフトウェア開発者が使う「Visual Studio」というプログラミングツールの無料版です。学生、個人、少人数の開発であれば、Visual Studio の有料版と同じ機能を無料で使えます。
+Windows 7 や Windows 8.1, Windows 10, Windows 11 のパソコンで Siv3D プログラミングをする場合は「Visual Studio Community 2022（ビジュアル・スタジオ・コミュニティ 2022）」を使うのが便利です。これは世界中のプロフェッショナルのソフトウェア開発者が使う「Visual Studio」というプログラミングツールの無料版です。学生、個人、少人数の開発であれば、Visual Studio の有料版と同じ機能を無料で使えます。
 
 ### 手順
 

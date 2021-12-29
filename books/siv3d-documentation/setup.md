@@ -18,7 +18,8 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 
 ## 1.2 SDK のインストール
 
-- **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
+1. **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)** をダウンロードして実行します
+2. 実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します
 
 ::: message
 インストーラの実行に失敗する場合は、このページの「4. Windows で SDK を手動インストールして Siv3D を始める」の方法で SDK をインストールしてください。
@@ -31,7 +32,7 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 - アンインストーラの登録
 :::
 
-:::details OpenSiv3D SDK を削除するには
+:::details インストールした OpenSiv3D SDK を削除するには
 Windows の設定からアンインストールします。
 ![](/images/doc_v6/manual/uninstall.png)
 :::
