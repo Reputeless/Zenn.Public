@@ -19,11 +19,13 @@ Windows および macOS では 30 秒程度で Siv3D を始める準備が完了
 ## 1.2 SDK のインストール
 
 - **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)** をダウンロードして実行します。実行時に「Windows によって PC が保護されました」と表示された場合は、「詳細情報」を押して「実行」を押します。
-- インストーラが自動的に以下のことを行います
-  - SDK のコピー（デフォルトではドキュメントフォルダ）
-  - SDK のパスへのユーザ環境変数の設定
-  - Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2019\Templates\ProjectTemplates\` および `ドキュメント\Visual Studio 2022\Templates\ProjectTemplates\`)
-  - アンインストーラの登録
+
+:::details インストーラが自動的に行うこと
+- SDK のコピー（デフォルトではドキュメントフォルダ）
+- SDK のパスへのユーザ環境変数の設定
+- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2019\Templates\ProjectTemplates\` および `ドキュメント\Visual Studio 2022\Templates\ProjectTemplates\`)
+- アンインストーラの登録
+:::
 
 > OpenSiv3D SDK を削除するには、Windows の設定からアンインストールします。
 > ![](/images/doc_v6/manual/uninstall.png)
