@@ -41,7 +41,7 @@ Windows の設定からアンインストールします。
 
 https://www.youtube.com/watch?v=O0XtvulXSOk
 
-1. Visual Studio のスタート画面で **新しいプロジェクトの作成** をクリックします。
+1. Visual Studio のスタート画面で **新しいプロジェクトの作成** をクリックします
 1. プロジェクト テンプレートのリストから **OpenSiv3D** を選択し、**次へ** を押します (⚠️表示されない場合は[こちら](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/troubleshooting-setup))
 1. プロジェクト名と保存場所を入力し（任意）、**作成** を押します
 1. サンプルプログラム (Main.cpp) が最初から用意されています
@@ -69,7 +69,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 ## 2.3 Siv3D アプリのビルド
 1. プロジェクトファイル `examples/empty/empty.xcodeproj` を Xcode で開きます
 1. サンプルプログラム (Main.cpp) が最初から用意されています
-1. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
+1. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します
 1. macOS Catalina 以降でファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`ユーザ/アプリケーション` フォルダ以下へ移動させることで回避できます
 
 :::details 新しいプロジェクトを増やしたい場合は
@@ -88,13 +88,13 @@ Linux 版は SDK 形式での配布が無いため、ライブラリを自前で
 | GPU | OpenGL 4.1 サポート |
 | 開発環境 | GCC 9.3.0<br>Boost 1.71.0 - 1.73.0 |
 
-## 3.2 OpenSiv3D の最新コードを入手する
+## 3.2 Siv3D の最新コードを入手する
 
 [OpenSiv3D 公式リポジトリの main ブランチ](https://github.com/Siv3D/OpenSiv3D) が、最新の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://storage.googleapis.com/zenn-user-upload/nc8tfa4gj60oyu134d99tboqtla8 =400x)
 
-## 3.3 OpenSiv3D をビルドする
+## 3.3 Siv3D をビルドする
 1. 次を参考に、必要な依存パッケージをインストールします  
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
@@ -115,7 +115,7 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 # 4. Windows で SDK を手動インストールする
 Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます。
 
-## 4.1 OpenSiv3D のヘッダとライブラリの配置
+## 4.1 SDK のヘッダとライブラリの配置
 
 1. [OpenSiv3D_SDK_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_SDK_0.6.3.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します
   - `.../Documents/OpenSiv3D_SDK_0.6.3/include`
@@ -125,7 +125,7 @@ Windows において OpenSiv3D インストーラが正常に実行されない�
 
 ![](/images/doc_v6/manual/envvariable.png =480x)
 
-## 4.2 OpenSiv3D プロジェクトテンプレート (ZIP) の配置
+## 4.2 Siv3D プロジェクトテンプレート (ZIP) の配置
 1. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (サイズ: 約 63 MB) をダウンロードします
 1. そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します  
 ![](/images/doc_v6/manual/projecttemplate.png =480x)
