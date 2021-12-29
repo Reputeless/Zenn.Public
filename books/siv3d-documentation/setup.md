@@ -89,7 +89,7 @@ Linux 版は SDK 形式での配布が無いため、ライブラリを自前で
 | GPU | OpenGL 4.1 サポート |
 | 開発環境 | GCC 9.3.0<br>Boost 1.71.0 - 1.73.0 |
 
-## 3.2 OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手する
+## 3.2 OpenSiv3D の最新コードを入手する
 
 [OpenSiv3D 公式リポジトリの main ブランチ](https://github.com/Siv3D/OpenSiv3D) が、最新の安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
@@ -109,9 +109,11 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60
 次を参考に Siv3D アプリをビルドします。 
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
+デフォルトの Main.cpp は「すぐ終了する空のプログラム」になっているため、リファレンスのサンプルなどで上書きしてください。
+
 
 # 4. Windows で SDK を手動インストールする
-Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールすることができます。
+Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます。
 
 ## 4.1 OpenSiv3D ヘッダ・ライブラリのダウンロードと配置
 
