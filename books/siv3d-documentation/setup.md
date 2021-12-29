@@ -3,8 +3,6 @@ title: "開発を始める（SDK のインストール）"
 free: true
 ---
 
-Windows および macOS では 30 秒程度で Siv3D を始める準備が完了します。
-
 # 1. Windows で Siv3D を始める
 
 ## 1.1 必要な環境
@@ -113,21 +111,16 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
 
 # 4. Windows で SDK を手動インストールする
-Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます。
-
-## 4.1 SDK のヘッダとライブラリの配置
+Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます。手順は次の通りです。
 
 1. [OpenSiv3D_SDK_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_SDK_0.6.3.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します
   - `.../Documents/OpenSiv3D_SDK_0.6.3/include`
   - `.../Documents/OpenSiv3D_SDK_0.6.3/lib`
 2. ユーザー環境変数 `SIV3D_0_6_3` を新規作成し、1. で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します
-- 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_3` に設定します
-
+- 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_3` に設定します  
 ![](/images/doc_v6/manual/envvariable.png =480x)
 
-## 4.2 Siv3D プロジェクトテンプレート (ZIP) の配置
-1. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (サイズ: 約 63 MB) をダウンロードします
-1. そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します  
+3. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します  
 ![](/images/doc_v6/manual/projecttemplate.png =480x)
 
 1. 以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動してください
