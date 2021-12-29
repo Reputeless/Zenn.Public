@@ -127,13 +127,13 @@ Windows において OpenSiv3D インストーラが正常に実行されない�
 
 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_3` に設定します。
 
-![](/images/doc_v6/manual/envvariable.png =400x)
+![](/images/doc_v6/manual/envvariable.png =480x)
 
 ## 4.3 OpenSiv3D プロジェクトテンプレート (ZIP) の配置
 
 Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (サイズ: 約 63 MB) をダウンロードし、**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します。
 
-![](/images/doc_v6/manual/projecttemplate.png =400x)
+![](/images/doc_v6/manual/projecttemplate.png =480x)
 
 以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動してください。
 
