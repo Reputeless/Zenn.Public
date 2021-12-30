@@ -346,7 +346,7 @@ void Main()
 		return;
 	}
 
-	const Texture texure{ U"example/windmill.png" };
+	const Texture texture{ U"example/windmill.png" };
 
 	while (System::Update())
 	{
@@ -357,7 +357,7 @@ void Main()
 
 		{
 			const ScopedCustomShader2D shader{ vs2D, ps2DTexture };
-			texure.draw();
+			texture.draw();
 		}
 	}
 }
