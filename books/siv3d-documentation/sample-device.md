@@ -36,7 +36,7 @@ void loop()
     // シリアル通信で受信したデータを読み込む
     const int val = Serial.read();
 
-    if (val == -1) // 受信したデーが無い
+    if (val == -1) // 受信したデータが無い
     {
         return;
     }
