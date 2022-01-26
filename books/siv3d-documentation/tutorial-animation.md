@@ -49,7 +49,7 @@ void Main()
 		// 経過時間を加算
 		t += Scene::DeltaTime();
 
-		Circle{ Scene::Center(), (r * 50) }.draw(ColorF{ 0.25 });
+		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
 	}
 }
 ```
