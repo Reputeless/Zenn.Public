@@ -37,7 +37,7 @@ Siv3D Web 版を利用すると、Web ブラウザで動作可能な Siv3D ア�
 
 1. Visual Studio Market Place から [Emscripten Extension Pack for Visual Studio](https://marketplace.visualstudio.com/items?itemName=KamenokoSoft.emscripten-extensions) をダウンロードして実行します
 2. インストールする項目のすべてにチェックを付け、**Modify** を押します  
-![](/images/doc_v6/manual/web_vsix.png =300x)
+![](/images/doc_v6/manual/web_vsix.png =400x)
 3. 一部の項目のインストールでエラーが表示されることがありますが、無視して構いません
 
 ::: message
@@ -65,7 +65,7 @@ Siv3D Web 版を利用すると、Web ブラウザで動作可能な Siv3D ア�
 
 ## 1.6 ファイルサイズの削減とその他の注意事項
 
-1. デフォルトでは、`engine\` と `example\` のすべてのファイルが最終出力に同梱されるため、Web アプリケーションに関連するファイルの合計サイズは Release ビルドで数十 MB 程度になります。そうした状態でアプリケーションを Web 公開すると、アクセスした利用者がファイルのダウンロードに時間がかかってしまいます。したがって、実際にアプリケーションを公開する際は、不要なファイルを削除する必要があります（参考: [チュートリアル 41 | アプリの公開](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-release#41.9-%E5%90%8C%E6%A2%B1%E3%81%99%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E7%84%A1%E3%81%84%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB))。Web 版の出力ファイルのサイズは、**最小で数 MB 程度** まで削減することができます
+1. デフォルトでは、`engine\` と `example\` のすべてのファイルが最終出力に同梱されるため、Web アプリケーションに関連するファイルのサイズは Release ビルドで合計数十 MB 程度になります。そうした状態のアプリケーションを Web で公開すると、アクセスした利用者がファイルのダウンロードに時間がかかってしまいます。実際にアプリケーションを公開する際は、不要なファイルを削除する必要があります（参考: [チュートリアル 41 | アプリの公開](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-release#41.9-%E5%90%8C%E6%A2%B1%E3%81%99%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E7%84%A1%E3%81%84%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB))。Web 版の出力ファイルのサイズは、**最小で数 MB 程度** まで削減することができます
 1. シーンのリサイズモードはデフォルトで `ResizeMode::Virtual` であるため、ブラウザの拡大縮小に応じてシーンのサイズが変化します。これを防ぐには `Scene::SetResizeMode(ResizeMode::Keep);` でシーンサイズを固定します
 1. 通常の Siv3D と Web 版の差異については OpenSiv3D for Web[「Web 固有の注意点」](https://siv3d.kamenokosoft.com/ja/building/web-specific-notes) を参照してください
 
