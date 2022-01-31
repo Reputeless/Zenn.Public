@@ -3,7 +3,7 @@ title: "Web 向けの開発"
 free: true
 ---
 
-Siv3D Web 版を利用すると、Web ブラウザで動作可能な Siv3D アプリケーションを C++ だけで開発できます。
+Siv3D Web 版 (experimental) を利用すると、Web ブラウザで動作可能な Siv3D アプリケーションを C++ だけで開発できます。
 
 # 1. Visual Studio で Web 向け開発を始める (Windows)
 
