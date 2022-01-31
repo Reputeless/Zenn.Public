@@ -52,6 +52,7 @@ chapters:
   - tutorial-tcp
   - tutorial-release
   - tutorial-next
+  - web
   - sample-game
   - sample-application
   - sample-visual
