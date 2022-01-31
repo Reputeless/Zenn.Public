@@ -36,7 +36,7 @@ Siv3D Web 版を利用すると、Web ブラウザで動作可能な Siv3D ア�
 ## 1.3 Visual Studio 拡張機能のインストール
 
 1. Visual Studio Market Place から [Emscripten Extension Pack for Visual Studio](https://marketplace.visualstudio.com/items?itemName=KamenokoSoft.emscripten-extensions) をダウンロードして実行します
-2. インストールする項目のすべてにチェックを付け、**Modify** を押します
+2. インストールする項目のすべてにチェックを付け、**Modify** を押します  
 ![](/images/doc_v6/manual/web_vsix.png =300px)
 3. 一部の項目のインストールでエラーが表示されることがありますが、無視して構いません
 
