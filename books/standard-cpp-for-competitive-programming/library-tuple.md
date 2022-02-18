@@ -80,6 +80,31 @@ int main()
 ```
 
 
+## 1.4 型推論の利用（推奨しない）
+- C++ では型推論により、`std::tuple<>` の `<>` の部分を、初期値から自動的に推論してくれます
+- ただし、文字列リテラルは `std::string` 型ではなく `const char*` 型になることに注意します
+- 型名が明示的に書かれていないと、コードが読みにくくなり、間違いにもつながりやすいため、`std::tuple` での型推論の使用は推奨しません
+
+```cpp
+#include <iostream>
+#include <string>
+#include <tuple>
+
+int main()
+{
+	// t1 は std::tuple<int, bool, double>
+	std::tuple t1{ 100, true, 2.5 };
+
+	// t2 は std::tuple<long long, double, const char*>
+	// 文字列リテラルは std::string 型ではないことに注意
+	std::tuple t2{ 200LL, 2.2, "bbb" };
+
+	// t3 は std::tuple<int, char, std::string>
+	std::tuple t3{ 5, 'a', std::string("hello") };
+}
+```
+
+
 # 2. `std::tuple` の要素へのアクセス
 
 ## 2.1 インデックスを指定して要素へアクセスする
@@ -309,6 +334,7 @@ eee
 
 ## 3.3 別のタプルを代入する
 - `=` を使って別のタプルの値を代入できます
+- 代入するタプルは `{ ... }` で構築することもできます
 
 ```cpp
 #include <iostream>
@@ -319,17 +345,25 @@ int main()
 {
 	std::tuple<int, double, std::string> t1{ 100, 1.1, "aaa" };
 	std::tuple<int, double, std::string> t2{ 200, 2.2, "bbb" };
-	t2 = t1;
 
+	t2 = t1;
 	std::cout << std::get<0>(t2) << '\n'; // 100
 	std::cout << std::get<1>(t2) << '\n'; // 1.1
 	std::cout << std::get<2>(t2) << '\n'; // aaa
+
+	t2 = { 300, 3.3, "ccc" };
+	std::cout << std::get<0>(t2) << '\n'; // 300
+	std::cout << std::get<1>(t2) << '\n'; // 3.3
+	std::cout << std::get<2>(t2) << '\n'; // ccc
 }
 ```
 ```txt:出力
 100
 1.1
 aaa
+300
+3.3
+ccc
 ```
 
 
