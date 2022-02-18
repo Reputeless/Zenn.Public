@@ -747,7 +747,7 @@ int main()
 
 
 ## 7.2 `std::tie()` で一部の要素を無視する
-- `std::tie()` には `std::ignore` を渡すことで、その要素をスキップできます
+- 7.1 の操作をする際、`std::tie()` に `std::ignore` を渡すことで、その要素をスキップできます
 
 ```cpp
 #include <iostream>
@@ -761,17 +761,16 @@ std::tuple<int, double, std::string> MakeTuple()
 
 int main()
 {
-	int a = 123;
 	double b = 45.6;
 	std::string c = "abc";
 
 	// b と c だけに代入する
 	std::tie(std::ignore, b, c) = MakeTuple();
-	std::cout << a << ' ' << b << ' ' << c << '\n';
+	std::cout << b << ' ' << c << '\n';
 }
 ```
 ```txt:出力
-123 1.1 aaa
+1.1 aaa
 ```
 
 
