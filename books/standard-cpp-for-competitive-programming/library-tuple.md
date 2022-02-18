@@ -46,6 +46,7 @@ int main()
 #include <iostream>
 #include <string>
 #include <tuple>
+#include <utility> // std::pair
 
 int main()
 {
