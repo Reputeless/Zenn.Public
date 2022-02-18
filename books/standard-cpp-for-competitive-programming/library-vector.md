@@ -132,6 +132,7 @@ apple
 |`int()`|`0`|
 |`double()`|`0.0`|
 |`std::string()`|空の文字列|
+|`std::vector<int>()`|空（要素数が 0) の vector|
 |`std::pair<int, int>()`|`std::pair<int, int>(0, 0)`|
 |`struct Point { int x, y; };`<br>のときの<br>`Point()`|`Point{ 0, 0 }`|
 |`struct Point { int x = -1, y = -1; };`<br>のときの<br>`Point()`|`Point{ -1, -1 }`|
