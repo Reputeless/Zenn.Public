@@ -108,7 +108,7 @@ int main()
 ```
 ```txt:出力
 100
-1.2
+1.1
 aaa
 110
 ```
@@ -125,7 +125,7 @@ int main()
 	std::tuple<int, double, std::string> t{ 100, 1.1, "aaa" };
 
 	// 整数リテラル 0 はコンパイル時定数
-	std::cout << std::get<0>>(t) << '\n'; // ok
+	std::cout << std::get<0> (t) << '\n'; // ok
 
 	constexpr int a = 1; // a はコンパイル時定数
 	std::cout << std::get<a>(t) << '\n'; // ok
@@ -627,6 +627,7 @@ false
 #include <string>
 #include <tuple>
 #include <vector>
+#include <algorithm> // std::sort()
 
 int main()
 {
