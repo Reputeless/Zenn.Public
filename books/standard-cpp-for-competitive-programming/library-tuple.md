@@ -114,8 +114,8 @@ using namespace std::string_literals; // std::string リテラルのための s 
 
 int main()
 {
-	// t2 は std::tuple<long long, double, const char*>
-	std::tuple t{ 200LL, 2.2, "bbb" };
+	// t1 は std::tuple<long long, double, const char*>
+	std::tuple t1{ 200LL, 2.2, "bbb" };
 
 	// t2 は std::tuple<long long, double, std::string>
 	std::tuple t2{ 200LL, 2.2, "bbb"s };
