@@ -104,6 +104,24 @@ int main()
 }
 ```
 
+- 文字列リテラルが `const char*` 型に推論されることへの対策として、`std::string` リテラル (`s` サフィックス) を用いる方法があります
+
+```cpp
+#include <iostream>
+#include <string>
+#include <tuple>
+using namespace std::string_literals; // std::string リテラルのための s サフィックスを有効化
+
+int main()
+{
+	// t2 は std::tuple<long long, double, const char*>
+	std::tuple t{ 200LL, 2.2, "bbb" };
+
+	// t2 は std::tuple<long long, double, std::string>
+	std::tuple t2{ 200LL, 2.2, "bbb"s };
+}
+```
+
 
 # 2. `std::tuple` の要素へのアクセス
 
