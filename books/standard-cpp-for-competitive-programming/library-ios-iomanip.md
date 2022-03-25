@@ -1,5 +1,5 @@
 ---
-title: "<ios> & <iosmanip>"
+title: "<ios>, <iosmanip>"
 free: true
 ---
 
