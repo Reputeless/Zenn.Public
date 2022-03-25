@@ -1,12 +1,12 @@
 ---
-title: "<ios>, <iosmanip>"
+title: "<ios>, <iomanip>"
 free: true
 ---
 
 - 1～2: マニピュレータ
 - 3: `ios::sync_with_stdio()`
 
-`<ios>` ヘッダは `<iostream>` の中でインクルードされるため、明示的にインクルードする必要はありません
+`<ios>` ヘッダは `<iostream>` の中でインクルードされるため、明示的にインクルードする必要はありません。
 
 # 1. `bool` 型の値の処理形式
 
