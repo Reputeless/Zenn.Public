@@ -174,9 +174,9 @@ int main()
 
 int main()
 {
-	const double x = 111222.333444555666777888999;
-	const double y = 0.000111222333444555666777888999;
-	const double z = 0.000000111222333444555666777888999;
+	constexpr double x = 111222.333444555666777888999;
+	constexpr double y = 0.000111222333444555666777888999;
+	constexpr double z = 0.000000111222333444555666777888999;
 	std::cout << x << '\n';
 	std::cout << y << '\n';
 	std::cout << z << '\n';
@@ -312,9 +312,9 @@ int main()
 
 int main()
 {
-	const double x = 111222.333444555666777888999;
-	const double y = 0.000111222333444555666777888999;
-	const double z = 0.000000111222333444555666777888999;
+	constexpr double x = 111222.333444555666777888999;
+	constexpr double y = 0.000111222333444555666777888999;
+	constexpr double z = 0.000000111222333444555666777888999;
 	std::cout << x << '\n';
 	std::cout << y << '\n';
 	std::cout << z << '\n';
@@ -453,9 +453,9 @@ int main()
 
 int main()
 {
-	const double x = 111222.333444555666777888999;
-	const double y = 0.000111222333444555666777888999;
-	const double z = 0.000000111222333444555666777888999;
+	constexpr double x = 111222.333444555666777888999;
+	constexpr double y = 0.000111222333444555666777888999;
+	constexpr double z = 0.000000111222333444555666777888999;
 	std::cout << x << '\n';
 	std::cout << y << '\n';
 	std::cout << z << '\n';
