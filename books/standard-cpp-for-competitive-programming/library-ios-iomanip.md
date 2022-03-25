@@ -593,6 +593,7 @@ int main()
 
 	for (int i = 0; i < 10; ++i)
 	{
+		// C++ の出力ストリームと C 言語の出力ストリームが混在している
 		std::cout << "A";
 		printf("B");
 	}
