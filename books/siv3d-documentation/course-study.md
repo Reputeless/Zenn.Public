@@ -39,7 +39,7 @@ Windows 版の OpenSiv3D SDK のインストーラのサイズは 200 MB 未満�
 Siv3D で困ったことがあれば、[オンラインコミュニティ](community) が役に立ちます。毎月開催されるイベントで、熱心なユーザや Siv3D の作者と交流できます。オープンソースソフトウェア開発に貢献したい学生には、Siv3D を練習場にしたサポートプログラムを毎年実施しています。
 
 #### 7. 🌐 Web ブラウザで動く
-現在試験的に提供される Web 版（[OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)）を使うと、Siv3D で作った C++ アプリケーションを、Web ブラウザ上で実行可能なプログラムに変換できます。世界中の人がスマホやタブレットからあたなの作品を体験できます。
+現在試験的に提供される Web 版を使うと、Siv3D で作った C++ アプリケーションを、Web ブラウザ上で実行可能なプログラムに変換できます。世界中の人がスマホやタブレットからあたなの作品を体験できます。
 
 #### Web ブラウザで動いている Siv3D プログラムの例
 ツイート内のリンクをクリックすると、Web ブラウザで動く Siv3D プログラムが開きます
@@ -159,7 +159,7 @@ https://twitter.com/Reputeless/status/1445377010197426180
 - スクリプティング (AngelScript)
 :::
 
-::: details 来月のアップデートで追加されるおもな機能
+::: details 来月のアップデート (v0.6.4) で追加されるおもな機能
 - 再生中のオーディオバッファへのリアルタイム波形書き込み
 - Union-Find 木（アルゴリズムとデータ構造）
 - 最新の Xcode 13.3 対応
@@ -175,7 +175,7 @@ https://twitter.com/Reputeless/status/1445377010197426180
   - `Siv3D/include/` がヘッダ
   - `Siv3D/src/` がソース
 - [Siv3D ゲーム典型](https://github.com/Reputeless/games)
-  - ゲームサンプルを掲載していくプロジェクト（先月スタート）
+  - ゲームサンプルを掲載していくプロジェクト（100 個を目標に、先月からスタート）
 - [Twitter #Siv3D #OpenSiv3D タグ検索](https://twitter.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
 
 # 1. Siv3D プログラムの基本構造
@@ -1994,4 +1994,134 @@ void Main()
 	}
 }
 ```
+
+
+## Siv3D アプリを作ってみよう
+
+### （かんたん）おみくじ
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 背景色を設定
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	// 文字列の配列
+	const Array<String> items =
+	{
+		U"大吉", U"吉", U"中吉", U"小吉", U"末吉", U"凶"
+	};
+
+	// 抽選中である場合 true
+	bool active = true;
+
+	// 選ばれた文字列
+	String currentItem;
+
+	// メインループ
+	while (System::Update())
+	{
+		// 抽選中である場合
+		if (active)
+		{
+			// ランダムに 1 個選択
+			currentItem = items.choice();
+		}
+
+		// (220, 100) の位置に幅 150 のボタンを表示
+		// ボタンのラベルは currentItem
+		if (SimpleGUI::Button(currentItem, Vec2{ 220, 100 }, 150))
+		{
+			// もし押されたら
+			// active の状態を反転 (true → false, false → true)
+			active = !active;
+		}
+	}
+}
+```
+
+
+### （ふつう）
+
+
+
+
+
+### （ややむずかしい）Slack で使えるアニメーション絵文字メーカー
+プロジェクトの App フォルダに、作成した GIF ファイル `emoji.gif` が保存されます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// GIF アニメ出力クラス
+	// writeFrame した内容は emoji.gif に出力
+	AnimatedGIFWriter gif{ U"emoji.gif", 64, 64 };
+
+	// 使用するフォント
+	const Font font{ 64, Typeface::Heavy };
+
+	// 描画先 (128x128 のテクスチャ)
+	MSRenderTexture renderTexture{ 128, 128 };
+
+	// 書き出したフレーム数
+	int32 frameCount = 0;
+
+	// メインループ
+	while (System::Update())
+	{
+		// renderTexture の内容をクリア
+		renderTexture.clear(Palette::White);
+		{
+			// renderTexture を描画先に設定する
+			ScopedRenderTarget2D target{ renderTexture };
+
+			////////////////////////////////
+			//
+			//	描画
+			//
+			////////////////////////////////
+
+			// 座標 (64, 64) を中心に回転する座標変換を適用
+			// 回転角度 = (18° * frameCount)
+			Transformer2D transform{ Mat3x2::Rotate(18_deg * frameCount, Vec2{ 64, 64 }) };
+
+			// テキストを (64, 64) に描画
+			font(U"OK").drawAt(64, 64, Palette::Orange);
+		}
+
+		// renderTexture の処理
+		{
+			Graphics2D::Flush();
+			renderTexture.resolve();
+		}
+
+		if (frameCount < 20) // 20 フレーム書き出し
+		{
+			Image image;
+
+			// renderTexture の内容を Image にコピー
+			renderTexture.readAsImage(image);
+
+			// Image を 64x64 に縮小し、
+			// 0.1 秒分の GIF アニメのフレームとして書き出し
+			gif.writeFrame(image.scaled(64, 64), 0.1s);
+
+			// フレームカウントを 1 増やす
+			++frameCount;
+		}
+		else // 20 フレーム書き出したら終了
+		{
+			break;
+		}
+
+		// 画面への描画
+		renderTexture.draw(20, 20);
+	}
+}
+```
+
 
