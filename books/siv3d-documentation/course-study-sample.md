@@ -99,6 +99,8 @@ void Main()
 
 
 ## S2. 万華鏡ペイント
+右クリックで描いた内容をクリアできます。
+
 ![](/images/doc_v6/quick-example/2.png)
 
 :::details コード
@@ -801,77 +803,7 @@ void Main()
 :::
 
 
-## S8. Web カメラと顔検出
-パソコンに接続されている Web カメラを起動し、撮影した画像から人の顔を検出します。
-
-:::details コード
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Window::Resize(1280, 720);
-
-	// Web カメラを非同期で起動
-	AsyncTask<Webcam> task{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
-	Webcam webcam;
-
-	// Web カメラ画像の表示用テクスチャ
-	DynamicTexture texture;
-	Image image;
-
-	// 顔検出用の分類器をロード
-	const CascadeClassifier cascade{ U"example/objdetect/haarcascade/frontal_face_alt2.xml" };
-	Array<Rect> faces;
-
-	while (System::Update())
-	{
-		if ((not webcam) && (not task.isValid()))
-		{
-			if (SimpleGUI::Button(U"Retry", Vec2{ 20, 20 }))
-			{
-				// Web カメラを非同期で再起動
-				task = AsyncTask{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
-			}
-		}
-
-		if (task.isReady())
-		{
-			webcam = task.get();
-		}
-
-		if (webcam.hasNewFrame())
-		{
-			webcam.getFrame(image);
-
-			// 顔を検出
-			faces = cascade.detectObjects(image);
-
-			texture.fill(image);
-		}
-
-		// Web カメラ起動待機中は円を表示
-		if (not webcam)
-		{
-			Circle{ Scene::Center(), 40 }.drawArc(Scene::Time() * 180_deg, 300_deg, 5, 5);
-		}
-
-		if (texture)
-		{
-			texture.draw();
-		}
-
-		for (const auto& face : faces)
-		{
-			face.drawFrame(4, Palette::Red);
-		}
-	}
-}
-```
-:::
-
-
-## S9. 複雑な 2D 物理演算
+## S8. 複雑な 2D 物理演算
 スペースキーで粒子を放出します。  
 マウスの左ボタンでかごを動かせます。
 
@@ -984,7 +916,7 @@ void Main()
 :::
 
 
-## S10. 3D 空間
+## S9. 3D 空間
 3D シーンを描くための機能も用意されています。
 
 ![](/images/doc_v6/quick-example/10.png)
@@ -1083,7 +1015,7 @@ void Main()
 :::
 
 
-## S11. 地形
+## S10. 地形
 左上の高さマップをクリックすると地形の標高を上げることができます。
 
 ![](/images/doc_v6/quick-example/12.png)
@@ -1185,7 +1117,7 @@ void Main()
 :::
 
 
-## S12. 音楽プレーヤー
+## S11. 音楽プレーヤー
 パソコンに保存されている音楽ファイルを再生します。  
 パソコンに再生できる音楽ファイルが無い場合、サンプル用の音楽ファイルが `App/example/test.mp3` にあります。フリーの BGM 素材 (MP3) をダウンロードして試すこともできます。
 
@@ -1289,7 +1221,7 @@ void Main()
 :::
 
 
-## S13. オーディオ処理
+## S12. オーディオ処理
 音楽にリアルタイムでエフェクトを適用できます。  
 パソコンに再生できる音楽ファイルが無い場合、サンプル用の音楽ファイルが `App/example/test.mp3` にあります。フリーの BGM 素材 (MP3) をダウンロードして試すこともできます。
 
