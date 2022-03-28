@@ -98,7 +98,7 @@ void Main()
 :::
 
 
-# S2. 万華鏡ペイント
+## S2. 万華鏡ペイント
 ![](/images/doc_v6/quick-example/2.png)
 
 :::details コード
@@ -169,7 +169,7 @@ void Main()
 :::
 
 
-# S3. ライフゲーム
+## S3. ライフゲーム
 ライフゲームとは: [ライフゲーム (Wikipedia)](https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)
 ![](/images/doc_v6/quick-example/3.png)
 
@@ -363,7 +363,7 @@ void Main()
 :::
 
 
-# S4. QR コード作成
+## S4. QR コード作成
 キーボードでテキストを入力します。  
 スマートフォンの QR コードリーダーで読み取ることができます。
 ![](/images/doc_v6/quick-example/4.png)
@@ -409,7 +409,7 @@ void Main()
 :::
 
 
-# S5. 物理演算スケッチ
+## S5. 物理演算スケッチ
 四角や丸を描くと物体が生成されて物理演算をします。  
 マウスホイールや右クリックで視点を移動できます。
 ![](/images/doc_v6/quick-example/5.png)
@@ -500,7 +500,7 @@ void Main()
 :::
 
 
-# S6. 物理演算による破壊
+## S6. 物理演算による破壊
 ボールを発射して積み重ねられたボックスを破壊します。
 
 :::details コード
@@ -716,7 +716,7 @@ void Main()
 :::
 
 
-# S7. kd-tree
+## S7. kd-tree
 近傍にある点を高速に探索できるデータ構造です。
 ![](/images/doc_v6/quick-example/7.png)
 
@@ -795,7 +795,7 @@ void Main()
 :::
 
 
-# S8. Web カメラと顔検出
+## S8. Web カメラと顔検出
 パソコンに接続されている Web カメラを起動し、撮影した画像から人の顔を検出します。
 
 :::details コード
@@ -865,7 +865,7 @@ void Main()
 :::
 
 
-# S9. 複雑な 2D 物理演算
+## S9. 複雑な 2D 物理演算
 スペースキーで粒子を放出します。  
 マウスの左ボタンでかごを動かせます。
 ![](/images/doc_v6/quick-example/9.png)
@@ -977,7 +977,7 @@ void Main()
 :::
 
 
-# S10. 3D 空間
+## S10. 3D 空間
 3D シーンを描くための機能も用意されています。
 ![](/images/doc_v6/quick-example/10.png)
 
@@ -1075,7 +1075,7 @@ void Main()
 :::
 
 
-# S11. 地形
+## S11. 地形
 左上の高さマップをクリックすると地形の標高を上げることができます。
 ![](/images/doc_v6/quick-example/12.png)
 
@@ -1176,7 +1176,7 @@ void Main()
 :::
 
 
-# S12. 音楽プレーヤー
+## S12. 音楽プレーヤー
 パソコンに保存されている音楽ファイルを再生します。
 ![](/images/doc_v6/quick-example/13.png)
 
@@ -1278,7 +1278,7 @@ void Main()
 :::
 
 
-# S13. オーディオ処理
+## S13. オーディオ処理
 音楽にリアルタイムでエフェクトを適用できます。
 ![](/images/doc_v6/quick-example/14.png)
 
