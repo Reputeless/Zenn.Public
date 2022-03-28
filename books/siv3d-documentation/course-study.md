@@ -3,16 +3,25 @@ title: "Siv3D 勉強会コース"
 free: true
 ---
 
-# 0. Siv3D とは
-
 - [勉強会開始前に遊べるサンプルプログラム](course-study-sample)
+  - インストールの手順の最後に作ったプログラムを、別のプログラムで上書きして試してみてください
+  - `# include <Siv3D.hpp>`～ で始まるコードを上書きするだけで OK です
+  - 記事中のサンプルコードの右上をクリックするとソースコードをコピーできて便利です
+
+勉強会開始まで、このプログラムで遊んでいます。
+
+# 0. Siv3D とは
 - スライド: [Siv3D / C++ イントロダクション](https://www.dropbox.com/s/0swkt5zd4iezi5b/introduction.pdf?dl=0)
 
 ### お役立ちリンク
 
 - [Siv3D リファレンス](https://zenn.dev/reputeless/books/siv3d-documentation)
+  - リファレンスのトップページ
 - [Siv3D のソースコード (GitHub)](https://github.com/Siv3D/OpenSiv3D)
+  - `Siv3D/include/` がヘッダ
+  - `Siv3D/src/` がソース
 - [Siv3D ゲーム典型](https://github.com/Reputeless/games)
+  - ゲームサンプルを掲載していくプロジェクト（先月スタート）
 
 # 1. Siv3D プログラムの基本構造
 
