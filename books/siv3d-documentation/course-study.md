@@ -3,15 +3,168 @@ title: "Siv3D 勉強会コース"
 free: true
 ---
 
-- [勉強会開始前に遊べるサンプルプログラム](course-study-sample)
+# 0. Siv3D とは
+
+### 勉強会開始前に遊べるサンプルプログラム
+
+- [遊べるサンプルプログラム](course-study-sample)
   - インストールの手順の最後に作ったプログラムを、別のプログラムで上書きして試してみてください
   - `# include <Siv3D.hpp>`～ で始まるコードを上書きするだけで OK です
   - 記事中のサンプルコードの右上をクリックするとソースコードをコピーできて便利です
 
 勉強会開始まで、このプログラムで遊んでいます。
 
-# 0. Siv3D とは
+### イントロダクション
+
 - スライド: [Siv3D / C++ イントロダクション](https://www.dropbox.com/s/0swkt5zd4iezi5b/introduction.pdf?dl=0)
+
+### Siv3D を使う 7 つの理由
+
+####  1. ⚡ 非常に短いコード
+Siv3D のコードは最短で 2 行です。描画やインタラクションを実現するための便利な関数とクラスが揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。あなたのアイデアを、[GitHub Gist](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアして、世界中の Siv3D ユーザと技術を交換し学び合いましょう。
+
+#### 2. 🛸 最新の C++
+Siv3D のサンプルとライブラリ API は、最新の C++20 スタイルで書かれているため、Siv3D を使っているだけで、モダンな C++ の書き方やテクニックが身に付きます。Siv3D の作者は、日本最大のゲーム開発カンファレンス CEDEC で [最新 C++ の活用に関する講演](https://speakerdeck.com/cpp/cedec2020) をしたり、[C++ の情報ポータル](https://cppmap.github.io/) を作成したりするなど、最先端の C++ の普及に努めています。
+
+#### 3. 🏬 一貫した API
+Siv3D は 2,200 ファイルのソースコードと 90 のサードパーティ・ソフトウェアが実現する、可視化やインタラクションのための様々な機能を、一貫した API で提供します。Siv3D のルールを覚えるだけで、ありとあらゆる機能が思いのままです。
+
+#### 4. ⛰️ オープンソース
+Siv3D は MIT ライセンスのもと [GitHub 上で開発](https://github.com/Siv3D/OpenSiv3D) されているため、いつでも内部のコードを調べたり改造したりできます。サードパーティ・ライブラリを含め、商用利用を妨げる条件は無く、開発したゲームやアプリケーションの収益は 100% 開発者が獲得できます。
+
+#### 5. 🛩️ 軽量・迅速
+Windows 版の OpenSiv3D SDK のインストーラのサイズは 200 MB 未満です。インストールはわずかなクリックで自動的に終わり、Visual Studio を起動すると、メニューには Siv3D プロジェクトを作成するアイテムが追加されていて、すぐにプログラミングを始められます。
+
+#### 6. 💗 ユーザコミュニティ
+Siv3D で困ったことがあれば、[オンラインコミュニティ](#) が役に立ちます。毎月開催される [イベント](#) では、熱心なユーザや Siv3D の作者と交流できます。オープンソースソフトウェア開発に貢献したい学生には、Siv3D を練習場にしたサポートプログラムを毎年実施しています。
+
+#### 7. 🌐 Web ブラウザで動く
+現在試験的に提供される Web 版（[OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)）を使うと、Siv3D で作った C++ アプリケーションを、Web ブラウザ上で実行可能なプログラムに変換できます。世界中の人がスマホやタブレットからあたなの作品を体験できます。
+
+#### Web で動いている Siv3D プログラムの例
+https://twitter.com/Reputeless/status/1451829140332560389
+
+https://twitter.com/Reputeless/status/1499360860632141824
+
+https://twitter.com/Reputeless/status/1445377010197426180
+
+
+### Siv3D の機能
+
+- グラフィックス（図形や画像、テキスト、アイコン、動画、3Dモデルなど）
+- オーディオ（BGM や効果音、テキスト読み上げなど）
+- 入力デバイス（マウスやキーボード、Webカメラ、マイク、ゲームパッドなど）
+- ウィンドウ、ファイルシステム、ネットワーク
+- 画像処理、音声処理、物理演算、経路探索、幾何などの計算
+
+これらをサポートする API を組み合わせて、2D / 3D ゲーム、メディアアート、ビジュアライザ、シミュレータなどのアプリケーションを効率的に開発できます。
+
+::: details 詳細な機能一覧
+## グラフィックス
+- Advanced 2D graphics
+- Basic 3D graphics (Wavefront OBJ, primitive shapes)
+- Custom vertex / pixel shaders (HLSL, GLSL)
+- Text rendering (Bitmap, SDF, MSDF)
+- PNG, JPEG, BMP, SVG, GIF, Animated GIF, TGA, PPM, WebP, TIFF
+- Unicode 14.0 emojis and 7,000+ icons
+- Image processing
+- Video rendering
+
+## オーディオ
+- WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA*, FLAC*, AIFF*
+- Adjustable volume, pan, play speed and pitch
+- File streaming (WAVE, MP3, OggVorbis)
+- Fade in and fade out
+- Looping
+- Mixing busses
+- Filters (LPF, HPF, echo, reverb)
+- FFT
+- SoundFont rendering
+- Text to speech
+
+## 入力デバイス
+- Mouse
+- Keyboard
+- Gamepad
+- Webcam
+- Microphone
+- Joy-Con / Pro Controller
+- XInput
+- Digital drawing tablet
+- Leap Motion
+
+## ウィンドウ
+- Fullscreen mode
+- High DPI support
+- Window styles (sizable, borderless)
+- File dialog
+- Drag & drop
+- Message box
+- Toast notification
+
+## ネットワークと通信
+- HTTP client
+- TCP communication
+- Serial communication
+- Interprocess communication (pipe)
+
+## 数学
+- Vector and matrix classes (`Point`, `Float2`, `Vec2`, `Float3`, `Vec3`, `Float4`, `Vec4`, `Mat3x2`, `Mat3x3`, `Mat4x4`, `SIMD_Float4`, `Quaternion`)
+- 2D shape classes (`Line`, `Circle`, `Ellipse`, `Rect`, `RectF`, `Triangle`, `Quad`, `RoundRect`, `Polygon`, `MultiPolygon`, `LineString`, `Spline2D`, `Bezier2`, `Bezier3`)
+- 3D shape classes (`Plane`, `InfinitePlane`, `Sphere`, `Box`, `OrientedBox`, `Ray`, `Line3D`, `Triangle3D`, `ViewFrustum`, `Disc`, `Cylinder`, `Cone`)
+- Color classes (`Color`, `ColorF`, `HSV`)
+- Polar / cylindrical / spherical coordinates system
+- 2D / 3D shape intersection
+- 2D / 3D geometry processing
+- Rectangle packing
+- Planar subdivisions
+- Linear and gamma color space
+- Pseudo random number generators
+- Interpolation, easing, and smoothing
+- Perlin noise
+- Math parser
+- Navigation mesh
+- Extended arithmetic types (`HalfFloat`, `int128`, `uint128`, `BigInt`, `BigFloat`)
+
+## 文字列処理
+- Advanced String class (`String`, `StringView`)
+- Unicode conversion
+- Regular expression
+- `{fmt}` style text formatting
+- Text reader / writer classes
+- CSV / INI / JSON / XML / TOML reader classes
+- CSV / INI / JSON writer classes
+
+## その他
+- Basic GUI (button, slider, radio buttons, checkbox, text box, color picker, list box)
+- Integrated 2D physics engine (Box2D)
+- Advanced array / 2D array classes (`Array`, `Grid`)
+- Kd-tree
+- Asynchronous asset file streaming
+- Data compression (zlib, Zstandard)
+- Transitions between scenes
+- File system
+- Directory watcher
+- QR code reader / writer
+- GeoJSON
+- Date and time
+- Stopwatch and timer
+- Logging
+- Serialization
+- UUID
+- Child process
+- Clipboard
+- Power status
+- Scripting (AngelScript)
+:::
+
+::: details 来月のアップデートで追加されるおもな機能
+- 再生中のオーディオバッファへのリアルタイム波形書き込み
+- Union-Find 木（アルゴリズムとデータ構造）
+- 最新の Xcode 13.3 対応
+- マルチプレイヤー機能 (Photon というサービスを利用)
+:::
+
 
 ### お役立ちリンク
 
@@ -22,6 +175,7 @@ free: true
   - `Siv3D/src/` がソース
 - [Siv3D ゲーム典型](https://github.com/Reputeless/games)
   - ゲームサンプルを掲載していくプロジェクト（先月スタート）
+- [Twitter #Siv3D #OpenSiv3D タグ検索](https://twitter.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
 
 # 1. Siv3D プログラムの基本構造
 
