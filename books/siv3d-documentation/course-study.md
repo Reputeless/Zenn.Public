@@ -2026,6 +2026,20 @@ void Main()
 ```
 
 
-## 演習 | Siv3D アプリを作ってみよう
+# 演習 | Siv3D アプリを作ってみよう
 
 [Siv3D 勉強会コース | 演習](course-study-try) に進む。
+
+
+# お役立ちリンク
+
+- [Siv3D リファレンス](https://zenn.dev/reputeless/books/siv3d-documentation)
+  - リファレンスのトップページ
+- [Siv3D のソースコード (GitHub)](https://github.com/Siv3D/OpenSiv3D)
+  - `Siv3D/include/` がヘッダ
+  - `Siv3D/src/` がソース
+- [Siv3D ゲーム典型](https://github.com/Reputeless/games)
+  - ゲームサンプルを掲載していくプロジェクト（100 個を目標に、先月からスタート）
+- [Twitter #Siv3D #OpenSiv3D タグ検索](https://twitter.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
+- [Siv3D コミュニティ](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/community)
+- [Siv3D 作者の Twitter アカウント](https://twitter.com/Reputeless)
