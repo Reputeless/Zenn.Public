@@ -41,7 +41,9 @@ Siv3D で困ったことがあれば、[オンラインコミュニティ](commu
 #### 7. 🌐 Web ブラウザで動く
 現在試験的に提供される Web 版（[OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)）を使うと、Siv3D で作った C++ アプリケーションを、Web ブラウザ上で実行可能なプログラムに変換できます。世界中の人がスマホやタブレットからあたなの作品を体験できます。
 
-#### Web で動いている Siv3D プログラムの例
+#### Web ブラウザで動いている Siv3D プログラムの例
+ツイート内のリンクをクリックすると、Web ブラウザで動く Siv3D プログラムが開きます
+
 https://twitter.com/Reputeless/status/1451829140332560389
 
 https://twitter.com/Reputeless/status/1499360860632141824
@@ -61,108 +63,107 @@ https://twitter.com/Reputeless/status/1445377010197426180
 
 ::: details 詳細な機能一覧
 ## グラフィックス
-- Advanced 2D graphics
-- Basic 3D graphics (Wavefront OBJ, primitive shapes)
-- Custom vertex / pixel shaders (HLSL, GLSL)
-- Text rendering (Bitmap, SDF, MSDF)
-- PNG, JPEG, BMP, SVG, GIF, Animated GIF, TGA, PPM, WebP, TIFF
-- Unicode 14.0 emojis and 7,000+ icons
-- Image processing
-- Video rendering
+- 発展的な 2D グラフィックス
+- 基本的な3Dグラフィックス (Wavefront OBJ, 基本形状)
+- カスタム頂点・ピクセルシェーダ (HLSL, GLSL)
+- テキストレンダリング (Bitmap, SDF, MSDF)
+- 画像形式 (PNG, JPEG, BMP, SVG, GIF, Animated GIF, TGA, PPM, WebP, TIFF)
+- Unicode 14.0 emojis と 7,000種類以上のアイコン
+- 画像処理
+- ビデオレンダリング
 
 ## オーディオ
-- WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA*, FLAC*, AIFF*
-- Adjustable volume, pan, play speed and pitch
-- File streaming (WAVE, MP3, OggVorbis)
-- Fade in and fade out
-- Looping
-- Mixing busses
-- Filters (LPF, HPF, echo, reverb)
+- 音声形式 (WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA, FLAC, AIFF)
+- 音量やパン，スピード，ピッチの調整
+- ストリーミング再生
+- フェードイン，フェードアウト
+- ループ
+- ミキシングバス
+- フィルタ処理 (ローパスフィルタ，ハイパスフィルタ, エコー, リバーブ)
 - FFT
-- SoundFont rendering
-- Text to speech
+- サウンドフォントレンダリング
+- テキスト読み上げ
 
 ## 入力デバイス
-- Mouse
-- Keyboard
-- Gamepad
-- Webcam
-- Microphone
+- マウス
+- キーボード
+- ゲームパッド
+- ウェブカメラ
+- マイク
 - Joy-Con / Pro Controller
-- XInput
-- Digital drawing tablet
+- XInput ゲームパッド
+- ペンタブレット
 - Leap Motion
 
 ## ウィンドウ
-- Fullscreen mode
-- High DPI support
-- Window styles (sizable, borderless)
-- File dialog
-- Drag & drop
-- Message box
-- Toast notification
+- フルスクリーンモード
+- 高 DPI サポート
+- ウィンドウのスタイル
+- ファイルダイアログ
+- ドラッグ & ドロップ
+- メッセージボックス
+- トースト通知
 
 ## ネットワークと通信
-- HTTP client
-- TCP communication
-- Serial communication
-- Interprocess communication (pipe)
+- HTTP クライアント
+- TCP 通信
+- シリアル通信
+- プロセス間通信 (pipe)
 
 ## 数学
-- Vector and matrix classes (`Point`, `Float2`, `Vec2`, `Float3`, `Vec3`, `Float4`, `Vec4`, `Mat3x2`, `Mat3x3`, `Mat4x4`, `SIMD_Float4`, `Quaternion`)
-- 2D shape classes (`Line`, `Circle`, `Ellipse`, `Rect`, `RectF`, `Triangle`, `Quad`, `RoundRect`, `Polygon`, `MultiPolygon`, `LineString`, `Spline2D`, `Bezier2`, `Bezier3`)
-- 3D shape classes (`Plane`, `InfinitePlane`, `Sphere`, `Box`, `OrientedBox`, `Ray`, `Line3D`, `Triangle3D`, `ViewFrustum`, `Disc`, `Cylinder`, `Cone`)
-- Color classes (`Color`, `ColorF`, `HSV`)
-- Polar / cylindrical / spherical coordinates system
-- 2D / 3D shape intersection
-- 2D / 3D geometry processing
+- ベクトルと行列クラス (`Point`, `Float2`, `Vec2`, `Float3`, `Vec3`, `Float4`, `Vec4`, `Mat3x2`, `Mat3x3`, `Mat4x4`, `SIMD_Float4`, `Quaternion`)
+- 2D 形状クラス (`Line`, `Circle`, `Ellipse`, `Rect`, `RectF`, `Triangle`, `Quad`, `RoundRect`, `Polygon`, `MultiPolygon`, `LineString`, `Spline2D`, `Bezier2`, `Bezier3`)
+- 3D  形状クラス (`Plane`, `InfinitePlane`, `Sphere`, `Box`, `OrientedBox`, `Ray`, `Line3D`, `Triangle3D`, `ViewFrustum`, `Disc`, `Cylinder`, `Cone`)
+- 色クラス (`Color`, `ColorF`, `HSV`)
+- 曲座標系クラス
+- 2D / 3D 幾何計算
 - Rectangle packing
-- Planar subdivisions
-- Linear and gamma color space
-- Pseudo random number generators
-- Interpolation, easing, and smoothing
-- Perlin noise
-- Math parser
-- Navigation mesh
-- Extended arithmetic types (`HalfFloat`, `int128`, `uint128`, `BigInt`, `BigFloat`)
+- 平面細分割
+- 色空間
+- 疑似乱数生成器
+- 補間，イージング，スムージング
+- パーリンノイズ
+- 数式パーサ
+- ナビメッシュ
+- 拡張数値型 (`HalfFloat`, `int128`, `uint128`, `BigInt`, `BigFloat`)
 
 ## 文字列処理
-- Advanced String class (`String`, `StringView`)
-- Unicode conversion
-- Regular expression
-- `{fmt}` style text formatting
-- Text reader / writer classes
-- CSV / INI / JSON / XML / TOML reader classes
-- CSV / INI / JSON writer classes
+- 文字列クラス (`String`, `StringView`)
+- Unicode 変換
+- 正規表現
+- 文字列フォーマット
+- テキストファイル読み書き
+- CSV / INI / JSON / XML / TOML パーサ
+- CSV / INI / JSON 出力
 
 ## その他
-- Basic GUI (button, slider, radio buttons, checkbox, text box, color picker, list box)
-- Integrated 2D physics engine (Box2D)
-- Advanced array / 2D array classes (`Array`, `Grid`)
+- 基本的なGUI (ボタン，スライダー，ラジオボタン，チェックボックス，テキストボックス，リストボックス，カラーピッカー)
+- 2D 物理エンジン (Box2D)
+- 配列クラス (`Array`, `Grid`)
 - Kd-tree
-- Asynchronous asset file streaming
-- Data compression (zlib, Zstandard)
-- Transitions between scenes
-- File system
-- Directory watcher
-- QR code reader / writer
+- 非同期ファイルロード
+- データ圧縮 (zlib, Zstandard)
+- シーン遷移
+- ファイルシステム
+- ディレクトリ監視
+- QR コード
 - GeoJSON
-- Date and time
-- Stopwatch and timer
-- Logging
-- Serialization
+- 日付と時刻
+- 時間計測
+- ロギング
+- シリアライズ
 - UUID
-- Child process
-- Clipboard
-- Power status
-- Scripting (AngelScript)
+- 子プロセス管理
+- クリップボード
+- 電源管理
+- スクリプティング (AngelScript)
 :::
 
 ::: details 来月のアップデートで追加されるおもな機能
 - 再生中のオーディオバッファへのリアルタイム波形書き込み
 - Union-Find 木（アルゴリズムとデータ構造）
 - 最新の Xcode 13.3 対応
-- マルチプレイヤー機能 (Photon というサービスを利用)
+- マルチプレイヤーゲームを作りやすくする機能 (Photon というサービスを利用)
 :::
 
 
@@ -1198,7 +1199,7 @@ void Main()
 			.scaled(0.5).draw();
 
 		videoTexture
-			.scaled(0.25)
+			.scaled(0.5)
 			.rotated(Scene::Time() * 30_deg)
 			.drawAt(Cursor::Pos());
 	}
