@@ -295,7 +295,7 @@ void Main()
 |モザイク|![](/images/doc_v6/tutorial/33/7.15.png)|`mosaic` / `mosaiced`|
 |拡散|![](/images/doc_v6/tutorial/33/7.25.png)|`spread` / `spreaded`|
 |ブラー|![](/images/doc_v6/tutorial/33/7.16.png)|`blur` / `blurred`|
-|メディアんブラー|![](/images/doc_v6/tutorial/33/7.17.png)|`medianBlur` / `medianBlurred`|
+|メディアンブラー|![](/images/doc_v6/tutorial/33/7.17.png)|`medianBlur` / `medianBlurred`|
 |ガウスぼかし|![](/images/doc_v6/tutorial/33/7.18.png)|`gaussianBlur` / `gaussianBlurred`|
 |バイラテラルフィルタ|![](/images/doc_v6/tutorial/33/7.19.png)|`bilateralFilter` / `bilateralFiltered`|
 |膨張|![](/images/doc_v6/tutorial/33/7.20.png)|`dilate` / `dilated`|
