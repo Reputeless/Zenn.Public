@@ -3,6 +3,98 @@ title: "リリースノート"
 free: true
 ---
 
+# v0.6.4
+
+## 新機能
+- Visual Studio 2022 17.2 以降に対応しました ([#790](https://github.com/Siv3D/OpenSiv3D/issues/790))
+- Xcode 13.3 以降に対応しました ([#753](https://github.com/Siv3D/OpenSiv3D/issues/753))
+- Photon SDK と連係する `Multiplayer_Photon`（マルチプレイヤー機能）アドオンを追加しました ([#734](https://github.com/Siv3D/OpenSiv3D/issues/734))
+  - [チュートリアル](https://zenn.dev/reputeless/scraps/03d951dddb53ab)
+- 3D 標準頂点シェーダの定数バッファに UV transform を追加しました ([#764](https://github.com/Siv3D/OpenSiv3D/issues/764))
+  - [サンプル](https://zenn.dev/link/comments/8247739e3be0fb)
+- `MeshData::RoundedBox()` を追加しました ([#769](https://github.com/Siv3D/OpenSiv3D/issues/769))
+  - [サンプル](https://zenn.dev/link/comments/654aede40de72c)
+- 再生中のオーディオに動的に波形を書き込む機能を追加しました ([#736](https://github.com/Siv3D/OpenSiv3D/issues/736))
+  - [サンプル](https://zenn.dev/link/comments/8af1a8f60deaa1)
+- Windows 版のトースト通知における通知音の無効化オプションを追加しました ([#748](https://github.com/Siv3D/OpenSiv3D/issues/748))
+  - [サンプル](https://zenn.dev/link/comments/c076465eed0f45)
+- `DisjointSet` (Union Find) を追加しました ([#742](https://github.com/Siv3D/OpenSiv3D/issues/742))
+  - [サンプル](https://zenn.dev/link/comments/5a327d5c40b86f)
+- `Shader::LinearToScreen()` においてテクスチャフィルタを変更可能にしました ([#762](https://github.com/Siv3D/OpenSiv3D/issues/762))
+  - [サンプル](https://zenn.dev/link/comments/81ffc408b80ac8)
+- `Polygon::addHole()` オーバーロードを追加しました ([#786](https://github.com/Siv3D/OpenSiv3D/issues/786))
+  - [サンプル](https://zenn.dev/link/comments/3a5e307fa484c6)
+- `Font` に合字を回避するオプションを追加しました ([#792](https://github.com/Siv3D/OpenSiv3D/issues/792))
+  - [サンプル](https://zenn.dev/link/comments/b4e3e69c91b3a0)
+- -1.0 ～ 1.0 の範囲を返す` Periodic::` 関数を追加しました ([#761](https://github.com/Siv3D/OpenSiv3D/issues/761))
+  - [サンプル](https://zenn.dev/link/comments/e321c3bf3fc6cc)
+- `ManagedScript` に、リロードを発生させるカスタムトリガーを設定する関数を追加しました ([#768](https://github.com/Siv3D/OpenSiv3D/issues/768))
+  - [サンプル](https://zenn.dev/link/comments/9726f79f84c446)
+- `Script` 内で include したファイルを取得する機能を追加しました ([#767](https://github.com/Siv3D/OpenSiv3D/issues/767))
+  - [サンプル](https://zenn.dev/link/comments/052f71ba876683)
+- `JSON::push_back()` を追加しました ([#725](https://github.com/Siv3D/OpenSiv3D/issues/725))
+- `String::replace()` のオーバーロードを増やしました ([#729](https://github.com/Siv3D/OpenSiv3D/issues/729))
+- `ImageProcessing::GenerateMips()` で最大レベルを指定できるようにしました ([#763](https://github.com/Siv3D/OpenSiv3D/issues/763))
+- スクリプトで enum の値を表示可能にしました ([#774](https://github.com/Siv3D/OpenSiv3D/issues/774))
+- スクリプトに `OpenMode`, `TextEncoding`, `TextReader`, `TextWriter` を追加しました ([#775](https://github.com/Siv3D/OpenSiv3D/issues/775))
+-　スクリプトに `Parse` 系の関数を追加しました ([#782](https://github.com/Siv3D/OpenSiv3D/issues/782))
+-　スクリプトに `INI` を追加しました ([#783](https://github.com/Siv3D/OpenSiv3D/issues/783))
+- `Deserializer<MemoryViewReader>` を追加しました ([#777](https://github.com/Siv3D/OpenSiv3D/issues/777))
+- `Serializer<Writer>::operator ->() const` を追加しました ([#776](https://github.com/Siv3D/OpenSiv3D/issues/776))
+- `Geometry2D::Or()` のオーバーロードを追加しました ([#793](https://github.com/Siv3D/OpenSiv3D/issues/793))
+
+## ユーザビリティ向上
+- (非公式) ARM 向けのビルドを改善しました ([#707](https://github.com/Siv3D/OpenSiv3D/issues/707))
+- `SceneManager` のコードを改善しました ([#750](https://github.com/Siv3D/OpenSiv3D/issues/750))
+- `NavMesh` コンストラクタでマップ構築を可能にしました ([#785](https://github.com/Siv3D/OpenSiv3D/issues/785))
+  - [サンプル](https://zenn.dev/link/comments/af9b9deb7f205c)
+
+## 仕様変更
+- 各種サードパーティライブラリを更新しました ([#726](https://github.com/Siv3D/OpenSiv3D/issues/726)), ([#728](https://github.com/Siv3D/OpenSiv3D/issues/728)), ([#727](https://github.com/Siv3D/OpenSiv3D/issues/727)), ([#731](https://github.com/Siv3D/OpenSiv3D/issues/731)), ([#756](https://github.com/Siv3D/OpenSiv3D/issues/756)), ([#757](https://github.com/Siv3D/OpenSiv3D/issues/757)), ([#758](https://github.com/Siv3D/OpenSiv3D/issues/758)), ([#759](https://github.com/Siv3D/OpenSiv3D/issues/759)), ([#773](https://github.com/Siv3D/OpenSiv3D/issues/773)), ([#760](https://github.com/Siv3D/OpenSiv3D/issues/760))
+- `Polygon::addHole()` の仕様を変更しました ([#786](https://github.com/Siv3D/OpenSiv3D/issues/786))
+- engine / example ファイルを更新しました ([#740](https://github.com/Siv3D/OpenSiv3D/issues/740))
+
+## 不具合・バグ修正
+- `Circle::boundingRect()` のバグを修正しました ([#718](https://github.com/Siv3D/OpenSiv3D/issues/718))
+- `SimpleAnimation::isDone()` の戻り値を修正しました ([#710](https://github.com/Siv3D/OpenSiv3D/issues/710))
+- `TextEditState::TextEditState(String&& defaultText)` の use after move バグを修正しました ([#703](https://github.com/Siv3D/OpenSiv3D/issues/703))
+- `JSON` クラスで空の配列を作れなかったバグを修正しました ([#723](https://github.com/Siv3D/OpenSiv3D/issues/723))
+- `operator>>(basic_istream&, Color&)` の警告を修正しました ([#720](https://github.com/Siv3D/OpenSiv3D/issues/720))
+- リモートデスクトップ環境で `System::EnumActiveMonitors()` に失敗した不具合を修正しました ([#719](https://github.com/Siv3D/OpenSiv3D/issues/719))
+- `TOMLReader` で存在しないファイルをロードしても失敗判定にならなかったバグを修正しました ([#732](https://github.com/Siv3D/OpenSiv3D/issues/732))
+- Windows 版でメッセージボックスがウィンドウの背面に表示されることがあった不具合を修正しました ([#706](https://github.com/Siv3D/OpenSiv3D/issues/706))
+- スクリプトのバインドのバグを修正しました ([#741](https://github.com/Siv3D/OpenSiv3D/issues/741))
+- `Shape2D::Stairs()` の第 5 引数が `false` だと三角形の向きが逆になっていたバグを修正しました ([#708](https://github.com/Siv3D/OpenSiv3D/issues/708))
+- macOS 版で `RectanglePacking` が利用できなかったバグを修正しました ([#754](https://github.com/Siv3D/OpenSiv3D/issues/754))
+- ARM 向けビルドにおける `Image` と OpenCV の連携を修正しました ([#778](https://github.com/Siv3D/OpenSiv3D/issues/778))
+- `SimpleGUI::ListBox()` で範囲外アクセスが発生することがあったバグを修正しました ([#780](https://github.com/Siv3D/OpenSiv3D/issues/780))
+- `WaveSample` の変換のバグを修正しました ([#795](https://github.com/Siv3D/OpenSiv3D/issues/795))
+
+
+## コントリビューション
+### コミッタ―
+（敬称略）
+- [nokotan](https://github.com/nokotan)
+  - **Web 版を更新**
+- [tana](https://github.com/tana)
+  - **ARM 向けビルドの改善**
+- [mak1a](https://github.com/mak1a)
+  - **Multiplayer_Photon の実装**
+  - `SimpleAnimation::isDone()` の修正
+- [Ryoga-exe](https://github.com/Ryoga-exe)
+  - コードの改善
+- [k-sunako](https://github.com/k-sunako)
+  - CMakeLists.txt の改善
+- [falrnd](https://github.com/falrnd)
+  - `Circle::boundingRect()` の修正
+- [polyester-CTRL](https://github.com/polyester-CTRL)
+  - OpenCV_Bridge の改善
+- [yaito3014](https://github.com/yaito3014)
+  - コードの改善
+- [NachiaVivias](https://github.com/NachiaVivias)
+  - `WaveSample` の改善
+
+
 # v0.6.3
 
 ## 新機能
@@ -609,10 +701,6 @@ void Main()
 
 [サンプルコード、画像・動画での紹介](https://zenn.dev/reputeless/scraps/f2e28f40ba44f174d87a)
 
-:::message
-非常に多くの更新があるため、現在も執筆中です。
-:::
-
 ## 新機能
 
 ### Featured
@@ -634,7 +722,6 @@ void Main()
 - `Font` のレンダリング形式に SDF / MSDF を指定できるようになりました
 - `Font` の拡大縮小描画、輪郭、シャドウに対応しました
 - オーディオファイルのストリーミング再生に対応しました
--
 
 
 ### その他
@@ -701,14 +788,7 @@ void Main()
 - スクリプト機能を大幅に改善しました
 - 2D 図形の交差判定をより多くの組み合わせに対応しました
 - 多くの 3D 形状のクラスを追加しました
-- Linux 版の IMEの挙動を改善しました 
-- (執筆中）
--
--
--
--
--
-- 
+- Linux 版の IMEの挙動を改善しました
 - ユーザアドオンの追加機能を追加しました
 - その他多数の新機能が追加されています
 
@@ -717,18 +797,10 @@ void Main()
 - `Heterogeneous lookup` により、文字列リテラルや `StringView` で `HashTable` や `HashSet` のルックアップをする際の実行時性能が向上しました
 - ファイルの読み書き、画像ファイルや音声ファイルのロードが高速になりました
 - `Parse` / `ParseOpt` / `ParseOr` の速度を改善しました
-- (執筆中）
-- 
-- 
-- 
-- 
 
 ## ユーザビリティ向上
 - インライン関数が .hpp ファイルから .ipp ファイルに移され、ヘッダファイルが読みやすくなりました
 - Windows 版のプロジェクトがデフォルトでプリコンパイル済みファイルを使用するようになり、ビルドが高速化しました
-- (執筆中）
-- 
-- 
 
 
 ## 仕様変更
@@ -760,20 +832,6 @@ void Main()
 - ConstantBuffer サイズ 16 × N バイト制約が撤廃されました
 - 並列実行に関する機能は `SIV3D_CONCURRENT` マクロを定義しなくても使えるようになりました
 - High DPI ウィンドウがデフォルトになり、`SIV3D_WINDOWS_HIGH_DPI` マクロは廃止されました
-- (執筆中）
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
-- 
 
 ## 不具合・バグ修正
 - `Array` の並列関数の不具合を修正しました
@@ -782,14 +840,6 @@ void Main()
 - PPM 画像読み込みの不具合を修正しました
 - プラットフォームごとの乱数の再現性の改善しました
 - QR コード生成の不具合を修正しました
-- (執筆中）
-- 
-- 
-- 
-- 
-- 
-- 
-
 
 ## 注意点
 - `Math::SmoothDmap()` の引数順が変更されています。コンパイルエラーで発見できません
@@ -805,9 +855,6 @@ void Main()
 - `Glyph` 単位での描画の方法が変更されました
 - Windows 版は `<Siv3D.hpp>` のプリコンパイル済みを全てのソースファイルで自動でインクルードするようになりました。Main.cpp にある `# include <Siv3D.hpp>` は実質的には無意味です。`# define NO_S3D_USING` が必要な場合はプリコンパイル済みヘッダ作成用ヘッダ `stdafx.h` で行ってください
 - `Audio` は `Wave` と互換の形式でデータを保持しなくなりました。`.getWave()` は `.getSamples()` に置き換わりました。`GlobalAudio::BusGetSamples()` も利用できます
-- 
-- 
-- 
 
 ## コントリビューション
 ### コミッタ―

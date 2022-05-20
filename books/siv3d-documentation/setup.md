@@ -12,11 +12,11 @@ free: true
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | [Microsoft Visual C++ 2019 16.11 または 2022 17.0](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
+| 開発環境 | [Microsoft Visual C++ 2022 17.2](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
 
 ## 1.2 SDK のインストール
 
-1. **[OpenSiv3D v0.6.3 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.3_Installer.exe)** をダウンロードして実行します
+1. **[OpenSiv3D v0.6.4 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.4_Installer.exe)** をダウンロードして実行します
 2. 実行時に「Windows によって PC が保護されました」と表示された場合は、**詳細情報** を押して **実行** を押します
 
 ::: message
@@ -26,7 +26,7 @@ free: true
 :::details インストーラが自動的に行うこと
 - SDK のコピー（デフォルトではドキュメントフォルダ）
 - SDK のパスへのユーザ環境変数の設定
-- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2019\Templates\ProjectTemplates\` および `ドキュメント\Visual Studio 2022\Templates\ProjectTemplates\`)
+- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント\Visual Studio 2022\Templates\ProjectTemplates\`)
 - アンインストーラの登録
 :::
 
@@ -61,7 +61,7 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
 
 ## 2.2 プロジェクトテンプレートのダウンロード
-1. **[OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip)** をダウンロードしてファイルを展開します
+1. **[OpenSiv3D v0.6.4 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.4_macOS.zip)** をダウンロードしてファイルを展開します
 1. macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます
 
 ## 2.3 Siv3D アプリのビルド
@@ -84,10 +84,10 @@ Linux 版は SDK 形式での配布が無いため、ライブラリを自前で
 ## 3.1 必要な環境
 |  |  |
 |--|--|
-| OS | Ubuntu 20.04 LTS |
+| OS | Ubuntu 20.04 LTS / Ubuntu 22.04 LTS |
 | CPU | Intel もしくは AMD 製の CPU |
 | GPU | OpenGL 4.1 サポート |
-| 開発環境 | GCC 9.3.0<br>Boost 1.71.0 - 1.73.0 |
+| 開発環境 | GCC 9.3.0 + Boost 1.71.0 / GCC 11.2 + Boost 1.74.0 |
 
 ## 3.2 Siv3D の最新コードを入手する
 
@@ -100,7 +100,7 @@ Linux 版は SDK 形式での配布が無いため、ライブラリを自前で
 https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49
 
 :::message
-Boost ライブラリについては 1.71.0 / 1.72.0 / 1.73.0 のみサポートしています。それより新しいバージョンではビルドエラーが発生します（将来サポート予定）。GCC のバージョンも 9.3.0 が必要で、それより新しいバージョンは現在サポートしていません。
+Boost ライブラリとコンパイラのバージョンは「開発環境」にて組み合わせを指定しています。
 :::
 
 2. 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します 
@@ -114,16 +114,17 @@ https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71
 
 
 # 4. Windows で SDK を手動インストールする
-Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます。手順は次の通りです。
+Windows において OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます（Visual Studio 2022 向け）。手順は次の通りです。
 
-1. [OpenSiv3D_SDK_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_SDK_0.6.3.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します
-  - `.../Documents/OpenSiv3D_SDK_0.6.3/include`
-  - `.../Documents/OpenSiv3D_SDK_0.6.3/lib`
-2. ユーザー環境変数 `SIV3D_0_6_3` を新規作成し、1. で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します
-- 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.3` を環境変数 `SIV3D_0_6_3` に設定します  
+1. [OpenSiv3D_SDK_0.6.4.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.4/OpenSiv3D_SDK_0.6.4.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダに次のように配置します
+  - `.../Documents/OpenSiv3D_SDK_0.6.4/include`
+  - `.../Documents/OpenSiv3D_SDK_0.6.4/lib`
+  - `.../Documents/OpenSiv3D_SDK_0.6.4/addon`
+2. ユーザー環境変数 `SIV3D_0_6_4` を新規作成し、1. で配置した OpenSiv3D SDK のフォルダ (`include/`, `lib/` の親フォルダ) のパスを設定します
+- 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.4/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.4` を環境変数 `SIV3D_0_6_4` に設定します  
 ![](/images/doc_v6/manual/envvariable.png =480x)
 
-3. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.3.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.3/OpenSiv3D_0.6.3.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2019 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2019/Templates/ProjectTemplates/` フォルダの中に配置します  
+3. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.4.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.4/OpenSiv3D_0.6.4.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2022 インストール時にドキュメントフォルダに作成される `Documents/Visual Studio 2022/Templates/ProjectTemplates/` フォルダの中に配置します  
 ![](/images/doc_v6/manual/projecttemplate.png =480x)
 
 1. 以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動してください
