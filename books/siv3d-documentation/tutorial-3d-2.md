@@ -386,7 +386,7 @@ void Main()
   - (予約済み) (slot0)
   - VSPerView (slot 1)
   - VSPerObject (slot 2)
-  - (予約済み) (slot 3)
+  - VSPerMaterial (slot 3)
 - ピクセルシェーダ
   - PSPerFrame (slot 0)
   - PSPerView (slot 1)
@@ -446,6 +446,11 @@ cbuffer VSPerObject : register(b2)
 	row_major float4x4 g_localToWorld;
 }
 
+cbuffer VSPerMaterial : register(b3)
+{
+	float4 g_uvTransform;
+}
+
 cbuffer PSPerFrame : register(b0)
 {
 	float3 g_gloablAmbientColor;
@@ -479,7 +484,7 @@ s3d::PSInput VS(s3d::VSInput input)
 
 	result.position			= mul(worldPosition, g_worldToProjected);
 	result.worldPosition	= worldPosition.xyz;
-	result.uv				= input.uv;
+	result.uv				= (input.uv * g_uvTransform.xy + g_uvTransform.zw);
 	result.normal			= mul(input.normal, (float3x3)g_localToWorld);
 	return result;
 }
@@ -574,6 +579,11 @@ layout(std140) uniform VSPerObject // slot 2
 	mat4x4 g_localToWorld;
 };
 
+layout(std140) uniform VSPerMaterial // slot 3
+{
+	vec4 g_uvTransform;
+};
+
 //
 //	Functions
 //
@@ -583,7 +593,7 @@ void main()
 
 	gl_Position		= worldPosition * g_worldToProjected;
 	WorldPosition	= worldPosition.xyz;
-	UV				= VertexUV;
+	UV				= (VertexUV * g_uvTransform.xy + g_uvTransform.zw);
 	Normal			= VertexNormal * mat3x3(g_localToWorld);
 }
 ```
@@ -702,7 +712,7 @@ void Main()
 
 	// 頂点シェーダ
 	const VertexShader vs3D = HLSL{ U"example/shader/hlsl/default3d_forward.hlsl", U"VS" }
-		| GLSL{ U"example/shader/glsl/default3d_forward.vert", {{ U"VSPerView", 1 }, { U"VSPerObject", 2 }} };
+		| GLSL{ U"example/shader/glsl/default3d_forward.vert", {{ U"VSPerView", 1 }, { U"VSPerObject", 2 }, { U"VSPerMaterial", 3 }} };
 
 	// ピクセルシェーダ
 	const PixelShader ps3D = HLSL{ U"example/shader/hlsl/default3d_forward.hlsl", U"PS" }
@@ -910,7 +920,7 @@ void Main()
 	Window::Resize(1280, 720);
 
 	const VertexShader vsTerrain = HLSL{ U"example/shader/hlsl/terrain_forward.hlsl", U"VS" }
-		| GLSL{ U"example/shader/glsl/terrain_forward.vert", {{ U"VSPerView", 1 }, { U"VSPerObject", 2 }} };
+		| GLSL{ U"example/shader/glsl/terrain_forward.vert", {{ U"VSPerView", 1 }, { U"VSPerObject", 2 }, { U"VSPerMaterial", 3 }} };
 
 	const PixelShader psTerrain = HLSL{ U"example/shader/hlsl/terrain_forward.hlsl", U"PS" }
 		| GLSL{ U"example/shader/glsl/terrain_forward.frag", {{ U"PSPerFrame", 0 }, { U"PSPerView", 1 }, { U"PSPerMaterial", 3 }} };
