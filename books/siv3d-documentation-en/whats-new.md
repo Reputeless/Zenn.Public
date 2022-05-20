@@ -94,6 +94,10 @@ free: true
 - [NachiaVivias](https://github.com/NachiaVivias)
   - `WaveSample` の改善
 
+### OpenSiv3D Challenge 参加者
+- #12 Photon
+  - mak1a, Luke, sthairno
+
 
 # v0.6.3
 
