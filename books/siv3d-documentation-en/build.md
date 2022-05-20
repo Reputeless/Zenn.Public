@@ -14,7 +14,7 @@ free: true
 ## 1.1 追加のサードパーティ・ライブラリをダウンロードする
 ◆ OpenSiv3D のライブラリ本体のビルドに必要な C++ ライブラリ **「Boost」** を準備します
 
-https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` の圧縮されたソースコードをダウンロードし、展開します。配布されているファイル形式は `.7z` と `.zip` がありますが、もし使用しているコンピュータで `.7z` の展開ができるなら `.7z` を使ったほうが所用時間が短いです。`boost_1_73_0.zip` は巨大なので、Windows OS 標準の ZIP 展開機能を使用すると展開の完了まで数分近くかかりますが、`.7z` はその数分の一以下で終わります。
+https://www.boost.org/users/history/version_1_74_0.html から `boost_1_74_0` の圧縮されたソースコードをダウンロードし、展開します。配布されているファイル形式は `.7z` と `.zip` がありますが、もし使用しているコンピュータで `.7z` の展開ができるなら `.7z` を使ったほうが所用時間が短いです。`boost_1_74_0.zip` は巨大なので、Windows OS 標準の ZIP 展開機能を使用すると展開の完了まで数分近くかかりますが、`.7z` はその数分の一以下で終わります。
 
 [Boost](https://www.boost.org/) は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。OpenSiv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
 
@@ -28,9 +28,9 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 1.3 追加のサードパーティ・ライブラリをコピーして追加する
 ◆ ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします
 
-1.2 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_73_0/` フォルダがあります。この中へ 1.1 で準備した Boost ライブラリの一部である `boost_1_73_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_73_0/boost/` となります。
+1.2 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_74_0/` フォルダがあります。この中へ 1.1 で準備した Boost ライブラリの一部である `boost_1_74_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_74_0/boost/` となります。
 
-![](https://storage.googleapis.com/zenn-user-upload/e70ir56vvpajl46eu64v88ubwd5r)
+![](/images/doc_v6/manual/boost.png)
 
 ## 1.4 OpenSiv3D ライブラリと OpenSiv3D アプリをビルドする
 ◆ Visual Studio で OpenSiv3D ライブラリと OpenSiv3D アプリをビルドします
@@ -46,7 +46,7 @@ Windows 版の OpenSiv3D ライブラリビルドで `error C2039: '​CheckForD
 ## 2.1 追加のサードパーティ・ライブラリをダウンロードする
 ◆ OpenSiv3D のライブラリ本体のビルドに必要な C++ ライブラリ **「Boost」** を準備します
 
-https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` の圧縮されたソースコードをダウンロードし、展開します。
+https://www.boost.org/users/history/version_1_74_0.html から `boost_1_74_0` の圧縮されたソースコードをダウンロードし、展開します。
 
 ## 2.2 OpenSiv3D の開発ブランチからソースコードを入手する
 ◆ OpenSiv3D の最新コードを OpenSiv3D 公式リポジトリから入手します
@@ -58,7 +58,7 @@ https://www.boost.org/users/history/version_1_73_0.html から `boost_1_73_0` �
 ## 2.3 追加のサードパーティ・ライブラリをコピーして追加する
 ◆ ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします。
 
-2.2 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_73_0/` フォルダがあります。この中へ 2.1 で準備した Boost ライブラリの一部である `boost_1_73_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_73_0/boost/` となります。
+2.2 で入手した OpenSiv3D プロジェクトのフォルダ内に `Dependencies/boost_1_74_0/` フォルダがあります。この中へ 2.1 で準備した Boost ライブラリの一部である `boost_1_74_0/boost/` フォルダ (約 120 MB) をコピーします。つまりコピー後は `Dependencies/boost_1_74_0/boost/` となります。
 
 ## 2.4 OpenSiv3D ライブラリをビルドする
 ◆ Xcode で OpenSiv3D ライブラリをビルドします
