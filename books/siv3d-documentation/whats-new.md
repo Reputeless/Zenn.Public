@@ -10,6 +10,7 @@ free: true
 - Xcode 13.3 以降に対応しました ([#753](https://github.com/Siv3D/OpenSiv3D/issues/753))
 - Photon SDK と連係する `Multiplayer_Photon`（マルチプレイヤー機能）アドオンを追加しました ([#734](https://github.com/Siv3D/OpenSiv3D/issues/734))
   - [チュートリアル](https://zenn.dev/reputeless/scraps/03d951dddb53ab)
+  - [サンプル](https://zenn.dev/link/comments/10e5a407500f04)
 - 3D 標準頂点シェーダの定数バッファに UV transform を追加しました ([#764](https://github.com/Siv3D/OpenSiv3D/issues/764))
   - [サンプル](https://zenn.dev/link/comments/8247739e3be0fb)
 - `MeshData::RoundedBox()` を追加しました ([#769](https://github.com/Siv3D/OpenSiv3D/issues/769))
