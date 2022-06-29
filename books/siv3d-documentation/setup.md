@@ -8,7 +8,7 @@ free: true
 ## 1.1 必要な環境
 |  |  |
 |--|--|
-| OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit)<br>Windows 11 |
+| OS | Windows 10 (64-bit)<br>Windows 11 |
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
@@ -52,12 +52,12 @@ https://www.youtube.com/watch?v=O0XtvulXSOk
 |  |  |
 |--|--|
 | OS | macOS Mojave / Catalina / Big Sur |
-| CPU | Intel 製の CPU |
+| CPU | Intel 製の CPU / Apple Silicon (Rosetta モード) |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 開発環境 | Xcode 11.3 以降<br>(Big Sur の場合は Xcode 12.5 以降) |
 
-- Apple Silicon は将来のバージョンでサポートが追加されます 
+- Apple Silicon のネイティブサポートは将来のバージョンで追加されます
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
 
 ## 2.2 プロジェクトテンプレートのダウンロード

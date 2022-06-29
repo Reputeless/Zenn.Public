@@ -10,11 +10,11 @@ Siv3D Web 版 (experimental) を利用すると、Web ブラウザで動作可�
 ## 1.1 必要な環境
 |  |  |
 |--|--|
-| OS | Windows 7 SP1 (64-bit)<br>Windows 8.1 (64-bit)<br>Windows 10 (64-bit)<br>Windows 11 |
+| OS | Windows 10 (64-bit)<br>Windows 11 |
 | CPU | Intel もしくは AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | [Microsoft Visual C++ 2022 17.0](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
+| 開発環境 | [Microsoft Visual C++ 2022 17.2](https://visualstudio.microsoft.com/ja/downloads/)<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストール) |
 
 ## 1.2 Web 向けビルドに必要な Emscripten 関連ツールのインストール
 
