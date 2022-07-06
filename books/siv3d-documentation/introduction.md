@@ -93,8 +93,6 @@ https://twitter.com/Ryoga_exe/status/1429748042169602049
 
 https://twitter.com/takara2314/status/1415649264085069829
 
-https://twitter.com/e869120/status/1428662453785612290
-
 https://twitter.com/agehama_/status/1410563076869394433
 
 https://twitter.com/Ryoga_exe/status/1401098907195559938
@@ -102,8 +100,6 @@ https://twitter.com/Ryoga_exe/status/1401098907195559938
 https://twitter.com/G4rryS1ngh/status/1394752543364763648
 
 https://twitter.com/azaika_/status/1393421628403380224
-
-https://twitter.com/MASAYA_math/status/1391575153708920832
 
 https://twitter.com/itakawa/status/1389944433177546757
 
