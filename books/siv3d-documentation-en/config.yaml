@@ -6,7 +6,6 @@ price: 0
 chapters:
   - introduction
  # - whats-new
-  - requirements
   - setup
   - hello-siv3d
   - quick-example

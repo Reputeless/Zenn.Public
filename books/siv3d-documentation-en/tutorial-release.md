@@ -152,7 +152,7 @@ Windows では　`Resource.rc` から該当ファイルをコメントアウト�
 
 
 ## 41.11 アプリを公開する
-必要なファイルを ZIP アーカイブで 1 つにまとめ、配布・ダウンロードしやすい形式にしましょう。アプリケーションを配布するプラットフォームとしては次のような方法があります。[動作環境](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/requirements#2.-opensiv3d-v0.6-%E3%81%A7%E9%96%8B%E7%99%BA%E3%81%97%E3%81%9F%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E5%AE%9F%E8%A1%8C%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E7%92%B0%E5%A2%83) (Windows 向け、64-bit 必須など) についても分かりやすく表示しておきましょう。
+必要なファイルを ZIP アーカイブで 1 つにまとめ、配布・ダウンロードしやすい形式にしましょう。アプリケーションを配布するプラットフォームとしては次のような方法があります。[動作環境](https://siv3d.github.io/ja-jp/download/windows/) (Windows 向け、64-bit 必須など) についても分かりやすく表示しておきましょう。
 
 - 「[ふりーむ！](https://www.freem.ne.jp/)」「[itch.io](https://itch.io/)」などのゲーム公開サービスを使う
 - 「[Booth](https://booth.pm/ja)」などの販売サイトで無料 / 有料配布する
