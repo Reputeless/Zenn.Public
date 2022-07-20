@@ -5,7 +5,6 @@ published: true # falseだと下書き
 price: 0
 chapters:
   - introduction
-  - whats-new
   - setup
   - hello-siv3d
   - quick-example
