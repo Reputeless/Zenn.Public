@@ -5,6 +5,8 @@ free: true
 
 # 1. Siv3D のコミュニティ
 - [Siv3D のコミュニティ](https://siv3d.github.io/ja-jp/community/community/)
+  - [Discord Siv3D サーバに参加する](https://discord.gg/mzevvsY)
+  - [Siv3D ユーザコミュニティ Slack に参加する](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM)
 - [Siv3D 勉強会](https://siv3d.github.io/ja-jp/community/study-meeting/)
 - [OpenSiv3D 実装会](https://siv3d.github.io/ja-jp/community/dev-day/)
 

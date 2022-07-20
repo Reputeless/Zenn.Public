@@ -5,6 +5,8 @@ free: true
 
 # 1. Siv3D Community
 - [Siv3D Community](https://siv3d.github.io/community/community/)
+  - [Join Siv3D Discord](https://discord.gg/mzevvsY)
+  - [Join Siv3D Slack](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM)
 - [Siv3D Lectures](https://siv3d.github.io/community/study-meeting/)
 - [OpenSiv3D Dev-day (Jissoukai)](https://siv3d.github.io/community/dev-day/)
 
