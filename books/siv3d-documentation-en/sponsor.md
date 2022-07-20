@@ -22,7 +22,6 @@ Siv3D のオープンソース開発を継続・加速させ、Siv3D 作品制�
 
 |Sponsor tier| |
 |--|--|
-|🏞️Platinum | **[Kyle873](https://github.com/Kyle873)** |
 |🌳Gold |[TOMOAKI12345](https://github.com/TOMOAKI12345)<br>[CubeSoft, Inc.](https://www.cube-soft.jp/)|
 |🌴Silver |[sknjpn](https://twitter.com/sknjpn)|
 |🌷Bronze |アゲハマ, anonymous 😀, minachun, Fuyutsubaki, anonymous 😊, anonymous 🐝, anonymous 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, totono, おおやま, tumf, anonymous 🍵, lamuda|
