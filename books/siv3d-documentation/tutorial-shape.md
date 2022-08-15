@@ -813,7 +813,7 @@ void Main()
 これら以外の形状の影を作りたい場合は [サンプル/図形や絵文字に影を付ける](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/sample-visual#%E5%9B%B3%E5%BD%A2%E3%82%84%E7%B5%B5%E6%96%87%E5%AD%97%E3%81%AB%E5%BD%B1%E3%82%92%E4%BB%98%E3%81%91%E3%82%8B) が参考になります。
 
 ## 2.26 グラデーション
-`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、塗りつぶしの色をグラデーションでにするオプションがあります。
+`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、塗りつぶしの色をグラデーションにするオプションがあります。
 ![](/images/doc_v6/tutorial/2/26.png)
 ```cpp
 # include <Siv3D.hpp>
