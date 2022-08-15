@@ -852,12 +852,9 @@ void Main()
 		Vec2 penPos{ basePos };
 
 		{
-			// MSDF フォント + 輪郭描画のための設定
+			// MSDF フォント + 影 + 輪郭描画のための設定
 			const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), TextStyle::Type::OutlineShadow) };
-			const Float4 param{ (0.5f + 0.1f), (0.5f - 0.1f), 2.0f, 2.0f };
-			const Float4 outlineColor = ColorF{ 0.8, 0.4, 0.0 }.toFloat4();
-			const Float4 shadowColor = ColorF{ 0.0, 0.5 }.toFloat4();
-			Graphics2D::Internal::SetSDFParameters({ param, outlineColor, shadowColor });
+			Graphics2D::SetSDFParameters(TextStyle::OutlineShadow(0.2, ColorF{ 0.8, 0.4, 0.0 }, Vec2{ 2, 2 }, ColorF{ 0.0, 0.5 }));
 
 			for (auto [index, glyph] : Indexed(font.getGlyphs(text)))
 			{
