@@ -63,7 +63,7 @@ Siv3D は MIT ライセンスのもと [GitHub 上で開発](https://github.com/
 Windows 版の OpenSiv3D SDK のインストーラのサイズは 120 MB 未満です。インストールはわずかなクリックで自動的に終わり、Visual Studio を起動すると、メニューには Siv3D プロジェクトを作成するアイテムが追加されていて、すぐにプログラミングを始められます。
 
 ### 💗 親切なユーザコミュニティ
-Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニティ Slack](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/community) で質問しましょう。匿名で質問したい場合は BBS も利用できます。毎月オンラインで開催される Siv3D 実装会では、Siv3D の熱心なユーザ達や Siv3D の作者と、Discord 上で雑談や技術的な相談をすることができます。Twitter では定期的に #Siv3D, #OpenSiv3D ハッシュタグを巡回しています。ユーザコミュニティが、作品の宣伝やシェアに協力してくれるでしょう。オープンソースソフトウェア開発に貢献したい学生には、Siv3D を練習場にしたサポートプログラムを毎年実施しています。
+Siv3D を使って困ったことがあったら、[Siv3D オンラインユーザコミュニティ](https://siv3d.github.io/ja-jp/community/community/) で質問しましょう。匿名で質問したい場合は BBS も利用できます。毎月オンラインで開催される Siv3D 実装会では、Siv3D の熱心なユーザ達や Siv3D の作者と、Discord 上で雑談や技術的な相談をすることができます。Twitter では定期的に #Siv3D, #OpenSiv3D ハッシュタグを巡回しています。ユーザコミュニティが、作品の宣伝やシェアに協力してくれるでしょう。オープンソースソフトウェア開発に貢献したい学生には、Siv3D を練習場にしたサポートプログラムを毎年実施しています。
 
 ### 🌐 Web ブラウザで動く
 現在試験的に提供される Web 版（[OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)）を使うと、Siv3D で作った C++ アプリケーションを、Web ブラウザ上で実行可能なプログラムに変換できます。世界中の人がスマホやタブレットからあたなの作品を体験できます。
