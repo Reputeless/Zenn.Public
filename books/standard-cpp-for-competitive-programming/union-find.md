@@ -312,11 +312,210 @@ private:
 # 2. Union-Find の例題
 
 ### [ATC 001 B - Union Find](https://atcoder.jp/contests/atc001/tasks/unionfind_a)
+:::details コード
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric> // std::iota()
+
+// Union-Find 木 (1.1 シンプルな実装)
+class UnionFind
+{
+public:
+
+	UnionFind() = default;
+
+	// n 個の要素
+	explicit UnionFind(size_t n)
+		: m_parents(n)
+	{
+		std::iota(m_parents.begin(), m_parents.end(), 0);
+	}
+
+	// i の root を返す
+	int find(int i)
+	{
+		if (m_parents[i] == i)
+		{
+			return i;
+		}
+
+		// 経路圧縮
+		return (m_parents[i] = find(m_parents[i]));
+	}
+
+	// a の木と b の木を統合
+	void merge(int a, int b)
+	{
+		a = find(a);
+		b = find(b);
+
+		if (a != b)
+		{
+			m_parents[b] = a;
+		}
+	}
+
+	// a と b が同じ木に属すかを返す
+	bool connected(int a, int b)
+	{
+		return (find(a) == find(b));
+	}
+
+private:
+
+	// m_parents[i] は i の 親,
+	// root の場合は自身が親
+	std::vector<int> m_parents;
+};
+
+int main()
+{
+	std::cin.tie(0)->sync_with_stdio(0);
+
+	int N, Q;
+	std::cin >> N >> Q;
+
+	UnionFind uf(N);
+
+	while (Q--)
+	{
+		int t, u, v;
+		std::cin >> t >> u >> v;
+
+		if (t == 0)
+		{
+			uf.merge(u, v);
+		}
+		else // t == 1
+		{
+			std::cout << (uf.connected(u, v) ? "Yes\n" : "No\n");
+		}
+	}
+}
+```
+:::
+
 
 ### [ABC 075 C - Bridge](https://atcoder.jp/contests/abc075/tasks/abc075_c)
+:::details コード
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric> // std::iota()
+
+// Union-Find 木 (1.1 シンプルな実装)
+class UnionFind
+{
+public:
+
+	UnionFind() = default;
+
+	// n 個の要素
+	explicit UnionFind(size_t n)
+		: m_parents(n)
+	{
+		std::iota(m_parents.begin(), m_parents.end(), 0);
+	}
+
+	// i の root を返す
+	int find(int i)
+	{
+		if (m_parents[i] == i)
+		{
+			return i;
+		}
+
+		// 経路圧縮
+		return (m_parents[i] = find(m_parents[i]));
+	}
+
+	// a の木と b の木を統合
+	void merge(int a, int b)
+	{
+		a = find(a);
+		b = find(b);
+
+		if (a != b)
+		{
+			m_parents[b] = a;
+		}
+	}
+
+	// a と b が同じ木に属すかを返す
+	bool connected(int a, int b)
+	{
+		return (find(a) == find(b));
+	}
+
+private:
+
+	// m_parents[i] は i の 親,
+	// root の場合は自身が親
+	std::vector<int> m_parents;
+};
+
+int main()
+{
+	std::cin.tie(0)->sync_with_stdio(0);
+
+	// N 頂点 M 辺
+	int N, M;
+	std::cin >> N >> M;
+
+	std::vector<int> A(M), B(M);
+
+	for (int i = 0; i < M; ++i)
+	{
+		int a, b;
+		std::cin >> a >> b;
+		A[i] = --a;
+		B[i] = --b;
+	}
+
+	int ans = 0;
+
+	// 各辺について
+	for (int i = 0; i < M; ++i)
+	{
+		UnionFind uf(N);
+
+		// 辺 i を取り除いた Union-Find 木を作る
+		for (int k = 0; k < M; ++k)
+		{
+			if (i != k)
+			{
+				uf.merge(A[k], B[k]);
+			}
+		}
+
+		// root がいくつあるか
+		int count = 0;
+
+		// 各頂点について
+		for (int k = 0; k < N; ++k)
+		{
+			// 自身が root なら count を増やす
+			if (k == uf.find(k))
+			{
+				++count;
+			}
+		}
+
+		// 最終的にグラフが非連結になっていたら
+		if (1 < count)
+		{
+			// 削除した辺は橋であった
+			++ans;
+		}
+	}
+
+	std::cout << ans << '\n';
+}
+```
+
 
 ### [ABC 177 D - Friends](https://atcoder.jp/contests/abc177/tasks/abc177_d)
-
 :::details コード
 ```cpp
 #include <iostream>
@@ -425,8 +624,20 @@ int main()
 
 ### [ABC 049 D - 連結](https://atcoder.jp/contests/abc049/tasks/arc065_b)
 
+
+
+### [AOJ GRL_2_A - Minimum Spanning Tree](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja)
+- クラスカル法
+
+
+
 ### [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/tasks/arc032_2)
+
+
 
 ### [ABC 264 E - Blackout 2](https://atcoder.jp/contests/abc264/tasks/abc264_e)
 
+
+
 ### [ABC 183 F - Confluence](https://atcoder.jp/contests/abc183/tasks/abc183_f)
+
