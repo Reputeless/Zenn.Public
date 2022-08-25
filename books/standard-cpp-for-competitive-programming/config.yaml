@@ -11,6 +11,7 @@ chapters:
   - library-algorithm
   - library-tuple
   - library-ios-iomanip
+  - union-find
   - next
   - acknowledgments
   
