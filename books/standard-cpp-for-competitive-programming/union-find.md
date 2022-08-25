@@ -8,17 +8,16 @@ C++ 標準ライブラリを用いた Union-Find (別名: Disjoint-set) の実�
 
 # 1. Union-Find のテンプレート
 
+| 機能 | 説明 | 1.1 | 1.2 | 1.3 | 1.4 |
+|----|----|:----:|:----:|:----:|:----:|
+| `.find(i)` | i を含むグループの root (代表) を返す | ✅ | ✅ | ✅ | ✅ |
+| `.merge(a, b)` | a を含むグループと b を含むグループを併合する | ✅ | ✅ | ✅ | ✅ |
+| `.connected(a, b)` | a と b が同じグループに属すかを返す | ✅ | ✅ | ✅ | ✅ |
+| `.size(i)` | i を含むグループの要素数を返す |  | ✅ | ✅ | ✅ |
+| 経路圧縮 | 計算量をおよそ $O(log N)$ に減らす | ✅ | ✅ | ✅ | ✅ |
+| union by size | 経路圧縮との組み合わせで、計算量を競プロの実用範囲でほぼ $O(1)$ に減らす |  |  | ✅ | ✅ |
+
 ## 1.1 シンプルな実装
-
-| 機能 | 説明 | 実装 |
-|----|----|:----:|
-| `.find(i)` | i を含むグループの root (代表) を返す | ✅ |
-| `.merge(a, b)` | a を含むグループと b を含むグループを併合する | ✅ |
-| `.connected(a, b)` | a と b が同じグループに属すかを返す | ✅ |
-| `.size(i)` | i を含むグループの要素数を返す |  |
-| 経路圧縮 | 計算量をおよそ $O(log N)$ に減らす | ✅ |
-| union by size | 経路圧縮と組み合わせることで、計算量を競プロの実用範囲でほぼ $O(1)$ に減らす | |
-
 - [Library Checker](https://judge.yosupo.jp/submission/101500)
 
 :::details コード
@@ -82,16 +81,6 @@ private:
 
 
 ## 1.2 グループの要素数取得対応
-
-| 機能 | 説明 | 実装 |
-|----|----|:----:|
-| `.find(i)` | i を含むグループの root (代表) を返す | ✅ |
-| `.merge(a, b)` | a を含むグループと b を含むグループを併合する | ✅ |
-| `.connected(a, b)` | a と b が同じグループに属すかを返す | ✅ |
-| `.size(i)` | i を含むグループの要素数を返す | ✅ |
-| 経路圧縮 | 計算量をおよそ $O(log N)$ に減らす | ✅ |
-| union by size | 経路圧縮と組み合わせることで、計算量を競プロの実用範囲でほぼ $O(1)$ に減らす |  |
-
 - [Library Checker](https://judge.yosupo.jp/submission/101501) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319606)
 
 :::details コード
@@ -167,16 +156,6 @@ private:
 
 
 ## 1.3 高速化
-
-| 機能 | 説明 | 実装 |
-|----|----|:----:|
-| `.find(i)` | i を含むグループの root (代表) を返す | ✅ |
-| `.merge(a, b)` | a を含むグループと b を含むグループを併合する | ✅ |
-| `.connected(a, b)` | a と b が同じグループに属すかを返す | ✅ |
-| `.size(i)` | i を含むグループの要素数を返す | ✅ |
-| 経路圧縮 | 計算量をおよそ $O(log N)$ に減らす | ✅ |
-| union by size | 経路圧縮と組み合わせることで、計算量を競プロの実用範囲でほぼ $O(1)$ に減らす | ✅ |
-
 - [Library Checker](https://judge.yosupo.jp/submission/101503) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319608)
 
 :::details コード
@@ -259,16 +238,6 @@ private:
 
 
 ## 1.4 高速化 + 省メモリ化
-
-| 機能 | 説明 | 実装 |
-|----|----|:----:|
-| `.find(i)` | i を含むグループの root (代表) を返す | ✅ |
-| `.merge(a, b)` | a を含むグループと b を含むグループを併合する | ✅ |
-| `.connected(a, b)` | a と b が同じグループに属すかを返す | ✅ |
-| `.size(i)` | i を含むグループの要素数を返す | ✅ |
-| 経路圧縮 | 計算量をおよそ $O(log N)$ に減らす | ✅ |
-| union by size | 経路圧縮と組み合わせることで、計算量を競プロの実用範囲でほぼ $O(1)$ に減らす | ✅ |
-
 - [Library Checker](https://judge.yosupo.jp/submission/101504) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319612)
 
 :::details コード
