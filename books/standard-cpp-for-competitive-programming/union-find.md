@@ -18,8 +18,6 @@ C++ 標準ライブラリを用いた Union-Find (別名: Disjoint-set) の実�
 | union by size | 経路圧縮との組み合わせで、計算量を競プロの実用範囲でほぼ $O(1)$ に減らす |  |  | ✅ | ✅ |
 
 ## 1.1 シンプルな実装
-- [Library Checker](https://judge.yosupo.jp/submission/101500)
-
 :::details コード
 ```cpp
 #include <iostream>
@@ -77,12 +75,12 @@ private:
 	std::vector<int> m_parents;
 };
 ```
+
+- [Library Checker](https://judge.yosupo.jp/submission/101500)
 :::
 
 
 ## 1.2 グループの要素数取得対応
-- [Library Checker](https://judge.yosupo.jp/submission/101501) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319606)
-
 :::details コード
 ```cpp
 #include <iostream>
@@ -152,12 +150,12 @@ private:
 	std::vector<int> m_sizes;
 };
 ```
+
+- [Library Checker](https://judge.yosupo.jp/submission/101501) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319606)
 :::
 
 
 ## 1.3 高速化
-- [Library Checker](https://judge.yosupo.jp/submission/101503) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319608)
-
 :::details コード
 ```cpp
 #include <iostream>
@@ -234,12 +232,12 @@ private:
 	std::vector<int> m_sizes;
 };
 ```
+
+- [Library Checker](https://judge.yosupo.jp/submission/101503) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319608)
 :::
 
 
 ## 1.4 高速化 + 省メモリ化
-- [Library Checker](https://judge.yosupo.jp/submission/101504) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319612)
-
 :::details コード
 ```cpp
 #include <iostream>
@@ -306,6 +304,8 @@ private:
 	// ただし root の場合は (-1 * そのグループに属する要素数)
 	std::vector<int> m_parentsOrSize;
 };
+
+- [Library Checker](https://judge.yosupo.jp/submission/101504) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319612)
 ```
 :::
 
