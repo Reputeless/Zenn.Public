@@ -623,6 +623,106 @@ int main()
 ### [AOJ GRL_2_A - Minimum Spanning Tree](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=ja)
 - クラスカル法
 
+:::details コード
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric> // std::iota()
+#include <algorithm> // std::sort()
+
+// Union-Find 木 (1.1 シンプルな実装)
+class UnionFind
+{
+public:
+
+	UnionFind() = default;
+
+	// n 個の要素
+	explicit UnionFind(size_t n)
+		: m_parents(n)
+	{
+		std::iota(m_parents.begin(), m_parents.end(), 0);
+	}
+
+	// i の root を返す
+	int find(int i)
+	{
+		if (m_parents[i] == i)
+		{
+			return i;
+		}
+
+		// 経路圧縮
+		return (m_parents[i] = find(m_parents[i]));
+	}
+
+	// a の木と b の木を統合
+	void merge(int a, int b)
+	{
+		a = find(a);
+		b = find(b);
+
+		if (a != b)
+		{
+			m_parents[b] = a;
+		}
+	}
+
+	// a と b が同じ木に属すかを返す
+	bool connected(int a, int b)
+	{
+		return (find(a) == find(b));
+	}
+
+private:
+
+	// m_parents[i] は i の 親,
+	// root の場合は自身が親
+	std::vector<int> m_parents;
+};
+
+struct Edge
+{
+	int from;
+	int to;
+	int cost;
+
+	// コストに基づく大小定義
+	bool operator <(const Edge& other) const
+	{
+		return (cost < other.cost);
+	}
+};
+
+int main()
+{
+	int V, E;
+	std::cin >> V >> E;
+
+	std::vector<Edge> edges(E);
+	for (auto& edge : edges)
+	{
+		std::cin >> edge.from >> edge.to >> edge.cost;
+	}
+
+	std::sort(edges.begin(), edges.end());
+
+	UnionFind uf(V);
+	long long sum = 0;
+
+	for (const auto& edge : edges)
+	{
+		if (!uf.connected(edge.from, edge.to))
+		{
+			uf.merge(edge.from, edge.to);
+			sum += edge.cost;
+		}
+	}
+
+	std::cout << sum << '\n';
+}
+```
+:::
 
 
 ### [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/tasks/arc032_2)
