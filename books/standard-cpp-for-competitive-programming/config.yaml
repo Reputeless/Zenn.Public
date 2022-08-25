@@ -12,6 +12,7 @@ chapters:
   - library-tuple
   - library-ios-iomanip
   - union-find
+  - fast-io
   - next
   - acknowledgments
   
