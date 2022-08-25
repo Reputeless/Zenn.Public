@@ -304,9 +304,9 @@ private:
 	// ただし root の場合は (-1 * そのグループに属する要素数)
 	std::vector<int> m_parentsOrSize;
 };
+```
 
 - [Library Checker](https://judge.yosupo.jp/submission/101504) / [ABC 177 D](https://atcoder.jp/contests/abc177/submissions/34319612)
-```
 :::
 
 # 2. Union-Find の例題
