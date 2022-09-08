@@ -13,6 +13,7 @@ chapters:
   - library-ios-iomanip
   - union-find
   - lis
+  - bellman-ford
   - fast-io
   - next
   - acknowledgments
