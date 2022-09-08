@@ -8,12 +8,13 @@ C++ 標準ライブラリを用いたベルマンフォード法 (Bellman–Ford
 
 # 1. ベルマンフォード法のテンプレート
 
-| 機能 | 1.1 | 1.2 | 1.3 |
-|----|:----:|:----:|:----:|
-| 単一始点の最短経路問題を解く | ✅ | ✅ | ✅ |
-| 負閉路を検出する | ✅ | ✅ | ✅ |
-| 負閉路の影響を受ける頂点を調べる |   | ✅ | ✅ |
-| 最短経路を再構築する |   |   | ✅ |
+| 機能 | 1.1 | 1.2 | 1.3 | 1.4 | 1.5 |
+|----|:----:|:----:|:----:|:----:|:----:|
+| 単一始点の最短経路問題を解く | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 負閉路を検出する | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 負閉路の影響を受ける頂点を調べる |   | ✅ | ✅ |   |   |
+| 最短経路を再構築する |   |   | ✅ |   | ✅ |
+| SPFA による定数倍高速化 |   |   |   | ✅ | ✅ |
 
 
 ## 1.1 基本実装
@@ -269,6 +270,162 @@ bool BellmanFord(const std::vector<Edge>& edges, std::vector<long long>& distanc
 
 - [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949819#2) / [Library Checker](https://judge.yosupo.jp/submission/103533) (ダイクストラ法より計算量が大きいため、一部ケースは TLE) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687122)
 :::
+
+
+## 1.4 SPFA 基本実装
+:::details コード
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+
+constexpr long long INF = (1LL << 60);
+
+// 辺
+struct Edge
+{
+	int to;
+	int cost;
+};
+
+using Graph = std::vector<std::vector<Edge>>;
+
+// ベルマンフォード法 (1.4 SPFA 基本実装)
+// 負閉路が存在する場合 true を返す
+// distances は頂点数と同じサイズ, 全要素 INF で初期化しておく
+bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex)
+{
+	const size_t N = distances.size();
+	std::vector<int> counts(N, 0);
+	std::vector<bool> inqueue(N);
+	std::queue<int> q;
+
+	distances[startIndex] = 0;
+	q.push(startIndex);
+	inqueue[startIndex] = true;
+
+	while (!q.empty())
+	{
+		const int from = q.front(); q.pop();
+		inqueue[from] = false;
+
+		for (const auto& edge : grpah[from])
+		{
+			// to までの新しい距離
+			const long long d = (distances[from] + edge.cost);
+
+			// d が現在の記録より小さければ更新
+			if (d < distances[edge.to])
+			{
+				distances[edge.to] = d;
+			
+				if (!inqueue[edge.to])
+				{
+					q.push(edge.to);
+					inqueue[edge.to] = true;
+					++counts[edge.to];
+					
+					if (N < counts[edge.to])
+					{
+						return true; // 負閉路あり
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+```
+
+- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949980#2)
+:::
+
+
+## 1.5 SPFA + 最短経路の再構築
+:::details コード
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+constexpr long long INF = (1LL << 60);
+
+// 辺
+struct Edge
+{
+	int to;
+	int cost;
+};
+
+using Graph = std::vector<std::vector<Edge>>;
+
+// ベルマンフォード法 (1.5 SPFA + 最短経路の再構築)
+// 負閉路が存在する場合 true を返す
+// 負閉路が存在しない場合, 頂点 startIndex から頂点 targetIndex の最短経路を path に格納する
+// distances は頂点数と同じサイズ, 全要素 INF で初期化しておく
+bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex, int targetIndex, std::vector<int>& path)
+{
+	const size_t N = distances.size();
+	std::vector<int> counts(N, 0);
+	std::vector<bool> inqueue(N);
+	std::queue<int> q;
+
+	// 直前の頂点を記録する配列
+	std::vector<int> p(N, -1);
+
+	distances[startIndex] = 0;
+	q.push(startIndex);
+	inqueue[startIndex] = true;
+
+	while (!q.empty())
+	{
+		const int from = q.front(); q.pop();
+		inqueue[from] = false;
+
+		for (const auto& edge : grpah[from])
+		{
+			// to までの新しい距離
+			const long long d = (distances[from] + edge.cost);
+
+			// d が現在の記録より小さければ更新
+			if (d < distances[edge.to])
+			{
+				distances[edge.to] = d;
+				p[edge.to] = from;
+			
+				if (!inqueue[edge.to])
+				{
+					q.push(edge.to);
+					inqueue[edge.to] = true;
+					++counts[edge.to];
+					
+					if (N < counts[edge.to])
+					{
+						return true; // 負閉路あり
+					}
+				}
+			}
+		}
+	}
+
+	if (distances[targetIndex] != INF) // 頂点 targetIndex に到達不可の場合は最短経路無し
+	{
+		// 経路を再構築
+		for (int i = targetIndex; i != -1; i = p[i])
+		{
+			path.push_back(i);
+		}
+
+		std::reverse(path.begin(), path.end());
+	}
+
+	return false;
+}
+```
+
+- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949981#2) / [Library Checker](https://judge.yosupo.jp/submission/103545) (1.3 よりは実行時間短縮)
 
 
 # 2. ベルマンフォード法の例題
