@@ -296,7 +296,7 @@ using Graph = std::vector<std::vector<Edge>>;
 bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex)
 {
 	const size_t N = distances.size();
-	std::vector<int> counts(N, 0);
+	std::vector<int> counts(N);
 	std::vector<bool> inqueue(N);
 	std::queue<int> q;
 
@@ -368,7 +368,7 @@ using Graph = std::vector<std::vector<Edge>>;
 bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex, int targetIndex, std::vector<int>& path)
 {
 	const size_t N = distances.size();
-	std::vector<int> counts(N, 0);
+	std::vector<int> counts(N);
 	std::vector<bool> inqueue(N);
 	std::queue<int> q;
 
