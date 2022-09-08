@@ -159,7 +159,7 @@ bool BellmanFord(const std::vector<Edge>& edges, std::vector<long long>& distanc
 }
 ```
 
-- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949815#2) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687149)
+- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949815#2) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687694)
 :::
 
 
@@ -462,8 +462,9 @@ int main()
 
 	std::vector<long long> distances(N, INF);
 
-	if (BellmanFord(edges, distances, 0)
-		&& (distances[N - 1] == -INF)) // 頂点 N へと至る負閉路が存在する場合
+	BellmanFord(edges, distances, 0);
+
+	if (distances[N - 1] == -INF) // 頂点 N へと至る負閉路が存在する場合
 	{
 		std::cout << "inf\n";
 	}
@@ -572,8 +573,9 @@ int main()
 
 	std::vector<long long> distances(N, INF);
 
-	if (BellmanFord(edges, distances, 0)
-		&& (distances[N - 1] == -INF)) // 頂点 N へと至る負閉路が存在する場合
+	BellmanFord(edges, distances, 0);
+
+	if (distances[N - 1] == -INF) // 頂点 N へと至る負閉路が存在する場合
 	{
 		std::cout << "-1\n";
 	}
