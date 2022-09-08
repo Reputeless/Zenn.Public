@@ -425,7 +425,7 @@ bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex,
 }
 ```
 
-- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949981#2) / [Library Checker](https://judge.yosupo.jp/submission/103545) (1.3 よりは実行時間短縮)
+- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949981#2) / [Library Checker](https://judge.yosupo.jp/submission/103545) (1.3 より実行時間改善)
 :::
 
 
