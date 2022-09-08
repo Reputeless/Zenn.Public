@@ -161,7 +161,6 @@ bool BellmanFord(const std::vector<Edge>& edges, std::vector<long long>& distanc
 
 - [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949815#2) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687149)
 :::
-:::
 
 
 ## 1.3 最短経路を再構築する
@@ -270,8 +269,6 @@ bool BellmanFord(const std::vector<Edge>& edges, std::vector<long long>& distanc
 
 - [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949819#2) / [Library Checker](https://judge.yosupo.jp/submission/103533) (ダイクストラ法より計算量が大きいため、一部ケースは TLE) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687122)
 :::
-:::
-
 
 
 # 2. ベルマンフォード法の例題
