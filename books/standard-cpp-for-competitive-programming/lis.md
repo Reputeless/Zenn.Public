@@ -483,7 +483,7 @@ int main()
 :::
 
 
-### [ABC 038 D - プレゼント]()
+### [ABC 038 D - プレゼント](https://atcoder.jp/contests/abc038/tasks/abc038_d)
 :::details コード
 ```cpp
 #include <iostream>
