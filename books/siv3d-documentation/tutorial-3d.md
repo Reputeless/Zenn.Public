@@ -466,7 +466,7 @@ void Main()
 		// カメラの状態を表示
 		Print << U"eyePositon: {:.1f}"_fmt(camera.getEyePosition());
 		Print << U"focusPosition: {:.1f}"_fmt(camera.getFocusPosition());
-		Print << U"verticalFOV: {:.1f}°"_fmt(Math::ToDegrees(camera.getVerticlaFOV()));
+		Print << U"verticalFOV: {:.1f}°"_fmt(Math::ToDegrees(camera.getVerticalFOV()));
 
 		// 3D シーンにカメラを設定
 		Graphics3D::SetCameraTransform(camera);
