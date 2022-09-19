@@ -1,12 +1,12 @@
 ---
-title: "ワーシャル・フロイド法"
+title: "ワーシャルフロイド法"
 free: true
 ---
 
-C++ 標準ライブラリを用いたワーシャル・フロイド法 (Floyd–Warshall Algorithm) の実装です。
+C++ 標準ライブラリを用いたワーシャルフロイド法 (Floyd–Warshall Algorithm) の実装です。
 
 
-# 1. ワーシャル・フロイド法のテンプレート
+# 1. ワーシャルフロイド法のテンプレート
 
 | 機能 | 1.1 |
 |----|:----:|
@@ -23,7 +23,7 @@ C++ 標準ライブラリを用いたワーシャル・フロイド法 (Floyd–
 
 constexpr long long INF = (1LL << 60);
 
-// ワーシャル・フロイド法 (1.1 基本実装)
+// ワーシャルフロイド法 (1.1 基本実装)
 // 負閉路が存在する場合 true を返す
 bool FloydWarshall(std::vector<std::vector<long long>>& distances)
 {
@@ -60,7 +60,7 @@ bool FloydWarshall(std::vector<std::vector<long long>>& distances)
 :::
 
 
-# 2. ワーシャル・フロイド法の例題
+# 2. ワーシャルフロイド法の例題
 
 ### [AOJ GRL_1_C - All Pairs Shortest Path](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C&lang=ja)
 :::details コード
@@ -71,7 +71,7 @@ bool FloydWarshall(std::vector<std::vector<long long>>& distances)
 
 constexpr long long INF = (1LL << 60);
 
-// ワーシャル・フロイド法 (1.1 基本実装)
+// ワーシャルフロイド法 (1.1 基本実装)
 // 負閉路が存在する場合 true を返す
 bool FloydWarshall(std::vector<std::vector<long long>>& distances)
 {
@@ -163,7 +163,7 @@ int main()
 
 constexpr long long INF = (1LL << 60);
 
-// ワーシャル・フロイド法 (1.1 基本実装)
+// ワーシャルフロイド法 (1.1 基本実装)
 // 負閉路が存在する場合 true を返す
 bool FloydWarshall(std::vector<std::vector<long long>>& distances)
 {
@@ -239,7 +239,7 @@ int main()
 
 constexpr long long INF = (1LL << 60);
 
-// ワーシャル・フロイド法 (1.1 基本実装)
+// ワーシャルフロイド法 (1.1 基本実装)
 // 負閉路が存在する場合 true を返す
 bool FloydWarshall(std::vector<std::vector<long long>>& distances)
 {
