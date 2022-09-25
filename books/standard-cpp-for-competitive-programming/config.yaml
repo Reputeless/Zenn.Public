@@ -15,6 +15,7 @@ chapters:
   - lis
   - bellman-ford
   - floyd-warshall
+  - dijkstra
   - fast-io
   - next
   - acknowledgments

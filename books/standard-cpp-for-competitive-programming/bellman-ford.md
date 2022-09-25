@@ -268,7 +268,7 @@ bool BellmanFord(const std::vector<Edge>& edges, std::vector<long long>& distanc
 }
 ```
 
-- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949819#2) / [Library Checker](https://judge.yosupo.jp/submission/103533) (ダイクストラ法より計算量が大きいため、一部ケースは TLE) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687122)
+- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949819#2) / [Library Checker - Shortest Path](https://judge.yosupo.jp/submission/103533) (ダイクストラ法より計算量が大きいため、一部ケースは TLE) / [ABC 137 E](https://atcoder.jp/contests/abc137/submissions/34687122)
 :::
 
 
@@ -425,7 +425,7 @@ bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex,
 }
 ```
 
-- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949981#2) / [Library Checker](https://judge.yosupo.jp/submission/103545) (1.3 より実行時間改善)
+- [AOJ GRL_1_B](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=6949981#2) / [Library Checker - Shortest Path](https://judge.yosupo.jp/submission/103545) (1.3 より実行時間改善)
 :::
 
 
