@@ -1,5 +1,5 @@
 ---
-title: "Binary Indexed Tree"
+title: "Binary Indexed Tree (BIT)"
 free: true
 ---
 
