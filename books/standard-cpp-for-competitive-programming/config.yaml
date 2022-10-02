@@ -13,6 +13,7 @@ chapters:
   - library-ios-iomanip
   - union-find
   - lis
+  - binary-indexed-tree
   - bellman-ford
   - floyd-warshall
   - dijkstra
