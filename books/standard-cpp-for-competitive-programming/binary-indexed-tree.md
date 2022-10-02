@@ -258,7 +258,7 @@ int main()
 
 	for (int i = 0; i < N; ++i)
 	{
-		answer += (i - bit.sum(A[i]));
+		answer += bit.sum(A[i], N);
 		bit.add(A[i], 1);
 	}
 
