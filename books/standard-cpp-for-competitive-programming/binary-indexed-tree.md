@@ -83,7 +83,7 @@ private:
 ## 1.2 区間加算対応
 :::details コード
 ```cpp
-
+// 執筆中
 ```
 
 - [Library Checker - Point Add Range Sum]() / [AOJ DSL_2_G - RSQ and RAQ]()
