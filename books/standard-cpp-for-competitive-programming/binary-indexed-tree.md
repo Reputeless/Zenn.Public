@@ -141,17 +141,17 @@ private:
 
 // Binary Indexed Tree (1.2 区間加算対応)
 // 1-based indexing
-class BIT_Range
+class BIT_RAQ
 {
 public:
 
-	BIT_Range() = default;
+	BIT_RAQ() = default;
 
-	explicit BIT_Range(size_t n)
+	explicit BIT_RAQ(size_t n)
 		: m_bit0(n)
 		, m_bit1(n) {}
 
-	explicit BIT_Range(const std::vector<long long>& v)
+	explicit BIT_RAQ(const std::vector<long long>& v)
 		: m_bit0(v)
 		, m_bit1(v.size()) {}
 
@@ -190,7 +190,7 @@ private:
 };
 ```
 
-- [Library Checker - Static Range Sum](https://judge.yosupo.jp/submission/106936) / [Library Checker - Point Add Range Sum](https://judge.yosupo.jp/submission/106935) / [AOJ DSL_2_G - RSQ and RAQ](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=7008175#2)
+- [Library Checker - Static Range Sum](https://judge.yosupo.jp/submission/106937) / [Library Checker - Point Add Range Sum](https://judge.yosupo.jp/submission/106938) / [AOJ DSL_2_G - RSQ and RAQ](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=7008192#2)
 :::
 
 
@@ -470,9 +470,6 @@ int main()
 :::
 
 
-
-
-
 ### [AOJ DSL_2_G - RSQ and RAQ](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_G)
 :::details コード
 ```cpp
@@ -534,17 +531,17 @@ private:
 
 // Binary Indexed Tree (1.2 区間加算対応)
 // 1-based indexing
-class BIT_Range
+class BIT_RAQ
 {
 public:
 
-	BIT_Range() = default;
+	BIT_RAQ() = default;
 
-	explicit BIT_Range(size_t n)
+	explicit BIT_RAQ(size_t n)
 		: m_bit0(n)
 		, m_bit1(n) {}
 
-	explicit BIT_Range(const std::vector<long long>& v)
+	explicit BIT_RAQ(const std::vector<long long>& v)
 		: m_bit0(v)
 		, m_bit1(v.size()) {}
 
@@ -587,7 +584,7 @@ int main()
 	int n, q;
 	std::cin >> n >> q;
 
-	BIT_Range bit(n);
+	BIT_RAQ bit(n);
 
 	while (q--)
 	{
