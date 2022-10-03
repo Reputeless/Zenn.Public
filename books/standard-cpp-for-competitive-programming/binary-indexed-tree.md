@@ -537,9 +537,9 @@ public:
 
 	BIT_RAQ() = default;
 
-	explicit BIT_RAQ(size_t n)
-		: m_bit0(n)
-		, m_bit1(n) {}
+	explicit BIT_RAQ(size_t size)
+		: m_bit0(size)
+		, m_bit1(size) {}
 
 	explicit BIT_RAQ(const std::vector<long long>& v)
 		: m_bit0(v)
