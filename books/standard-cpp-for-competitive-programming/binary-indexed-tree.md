@@ -120,15 +120,14 @@ public:
 		}
 	}
 
-	// 閉区間 [1, i] の合計を返す (1-based indexing)
-	// i が 0 以下の時は 0 を返す
-	long long sum(int i) const
+	// 閉区間 [1, r] の合計を返す (1-based indexing)
+	long long sum(int r) const
 	{
 		long long ret = 0;
 
-		for (; 0 < i; i -= (i & -i))
+		for (; 0 < r; r -= (r & -r))
 		{
-			ret += m_bit[i];
+			ret += m_bit[r];
 		}
 
 		return ret;
@@ -347,9 +346,9 @@ int main()
 
 	for (const auto& a : A)
 	{
-		answer += (bit.sum(N) - bit.sum(a));
+		answer += bit.sum((a + 1), N);
 
-		bit.add(a + 1, 1);
+		bit.add((a + 1), 1);
 	}
 
 	for (const auto& a : A)
