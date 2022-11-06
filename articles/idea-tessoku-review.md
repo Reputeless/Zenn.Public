@@ -6,7 +6,7 @@ topics: ["競技プログラミング", "書評"]
 published: false
 ---
 
-書籍[『競技プログラミングの鉄則』](https://book.mynavi.jp/ec/products/detail/id=131288)を著者の [@e869120](https://twitter.com/e869120) 氏から恵贈いただいたので、書評を記します。
+書籍[『競技プログラミングの鉄則』（マイナビ出版）](https://book.mynavi.jp/ec/products/detail/id=131288)を著者の [@e869120](https://twitter.com/e869120) 氏から恵贈いただいたので、書評を記します。
 
 C++ で書かれたコンテスト対策本は、いわゆる[蟻本 (2012)](https://book.mynavi.jp/ec/products/detail/id=22672), [螺旋本 (2015)](https://book.mynavi.jp/ec/products/detail/id=35408) があり、コンテストが一部のマニアックな情報系向けだった時代のニーズには十分な書でした。
 
