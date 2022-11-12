@@ -989,7 +989,7 @@ void Main()
 	Vec3 eyePosition{ 0, 16, -32 };
 	Vec3 focusPosition{ 0, 2, 0 };
 
-	BasicCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 0, 16, -32 }, Vec3{ 0, 16, -32 } };
+	BasicCamera3D camera{ renderTexture.size(), 30_deg, eyePosition, focusPosition };
 
 	while (System::Update())
 	{
