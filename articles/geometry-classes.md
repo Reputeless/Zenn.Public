@@ -3,16 +3,16 @@ title: "Siv3D の 2D 図形クラスを俯瞰する"
 emoji: "⏹️"
 type: "tech"
 topics: ["siv3d"]
-published: false
+published: true
 ---
 
-> この記事は [GameEngineDev Advent Calendar 2022](https://qiita.com/advent-calendar/2022/mygameengine) の参加記事です。
+> この記事は [GameEngineDev Advent Calendar 2022](https://qiita.com/advent-calendar/2022/mygameengine) 20 日目の参加記事です。
 
-C++ フレームワーク Siv3D を使うと、複雑な視覚要素を短いコードで表現できます。とくに 2D 描画に注目してみると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その機能の一部を紹介します。
+C++ フレームワーク [Siv3D](https://siv3d.github.io/ja-jp/) を使うと、複雑な視覚要素を短いコードで表現できます。とくに 2D 描画に注目してみると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その機能の一部を紹介します。
 
 
 ## 二次元ベクトル
-二次元平面上での位置 `(x, y)` を表現するクラスです。
+二次元平面上の位置 `(x, y)` を表現するクラスです。
 
 ```cpp
 struct Point
@@ -41,7 +41,7 @@ using SizeF = Vec2;
 - [📄Point](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Point.hpp)
 - [📄Float2 / Vec2](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Vector2D.hpp)
 
-二次元ベクトルは大きさの表現にも使うことができますが、型を区別すると使い分けが面倒です。そこで `Size, SizeF` というエイリアスを提供しています。
+二次元ベクトルは大きさの表現にも使うことができますが、それらの型を区別すると使い分けが面倒です。そこで `Size, SizeF` というエイリアスを提供しています。
 
 :::details サンプル
 ![](https://storage.googleapis.com/zenn-user-upload/340b318c4eeb-20221220.png)
@@ -771,7 +771,7 @@ void Main()
 Siv3D では専用の機能として用意されていませんが、次のような図形クラスを定義することもできるでしょう。
 
 #### 角の r を個別に設定できる角丸長方形
-Siv3D の `RoundRect` ではすべての角が同じ r を共有するため、GUI などで使われる、1 つの辺に関する角のみが丸い長方形を表現できません。代わりに `Rect::rounded(double, double, double, double)` の戻り値である `Polygon` 型を用いる必要があります。
+Siv3D の `RoundRect` ではすべての角が同じ r を共有するため、GUI などで使われる、1 つの辺に関する角のみが丸い長方形を表現できません。代わりに `Rect::rounded(double, double, double, double)` の戻り値である `Polygon` を用いる必要があります。
 
 :::details サンプル
 ![](https://storage.googleapis.com/zenn-user-upload/3465915ac567-20221220.png)
