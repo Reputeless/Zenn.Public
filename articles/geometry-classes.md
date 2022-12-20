@@ -338,9 +338,9 @@ void Main()
 {
 	while (System::Update())
 	{
-		Triangle{ 400, 200, 240 }.draw(ColorF{ 1.0, 0.5, 0.5 });
+		Triangle{ Vec2{ 400, 200 }, 240 }.draw(ColorF{ 1.0, 0.5, 0.5 });
 
-		Triangle{ 400, 400, 240, 180_deg }.draw(ColorF{ 0.5, 0.5, 1.0 });
+		Triangle{ Vec2{ 400, 400 }, 240, 180_deg }.draw(ColorF{ 0.5, 0.5, 1.0 });
 	}
 }
 ```
@@ -365,8 +365,20 @@ struct Quad
 `Rect::rotated()` から `Quad` を作ることもできます。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/abe795cb1c9a-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	while (System::Update())
+	{
+		Rect{ 200, 200, 400, 200 }
+			.rotated(30_deg) // 戻り値は Quad
+			.draw();
+	}
+}
 ```
 :::
 
@@ -427,10 +439,29 @@ struct RoundRect
 ```
 - [📄RoundRect](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Ellipse.hpp)
 
+`RoundRect::drawShadow()` によって影を描くことができます。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/a5f74223502c-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	while (System::Update())
+	{
+		RoundRect{ 100, 50, 400, 200, 20 }
+			.drawShadow(Vec2{ 2, 2 }, 6, 0)
+			.draw();
+
+		RoundRect{ 100, 300, 400, 200, 20 }
+			.drawShadow(Vec2{ 4, 4 }, 16, 1)
+			.draw();
+	}
+}
 ```
 :::
 
@@ -443,25 +474,70 @@ class Polygon
 {
 	// ...　実装略
 };
+
+// 簡易的な Polygon
+class Shape2D
+{
+	// ... 実装略
+};
 ```
 - [📄Polygon](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Polygon.hpp)
-
-
-:::details サンプル
-```cpp
-
-```
-:::
-
-
-## 特別な多角形
-
-
 - [📄Shape2D](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Shape2D.hpp)
 
-:::details サンプル
-```cpp
+正六角形や十字、星形などのように、よく使われる多角形を生成する関数が用意されています。
 
+:::details サンプル
+![](https://storage.googleapis.com/zenn-user-upload/eb35f4b43576-20221220.png)
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	Window::Resize(1000, 600);
+
+	while (System::Update())
+	{
+		Shape2D::Cross(80, 10, Vec2{ 100, 100 }).draw(Palette::Skyblue);
+
+		Shape2D::Plus(80, 10, Vec2{ 300, 100 }).draw(Palette::Skyblue);
+
+		Shape2D::Pentagon(80, Vec2{ 500, 100 }).draw(Palette::Skyblue);
+
+		Shape2D::Hexagon(80, Vec2{ 700, 100 }).draw(Palette::Skyblue);
+
+		// 30° 回転させる
+		Shape2D::Hexagon(80, Vec2{ 900, 100 }, 30_deg).draw(Palette::Skyblue);
+
+
+		// 正十角形
+		Shape2D::Ngon(10, 80, Vec2{ 100, 300 }).draw(Palette::Skyblue);
+
+		Shape2D::Star(80, Vec2{ 300, 300 }).draw(Palette::Skyblue);
+
+		// rOuter は外周の半径、rInner は内周の半径
+		Shape2D::NStar(10, 80, 60, Vec2{ 500, 300 }).draw(Palette::Skyblue);
+
+		// headSize は三角形の幅と高さ
+		Shape2D::Arrow(Line{ 640, 340, 760, 260 }, 20, Vec2{ 40, 30 }).draw(Palette::Skyblue);
+
+		Shape2D::DoubleHeadedArrow(Line{ 840, 340, 960, 260 }, 20, Vec2{ 40, 30 }).draw(Palette::Skyblue);
+
+
+		Shape2D::Rhombus(160, 120, Vec2{ 100, 500 }).draw(Palette::Skyblue);
+
+		// 吹き出しの長方形と、三角形の頂点の置を指定。三角形のサイズは pointingRootRatio で決まる
+		Shape2D::RectBalloon(RectF{ 220, 420, 160, 120 }, Vec2{ 220, 580 }).draw(Palette::Skyblue);
+
+		// base には階段の最も高い段の底の端の座標を指定。steps は段数、upStairs を false にすると下りの階段に
+		Shape2D::Stairs(Vec2{ 560, 560 }, 120, 120, 4).draw(Palette::Skyblue);
+
+		Shape2D::Heart(80, Vec2{ 700, 500 }).draw(Palette::Skyblue);
+
+		// 第 3 引数は角の丸の分割品質
+		Shape2D::Squircle(60, Vec2{ 900, 500 }, 64).draw(Palette::Skyblue);
+	}
+}
 ```
 :::
 
@@ -477,10 +553,54 @@ class MultiPolygon
 ```
 - [📄MultiPolygon](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/MultiPolygon.hpp)
 
+GeoJSON ファイルからロードした国土情報は `MulitiPolygon` 型で管理されます。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/d4ade9491754-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	const Array<MultiPolygon> countries = GeoJSONFeatureCollection{ JSON::Load(U"example/geojson/countries.geojson") }.getFeatures()
+		.map([](const GeoJSONFeature& f) { return f.getGeometry().getPolygons(); });
+
+	Camera2D camera{ Vec2{ 0, 0 }, 2.0, Camera2DParameters{.maxScale = 4096.0 } };
+	Optional<size_t> selected;
+
+	while (System::Update())
+	{
+		camera.update();
+		{
+			const auto transformer = camera.createTransformer();
+			const double lineThickness = (1.0 / Graphics2D::GetMaxScaling());
+			const RectF viewRect = camera.getRegion();
+
+			Rect{ Arg::center(0, 0), 360, 180 }.draw(ColorF{ 0.2, 0.6, 0.9 }); // 海
+			{
+				for (auto&& [i, country] : Indexed(countries))
+				{
+					if (!country.computeBoundingRect().intersects(viewRect))
+					{
+						continue;
+					}
+
+					if (country.leftClicked())
+					{
+						selected = i;
+					}
+
+					country.draw((selected == i) ? ColorF{ 0.9, 0.8, 0.7 } : ColorF{ 0.93, 0.99, 0.96 });
+					country.drawFrame(lineThickness, ColorF{ 0.25 });
+				}
+			}
+		}
+		camera.draw(Palette::Orange);
+	}
+}
 ```
 :::
 
@@ -508,9 +628,37 @@ struct Bezier3
 - [📄Bezier3](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Bezier3.hpp)
 
 
-:::details サンプル
-```cpp
+`Bezier3` はノードベースの UI の表現に便利です。
 
+:::details サンプル
+![](https://storage.googleapis.com/zenn-user-upload/8d439fa9e20b-20221220.png)
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	const Rect rect1{ 100, 300, 200, 150 };
+
+	const Rect rect2{ 500, 100, 200, 150 };
+
+	while (System::Update())
+	{
+		rect1.draw(Palette::Skyblue);
+
+		rect2.draw(Palette::Skyblue);
+
+		const Vec2 a = rect1.rightCenter();
+
+		const Vec2 b = rect2.leftCenter();
+
+		Bezier3{ a, Vec2{ ((a.x + b.x) * 0.5), a.y }, Vec2{ ((a.x + b.x) * 0.5), b.y }, b }.draw(5);
+
+		a.asCircle(10).draw(Palette::Gray);
+
+		b.asCircle(10).draw(Palette::Gray);
+	}
+}
 ```
 :::
 
@@ -526,10 +674,37 @@ class LineString
 ```
 - [📄LineString](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/LineString.hpp)
 
+ある図形の輪郭の一部分を `LineString` で取得することができます。
 
 :::details サンプル
-```cpp
+https://twitter.com/Reputeless/status/1351193928104636417
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.15 });
+
+	const Polygon polygon0 = Shape2D::Plus(180, 100, Scene::Center().movedBy(-350, -120));
+	const Polygon polygon1 = Shape2D::Heart(180, Scene::Center().movedBy(0, 120));
+	const Polygon polygon2 = Shape2D::NStar(8, 180, 140, Scene::Center().movedBy(350, -120));
+
+	while (System::Update())
+	{
+		const double t = (Scene::Time() * 720);
+
+		polygon0.draw(ColorF{ 0.4 });
+		polygon0.outline(t, 200).draw(LineStyle::RoundCap, 8, ColorF{ 0, 1, 0.5 });
+
+		polygon1.draw(ColorF{ 0.4 });
+		polygon1.outline(t, 200).draw(LineStyle::RoundCap, 8, ColorF{ 0, 1, 0.5 });
+
+		polygon2.draw(ColorF{ 0.4 });
+		polygon2.outline(t, 200).draw(LineStyle::RoundCap, 8, ColorF{ 0, 1, 0.5 });
+	}
+}
 ```
 :::
 
@@ -544,11 +719,17 @@ class Spline2D
 ```
 - [📄Spline2D](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Spline2D.hpp)
 
+`Spline2D::calculateRoundBuffer()` を使うと、曲線を太らせて `Polygon` を作成することができます。`Polygon` からはナビメッシュを作成でき、道路を模したマップの経路探索に使えます。
+
 :::details サンプル
 ```cpp
 
 ```
 :::
+
+
+## Siv3D の図形関連の機能
+[Siv3D サンプル集 | アルゴリズムとデータ構造](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/sample-algorithm) が参考になります。
 
 
 ## それ以外のアイデア
