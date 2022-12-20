@@ -67,7 +67,7 @@ void Main()
 
 
 ## 円座標
-円座標 `(r, Θ)` を表現するクラスです。
+円座標 `(r, Θ)` を表現するクラスです。`Vec2` 型に暗黙変換できます。
 
 ```cpp
 struct Circular
@@ -102,12 +102,10 @@ void Main()
 	{
 		for (int32 i = 0; i < 12; ++i)
 		{
-			const double angle = (i * 30_deg);
-
 			// 画面の中心を中心とする半径 160 の円周上、30° ごとに円を描く
-			const Vec2 pos = OffsetCircular{ Scene::Center(), 160, angle };
+			const Vec2 pos = OffsetCircular{ Scene::Center(), 160, (i * 30_deg) };
 
-			Circle{ pos, 20 }.draw(HSV{ (i * 30) });
+			pos.asCircle(20).draw(HSV{ (i * 30) });
 		}
 	}
 }
@@ -127,11 +125,58 @@ struct Line
 ```
 - [📄Line](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Line.hpp)
 
-`Line::drawArrow()` で矢印を描くこともできます。
+線分にはいくつかのスタイルが用意されています。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/09c5e54334ed-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 通常の線
+		Line{ 100, 200, 700, 200 }.draw(12, Palette::Orange);
+
+		// 両端が丸い線
+		Line{ 100, 250, 700, 250 }.draw(LineStyle::RoundCap, 12, Palette::Orange);
+
+		// 四角いドットの線
+		Line{ 100, 300, 700, 300 }.draw(LineStyle::SquareDot, 12, Palette::Orange);
+
+		// 丸いドットの線
+		Line{ 100, 350, 700, 350 }.draw(LineStyle::RoundDot, 12, Palette::Orange);
+	}
+}
+```
+:::
+
+`Line::drawArrow()` や `Line::drawDoubleHeadedArrow()` で矢印を描くこともできます。
+
+:::details サンプル
+![](https://storage.googleapis.com/zenn-user-upload/5533397e10e5-20221220.png)
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 線の幅 10px, 三角の幅 20px, 高さ 20px の線分を描く
+		Line{ 50, 200, 200, 250 }.draw(5, Palette::Skyblue);
+
+		// 線の幅 10px, 三角の幅 40px, 高さ 80px の単方向矢印を描く
+		Line{ 350, 450, 450, 100 }
+			.drawArrow(10, Vec2{ 40, 80 }, Palette::Orange);
+
+		// 線の幅 8px, 三角の幅 30px, 高さ 30px の両方向矢印を描く
+		Line{ 600, 100, 700, 400 }
+			.drawDoubleHeadedArrow(8, Vec2{ 30, 30 }, Palette::Limegreen);
+	}
+}
 ```
 :::
 
