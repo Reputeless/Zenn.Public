@@ -722,8 +722,43 @@ class Spline2D
 `Spline2D::calculateRoundBuffer()` を使うと、曲線を太らせて `Polygon` を作成することができます。`Polygon` からはナビメッシュを作成でき、道路を模したマップの経路探索に使えます。
 
 :::details サンプル
-```cpp
+https://youtu.be/RSDZlDs2IFQ
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 0.8 });
+
+	Array<Vec2> points;
+	Polygon polygon;
+	LineString path;
+
+	constexpr NavMeshConfig config{ .agentRadius = 20.0 };
+	NavMesh navMesh;
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			points << Cursor::Pos();
+			polygon = Spline2D{ points }.calculateRoundBuffer(24, 8, 12);
+			navMesh.build(polygon, config);
+			path = navMesh.query(points.front(), points.back());
+		}
+
+		polygon.draw(ColorF{ 1.0 }).drawFrame(2, ColorF{ 0.7 });
+
+		if (path)
+		{
+			path.draw(8, ColorF{ 0.1, 0.5, 0.9 });
+			path.front().asCircle(12).draw(ColorF{ 1.0, 0.3, 0.0 });
+			path.back().asCircle(12).draw(ColorF{ 1.0, 0.3, 0.0 });
+		}
+	}
+}
 ```
 :::
 
@@ -733,7 +768,7 @@ class Spline2D
 
 
 ## それ以外のアイデア
-Siv3D では実装されていませんが、次のような図形クラスを定義することもできるでしょう。
+Siv3D では専用の機能として用意されていませんが、次のような図形クラスを定義することもできるでしょう。
 
 #### 角の r を個別に設定できる角丸長方形
 Siv3D の `RoundRect` ではすべての角が同じ r を共有するため、GUI などで使われる、1 つの辺に関する角のみが丸い長方形を表現できません。代わりに `Rect::rounded(double, double, double, double)` の戻り値である `Polygon` 型を用いる必要があります。
