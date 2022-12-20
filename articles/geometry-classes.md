@@ -38,6 +38,10 @@ struct Vec2
 using SizeF = Vec2;
 ```
 
+- [Point](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Point.hpp)
+- [Float2 / Vec2](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Vector2D.hpp)
+
+
 ## 円座標
 円座標 `(r, Θ)` を表現するクラスです。
 
@@ -55,6 +59,8 @@ struct OffsetCircular
 	double theta;
 };
 ```
+- [Circular](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Circular.hpp)
+- [OffsetCircular](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/OffsetCircular.hpp)
 
 ## 線分
 始点と終点で線分を表現するクラスです。
@@ -66,6 +72,9 @@ struct Line
 	Vec2 end;
 };
 ```
+- [Line](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Line.hpp)
+
+
 
 ## 円
 中心座標と半径で円を表現するクラスです。
@@ -87,6 +96,7 @@ struct Circle
 	double r;
 };
 ```
+- [Circle](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Circle.hpp)
 
 ## 長方形
 左上の座標と幅、高さで長方形を表現するクラスです。
@@ -142,6 +152,8 @@ struct RectF
 	};
 };
 ```
+- [Rect](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Rect.hpp)
+- [RectF](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/RectF.hpp)
 
 ## 三角形
 3 つの座標で三角形を表現するクラスです。
@@ -154,6 +166,7 @@ struct Triangle
 	Vec2 p2;
 };
 ```
+- [Triangle](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Triangle.hpp)
 
 ## 四角形
 4 つの座標で三角形を表現するクラスです。三角形分割の計算コスト節約のため、凹の角を持つことができない制約があります。
@@ -167,6 +180,7 @@ struct Quad
 	Vec2 p3;
 };
 ```
+- [Quad](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Quad.hpp)
 
 ## 楕円
 中心と x 軸、y 軸の径で楕円を表現するクラスです。
@@ -197,6 +211,7 @@ struct Ellipse
 	};
 };
 ```
+- [Ellipse](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Ellipse.hpp)
 
 ## 角丸長方形
 長方形と角の r で角丸長方形を表現するクラスです。
@@ -220,10 +235,10 @@ struct RoundRect
 	double r;
 };
 ```
+- [RoundRect](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Ellipse.hpp)
 
 ## 多角形
 外周を表現する頂点配列と、穴を表現する頂点配列の配列で、穴を持てる多角形を表現するクラスです。
-
 
 ```cpp
 class Polygon
@@ -231,10 +246,11 @@ class Polygon
 	// ...　実装略
 };
 ```
+- [Polygon](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Polygon.hpp)
+
 
 ## 多角形の集合
 `Polygon` の集合を表現するクラスです。個々の多角形は互いに重ならないことが期待されます。
-
 
 ```cpp
 class MultiPolygon
@@ -242,6 +258,8 @@ class MultiPolygon
 	Array<Polygon> m_data;
 };
 ```
+- [MultiPolygon](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/MultiPolygon.hpp)
+
 
 ## ベジェ曲線
 複数の制御点によりなめらかな曲線を表現するクラスです。
@@ -262,6 +280,9 @@ struct Bezier3
 	Vec2 p3;
 };
 ```
+- [Bezier2](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Bezier2.hpp)
+- [Bezier3](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Bezier3.hpp)
+
 
 ## 連続する線分
 複数の点を先頭から順につないでできる連続線分を表現するクラスです。
@@ -272,6 +293,8 @@ class LineString
 	Array<Vec2> m_data;
 };
 ```
+- [LineString](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/LineString.hpp)
+
 
 ## スプライン曲線
 指定した複数の点を必ず通過する Catmull-Rom スプライン曲線を表現するクラスです。
@@ -282,6 +305,7 @@ class Spline2D
 	// ...　実装略
 };
 ```
+- [Spline2D](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Spline2D.hpp)
 
 
 ## それ以外のアイデア
@@ -303,4 +327,4 @@ https://twitter.com/segawachobbies/status/1604496568664862720
 
 
 ## おわりに
-ライブラリやエンジンにおける 2D 図形の表現手法が充実すれば、開発者が画像データに頼らずに複雑な視覚表現をゲーム内に実装できます。副次的な効果として、アセットサイズの削減やメモリ消費量の削減にもつながります。使いやすい図形クラスのアイデアができたら、ぜひ共有してください。
+ライブラリやエンジンにおける 2D 図形の表現手法を充実させることで、開発者が画像データに頼らずに複雑な視覚表現をゲーム内に実装できます。副次的な効果として、アセットサイズの削減やメモリ消費量の削減にもつながります。使いやすい図形クラスのアイデアができたら、ぜひ共有してください。
