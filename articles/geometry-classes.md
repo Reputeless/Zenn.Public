@@ -44,6 +44,8 @@ using SizeF = Vec2;
 二次元ベクトルは大きさの表現にも使うことができますが、型を区別すると使い分けが面倒です。そこで `Size, SizeF` というエイリアスを提供しています。
 
 :::details サンプル
+![](https://storage.googleapis.com/zenn-user-upload/340b318c4eeb-20221220.png)
+
 ```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6.6
 
@@ -438,8 +440,20 @@ Siv3D では実装されていませんが、次のような図形クラスを�
 Siv3D の `RoundRect` ではすべての角が同じ r を共有するため、GUI などで使われる、1 つの辺に関する角のみが丸い長方形を表現できません。代わりに `Rect::rounded(double, double, double, double)` の戻り値である `Polygon` 型を用いる必要があります。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/3465915ac567-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	constexpr Rect rect{ 200, 100, 400, 60 };
+
+	while (System::Update())
+	{
+		rect.rounded(30, 30, 0, 0).draw(Palette::Skyblue);
+	}
+}
 ```
 :::
 
@@ -448,8 +462,22 @@ Siv3D の `RoundRect` ではすべての角が同じ r を共有するため、G
 Siv3D の `Ellipse` では傾きのある楕円を表現できないため、`Mat3x2` によるアフィン変換と組み合わせて描画します。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/cbdffafadd97-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	constexpr Ellipse ellipse{ 400, 300, 200, 100 };
+
+	while (System::Update())
+	{
+		const Transformer2D tr{ Mat3x2::Rotate(30_deg, ellipse.center) };
+
+		ellipse.draw(Palette::Seagreen);
+	}
+}
 ```
 :::
 
