@@ -1,5 +1,5 @@
 ---
-title: "Siv3D の 2D 図形クラスを俯瞰する"
+title: "Siv3D の 2D 図形クラスの簡単な紹介"
 emoji: "⏹️"
 type: "tech"
 topics: ["siv3d"]
