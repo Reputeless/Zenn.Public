@@ -8,10 +8,12 @@ published: false
 
 > この記事は [GameEngineDev Advent Calendar 2022](https://qiita.com/advent-calendar/2022/mygameengine) の参加記事です。
 
-C++ フレームワーク Siv3D では、複雑な視覚要素を短いコードで表現できます。2D 描画のコードに注目すると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスとその機能の一部を紹介します。
+C++ フレームワーク Siv3D では、複雑な視覚要素を短いコードで表現できます。2D 描画のコードに注目すると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その特徴的な機能の一部を紹介します。
 
 
 ## 二次元ベクトル
+二次元平面上での位置 `(x, y)` を表現するクラスです。
+
 ```cpp
 struct Point
 {
@@ -36,7 +38,9 @@ struct Vec2
 using SizeF = Vec2;
 ```
 
-## 極座標
+## 円座標
+円座標 `(r, Θ)` を表現するクラスです。
+
 ```cpp
 struct Circular
 {
@@ -53,6 +57,8 @@ struct OffsetCircular
 ```
 
 ## 線分
+始点と終点で線分を表現するクラスです。
+
 ```cpp
 struct Line
 {
@@ -62,6 +68,8 @@ struct Line
 ```
 
 ## 円
+中心座標と半径で円を表現するクラスです。
+
 ```cpp
 struct Circle
 {
@@ -81,6 +89,8 @@ struct Circle
 ```
 
 ## 長方形
+左上の座標と幅、高さで長方形を表現するクラスです。
+
 ```cpp
 struct Rect
 {
@@ -134,6 +144,8 @@ struct RectF
 ```
 
 ## 三角形
+3 つの座標で三角形を表現するクラスです。
+
 ```cpp
 struct Triangle
 {
@@ -144,6 +156,8 @@ struct Triangle
 ```
 
 ## 四角形
+4 つの座標で三角形を表現するクラスです。三角形分割の計算コスト節約のため、凹の角を持つことができない制約があります。
+
 ```cpp
 struct Quad
 {
@@ -155,6 +169,8 @@ struct Quad
 ```
 
 ## 楕円
+中心と x 軸、y 軸の径で楕円を表現するクラスです。
+
 ```cpp
 struct Ellipse
 {
@@ -183,6 +199,8 @@ struct Ellipse
 ```
 
 ## 角丸長方形
+長方形と角の r で角丸長方形を表現するクラスです。
+
 ```cpp
 struct RoundRect
 {
@@ -204,6 +222,9 @@ struct RoundRect
 ```
 
 ## 多角形
+外周を表現する頂点配列と、穴を表現する頂点配列の配列で、穴を持てる多角形を表現するクラスです。
+
+
 ```cpp
 class Polygon
 {
@@ -212,6 +233,9 @@ class Polygon
 ```
 
 ## 多角形の集合
+`Polygon` の集合を表現するクラスです。個々の多角形は互いに重ならないことが期待されます。
+
+
 ```cpp
 class MultiPolygon
 {
@@ -220,6 +244,8 @@ class MultiPolygon
 ```
 
 ## ベジェ曲線
+複数の制御点によりなめらかな曲線を表現するクラスです。
+
 ```cpp
 struct Bezier2
 {
@@ -238,6 +264,8 @@ struct Bezier3
 ```
 
 ## 連続する線分
+複数の点を先頭から順につないでできる連続線分を表現するクラスです。
+
 ```cpp
 class LineString
 {
@@ -246,6 +274,8 @@ class LineString
 ```
 
 ## スプライン曲線
+指定した複数の点を必ず通過する Catmull-Rom スプライン曲線を表現するクラスです。
+
 ```cpp
 class Spline2D
 {
