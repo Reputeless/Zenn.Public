@@ -8,7 +8,7 @@ published: false
 
 > この記事は [GameEngineDev Advent Calendar 2022](https://qiita.com/advent-calendar/2022/mygameengine) の参加記事です。
 
-C++ フレームワーク Siv3D では、複雑な視覚要素を短いコードで表現できます。とくに 2D 描画に注目すると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その機能の一部を紹介します。
+C++ フレームワーク Siv3D を使うと、複雑な視覚要素を短いコードで表現できます。とくに 2D 描画に注目してみると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その機能の一部を紹介します。
 
 
 ## 二次元ベクトル
@@ -107,9 +107,11 @@ struct Line
 
 `Line::drawArrow()` で矢印を描くこともできます。
 
+:::details サンプル
 ```cpp
 
 ```
+:::
 
 
 ## 円
@@ -133,6 +135,15 @@ struct Circle
 };
 ```
 - [📄Circle](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Circle.hpp)
+
+`Circle::drawPie()` で扇形を、`Circle::drawArc()` で円弧を描くことができます。
+
+:::details サンプル
+```cpp
+
+```
+:::
+
 
 ## 長方形
 左上の座標と幅、高さで長方形を表現するクラスです。
@@ -191,6 +202,13 @@ struct RectF
 - [📄Rect](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Rect.hpp)
 - [📄RectF](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/RectF.hpp)
 
+:::details サンプル
+```cpp
+
+```
+:::
+
+
 ## 三角形
 3 つの座標で三角形を表現するクラスです。
 
@@ -203,6 +221,13 @@ struct Triangle
 };
 ```
 - [📄Triangle](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Triangle.hpp)
+
+:::details サンプル
+```cpp
+
+```
+:::
+
 
 ## 四角形
 4 つの座標で三角形を表現するクラスです。三角形分割の計算コスト節約のため、凹の角を持つことができない制約があります。
@@ -217,6 +242,14 @@ struct Quad
 };
 ```
 - [📄Quad](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Quad.hpp)
+
+
+:::details サンプル
+```cpp
+
+```
+:::
+
 
 ## 楕円
 中心と x 軸、y 軸の径で楕円を表現するクラスです。
@@ -249,6 +282,7 @@ struct Ellipse
 ```
 - [📄Ellipse](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Ellipse.hpp)
 
+
 ## 角丸長方形
 長方形と角の r で角丸長方形を表現するクラスです。
 
@@ -273,6 +307,14 @@ struct RoundRect
 ```
 - [📄RoundRect](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Ellipse.hpp)
 
+
+:::details サンプル
+```cpp
+
+```
+:::
+
+
 ## 多角形
 外周を表現する頂点配列と、穴を表現する頂点配列の配列で、穴を持てる多角形を表現するクラスです。
 
@@ -285,10 +327,23 @@ class Polygon
 - [📄Polygon](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Polygon.hpp)
 
 
+:::details サンプル
+```cpp
+
+```
+:::
+
+
 ## 特別な多角形
 
 
 - [📄Shape2D](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Shape2D.hpp)
+
+:::details サンプル
+```cpp
+
+```
+:::
 
 
 ## 多角形の集合
@@ -301,6 +356,13 @@ class MultiPolygon
 };
 ```
 - [📄MultiPolygon](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/MultiPolygon.hpp)
+
+
+:::details サンプル
+```cpp
+
+```
+:::
 
 
 ## ベジェ曲線
@@ -326,6 +388,13 @@ struct Bezier3
 - [📄Bezier3](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Bezier3.hpp)
 
 
+:::details サンプル
+```cpp
+
+```
+:::
+
+
 ## 連続する線分
 複数の点を先頭から順につないでできる連続線分を表現するクラスです。
 
@@ -338,6 +407,12 @@ class LineString
 - [📄LineString](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/LineString.hpp)
 
 
+:::details サンプル
+```cpp
+
+```
+:::
+
 ## スプライン曲線
 指定した複数の点を必ず通過する Catmull-Rom スプライン曲線を表現するクラスです。
 
@@ -349,20 +424,39 @@ class Spline2D
 ```
 - [📄Spline2D](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Spline2D.hpp)
 
+:::details サンプル
+```cpp
+
+```
+:::
+
 
 ## それ以外のアイデア
 Siv3D では実装されていませんが、次のような図形クラスを定義することもできるでしょう。
 
-### 角の r を個別に設定できる角丸長方形
+#### 角の r を個別に設定できる角丸長方形
 Siv3D の `RoundRect` ではすべての角が同じ r を共有するため、GUI などで使われる、1 つの辺に関する角のみが丸い長方形を表現できません。代わりに `Rect::rounded(double, double, double, double)` の戻り値である `Polygon` 型を用いる必要があります。
 
-### 傾きのある楕円
+:::details サンプル
+```cpp
+
+```
+:::
+
+
+#### 傾きのある楕円
 Siv3D の `Ellipse` では傾きのある楕円を表現できないため、`Mat3x2` によるアフィン変換と組み合わせて描画します。
 
-### 直線
+:::details サンプル
+```cpp
+
+```
+:::
+
+#### 直線
 長方形や多角形を直線によって分割したい場合、直線を表現できるクラスがあると便利かもしれません。Siv3D の場合は `Line` の両端を無限に伸ばすと見なすことで直線を表現できます。
 
-### 連続するベジェ曲線
+#### 連続するベジェ曲線
 （参考）Siv3D Advent Calendar 2022, 19 日目の記事
 
 https://twitter.com/segawachobbies/status/1604496568664862720
