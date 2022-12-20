@@ -215,10 +215,12 @@ void Main()
 {
 	while (System::Update())
 	{
+		// 扇形
 		Circle{ 250, 300, 200 }
 			.drawPie(0_deg, 120_deg, Palette::White)
 			.drawPie(120_deg, 200_deg, Palette::Seagreen);
 
+		// 円弧
 		Circle{ 550, 300, 200 }
 			.drawArc(0_deg, 120_deg, 80, 0, Palette::Skyblue)
 			.drawArc(120_deg, 70_deg, 0, 20, Palette::Orange);
@@ -338,8 +340,10 @@ void Main()
 {
 	while (System::Update())
 	{
+		// 上向き正三角形
 		Triangle{ Vec2{ 400, 200 }, 240 }.draw(ColorF{ 1.0, 0.5, 0.5 });
 
+		// 下向き正三角形
 		Triangle{ Vec2{ 400, 400 }, 240, 180_deg }.draw(ColorF{ 0.5, 0.5, 1.0 });
 	}
 }
@@ -652,6 +656,7 @@ void Main()
 
 		const Vec2 b = rect2.leftCenter();
 
+		// 3 次ベジェ曲線を描く
 		Bezier3{ a, Vec2{ ((a.x + b.x) * 0.5), a.y }, Vec2{ ((a.x + b.x) * 0.5), b.y }, b }.draw(5);
 
 		a.asCircle(10).draw(Palette::Gray);
@@ -696,6 +701,7 @@ void Main()
 		const double t = (Scene::Time() * 720);
 
 		polygon0.draw(ColorF{ 0.4 });
+		// .outline() の戻り値は LineString
 		polygon0.outline(t, 200).draw(LineStyle::RoundCap, 8, ColorF{ 0, 1, 0.5 });
 
 		polygon1.draw(ColorF{ 0.4 });
