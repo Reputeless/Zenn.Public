@@ -43,6 +43,7 @@ using SizeF = Vec2;
 
 二次元ベクトルは大きさの表現にも使うことができますが、型を区別すると使い分けが面倒です。そこで `Size, SizeF` というエイリアスを提供しています。
 
+:::details サンプル
 ```cpp
 # include <Siv3D.hpp> // OpenSiv3D v0.6.6
 
@@ -60,6 +61,7 @@ void Main()
 	}
 }
 ```
+:::
 
 
 ## 円座標
@@ -84,9 +86,11 @@ struct OffsetCircular
 
 `OffsetCircular` は、ある座標を中心として、その周囲に円状に何かを配置するときに便利です。
 
+:::details サンプル
 ```cpp
 
 ```
+:::
 
 
 ## 線分
