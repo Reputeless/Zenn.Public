@@ -206,8 +206,24 @@ struct Circle
 `Circle::drawPie()` で扇形を、`Circle::drawArc()` で円弧を描くことができます。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/87c4580a8c8b-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	while (System::Update())
+	{
+		Circle{ 250, 300, 200 }
+			.drawPie(0_deg, 120_deg, Palette::White)
+			.drawPie(120_deg, 200_deg, Palette::Seagreen);
+
+		Circle{ 550, 300, 200 }
+			.drawArc(0_deg, 120_deg, 80, 0, Palette::Skyblue)
+			.drawArc(120_deg, 70_deg, 0, 20, Palette::Orange);
+	}
+}
 ```
 :::
 
@@ -269,9 +285,30 @@ struct RectF
 - [📄Rect](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Rect.hpp)
 - [📄RectF](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/RectF.hpp)
 
-:::details サンプル
-```cpp
+Siv3D 独自の名前付き引数機能を用いることで、グラデーションの表現ができます。
 
+:::details サンプル
+![](https://storage.googleapis.com/zenn-user-upload/cbfebdbc36bd-20221220.png)
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	while (System::Update())
+	{
+		// 通常の塗りつぶし
+		Rect{ 200, 100, 400, 100 }.draw(ColorF{ 0.8, 0.9, 1.0 });
+
+		// 左から右へのグラデーション
+		Rect{ 200, 220, 400, 100 }
+			.draw(Arg::left = Palette::Skyblue, Arg::right = Palette::Seagreen);
+
+		// 上から下へのグラデーション
+		Rect{ 200, 340, 400, 100 }
+			.draw(Arg::top = ColorF{ 1.0 }, Arg::bottom = ColorF{ 0.3 });
+	}
+}
 ```
 :::
 
@@ -289,9 +326,23 @@ struct Triangle
 ```
 - [📄Triangle](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Triangle.hpp)
 
-:::details サンプル
-```cpp
+3 頂点の位置指定ではなく、「重心、一辺の長さ、回転」から正三角形を構築するコンストラクタもあります。
 
+:::details サンプル
+![](https://storage.googleapis.com/zenn-user-upload/f3e06b5aa1c4-20221220.png)
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	while (System::Update())
+	{
+		Triangle{ 400, 200, 240 }.draw(ColorF{ 1.0, 0.5, 0.5 });
+
+		Triangle{ 400, 400, 240, 180_deg }.draw(ColorF{ 0.5, 0.5, 1.0 });
+	}
+}
 ```
 :::
 
@@ -310,6 +361,8 @@ struct Quad
 ```
 - [📄Quad](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Quad.hpp)
 
+
+`Rect::rotated()` から `Quad` を作ることもできます。
 
 :::details サンプル
 ```cpp
