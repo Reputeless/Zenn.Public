@@ -89,8 +89,28 @@ struct OffsetCircular
 `OffsetCircular` は、ある座標を中心として、その周囲に円状に何かを配置するときに便利です。
 
 :::details サンプル
-```cpp
+![](https://storage.googleapis.com/zenn-user-upload/64dcc953ea9f-20221220.png)
 
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	Scene::SetBackground(Palette::Whitesmoke);
+
+	while (System::Update())
+	{
+		for (int32 i = 0; i < 12; ++i)
+		{
+			const double angle = (i * 30_deg);
+
+			// 画面の中心を中心とする半径 160 の円周上、30° ごとに円を描く
+			const Vec2 pos = OffsetCircular{ Scene::Center(), 160, angle };
+
+			Circle{ pos, 20 }.draw(HSV{ (i * 30) });
+		}
+	}
+}
 ```
 :::
 
@@ -451,6 +471,7 @@ void Main()
 
 	while (System::Update())
 	{
+		// 左上、右上をそれぞれ r = 30px で丸めた Polygon を返す
 		rect.rounded(30, 30, 0, 0).draw(Palette::Skyblue);
 	}
 }
@@ -473,6 +494,7 @@ void Main()
 
 	while (System::Update())
 	{
+		// 楕円の中心を回転軸として時計回りに 30° 回転する座標変換を適用
 		const Transformer2D tr{ Mat3x2::Rotate(30_deg, ellipse.center) };
 
 		ellipse.draw(Palette::Seagreen);
