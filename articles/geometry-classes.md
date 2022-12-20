@@ -8,7 +8,7 @@ published: false
 
 > この記事は [GameEngineDev Advent Calendar 2022](https://qiita.com/advent-calendar/2022/mygameengine) の参加記事です。
 
-C++ フレームワーク Siv3D では、複雑な視覚要素を短いコードで表現できます。2D 描画のコードに注目すると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その特徴的な機能の一部を紹介します。
+C++ フレームワーク Siv3D では、複雑な視覚要素を短いコードで表現できます。とくに 2D 描画に注目すると、2D 図形を表現するクラスとそのメンバ関数が豊富に用意されていることがわかります。本記事では、自作ゲームライブラリ・エンジンで図形クラスを設計するための参考資料として、Siv3D の 2D 図形クラスと、その機能の一部を紹介します。
 
 
 ## 二次元ベクトル
@@ -41,6 +41,26 @@ using SizeF = Vec2;
 - [Point](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Point.hpp)
 - [Float2 / Vec2](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Vector2D.hpp)
 
+二次元ベクトルは大きさの表現にも使うことができますが、型を区別すると使い分けが面倒です。そこで `Size, SizeF` というエイリアスを提供しています。
+
+```cpp
+# include <Siv3D.hpp> // OpenSiv3D v0.6.6
+
+void Main()
+{
+	constexpr Size SceneSize{ 640, 480 };
+
+	Window::Resize(SceneSize);
+
+	while (System::Update())
+	{
+		// Scene::Center() はシーンの中心座標を Point 型で返す
+		// Point::asCircle(r) は、その座標を中心とする半径 r の Circle を作成する 
+		Scene::Center().asCircle(100).draw();
+	}
+}
+```
+
 
 ## 円座標
 円座標 `(r, Θ)` を表現するクラスです。
@@ -62,6 +82,13 @@ struct OffsetCircular
 - [Circular](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Circular.hpp)
 - [OffsetCircular](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/OffsetCircular.hpp)
 
+`OffsetCircular` は、ある座標を中心として、その周囲に円状に何かを配置するときに便利です。
+
+```cpp
+
+```
+
+
 ## 線分
 始点と終点で線分を表現するクラスです。
 
@@ -74,6 +101,11 @@ struct Line
 ```
 - [Line](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Line.hpp)
 
+`Line::drawArrow()` で矢印を描くこともできます。
+
+```cpp
+
+```
 
 
 ## 円
