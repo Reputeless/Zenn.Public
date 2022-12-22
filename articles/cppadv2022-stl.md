@@ -28,7 +28,7 @@ https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/s
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5714-L5720
 
-しかし、検索する範囲がメモリ連続であり、なおかつ要素が 1 バイトである場合は、副作用なしで単純な `memchr()` に置き換えることができ、コンパイラによる効率的なコードの生成を助けることができます。下記の部分が、その考えに基づいて以前から実装されていたコードです。
+検索する範囲がメモリ連続であり、なおかつ要素が 1 バイトである場合は、副作用なしで単純な `memchr()` に置き換えることができ、コンパイラによる効率的なコードの生成を助けることができます。下記の部分が、その考えに基づいて以前から実装されていたコードです。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5699-L5708
 
@@ -150,7 +150,7 @@ VS 2022 17.5 以降
 12
 ```
 
-C++ 規格は `uniform_int_distribution` のアルゴリズムを規定していないため、今後もこのような変更が起こりえます。互換性が重要な場合は自前の実装を用意するとよいでしょう（例えば Siv3D では [abseil](https://github.com/abseil/abseil-cpp) の `uniform_int_distribution` クラスを利用しているため、この変更の影響を受けません）。
+C++ 規格は `uniform_int_distribution` のアルゴリズムを規定していないため、今後もこのような変更が起こりえます。互換性が重要な場合は自前の実装を用意するとよいでしょう（例えば Siv3D は [abseil](https://github.com/abseil/abseil-cpp) の `uniform_int_distribution` クラスを利用しているため、この変更の影響を受けません）。
 
 
 ## おわりに
