@@ -1,6 +1,6 @@
 ---
 title: "MSVC STL の最近の改良"
-emoji: "🎄"
+emoji: "🚅"
 type: "tech"
 topics: ["cpp"]
 published: false
@@ -8,13 +8,13 @@ published: false
 
 > この記事は [C++ Advent Calendar 2022](https://qiita.com/advent-calendar/2022/cxx) 22 日目の参加記事です。
 
-Visual Studio の C++ 開発環境に同梱される C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、更新の様子を GitHub リポジトリで追跡できるようになりました。
+Visual Studio の C++ 開発環境に同梱される C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、GitHub リポジトリで更新の様子を追跡できるようになりました。
 
 https://github.com/microsoft/STL
 
-リポジトリ上のコードは、リリース版の Visual Studio よりも数ヶ月先行している点に注意が必要です。更新が反映されるタイミングは [Changelog](https://github.com/microsoft/STL/wiki/Changelog) で確認できます。
+リポジトリ上の最新コードは、リリース版の Visual Studio よりも数ヶ月ほど先行している点に注意が必要です。更新が反映されるタイミングは [Changelog](https://github.com/microsoft/STL/wiki/Changelog) で確認できます。
 
-本記事では、MSVC STL に最近導入された興味深い改良を 2 つ紹介します。
+本記事では、MSVC STL のリポジトリで確認できる、最近実装された興味深い改良を 2 つ紹介します。
 
 ## 1. アルゴリズム関数のベクトル演算対応
 
@@ -26,7 +26,7 @@ https://github.com/microsoft/STL/pull/2434
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5678-L5721
 
-メモリ上で非連続な範囲（例えば `std::deque`）、非 Trivial な要素型 (例えば `std::string`）にも対応するための汎用的な実装は下記の部分です。
+メモリ非連続な範囲（例えば `std::deque`）、非 Trivial な要素型 (例えば `std::string`）にも対応するための汎用的な実装は下記の部分です。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5714-L5720
 
@@ -38,7 +38,7 @@ https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/s
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5682-L5697
 
-ここで呼ばれる `__std_find_trivial()` は最終的に次のような関数を呼び出します。
+`__std_find_trivial()` は最終的に次のような関数を呼び出します。
 
 https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/stl/src/vector_algorithms.cpp#L1270-L1315
 
@@ -46,7 +46,7 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 
 #### ベンチマーク
 
-配列 `T[8192]` から `std::ranges::find()` で要素を検索する処理 1,000,000 回の所要時間を計測した [ベンチマーク](https://github.com/microsoft/STL/pull/2434#:~:text=%F0%9F%8F%81,Perf%20benchmark) によると、2～9 倍の実行速度向上効果が報告されています。
+配列 `T[8192]` から `std::ranges::find()` で要素を検索する処理 1,000,000 回の所要時間を計測した [ベンチマーク](https://github.com/microsoft/STL/pull/2434#:~:text=%F0%9F%8F%81,Perf%20benchmark) によると、ベクトル演算の対応によって 2～9 倍の実行速度向上効果が報告されています。
 
 |配列 | 従来 | SIMD 実装 | 速度向上 |
 |:--|--|--|--|
@@ -57,7 +57,7 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 
 
 #### ベクトル演算に対応した関数
-`std::find()` 以外にも、ベクトル演算の対応が進んでいます。下記に現時点での状況をまとめます。
+`std::find()` 以外の関数でもベクトル演算対応が進んでいます。下記に現時点での状況をまとめます。
 
 | 関数 | 対応バージョン |
 |--|--|
@@ -79,7 +79,7 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 |`std::minmax_element()` | VS 2022 17.4 |
 |`std::ranges::minmax_element()` | VS 2022 17.4 |
 
-リポジトリ Issues から、次のような関数のベクトル演算化が検討されていることがわかります。
+リポジトリの Issues から、次のような関数でもベクトル演算対応が検討されていることがわかります。
 
 | 関数 | 関連 Issue |
 |--|--|
@@ -94,8 +94,13 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 
 ## 2. 乱数の一様分布アルゴリズムの高速化
 
+C++ で指定した範囲の乱数を得るときに使う `std::uniform_int_distribution` は C++11 で導入されました。
+
+
 https://github.com/microsoft/STL/pull/3012
 
 
 ## おわりに
-本記事では標準ライブラリ実装の高速化に注目しましたが、MSVC STL の Changelog および関連 Issues は、変更内容やその目的などが読みやすく整理されていて、C++ 規格の学習や、C++ におけるライブラリ設計の良い参考資料になります。ぜひ活用してみてください。
+今回紹介したように、標準ライブラリの関数は高度な最適化が行われていて、自前でループを書くよりも数倍高速に実行されるケースがあります。こうした標準ライブラリ実装の改良の恩恵を受けられるようになっているか、自身のコードを見直してみるとよいでしょう。
+
+本記事では、標準ライブラリ実装の高速化に注目しましたが、MSVC STL の Changelog および関連 Issues は、変更内容やその目的などが読みやすく整理されていて、C++ 規格の学習や、C++ におけるライブラリ設計の良い参考資料になります。ぜひ活用してみてください。
