@@ -8,7 +8,7 @@ published: false
 
 > この記事は [C++ Advent Calendar 2022](https://qiita.com/advent-calendar/2022/cxx) 22 日目の参加記事です。
 
-Visual Studio の C++ 開発環境に同梱される C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、GitHub リポジトリで更新の様子を追跡できるようになりました。
+Visual Studio の C++ 開発環境に含まれる C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、GitHub リポジトリで更新の様子を追跡できるようになりました。
 
 https://github.com/microsoft/STL
 
@@ -22,11 +22,11 @@ https://github.com/microsoft/STL/pull/2434
 
 範囲に対して検索の操作を行うアルゴリズム関数の一部が、適切な条件を満たす場合に、ベクトル演算 (SIMD) を用いて実行されるようになりました。
 
-記事執筆時点での MSVC STL では、`std::find()` の内部で次のような関数が呼ばれます。
+記事執筆時点での最新の MSVC STL では、`std::find()` は内部で次のような関数を呼びます。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5678-L5721
 
-メモリ非連続な範囲（例えば `std::deque`）や非 Trivial な要素型 (例えば `std::string`）にも対応する汎用的な実装は下記の部分です。
+メモリ非連続な範囲（例えば `std::deque`）や非 Trivial な要素型 (例えば `std::string`）にも対応する汎用的な `find()` の実装は下記の部分です。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5714-L5720
 
@@ -57,7 +57,7 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 
 
 #### ベクトル演算に対応した関数
-`std::find()` 以外の関数についても、ベクトル演算対応が進んでいます。下記に現時点での状況をまとめます。
+`std::find()` 以外の関数についても、ベクトル演算対応が進められています。下記に現時点での状況をまとめます。
 
 | 関数 | 対応バージョン |
 |--|--|
@@ -94,8 +94,19 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 
 ## 2. 乱数の一様分布アルゴリズムの高速化
 
-C++ で指定した範囲の乱数を得るときに使う `std::uniform_int_distribution` は C++11 で導入されました。
+乱数生成器から、一定の範囲に一様分布する整数を得るときには、C++11 で導入された `std::uniform_int_distribution` を使います。その内部で使えるアルゴリズムについて、2019 年に新しい高速な方法が発表されました。
 
+https://lemire.me/blog/2019/06/06/nearly-divisionless-random-integer-generation-on-various-systems/
+
+- 論文: https://arxiv.org/abs/1805.10941
+
+基本的には除算を減らしたことが高速化に貢献しています。次の記事に概要がまとまっています。
+
+https://lemire.me/blog/2019/09/28/doubling-the-speed-of-stduniform_int_distribution-in-the-gnu-c-library/
+
+この改良アルゴリズムは、2020 年に [libstdc++ にマージ](https://gcc.gnu.org/git/?p=gcc.git;a=blobdiff;f=libstdc%2B%2B-v3/include/bits/uniform_int_dist.h;h=ecb8574864aee10b9ea164379fffef27c7bdb0df;hp=6e1e3d5fc5fe8f7f22e62a85b35dc8bfa4743372;hb=98c37d3bacbb2f8bbbe56ed53a9547d3be01b66b;hpb=6ce2cb116af6e0965ff0dd69e7fd1925cf5dc68c) され、[約 2 倍の速度向上](https://lemire.me/blog/2019/09/28/doubling-the-speed-of-stduniform_int_distribution-in-the-gnu-c-library/)が報告されました。
+
+MSVC STL においてもそのアルゴリズムを採用することになり、VS 2022 17.5 であたらしい実装がマージされました。下記の Conversation では、およそ 1～2 倍前後の高速化、とくに x86 では `std::mt19937`, x64 では `std::mt19937_64` とターゲットプラットフォームに合った乱数生成器を使ったときに効果が顕著であったことが報告されています。
 
 https://github.com/microsoft/STL/pull/3012
 
