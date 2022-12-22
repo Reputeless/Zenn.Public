@@ -26,7 +26,7 @@ https://github.com/microsoft/STL/pull/2434
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5678-L5721
 
-メモリ非連続な範囲（例えば `std::deque`）、非 Trivial な要素型 (例えば `std::string`）にも対応するための汎用的な実装は下記の部分です。
+メモリ非連続な範囲（例えば `std::deque`）や非 Trivial な要素型 (例えば `std::string`）にも対応する汎用的な実装は下記の部分です。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5714-L5720
 
@@ -57,7 +57,7 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 
 
 #### ベクトル演算に対応した関数
-`std::find()` 以外の関数でもベクトル演算対応が進んでいます。下記に現時点での状況をまとめます。
+`std::find()` 以外の関数についても、ベクトル演算対応が進んでいます。下記に現時点での状況をまとめます。
 
 | 関数 | 対応バージョン |
 |--|--|
@@ -79,7 +79,7 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 |`std::minmax_element()` | VS 2022 17.4 |
 |`std::ranges::minmax_element()` | VS 2022 17.4 |
 
-リポジトリの Issues から、次のような関数でもベクトル演算対応が検討されていることがわかります。
+リポジトリの Issues から、次のような関数についてもベクトル演算対応が検討されていることがわかります。
 
 | 関数 | 関連 Issue |
 |--|--|
@@ -101,6 +101,11 @@ https://github.com/microsoft/STL/pull/3012
 
 
 ## おわりに
-今回紹介したように、標準ライブラリの関数は高度な最適化が行われていて、自前でループを書くよりも数倍高速に実行されるケースがあります。こうした標準ライブラリ実装の改良の恩恵を受けられるようになっているか、自身のコードを見直してみるとよいでしょう。
+今回紹介したように、標準ライブラリの関数は高度な最適化が行われていて、自前でループを書くよりも数倍高速に実行されるケースがあります。こうした標準ライブラリ実装の改良の恩恵を受けられるよう、自身のコードを見直してみるとよいでしょう。
 
 本記事では、標準ライブラリ実装の高速化に注目しましたが、MSVC STL の Changelog および関連 Issues は、変更内容やその目的などが読みやすく整理されていて、C++ 規格の学習や、C++ におけるライブラリ設計の良い参考資料になります。ぜひ活用してみてください。
+
+https://github.com/microsoft/STL/wiki/Changelog
+
+https://github.com/microsoft/STL/issues
+
