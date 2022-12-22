@@ -6,7 +6,7 @@ topics: ["cpp"]
 published: true
 ---
 
-> この記事は [C++ Advent Calendar 2022](https://qiita.com/advent-calendar/2022/cxx) 22 日目の参加記事です。
+> この記事は [C++ Advent Calendar 2022](https://qiita.com/advent-calendar/2022/cxx) 23 日目の参加記事です。
 
 Microsoft Visual Studio の C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、GitHub 上で更新の様子を追跡できるようになりました。
 
