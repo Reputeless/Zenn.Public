@@ -8,52 +8,33 @@ published: false
 
 > この記事は [C++ Advent Calendar 2022](https://qiita.com/advent-calendar/2022/cxx) 22 日目の参加記事です。
 
-Visual Studio の C++ 開発環境に同梱される C++ 標準ライブラリは、2019 年 9 月にオープンソース化され、ライブラリの更新の様子を GitHub リポジトリで追跡できるようになりました。
+Visual Studio の C++ 開発環境に同梱される C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、更新の様子を GitHub リポジトリで追跡できるようになりました。
 
 https://github.com/microsoft/STL
 
-リポジトリ上のコードは、リリース版の Visual Studio よりも数ヶ月先行している点に注意が必要です。更新が反映されるタイミングは [Changelog](https://github.com/microsoft/STL/wiki/Changelog) にまとめられています。
+リポジトリ上のコードは、リリース版の Visual Studio よりも数ヶ月先行している点に注意が必要です。更新が反映されるタイミングは [Changelog](https://github.com/microsoft/STL/wiki/Changelog) で確認できます。
 
-本記事では、MSVC の標準ライブラリの実装に、直近で導入された興味深い改良を 3 つ紹介します。
+本記事では、MSVC STL に最近導入された興味深い改良を 2 つ紹介します。
 
 ## 1. アルゴリズム関数のベクトル演算対応
 
 https://github.com/microsoft/STL/pull/2434
 
-範囲に対して検索や操作を行うアルゴリズム関数の一部が、適切な条件を満たす場合に、ベクトル演算 (SIMD) を用いて実行されるようになりました。
+範囲に対して検索の操作を行うアルゴリズム関数の一部が、適切な条件を満たす場合に、ベクトル演算 (SIMD) を用いて実行されるようになりました。
 
-例えば、最新の MSVC STL では `std::find()` の内部で次のような関数が呼ばれます。
+記事執筆時点での MSVC STL では、`std::find()` の内部で次のような関数が呼ばれます。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5678-L5721
 
 メモリ上で非連続な範囲（例えば `std::deque`）、非 Trivial な要素型 (例えば `std::string`）にも対応するための汎用的な実装は下記の部分です。
 
-```cpp
-for (; _First != _Last; ++_First) {
-	if (*_First == _Val) {
-		break;
-	}
-}
+https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5714-L5720
 
-return _First;
-```
+しかし、検索する範囲がメモリ連続であり、なおかつ要素が 1 バイトである場合は、副作用なしで単純な `memchr()` に置き換えることができ、コンパイラによる効率的なコードの生成を助けることができます。下記の部分が、その考えに基づいて従来まで実装されていたコードです。
 
-しかし、検索する範囲がメモリ連続であり、なおかつ要素が 1 バイトである場合は、副作用なしで単純な `memchr()` に置き換えて、コンパイラによる効率的なコードの生成を助けることができます。下記の部分が、その考えに基づいて従来まで実装されていたコードです。
+https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5699-L5708
 
-```cpp
-if constexpr (sizeof(_Iter_value_t<_InIt>) == 1) {
-	const auto _First_ptr = _To_address(_First);
-	const auto _Result    = static_cast<remove_reference_t<_Iter_ref_t<_InIt>>*>(
-		_CSTD memchr(_First_ptr, static_cast<unsigned char>(_Val), static_cast<size_t>(_Last - _First)));
-	if constexpr (is_pointer_v<_InIt>) {
-		return _Result ? _Result : _Last;
-	} else {
-		return _Result ? _First + (_Result - _First_ptr) : _Last;
-	}
-}
-```
-
-しかし、1 バイトの要素を検索するような機会は多くなく、この最適化が役に立つケースは限定的でした。VS 2022 17.3 では、1, 2, 4, 8 バイトの整数型、ポインタ型、`std::byte` を検索する際に、SSE2 または AVX2 命令を用いるような実装が追加されました。
+しかし、1 バイトの要素を検索するような機会は多くなく、この最適化が役に立つケースは限定的でした。VS 2022 17.3 では、1, 2, 4, 8 バイトの整数型、ポインタ型、`std::byte` を検索する際に、SSE2 または AVX2 命令を用いる実装が新たに追加されました。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5682-L5697
 
@@ -61,7 +42,11 @@ https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/s
 
 https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/stl/src/vector_algorithms.cpp#L1270-L1315
 
-配列 `T[8192]` から `std::ranges::count()` で要素を検索する処理を 1,000,000 回行うのにかかった時間を計測した [ベンチマーク](https://github.com/microsoft/STL/pull/2434#:~:text=%F0%9F%8F%81,Perf%20benchmark) によると、実行速度は 2～9 倍向上しています。
+該当ソースファイルを開いて全体を読むと、`_mm_cmpeq_epi32()` や `_mm256_cmpeq_epi32()` のような SSE2 / AVX2 の整数比較命令が呼ばれることがわかります。
+
+#### ベンチマーク
+
+配列 `T[8192]` から `std::ranges::find()` で要素を検索する処理 1,000,000 回の所要時間を計測した [ベンチマーク](https://github.com/microsoft/STL/pull/2434#:~:text=%F0%9F%8F%81,Perf%20benchmark) によると、2～9 倍の実行速度向上効果が報告されています。
 
 |配列 | 従来 | SIMD 実装 | 速度向上 |
 |:--|--|--|--|
@@ -71,17 +56,46 @@ https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/s
 | `std::uint64_t[8192]` | 0.975016s	 | 0.357151s | 2.73 倍 |
 
 
+#### ベクトル演算に対応した関数
+`std::find()` 以外にも、ベクトル演算の対応が進んでいます。下記に現時点での状況をまとめます。
+
+| 関数 | 対応バージョン |
+|--|--|
+|`std::swap_ranges()` | VS 2022 以前 |
+|`std::ranges::swap_ranges()` | VS 2022 以前 |
+|`std::array::swap()` | VS 2022 以前 |
+|`std::reverse()` | VS 2022 以前 |
+|`std::ranges::reverse()` | VS 2022 以前 |
+|`std::reverse_copy()` | VS 2022 以前 |
+|`std::ranges::reverse_copy()` | VS 2022 以前 |
+|`std::find()` | VS 2022 17.3 |
+|`std::ranges::find()` | VS 2022 17.3 |
+|`std::count()` | VS 2022 17.3 |
+|`std::ranges::count()` | VS 2022 17.3 |
+|`std::min_element()` | VS 2022 17.4 |
+|`std::ranges::min_element()` | VS 2022 17.4 |
+|`std::max_element()` | VS 2022 17.4 |
+|`std::ranges::max_element()` | VS 2022 17.4 |
+|`std::minmax_element()` | VS 2022 17.4 |
+|`std::ranges::minmax_element()` | VS 2022 17.4 |
+
+リポジトリ Issues から、次のような関数のベクトル演算化が検討されていることがわかります。
+
+| 関数 | 関連 Issue |
+|--|--|
+|`std::search()` | [#2453](https://github.com/microsoft/STL/issues/2453) |
+|`std::ranges::search()` | [#2453](https://github.com/microsoft/STL/issues/2453) |
+|`std::ranges::min()` | [#2803](https://github.com/microsoft/STL/issues/2803) |
+|`std::ranges::max()` | [#2803](https://github.com/microsoft/STL/issues/2803) |
+|`std::ranges::minmax()` | [#2803](https://github.com/microsoft/STL/issues/2803) |
+|`std::find_last()` | [#3274](https://github.com/microsoft/STL/issues/3274) |
+|`std::ranges::find_last()` | [#3274](https://github.com/microsoft/STL/issues/3274) |
 
 
-## 2. 演算子の Hidden friends 対応
-
-https://github.com/microsoft/STL/pull/2797
-
-
-## 3. 乱数の一様分布アルゴリズムの高速化
+## 2. 乱数の一様分布アルゴリズムの高速化
 
 https://github.com/microsoft/STL/pull/3012
 
 
 ## おわりに
-MSVC STL の Changelog および関連 Issues は読みやすく整理されているため、C++ 最新規格の学習や、C++ におけるライブラリ設計の参考資料になります。ぜひ活用してみてください。
+本記事では標準ライブラリ実装の高速化に注目しましたが、MSVC STL の Changelog および関連 Issues は、変更内容やその目的などが読みやすく整理されていて、C++ 規格の学習や、C++ におけるライブラリ設計の良い参考資料になります。ぜひ活用してみてください。
