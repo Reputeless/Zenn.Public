@@ -24,7 +24,7 @@ https://github.com/microsoft/STL
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5678-L5721
 
-メモリ非連続な範囲（例えば `std::deque`）や非 Trivial な要素型 (例えば `std::string`）にも対応する汎用的な `find()` の実装は下記の部分です。
+メモリ非連続な範囲（例えば `std::deque`）や非 Trivial な要素型 (例えば要素が `std::string`）にも対応する汎用的な `find()` の実装は下記の部分です。
 
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5714-L5720
 
