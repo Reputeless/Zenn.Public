@@ -8,17 +8,15 @@ published: false
 
 > この記事は [C++ Advent Calendar 2022](https://qiita.com/advent-calendar/2022/cxx) 22 日目の参加記事です。
 
-Visual Studio の C++ 開発環境に含まれる C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、GitHub リポジトリで更新の様子を追跡できるようになりました。
+Microsoft Visual Studio の C++ 開発環境に含まれる C++ 標準ライブラリ (MSVC STL) は、2019 年 9 月にオープンソース化され、GitHub 上で更新の様子を追跡できるようになりました。
 
 https://github.com/microsoft/STL
 
-リポジトリ上の最新コードは、リリース版の Visual Studio よりも数ヶ月ほど先行している点に注意が必要です。更新が反映されるタイミングは [Changelog](https://github.com/microsoft/STL/wiki/Changelog) で確認できます。
+リポジトリの最新コードは、リリース版の Visual Studio よりも数ヶ月ほど先行している点に注意が必要です。更新が反映されるタイミングは [Changelog](https://github.com/microsoft/STL/wiki/Changelog) で確認できます。
 
-本記事では、MSVC STL のリポジトリで確認できる、最近実装された興味深い改良を 2 つ紹介します。
+本記事では、上記リポジトリで確認できる、最近実装された興味深い改良を 2 つ紹介します。
 
 ## 1. アルゴリズム関数のベクトル演算対応
-
-https://github.com/microsoft/STL/pull/2434
 
 範囲に対して検索の操作を行うアルゴリズム関数の一部が、適切な条件を満たす場合に、ベクトル演算 (SIMD) を用いて実行されるようになりました。
 
@@ -36,17 +34,20 @@ https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/s
 
 しかし、1 バイトの要素を検索するような機会は多くなく、この最適化が役に立つケースは限定的でした。VS 2022 17.3 では、1, 2, 4, 8 バイトの整数型、ポインタ型、`std::byte` を検索する際に、SSE2 または AVX2 命令を用いる実装が新たに追加されました。
 
+https://github.com/microsoft/STL/pull/2434
+
+該当箇所は次の部分です。
+
 https://github.com/microsoft/STL/blob/cae666016151ec3392fb7170639e0e4fcb9c548c/stl/inc/xutility#L5682-L5697
 
 `__std_find_trivial()` は最終的に次のような関数を呼び出します。
 
 https://github.com/microsoft/STL/blob/8ddf4da23939b5c65587ed05f783ff39b8801e0f/stl/src/vector_algorithms.cpp#L1270-L1315
 
-該当ソースファイルを開いて全体を読むと、`_mm_cmpeq_epi32()` や `_mm256_cmpeq_epi32()` のような SSE2 / AVX2 の整数比較命令が呼ばれることがわかります。
+`vector_algorithms.cpp` 全体を読むと、`_mm_cmpeq_epi32()` や `_mm256_cmpeq_epi32()` のような SSE2 / AVX2 の整数比較命令が呼ばれることがわかります。
 
 #### ベンチマーク
-
-配列 `T[8192]` から `std::ranges::find()` で要素を検索する処理 1,000,000 回の所要時間を計測した [ベンチマーク](https://github.com/microsoft/STL/pull/2434#:~:text=%F0%9F%8F%81,Perf%20benchmark) によると、ベクトル演算の対応によって 2～9 倍の実行速度向上効果が報告されています。
+`std::ranges::find()` によって配列 `T[8192]` から要素を検索する処理 1,000,000 回の所要時間を計測した [ベンチマーク](https://github.com/microsoft/STL/pull/2434#:~:text=%F0%9F%8F%81,Perf%20benchmark) によると、ベクトル演算対応によって 2～9 倍の実行速度向上効果が報告されています。
 
 |配列 | 従来 | SIMD 実装 | 速度向上 |
 |:--|--|--|--|
@@ -100,19 +101,60 @@ https://lemire.me/blog/2019/06/06/nearly-divisionless-random-integer-generation-
 
 - 論文: https://arxiv.org/abs/1805.10941
 
-基本的には除算を減らしたことが高速化に貢献しています。次の記事に概要がまとまっています。
+基本的には除算の削減が高速化に貢献しています。次の記事に概要がまとまっています。
 
 https://lemire.me/blog/2019/09/28/doubling-the-speed-of-stduniform_int_distribution-in-the-gnu-c-library/
 
 この改良アルゴリズムは、2020 年に [libstdc++ にマージ](https://gcc.gnu.org/git/?p=gcc.git;a=blobdiff;f=libstdc%2B%2B-v3/include/bits/uniform_int_dist.h;h=ecb8574864aee10b9ea164379fffef27c7bdb0df;hp=6e1e3d5fc5fe8f7f22e62a85b35dc8bfa4743372;hb=98c37d3bacbb2f8bbbe56ed53a9547d3be01b66b;hpb=6ce2cb116af6e0965ff0dd69e7fd1925cf5dc68c) され、[約 2 倍の速度向上](https://lemire.me/blog/2019/09/28/doubling-the-speed-of-stduniform_int_distribution-in-the-gnu-c-library/)が報告されました。
 
-MSVC STL においてもそのアルゴリズムを採用することになり、VS 2022 17.5 であたらしい実装がマージされました。下記の Conversation では、およそ 1～2 倍前後の高速化、とくに x86 では `std::mt19937`, x64 では `std::mt19937_64` とターゲットプラットフォームに合った乱数生成器を使ったときに効果が顕著であったことが報告されています。
+MSVC STL においても、そのアルゴリズムを採用することになり、VS 2022 17.5 でマージされました。下記の Conversation では、およそ 1～2 倍前後の高速化と、とくに x86 では `std::mt19937`, x64 では `std::mt19937_64` のようにターゲットプラットフォームに合った乱数生成器と組み合わせたときに効果が顕著であったことが報告されています。
 
 https://github.com/microsoft/STL/pull/3012
 
+https://github.com/microsoft/STL/blob/c31ca543af44d2a84d07c9ac73c41e9676c89517/stl/inc/random#L1747-L1794
+
+### アルゴリズム変更に伴う注意
+アルゴリズムの変更に伴い、MSVC STL の `std::uniform_int_distribution` は、過去バージョンとは異なる結果のパターンを出力します。
+
+```cpp
+#include <iostream>
+#include <random>
+
+int main()
+{
+	std::mt19937 rng;
+	std::uniform_int_distribution<int> ud{ 0, 100 };
+
+	for (int i = 0; i < 5; ++i)
+	{
+		std::cout << ud(rng) << '\n';
+	}
+}
+```
+
+VS 2022 17.4 まで
+```txt
+53
+20
+50
+22
+63
+```
+
+VS 2022 17.5 以降
+```txt
+82
+13
+91
+84
+12
+```
+
+C++ 規格は `uniform_int_distribution` のアルゴリズムを規定していないため、今後もこのような変更が起こりえます。互換性が重要な場合は自前の実装を用意するとよいでしょう（例えば Siv3D では [abseil](https://github.com/abseil/abseil-cpp) の `uniform_int_distribution` クラスを利用しています）。
+
 
 ## おわりに
-今回紹介したように、標準ライブラリの関数は高度な最適化が行われていて、自前でループを書くよりも数倍高速に実行されるケースがあります。こうした標準ライブラリ実装の改良の恩恵を受けられるよう、自身のコードを見直してみるとよいでしょう。
+今回紹介した例のように、標準ライブラリの関数は高度な最適化が行われていて、自前でループを書くよりも数倍高速に実行されるケースがあります。こうした標準ライブラリ実装の改良の恩恵を受けられるよう、自身のコードを見直してみましょう。
 
 本記事では、標準ライブラリ実装の高速化に注目しましたが、MSVC STL の Changelog および関連 Issues は、変更内容やその目的などが読みやすく整理されていて、C++ 規格の学習や、C++ におけるライブラリ設計の良い参考資料になります。ぜひ活用してみてください。
 
