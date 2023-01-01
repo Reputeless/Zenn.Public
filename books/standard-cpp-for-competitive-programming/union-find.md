@@ -3,7 +3,7 @@ title: "Union-Find"
 free: true
 ---
 
-C++ 標準ライブラリを用いた Union-Find (別名: Disjoint-set) の実装です。
+C++ 標準ライブラリを用いた、**Union-Find** (別名: Disjoint-set) の実装です。
 
 
 # 1. Union-Find のテンプレート

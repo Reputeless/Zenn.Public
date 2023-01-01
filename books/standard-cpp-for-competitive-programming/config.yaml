@@ -12,6 +12,7 @@ chapters:
   - library-tuple
   - library-ios-iomanip
   - union-find
+  - weighted-union-find
   - lis
   - binary-indexed-tree
   - bellman-ford

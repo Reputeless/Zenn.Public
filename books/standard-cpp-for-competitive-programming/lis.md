@@ -3,7 +3,7 @@ title: "最長増加部分列 (LIS)"
 free: true
 ---
 
-C++ 標準ライブラリを用いた最長増加部分列 (LIS: Longest Increasing Subsequence) の実装です。
+C++ 標準ライブラリを用いた、**最長増加部分列** (LIS: Longest Increasing Subsequence) の実装です。
 
 
 # 1. 最長増加部分列 (LIS) のテンプレート

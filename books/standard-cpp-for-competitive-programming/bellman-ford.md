@@ -3,7 +3,7 @@ title: "ベルマンフォード法"
 free: true
 ---
 
-C++ 標準ライブラリを用いたベルマンフォード法 (Bellman–Ford algorithm) の実装です。
+C++ 標準ライブラリを用いた、**ベルマンフォード法** (Bellman–Ford algorithm) の実装です。
 
 
 # 1. ベルマンフォード法のテンプレート

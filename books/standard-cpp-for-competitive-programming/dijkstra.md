@@ -3,7 +3,7 @@ title: "ダイクストラ法"
 free: true
 ---
 
-C++ 標準ライブラリを用いたダイクストラ法 (Dijkstra algorithm) の実装です。
+C++ 標準ライブラリを用いた、**ダイクストラ法** (Dijkstra algorithm) の実装です。
 
 
 # 1. ダイクストラ法のテンプレート

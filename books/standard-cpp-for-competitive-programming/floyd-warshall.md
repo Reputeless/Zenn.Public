@@ -3,7 +3,7 @@ title: "ワーシャルフロイド法"
 free: true
 ---
 
-C++ 標準ライブラリを用いたワーシャルフロイド法 (Floyd–Warshall Algorithm) の実装です。
+C++ 標準ライブラリを用いた、**ワーシャルフロイド法** (Floyd–Warshall Algorithm) の実装です。
 
 
 # 1. ワーシャルフロイド法のテンプレート
