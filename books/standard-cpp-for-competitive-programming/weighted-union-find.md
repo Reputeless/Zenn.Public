@@ -3,7 +3,7 @@ title: "重み付き Union-Find"
 free: true
 ---
 
-C++ 標準ライブラリを用いた、**重み付き Union-Find** の実装です。
+C++ 標準ライブラリを用いた、**重み付き Union-Find**（ポテンシャル付き Union-Find）の実装です。
 
 
 # 1. 重み付き Union-Find のテンプレート
