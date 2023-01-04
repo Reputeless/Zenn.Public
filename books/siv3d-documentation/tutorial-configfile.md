@@ -9,7 +9,7 @@ free: true
 | ファイル形式 | 読み込みクラス | 書き出しクラス |
 |--|:--:|:--:|
 | CSV | `CSV` | `CSV` |
-| INI | `CSV` | `CSV` |
+| INI | `INI` | `INI` |
 | JSON | `JSON` | `JSON` |
 | TOML | `TOMLReader` |  |
 | XML | `XMLReader` |  |
