@@ -24,21 +24,26 @@ C++ 標準ライブラリを用いた、**Union-Find** (別名: Disjoint-set) �
 #include <vector>
 #include <numeric> // std::iota()
 
-// Union-Find 木 (1.1 シンプルな実装)
+/// @brief Union-Find 木
+/// @note 1.1 シンプルな実装
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/union-find
 class UnionFind
 {
 public:
 
 	UnionFind() = default;
 
-	// n 個の要素
+	/// @brief Union-Find 木を構築します。
+	/// @param n 要素数
 	explicit UnionFind(size_t n)
 		: m_parents(n)
 	{
 		std::iota(m_parents.begin(), m_parents.end(), 0);
 	}
 
-	// i の root を返す
+	/// @brief 頂点 i の root のインデックスを返します。
+	/// @param i 調べる頂点のインデックス
+	/// @return 頂点 i の root のインデックス
 	int find(int i)
 	{
 		if (m_parents[i] == i)
@@ -50,7 +55,9 @@ public:
 		return (m_parents[i] = find(m_parents[i]));
 	}
 
-	// a の木と b の木を統合
+	/// @brief a のグループと b のグループを統合します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
 	void merge(int a, int b)
 	{
 		a = find(a);
@@ -62,7 +69,10 @@ public:
 		}
 	}
 
-	// a と b が同じ木に属すかを返す
+	/// @brief a と b が同じグループに属すかを返します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
+	/// @return a と b が同じグループに属す場合 true, それ以外の場合は false
 	bool connected(int a, int b)
 	{
 		return (find(a) == find(b));
@@ -87,14 +97,17 @@ private:
 #include <vector>
 #include <numeric> // std::iota()
 
-// Union-Find 木 (1.2 グループの要素数取得対応)
+/// @brief Union-Find 木
+/// @note 1.2 グループの要素数取得対応
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/union-find
 class UnionFind
 {
 public:
 
 	UnionFind() = default;
 
-	// n 個の要素
+	/// @brief Union-Find 木を構築します。
+	/// @param n 要素数
 	explicit UnionFind(size_t n)
 		: m_parents(n)
 		, m_sizes(n, 1)
@@ -102,7 +115,9 @@ public:
 		std::iota(m_parents.begin(), m_parents.end(), 0);
 	}
 
-	// i の root を返す
+	/// @brief 頂点 i の root のインデックスを返します。
+	/// @param i 調べる頂点のインデックス
+	/// @return 頂点 i の root のインデックス
 	int find(int i)
 	{
 		if (m_parents[i] == i)
@@ -114,7 +129,9 @@ public:
 		return (m_parents[i] = find(m_parents[i]));
 	}
 
-	// a の木と b の木を統合
+	/// @brief a のグループと b のグループを統合します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
 	void merge(int a, int b)
 	{
 		a = find(a);
@@ -127,13 +144,18 @@ public:
 		}
 	}
 
-	// a と b が同じ木に属すかを返す
+	/// @brief a と b が同じグループに属すかを返します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
+	/// @return a と b が同じグループに属す場合 true, それ以外の場合は false
 	bool connected(int a, int b)
 	{
 		return (find(a) == find(b));
 	}
 
-	// i が属するグループの要素数を返す
+	/// @brief i が属するグループの要素数を返します。
+	/// @param i インデックス
+	/// @return i が属するグループの要素数
 	int size(int i)
 	{
 		return m_sizes[find(i)];
@@ -163,14 +185,17 @@ private:
 #include <numeric> // std::iota()
 #include <utility> // std::swap()
 
-// Union-Find 木 (1.3 高速化)
+/// @brief Union-Find 木
+/// @note 1.3 高速化
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/union-find
 class UnionFind
 {
 public:
 
 	UnionFind() = default;
 
-	// n 個の要素
+	/// @brief Union-Find 木を構築します。
+	/// @param n 要素数
 	explicit UnionFind(size_t n)
 		: m_parents(n)
 		, m_sizes(n, 1)
@@ -178,7 +203,9 @@ public:
 		std::iota(m_parents.begin(), m_parents.end(), 0);
 	}
 
-	// i の root を返す
+	/// @brief 頂点 i の root のインデックスを返します。
+	/// @param i 調べる頂点のインデックス
+	/// @return 頂点 i の root のインデックス
 	int find(int i)
 	{
 		if (m_parents[i] == i)
@@ -190,7 +217,9 @@ public:
 		return (m_parents[i] = find(m_parents[i]));
 	}
 
-	// a の木と b の木を統合
+	/// @brief a のグループと b のグループを統合します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
 	void merge(int a, int b)
 	{
 		a = find(a);
@@ -209,13 +238,18 @@ public:
 		}
 	}
 
-	// a と b が同じ木に属すかを返す
+	/// @brief a と b が同じグループに属すかを返します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
+	/// @return a と b が同じグループに属す場合 true, それ以外の場合は false
 	bool connected(int a, int b)
 	{
 		return (find(a) == find(b));
 	}
 
-	// i が属するグループの要素数を返す
+	/// @brief i が属するグループの要素数を返します。
+	/// @param i インデックス
+	/// @return i が属するグループの要素数
 	int size(int i)
 	{
 		return m_sizes[find(i)];
