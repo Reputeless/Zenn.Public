@@ -13,6 +13,7 @@ chapters:
   - library-ios-iomanip
   - union-find
   - weighted-union-find
+  - minimum-spanning-tree
   - lis
   - binary-indexed-tree
   - bellman-ford

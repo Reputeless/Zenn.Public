@@ -244,18 +244,23 @@ private:
 #include <vector>
 #include <utility> // std::swap()
 
-// Union-Find 木 (1.4 高速化 + 省メモリ化)
+/// @brief Union-Find 木
+/// @note 1.4 高速化 + 省メモリ化
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/union-find
 class UnionFind
 {
 public:
 
 	UnionFind() = default;
 
-	// n 個の要素
+	/// @brief Union-Find 木を構築します。
+	/// @param n 要素数
 	explicit UnionFind(size_t n)
 		: m_parentsOrSize(n, -1) {}
 
-	// i の root を返す
+	/// @brief 頂点 i の root のインデックスを返します。
+	/// @param i 調べる頂点のインデックス
+	/// @return 頂点 i の root のインデックス
 	int find(int i)
 	{
 		if (m_parentsOrSize[i] < 0)
@@ -267,7 +272,9 @@ public:
 		return (m_parentsOrSize[i] = find(m_parentsOrSize[i]));
 	}
 
-	// a の木と b の木を統合
+	/// @brief a のグループと b のグループを統合します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
 	void merge(int a, int b)
 	{
 		a = find(a);
@@ -286,13 +293,18 @@ public:
 		}
 	}
 
-	// a と b が同じ木に属すかを返す
+	/// @brief a と b が同じグループに属すかを返します。
+	/// @param a 一方のインデックス
+	/// @param b 他方のインデックス
+	/// @return a と b が同じグループに属す場合 true, それ以外の場合は false
 	bool connected(int a, int b)
 	{
 		return (find(a) == find(b));
 	}
 
-	// i が属するグループの要素数を返す
+	/// @brief i が属するグループの要素数を返します。
+	/// @param i インデックス
+	/// @return i が属するグループの要素数
 	int size(int i)
 	{
 		return -m_parentsOrSize[find(i)];
