@@ -3,8 +3,13 @@ title: "謝辞"
 free: true
 ---
 
+### 本書の購入者
+
 有料版を購入してくださった皆様、ありがとうございます。執筆の励みになります。  
-本書の内容についてコメント・アドバイスをしてくださった以下の皆様にも感謝いたします。（ABC 順）
+
+### 本書の内容への貢献
+
+本書の内容についてコメント・アドバイスをしてくださった以下の皆様に感謝いたします。（ABC 順）
 - [@atree4728](https://twitter.com/atree4728) さん
   - [typo 報告](https://twitter.com/atree4728/status/1389898648880697345)
 - [@tatyam_prime](https://twitter.com/tatyam_prime) さん
