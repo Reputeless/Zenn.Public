@@ -1023,7 +1023,7 @@ void Main()
 
 
 ## トランプを描く
-トランプカードを描く機能が用意されています。詳しくは `<Siv3D/Experimental/PlayingCard.hpp>` を参照してください。
+トランプカードを描く機能が用意されています。詳しくは `<Siv3D/PlayingCard.hpp>` を参照してください。
 
 ![](/images/doc_v6/sample/game/playingcard.png)
 ```cpp
