@@ -12,21 +12,27 @@ C++ 標準ライブラリを用いた、**最長増加部分列** (LIS: Longest 
 |----|:----:|:----:|:----:|:----:|
 | 最長増加部分列の長さを取得する（狭義単調増加） | ✅ | ✅ | ✅ | ✅ |
 | 最長増加部分列の長さを取得する（広義単調増加） |   | ✅ | ✅ | ✅ |
-| 途中の最長増加部分列の長さを取得する |   |   | ✅ |   |
+| 途中経過も含んだ最長増加部分列の長さを取得する |   |   | ✅ |   |
 | 最長増加部分列を復元する |  |   |   | ✅ |
 
 
-## 1.1 最長増加部分列の長さの取得
+## 1.1 最長増加部分列の長さの取得（狭義単調増加）
 :::details コード
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound()
 
-// 最長増加部分列 (LIS)  (1.1 最長増加部分列の長さの取得)
-size_t LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）の長さを返します（狭義単調増加）
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）の長さ
+/// @note 1.1 最長増加部分列の長さの取得（狭義単調増加）
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <class Type>
+size_t LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	for (const auto& elem : v)
 	{
@@ -44,27 +50,47 @@ size_t LIS(const std::vector<int>& v)
 
 	return dp.size();
 }
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		//std::cin >> a;
+	}
+
+	std::cout << LIS(A) << '\n';
+}
 ```
 
-- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/34664512)
+- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/38212598)
 :::
 
 
-## 1.2 狭義 / 広義単調増加の両対応
+## 1.2 最長増加部分列の長さの取得
 :::details コード
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound(), std::upper_bound()
 
-// 最長増加部分列 (LIS)  (1.2 狭義 / 広義単調増加の両対応)
-template <bool Strict> // 狭義の場合 true, 広義の場合 false
-size_t LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）の長さを返します
+/// @tparam Strict 狭義単調増加の場合 true, 広義単調増加の場合 false
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）の長さ
+/// @note 1.2 最長増加部分列の長さの取得
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <bool Strict, class Type>
+size_t LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	auto it = dp.begin();
-	
+
 	for (const auto& elem : v)
 	{
 		if constexpr (Strict)
@@ -88,30 +114,50 @@ size_t LIS(const std::vector<int>& v)
 
 	return dp.size();
 }
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		//std::cin >> a;
+	}
+
+	std::cout << LIS<true>(A) << '\n';
+}
 ```
 
-- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/34664553)
+- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/38213392)
 :::
 
 
-## 1.3 途中の最長増加部分列の長さの記録
+## 1.3 途中経過も含んだ最長増加部分列の長さの取得
 :::details コード
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound(), std::upper_bound()
 
-// 最長増加部分列 (LIS)  (1.3 途中の最長増加部分列の長さの記録)
-template <bool Strict> // 狭義の場合 true, 広義の場合 false
-std::vector<size_t> LIS(const std::vector<int>& v)
+/// @brief 途中経過も含む, 最長増加部分列（LIS）の長さを返します
+/// @tparam Strict 狭義単調増加の場合 true, 広義単調増加の場合 false
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 途中経過も含む, 最長増加部分列（LIS）の長さ
+/// @note 1.3 途中経過も含んだ最長増加部分列の長さの取得
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <bool Strict, class Type>
+std::vector<size_t> LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	auto it = dp.begin();
 
-	// 途中の最長増加部分列の長さを記録する配列
+	// 最長増加部分列の長さの途中経過を記録する配列
 	std::vector<size_t> counts;
-	
+
 	for (const auto& elem : v)
 	{
 		if constexpr (Strict)
@@ -137,9 +183,23 @@ std::vector<size_t> LIS(const std::vector<int>& v)
 
 	return counts;
 }
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		//std::cin >> a;
+	}
+
+	std::cout << LIS<true>(A).back() << '\n';
+}
 ```
 
-- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/34664583) / [競プロ典型 90 問 - 060](https://atcoder.jp/contests/typical90/submissions/34664610)
+- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/38215082) / [競プロ典型 90 問 - 060](https://atcoder.jp/contests/typical90/submissions/38215295)
 :::
 
 
@@ -148,14 +208,19 @@ std::vector<size_t> LIS(const std::vector<int>& v)
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound(), std::upper_bound()
 
-// 最長増加部分列 (LIS)  (1.4 最長増加部分列の復元)
-// 部分列のインデックスの配列を返す
-template <bool Strict> // 狭義の場合 true, 広義の場合 false
-std::vector<int> LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）のインデックスを返します
+/// @tparam Strict 狭義単調増加の場合 true, 広義単調増加の場合 false
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）のインデックス
+/// @note 1.4 最長増加部分列の復元
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <bool Strict, class Type>
+std::vector<int> LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	auto it = dp.begin();
 
@@ -204,9 +269,23 @@ std::vector<int> LIS(const std::vector<int>& v)
 
 	return subseq;
 }
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		//std::cin >> a;
+	}
+
+	std::cout << LIS<true>(A).size() << '\n';
+}
 ```
 
-- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/34665272) / [Library Checker](https://judge.yosupo.jp/submission/103378)
+- [Chokudai SpeedRun 001 H](https://atcoder.jp/contests/chokudai_S001/submissions/38216003) / [Library Checker](https://judge.yosupo.jp/submission/122430)
 :::
 
 
@@ -217,12 +296,18 @@ std::vector<int> LIS(const std::vector<int>& v)
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound()
 
-// 最長増加部分列 (LIS)  (1.1 最長増加部分列の長さの取得)
-size_t LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）の長さを返します（狭義単調増加）
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）の長さ
+/// @note 1.1 最長増加部分列の長さの取得（狭義単調増加）
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <class Type>
+size_t LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	for (const auto& elem : v)
 	{
@@ -263,12 +348,18 @@ int main()
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound()
 
-// 最長増加部分列 (LIS)  (1.1 最長増加部分列の長さの取得)
-size_t LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）の長さを返します（狭義単調増加）
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）の長さ
+/// @note 1.1 最長増加部分列の長さの取得（狭義単調増加）
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <class Type>
+size_t LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	for (const auto& elem : v)
 	{
@@ -308,12 +399,18 @@ int main()
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound()
 
-// 最長増加部分列 (LIS)  (1.1 最長増加部分列の長さの取得)
-size_t LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）の長さを返します（狭義単調増加）
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）の長さ
+/// @note 1.1 最長増加部分列の長さの取得（狭義単調増加）
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <class Type>
+size_t LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	for (const auto& elem : v)
 	{
@@ -354,19 +451,25 @@ int main()
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound(), std::upper_bound()
 
-// 最長増加部分列 (LIS)  (1.3 途中の最長増加部分列の長さの記録)
-template <bool Strict> // 狭義の場合 true, 広義の場合 false
-std::vector<size_t> LIS(const std::vector<int>& v)
+/// @brief 途中経過も含む, 最長増加部分列（LIS）の長さを返します
+/// @tparam Strict 狭義単調増加の場合 true, 広義単調増加の場合 false
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 途中経過も含む, 最長増加部分列（LIS）の長さ
+/// @note 1.3 途中経過も含んだ最長増加部分列の長さの取得
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <bool Strict, class Type>
+std::vector<size_t> LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	auto it = dp.begin();
 
-	// 途中の最長増加部分列の長さを記録する配列
+	// 最長増加部分列の長さの途中経過を記録する配列
 	std::vector<size_t> counts;
-	
+
 	for (const auto& elem : v)
 	{
 		if constexpr (Strict)
@@ -430,13 +533,19 @@ int main()
 ```cpp
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // std::lower_bound(), std::upper_bound()
 
-// 最長増加部分列 (LIS)  (1.2 狭義 / 広義単調増加の両対応)
-template <bool Strict> // 狭義の場合 true, 広義の場合 false
-size_t LIS(const std::vector<int>& v)
+/// @brief 最長増加部分列（LIS）の長さを返します
+/// @tparam Strict 狭義単調増加の場合 true, 広義単調増加の場合 false
+/// @tparam Type 数列の要素の型
+/// @param v 数列
+/// @return 最長増加部分列（LIS）の長さ
+/// @note 1.2 最長増加部分列の長さの取得
+/// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/lis
+template <bool Strict, class Type>
+size_t LIS(const std::vector<Type>& v)
 {
-	std::vector<int> dp;
+	std::vector<Type> dp;
 
 	auto it = dp.begin();
 
@@ -488,18 +597,17 @@ int main()
 ```cpp
 #include <iostream>
 #include <vector>
-#include <utility>
-#include <algorithm>
+#include <algorithm> // std::lower_bound()
+#include <utility> // std::pair
 
-// 最長増加部分列 (LIS)  (1.1 最長増加部分列の長さの取得)
 size_t LIS(const std::vector<std::pair<int, int>>& v)
 {
 	std::vector<int> dp;
-
+ 
 	for (const auto& elem : v)
 	{
 		auto it = std::lower_bound(dp.begin(), dp.end(), elem.second);
-
+ 
 		if (it == dp.end())
 		{
 			dp.push_back(elem.second);
@@ -509,7 +617,7 @@ size_t LIS(const std::vector<std::pair<int, int>>& v)
 			*it = elem.second;
 		}
 	}
-
+ 
 	return dp.size();
 }
 
@@ -546,10 +654,9 @@ int main()
 ```cpp
 #include <iostream>
 #include <vector>
-#include <utility>
-#include <algorithm>
+#include <algorithm> // std::lower_bound()
+#include <utility> // std::pair
 
-// 最長増加部分列 (LIS)  (1.1 最長増加部分列の長さの取得)
 size_t LIS(const std::vector<std::pair<int, int>>& v)
 {
 	std::vector<int> dp;
