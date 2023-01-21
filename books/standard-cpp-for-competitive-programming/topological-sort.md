@@ -109,11 +109,11 @@ int main()
 /// @return トポロジカルソートの結果。グラフが閉路を含む場合は空の配列
 /// @note 1.2 幅優先探索を用いたトポロジカルソート
 /// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/topological-sort
-std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
+std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 {
-	std::vector<int> indegrees(grpah.size());
+	std::vector<int> indegrees(graph.size());
 
-	for (const auto& v : grpah)
+	for (const auto& v : graph)
 	{
 		for (const auto& to : v)
 		{
@@ -123,7 +123,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 	std::queue<int> q;
 
-	for (int i = 0; i < (int)grpah.size(); ++i)
+	for (int i = 0; i < (int)graph.size(); ++i)
 	{
 		if (indegrees[i] == 0)
 		{
@@ -139,7 +139,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 		result.push_back(from);
 
-		for (const auto& to : grpah[from])
+		for (const auto& to : graph[from])
 		{
 			if (--indegrees[to] == 0)
 			{
@@ -148,7 +148,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 		}
 	}
 
-	if (result.size() != grpah.size())
+	if (result.size() != graph.size())
 	{
 		return{};
 	}
@@ -196,11 +196,11 @@ int main()
 /// @return トポロジカルソートの結果で辞書順最小のもの。グラフが閉路を含む場合は空の配列
 /// @note 1.3 トポロジカルソートの結果で辞書順最小のもの
 /// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/topological-sort
-std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
+std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 {
-	std::vector<int> indegrees(grpah.size());
+	std::vector<int> indegrees(graph.size());
 
-	for (const auto& v : grpah)
+	for (const auto& v : graph)
 	{
 		for (const auto& to : v)
 		{
@@ -210,7 +210,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 	std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
 
-	for (int i = 0; i < (int)grpah.size(); ++i)
+	for (int i = 0; i < (int)graph.size(); ++i)
 	{
 		if (indegrees[i] == 0)
 		{
@@ -226,7 +226,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 		result.push_back(from);
 
-		for (const auto& to : grpah[from])
+		for (const auto& to : graph[from])
 		{
 			if (--indegrees[to] == 0)
 			{
@@ -235,7 +235,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 		}
 	}
 
-	if (result.size() != grpah.size())
+	if (result.size() != graph.size())
 	{
 		return{};
 	}
@@ -267,7 +267,7 @@ int main()
 ```
 
 - [AOJ GRL_4_B - Topological Sort](https://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=7367006#2)
-- [ABC 223 D - Restricted Permutation](https://atcoder.jp/contests/abc223/submissions/38205807)
+- [ABC 223 D - Restricted Permutation](https://atcoder.jp/contests/abc223/submissions/38229991)
 :::
 
 
@@ -286,11 +286,11 @@ int main()
 /// @return トポロジカルソートの結果。閉路を含む場合は空の配列
 /// @note 1.2 幅優先探索によるトポロジカルソート
 /// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/topological-sort
-std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
+std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 {
-	std::vector<int> indegrees(grpah.size());
+	std::vector<int> indegrees(graph.size());
 
-	for (const auto& v : grpah)
+	for (const auto& v : graph)
 	{
 		for (const auto& to : v)
 		{
@@ -300,7 +300,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 	std::queue<int> q;
 
-	for (int i = 0; i < (int)grpah.size(); ++i)
+	for (int i = 0; i < (int)graph.size(); ++i)
 	{
 		if (indegrees[i] == 0)
 		{
@@ -316,7 +316,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 		result.push_back(from);
 
-		for (const auto& to : grpah[from])
+		for (const auto& to : graph[from])
 		{
 			if (--indegrees[to] == 0)
 			{
@@ -325,7 +325,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 		}
 	}
 
-	if (result.size() != grpah.size())
+	if (result.size() != graph.size())
 	{
 		return{};
 	}
@@ -372,11 +372,11 @@ int main()
 /// @return トポロジカルソートの結果。閉路を含む場合は空の配列
 /// @note 1.2 幅優先探索によるトポロジカルソート
 /// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/topological-sort
-std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
+std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 {
-	std::vector<int> indegrees(grpah.size());
+	std::vector<int> indegrees(graph.size());
 
-	for (const auto& v : grpah)
+	for (const auto& v : graph)
 	{
 		for (const auto& to : v)
 		{
@@ -386,7 +386,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 	std::queue<int> q;
 
-	for (int i = 0; i < (int)grpah.size(); ++i)
+	for (int i = 0; i < (int)graph.size(); ++i)
 	{
 		if (indegrees[i] == 0)
 		{
@@ -402,7 +402,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 		result.push_back(from);
 
-		for (const auto& to : grpah[from])
+		for (const auto& to : graph[from])
 		{
 			if (--indegrees[to] == 0)
 			{
@@ -411,7 +411,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 		}
 	}
 
-	if (result.size() != grpah.size())
+	if (result.size() != graph.size())
 	{
 		return{};
 	}
@@ -473,11 +473,11 @@ int main()
 /// @return トポロジカルソートの結果で辞書順最小のもの。グラフが閉路を含む場合は空の配列
 /// @note 1.3 トポロジカルソートの結果で辞書順最小のものを得る
 /// @see https://zenn.dev/reputeless/books/standard-cpp-for-competitive-programming/viewer/topological-sort
-std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
+std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 {
-	std::vector<int> indegrees(grpah.size());
+	std::vector<int> indegrees(graph.size());
 
-	for (const auto& v : grpah)
+	for (const auto& v : graph)
 	{
 		for (const auto& to : v)
 		{
@@ -487,7 +487,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 	std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
 
-	for (int i = 0; i < (int)grpah.size(); ++i)
+	for (int i = 0; i < (int)graph.size(); ++i)
 	{
 		if (indegrees[i] == 0)
 		{
@@ -503,7 +503,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 
 		result.push_back(from);
 
-		for (const auto& to : grpah[from])
+		for (const auto& to : graph[from])
 		{
 			if (--indegrees[to] == 0)
 			{
@@ -512,7 +512,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& grpah)
 		}
 	}
 
-	if (result.size() != grpah.size())
+	if (result.size() != graph.size())
 	{
 		return{};
 	}

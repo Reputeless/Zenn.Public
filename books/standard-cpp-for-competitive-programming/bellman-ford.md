@@ -293,7 +293,7 @@ using Graph = std::vector<std::vector<Edge>>;
 // ベルマンフォード法 (1.4 SPFA 基本実装)
 // 負閉路が存在する場合 true を返す
 // distances は頂点数と同じサイズ, 全要素 INF で初期化しておく
-bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex)
+bool SPFA(const Graph& graph, std::vector<long long>& distances, int startIndex)
 {
 	const size_t N = distances.size();
 	std::vector<int> counts(N);
@@ -309,7 +309,7 @@ bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex)
 		const int from = q.front(); q.pop();
 		inqueue[from] = false;
 
-		for (const auto& edge : grpah[from])
+		for (const auto& edge : graph[from])
 		{
 			// to までの新しい距離
 			const long long d = (distances[from] + edge.cost);
@@ -365,7 +365,7 @@ using Graph = std::vector<std::vector<Edge>>;
 // 負閉路が存在する場合 true を返す
 // 負閉路が存在しない場合, 頂点 startIndex から頂点 targetIndex の最短経路を path に格納する
 // distances は頂点数と同じサイズ, 全要素 INF で初期化しておく
-bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex, int targetIndex, std::vector<int>& path)
+bool SPFA(const Graph& graph, std::vector<long long>& distances, int startIndex, int targetIndex, std::vector<int>& path)
 {
 	const size_t N = distances.size();
 	std::vector<int> counts(N);
@@ -384,7 +384,7 @@ bool SPFA(const Graph& grpah, std::vector<long long>& distances, int startIndex,
 		const int from = q.front(); q.pop();
 		inqueue[from] = false;
 
-		for (const auto& edge : grpah[from])
+		for (const auto& edge : graph[from])
 		{
 			// to までの新しい距離
 			const long long d = (distances[from] + edge.cost);
