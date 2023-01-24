@@ -904,7 +904,7 @@ cat
 
 ## 7.3 末尾に別の配列を追加する
 - `.insert(it, itFirst, itLast)` は、イテレータ `it` が指す位置の前に範囲 `[itFirst, itLast)` の要素を追加します
-- 終端位置のイテレータを返す `.begin()` と、追加したい配列の `.begin() / .end()` を組み合わせることで末尾に別の配列を追加できます
+- 終端位置のイテレータを返す `.end()` と、追加したい配列の `.begin() / .end()` を組み合わせることで末尾に別の配列を追加できます
 ```cpp
 #include <iostream>
 #include <string>
