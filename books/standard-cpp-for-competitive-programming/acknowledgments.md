@@ -19,5 +19,7 @@ free: true
   - [対象読者の記述について](https://twitter.com/TumoiYorozu/status/1386544434255253514)
 - [@wx257osn2](https://twitter.com/wx257osn2) さん
   - [`tuple` の型推論における std::string リテラルの使用](https://twitter.com/wx257osn2/status/1494638817587851271)
+- [@yurahuna](https://github.com/yurahuna) さん
+  - [関数名の修正](https://github.com/Reputeless/Zenn.Public/pull/17)
 - 匿名の方
   - ハッシュ関数の実装について
