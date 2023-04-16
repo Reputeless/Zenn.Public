@@ -145,7 +145,7 @@ Windows では　`Resource.rc` から該当ファイルをコメントアウト�
 | `engine/font/noto-emoji/NotoEmoji-Regular.ttf.zstdcmp` | `Typeface::MonochromeEmoji` や `Print` 内での絵文字を使用していない場合 |
 | `engine/font/fontawesome/fontawesome-brands.otf.zstdcmp` | `Typeface::Icon_Awesome_Brand` や `Icon` を使用していない場合 |
 | `engine/font/fontawesome/fontawesome-solid.otf.zstdcmp` | `Typeface::Icon_Awesome_Solid` や `Icon` を使用していない場合 |
-| `engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp` | `Typeface::Icon_MaterialDesign` や `Icon` を使用していない場合 |
+| `engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp` | SimpleGUI 内のアイコンや、`Typeface::Icon_MaterialDesign` や `Icon` を使用していない場合 |
 | `engine/soundfont/GMGSx.sf2.zstdcmp` | `GMInstrument` や `MIDI` ファイルの読み込みを使用しない場合 |
 
 これらのファイルは、もともと Siv3D プログラムの実行時にローカルのパソコンにキャッシュされます。例えばプログラムで `Typeface::Heavy` を使っているのに `engine/font/mplus/mplus-1p-heavy.ttf.zstdcmp` を埋め込まなかった際、プログラムはパソコンに保存された以前のキャッシュからフォントを読み込むことで、手元の環境では問題なく表示されることがあることに注意してください。Windows の場合、Siv3D アプリのキャッシュフォルダは `ユーザ名/AppData/Local/Siv3D/` (隠しフォルダ) に作成されます。初使用のユーザの環境を再現する目的で、この Siv3D キャッシュフォルダの中身は安全に削除することができます。
