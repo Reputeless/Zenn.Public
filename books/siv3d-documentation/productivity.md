@@ -53,6 +53,6 @@ void Main()
 
 ### 1.3 出力メッセージを色付けする
 
-Visual Studio の拡張機能「[VSColorOutput](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput)」を使うと、出力ウィンドウ内で "warning" や "error" が含まれているメッセージが色付けされ、警告やエラーなどの重要な情報を見つけやすくなります。
+Visual Studio の拡張機能「[VSColorOutput](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64)」を使うと、出力ウィンドウ内で "warning" や "error" が含まれているメッセージが色付けされ、警告やエラーなどの重要な情報を見つけやすくなります。
 
 ![](/images/doc_v6/technique/productivity/vscoloroutput.png)
