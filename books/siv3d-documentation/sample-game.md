@@ -435,12 +435,6 @@ Vec2 GenerateEnemy()
 
 void Main()
 {
-	while (System::Update())
-	{
-		if (Scene::Time() > 8)
-			break;
-	}
-
 	Scene::SetBackground(ColorF{ 0.1, 0.2, 0.7 });
 
 	const Font font{ 30 };
