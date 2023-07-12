@@ -18,4 +18,4 @@ Siv3D のオープンソース開発を継続・加速させ、Siv3D 作品制�
 - [sknjpn](https://twitter.com/sknjpn)
 
 #### Bronze Sponsor
-アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda, 🌻, fal_rnd, As Project
+アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda, 🌻, fal_rnd, As Project, 🍑
