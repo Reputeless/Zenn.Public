@@ -17,7 +17,8 @@ C++ 標準ライブラリは、任意の文字型 `Char` に対して、便利�
 ```cpp
 namespace std
 {
-	using string = basic_string<char>; // std::string は std::basic_string<char> の型エイリアス（別名）
+	// std::string は std::basic_string<char> の型エイリアス（別名）
+	using string = basic_string<char>;
 }
 ```
 
@@ -27,9 +28,9 @@ namespace std
 template <class Char>
 struct basic_string
 {
-    Char* m_ptr; // 確保したメモリの先頭を指すポインタ
-    size_t m_size; // 格納している文字列の長さ
-    size_t m_allocated_capacity; // 動的確保した配列に格納できる文字列の最大の長さ
+	Char* m_ptr; // 確保したメモリの先頭を指すポインタ
+	size_t m_size; // 格納している文字列の長さ
+	size_t m_allocated_capacity; // 動的確保した配列に格納できる文字列の最大の長さ
 };
 ```
 
@@ -150,11 +151,11 @@ struct string
 
 	static constexpr size_t LocalCapacity = 15; // 動的確保不要で格納できる文字列の最大の長さ
 
-    union
+	union
 	{
-        char m_local_buffer[LocalCapacity + 1]; // 文字列の長さが LocalCapacity 以下の場合、動的確保の代わりに使う配列
-        size_t m_allocated_capacity; // 動的確保した配列に格納できる文字列の最大の長さ
-    } m_storage;
+		char m_local_buffer[LocalCapacity + 1]; // 文字列の長さが LocalCapacity 以下の場合、動的確保の代わりに使う配列
+		size_t m_allocated_capacity; // 動的確保した配列に格納できる文字列の最大の長さ
+	} m_storage;
 };
 ```
 
@@ -175,6 +176,10 @@ int main()
 	printf("%s\n", s.c_str()); // NULL 終端されているおかげで、C 言語の関数で使うことができる
 }
 ```
+```txt:出力
+hello
+```
+
 
 ## 2.2 文字列リテラルは `std::string` 型ではない
 C++ において、文字列リテラル（例：`"hello"`）は `std::string` 型のオブジェクトではありません。もしそうであれば、`"hello".size()` のようにメンバ関数を呼び出せますが、実際にはコンパイルエラーになります。
@@ -188,7 +193,7 @@ const char* s = "hello";  // 's' は `const char[6]` 型へのポインタ
 上記の `"hello"` は 6 個の要素（`'h'`, `'e'`, `'l'`, `'l'`, `'o'`, `'\0'`）を持つ配列（`const char[]` 型）です。このように NULL 終端された `char` 文字列を、`std::string` によって表現する文字列と区別するため、「C 言語の文字列」といいます。
 
 
-## 2.3 `std::string` への変換
+## 2.3 `std::string` へ変換する
 C 言語の文字列から `std::string` に変換するのは簡単です。
 
 ```cpp
@@ -337,7 +342,7 @@ apple
 apple
 5
 ```
-## 4.2 複数個の入力
+## 4.2 複数個の入力を受け取る
 - 複数の文字列の入力には次のように対応します。
 
 ```cpp
@@ -409,7 +414,7 @@ cat
 3
 ```
 
-## 4.3 半角空白で区切られた入力
+## 4.3 半角空白で区切られた入力を受け取る
 - 1 行の入力の途中にある空白文字も、改行と同様に入力の区切りと見なされます。
 - 区切りと見なされた空白文字は除去されます。
 
@@ -439,7 +444,7 @@ ocean
 5
 ```
 
-## 4.4 丸ごと 1 行を入力
+## 4.4 丸ごと 1 行の入力を受け取る
 - 空白文字を含む 1 行を丸ごと読み込みたい場合は `std::getline()` を使います。
 - 末尾の改行文字は除去されます。
 
@@ -856,7 +861,7 @@ can
 ```
 
 
-## 8.5 NULL 終端文字へのアクセス
+## 8.5 NULL 終端文字にアクセスする
 - `std::string` の長さが `N` の場合、`s[N]` は NULL 終端文字 `'\0'` にアクセスします。`s[N]` への書き込み操作は禁止されていますが、読み込み操作は可能です。
 - これは `std::string` が末尾に NULL 終端文字を常に持つことに由来する仕様で、長さが `N` の配列や `std::vector` では `v[N]` にアクセスすることができないのとは対照的です。
 - `.at(N)` や `.front()`, `.back()` では NULL 終端文字にアクセスすることはできません。
@@ -874,7 +879,7 @@ int main()
 
 	if (ch == '\0')
 	{
-		std::cout << "ch is NULL.\n";
+		std::cout << "s[0] is NULL.\n";
 	}
 
 	// NG: NULL 終端の位置の要素を書き換えてはいけない
@@ -882,7 +887,7 @@ int main()
 }
 ```
 ```txt:出力
-c is NULL.
+s[0] is NULL.
 ```
 
 
@@ -901,7 +906,8 @@ int main()
 {
 	std::string s = "apple";
 
-	for (const auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への const 参照
+	// 要素の個数だけ繰り返すループ、ch は順に各要素への const 参照
+	for (const auto& ch : s)
 	{
 		std::cout << ch << '\n';
 	}
@@ -927,7 +933,8 @@ int main()
 {
 	std::string s = "apple";
 
-	for (auto& ch : s) // 要素の個数だけ繰り返すループ、ch は順に各要素への参照
+	// 要素の個数だけ繰り返すループ、ch は順に各要素への参照
+	for (auto& ch : s)
 	{
 		ch += 1;
 	}
@@ -1103,7 +1110,7 @@ a
 ```
 
 
-# 10. ビューを用いて各要素にアクセスする
+# 10. ビューを用いたアクセス
 - C++20 から、`std::string` を含むレンジ全般に対する**ビュー**を作成し、複雑な設定に基づくレンジ内の一連の要素へのアクセスを簡潔に記述できるようになりました。
 	- ここでのビューは、文字列ビュー（`std::string_view`）とは異なることに注意してください。
 - ビューは、新しい `std::string` を作成したり、既存の `std::string` を変更したりするのではなく、既存の `std::string` に対するアクセス方法を変更するだけであるため、通常、その操作に期待される最小のコストで動作します。
@@ -1125,7 +1132,8 @@ int main()
 {
 	std::string s = "atcoder";
 
-	for (const auto& ch : s | std::views::reverse) // 逆順にアクセスするビューを作成する
+	// 逆順にアクセスするビュー
+	for (const auto& ch : s | std::views::reverse)
 	{
 		std::cout << ch << '\n';
 	}
@@ -1157,7 +1165,8 @@ int main()
 {
 	std::string s = "atcoder";
 
-	for (auto& ch : s | std::views::take(3)) // 最初の 3 個の要素にアクセスするビューを作成する
+	// 最初の 3 個の要素にアクセスするビュー
+	for (auto& ch : s | std::views::take(3))
 	{
 		ch -= 32;
 	}
@@ -1185,7 +1194,8 @@ int main()
 {
 	std::string s = "atcoder";
 
-	for (auto& ch : s | std::views::drop(3)) // 最初の 3 個の要素を除いた要素にアクセスするビューを作成する
+	// 最初の 3 個の要素を除いた要素にアクセスするビュー
+	for (auto& ch : s | std::views::drop(3))
 	{
 		ch -= 32;
 	}
@@ -1211,7 +1221,8 @@ int main()
 {
 	std::string s = "atcoder";
 
-	for (auto& ch : s | std::views::drop(3) | std::views::take(2)) // 最初の 3 個の要素を除いたあとの最初の 2 個の要素にアクセスするビューを作成する
+	// 最初の 3 個の要素を除いたあとの最初の 2 個の要素にアクセスするビュー
+	for (auto& ch : s | std::views::drop(3) | std::views::take(2))
 	{
 		ch -= 32;
 	}
@@ -1234,7 +1245,8 @@ int main()
 {
 	std::string s = "atcoder";
 
-	for (auto& ch : std::views::counted((s.begin() + 3), 2)) // インデックス 3 番目から 2 個の要素にアクセスするビューを作成する
+	// インデックス 3 番目から 2 個の要素にアクセスするビューを作成する
+	for (auto& ch : std::views::counted((s.begin() + 3), 2))
 	{
 		ch -= 32;
 	}
@@ -1304,13 +1316,13 @@ int main()
 {
 	std::string s = "school";
 
-	std::string t = ("high" + s); // 前に足した
+	std::string t = ("high" + s); // 前に足した文字列を作成する
 	std::cout << t << '\n';
 
-	std::string u = (s + "bus"); // うしろに足した
+	std::string u = (s + "bus"); // うしろに足した文字列を作成する
 	std::cout << u << '\n';
 
-	std::cout << ("my" + s) << '\n'; // 前に足した
+	std::cout << ("my" + s) << '\n'; // 前に足した文字列を作成する
 }
 ```
 ```txt:出力
@@ -1508,16 +1520,16 @@ int main()
 	std::cout << s.size() << '\n';
 	std::cout << s.capacity() << '\n';
 
-    std::cout << "----\n";
+	std::cout << "----\n";
 
 	s.clear(); // 要素を全消去する
 	std::cout << s << '\n';
 	std::cout << s.size() << '\n';
 	std::cout << s.capacity() << '\n';
 
-    std::cout << "----\n";
+	std::cout << "----\n";
 
-    s.shrink_to_fit(); // 確保している配列のサイズを現在の文字列の長さに合わせてコンパクトにする
+	s.shrink_to_fit(); // 確保している配列のサイズを現在の文字列の長さに合わせてコンパクトにする
 	std::cout << s.size() << '\n';
 	std::cout << s.capacity() << '\n';
 }
@@ -1538,8 +1550,30 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 # 13. `std::string` の交換
 
 ## 13.1 二つの `std::string` を交換する
-- 2 つの `std::string` 型の変数 `a`, `b` の中身を入れ替えたい場合は `std::ranges::swap(a, b)` を使います。
+- 2 つの `std::string` 型の変数 `a`, `b` の中身を入れ替えたい場合は `std::swap(a, b)` を使います。
 - 実際に配列の要素をひとつずつ入れ替えるのではなく、1.1 で見た内部のポインタなど、数個の変数を交換するだけなので、格納している文字列の長さによらず、計算量は $O(1)$ です。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s1 = "abcdefghijklmnopqrstuvwxyz";
+	std::string s2 = "111111111111111111111111111111";
+
+	std::swap(s1, s2); // 中身を交換する
+
+	std::cout << s1 << '\n';
+	std::cout << s2 << '\n';
+}
+```
+```txt:出力
+111111111111111111111111111111
+abcdefghijklmnopqrstuvwxyz
+```
+
+- C++20 以降では、同じ操作をより汎用的に実現する `std::ranges::swap(a, b)` を使うことが推奨されます。
 
 ```cpp
 #include <iostream>
@@ -1567,7 +1601,6 @@ abcdefghijklmnopqrstuvwxyz
 ## 14.1 ある文字列から始まるかを調べる [C++20]
 - `.starts_with(str)` は、自身が文字列 `str` から始まるかを `bool` 値で返します。
 - `.starts_with(ch)` は、自身が文字 `ch` から始まるかを `bool` 値で返します。
-- 自身が空の場合は、常に `false` です。
 
 ```cpp
 #include <iostream>
@@ -1595,7 +1628,6 @@ false
 ## 14.2 ある文字列で終わるかを調べる [C++20]
 - `.ends_with(str)` は、自身が文字列 `str` で終わるかを `bool` 値で返します。
 - `.ends_with(ch)` は、自身が文字 `ch` で終わるかを `bool` 値で返します。
-- 自身が空の場合は、常に `false` です。
 
 ```cpp
 #include <iostream>
@@ -1615,6 +1647,37 @@ int main()
 ```txt:出力
 false
 true
+true
+false
+```
+
+
+## 14.3 ある文字列を含むかを調べる [C++23]
+- `.contains(str)` は、自身が文字列 `str` を含むかを `bool` 値で返します。
+- `.contains(ch)` は、自身が文字 `ch` を含むかを `bool` 値で返します。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "atcoder";
+
+	std::cout << std::boolalpha;
+	std::cout << s.contains("at") << '\n'; // true
+	std::cout << s.contains("coder") << '\n'; // true
+	std::cout << s.contains("atcoder") << '\n'; // true
+	std::cout << s.contains("atcoderr") << '\n'; // false
+	std::cout << s.contains('a') << '\n'; // true
+	std::cout << s.contains('z') << '\n'; // false
+}
+```
+```txt:出力
+true
+true
+true
+false
 true
 false
 ```
