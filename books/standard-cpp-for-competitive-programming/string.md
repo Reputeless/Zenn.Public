@@ -1683,22 +1683,103 @@ false
 ```
 
 
-# 15. `std::string` のイテレータ
+# 15. 部分文字列
+
+## 15.1 新しい部分文字列の `std::string` を作成する
+- `.substr(pos, count)` は、文字列の `pos` 番目の要素から `count` 個までの要素からなる部分文字列を、新しい `std::string` として返します。
+- `count` を省略した場合は、`pos` 番目の要素から末尾までの要素からなる部分文字列を返します。
+- `pos` が文字列の長さ以上の場合は、空の文字列を返します。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "atcoder";
+
+	std::cout << s.substr(0, 2) << '\n'; // "at"
+	std::cout << s.substr(3, 3) << '\n'; // "ode"
+	std::cout << s.substr(3) << '\n'; // "oder"
+	std::cout << s.substr(7) << '\n'; // ""
+}
+```
+```txt:出力
+at
+ode
+oder
+
+```
+
+
+## 15.2 新しい部分文字列の `std::string` を、イテレータのペアから作成する
+- イテレータのペアを使って、部分文字列から新しい `std::string` を作成することができます。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "atcoder";
+
+	std::cout << std::string(s.begin(), (s.begin() + 2)) << '\n'; // "at"
+	std::cout << std::string((s.begin() + 1), s.end()) << '\n'; // "tcoder"
+	std::cout << std::string(s.begin(), (s.end() - 1)) << '\n'; // "atcode"
+	std::cout << std::string((s.end() - 2), s.end()) << '\n'; // "er"
+}
+```
+```txt:出力
+at
+ode
+oder
+
+```
+
+
+## 15.3 部分文字列を指す `std::string_view` を、イテレータのペアから作成する [C++20]
+- 15.1, 15.2 の方法では、新しい `std::string` を作成するため、その分、新しいメモリの消費と文字列のコピーが発生します。このコストを回避するには、代わりに既存の `std::string` 内の部分文字列を指す文字列ビュー `std::string_view` を作成します。
+- `std::string_view` は `std::string` と異なり、既存の文字列の一部の範囲を指す情報（範囲の先頭のポインタと、そこからの長さ）だけを保持するため、非常に軽量です。
+- ただし、指していた `std::string` が破棄されたり、サイズ変更によってメモリが再確保されたりすると、`std::string_view` は不正な位置を指すことになり、それを使用すると未定義動作になります。そのため、`std::string_view` を変数に保存して長い間保持することは避けるべきです。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "atcoder";
+
+	std::cout << std::string_view{ s.begin(), (s.begin() + 2) } << '\n'; // "at"
+	std::cout << std::string_view{ (s.begin() + 1), s.end() } << '\n'; // "tcoder"
+	std::cout << std::string_view{ s.begin(), (s.end() - 1) } << '\n'; // "atcode"
+	std::cout << std::string_view{ (s.end() - 2), s.end() } << '\n'; // "er"
+}
+```
+```txt:出力
+at
+tcoder
+atcode
+er
+```
+
+
+# 16. `std::string` のイテレータ
 削除や挿入の位置指定や、アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。イテレータを取得した時点から文字列のサイズが変更されると、それ以前のイテレータは無効になることがあるため、イテレータを変数に保存して長い間保持することは避けるべきです。
 
-## 15.1 先頭位置のイテレータを取得する
+## 16.1 先頭位置のイテレータを取得する
 - `.begin()` は文字列の先頭位置を指すイテレータを返します。
 - 空の文字列の場合 `.begin() == .end()` です。
 
-## 15.2 終端位置のイテレータを取得する
+## 16.2 終端位置のイテレータを取得する
 - `.end()` は文字列の終端位置を指すイテレータを返します。
 - 空の文字列の場合 `.begin() == .end()` です。
 
-## 15.3 末尾を指す逆イテレータを取得する
+## 16.3 末尾を指す逆イテレータを取得する
 - `.rbegin()` は文字列の末尾を指す逆イテレータを返します。
 - 空の文字列の場合 `.rbegin() == .rend()` です。
 
-## 15.4 先頭の前を指す逆イテレータを取得する
+## 16.4 先頭の前を指す逆イテレータを取得する
 - `.rend()` は文字列の先頭の前を指す逆イテレータを返します。
 - 空の文字列の場合 `.rbegin() == .rend()` です。
 
