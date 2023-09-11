@@ -1146,7 +1146,7 @@ a
 - `std::views::take(N)` を使うと、文字列の最初の N 個の要素にアクセスするビューを作成できます。
 - 要素数が N 未満の場合は、すべての要素にアクセスするビューを作成します。
 
-![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v2.png)
+![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v2.png =400x)
 
 ```cpp
 #include <iostream>
@@ -1174,7 +1174,7 @@ ATCoder
 - `std::views::drop(N)` を使うと、文字列の最初の N 個の要素を除いた要素にアクセスするビューを作成できます。
 - 要素数が N 未満の場合は、空のビューを作成します。
 
-![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v3.png)
+![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v3.png =400x)
 
 ```cpp
 #include <iostream>
