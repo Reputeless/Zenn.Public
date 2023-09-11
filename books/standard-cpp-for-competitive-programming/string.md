@@ -1111,7 +1111,7 @@ a
 - ビューに対しては、範囲ベースの `for` 文が使えるため、範囲外アクセスのミスを防ぐことができます。
 
 ## 10.1 逆順にアクセスするビュー
-<img src="https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/cpp20.png">
+![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/cpp20.png)
 
 - `std::views::reverse` を使うと、文字列に対して逆順にアクセスするビューを作成できます。
 - 文字列の要素を `std::reverse()` / `std::ranges::reverse()` のように実際に逆順に並べ替えるわけではないため、効率的です。
