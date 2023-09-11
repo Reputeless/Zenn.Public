@@ -1114,7 +1114,7 @@ a
 - `std::views::reverse` を使うと、文字列に対して逆順にアクセスするビューを作成できます。
 - 文字列の要素を `std::reverse()` / `std::ranges::reverse()` のように実際に逆順に並べ替えるわけではないため、効率的です。
 
-![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v1.png)
+![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v1.png =400x)
 
 ```cpp
 #include <iostream>
