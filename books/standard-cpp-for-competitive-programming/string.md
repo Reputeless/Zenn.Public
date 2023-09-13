@@ -1503,7 +1503,43 @@ ple
 3
 ```
 
-## 12.3 文字列を消去する
+
+## 12.3 末尾の N 個の要素を削除する
+- `.erase(itBegin, itEnd)` は、イテレータ [`itBegin`, `itEnd`) の範囲の要素を削除します。
+- `itBegin` に `.end() - N` を、`itEnd` に `.end()` を指定することで、末尾の N 個の文字を削除できます。
+- `.end() - N` が範囲外にならないように注意してください。
+- 一般的な実装では、1.1 の図でいう新しい終端位置に NULL 終端文字を格納し、`m_size` を更新するだけの省コストな操作になっています。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "abcdefghijklmno";
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
+
+	s.erase((s.end() - 5), s.end()); // 末尾の 5 個の要素を削除する
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
+
+	s.erase((s.end() - 4), s.end()); // 末尾の 4 個の要素を削除する
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
+}
+```
+```txt:出力
+abcdefghijklmno
+15
+abcdefghij
+10
+abcdef
+6
+```
+
+
+## 12.4 文字列を消去する
 - `.clear()` を使うと、全要素を削除して空の文字列になります。
 	- 一般的な `std::string` の実装は、配列の先頭を NULL 終端文字 `'\0'` にして、1.1 で説明した `m_size` を 0 にすることで、外見上消去したように見せかける省コストなものになっています。その場合の計算量は $O(1)$ です。
 - 一般的な `std::string` の実装は、`.clear()` をしても、確保した配列領域はそのまま保持されます（`.capacity()` が変わりません）。そのオブジェクトを再利用して新しい要素を追加するときのメモリ確保のコストを抑制できますが、使用しない場合はメモリを無駄に占有することになります。
