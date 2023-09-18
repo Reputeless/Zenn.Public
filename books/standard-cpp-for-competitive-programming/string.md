@@ -71,7 +71,7 @@ struct string
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/3.png)
 
-この状態からさらに新しい要素を追加しようとすると、配列の再確保が行われます。例えば `.push_back()` や `+=` が呼ばれると、より広い `m_allocated_capacity` の値で配列を再確保し、既存の文字列を新しい配列にコピーしたのち、新しい追加の文字列が格納されます。
+この状態からさらに新しい要素を追加しようとすると、配列の再確保が行われます。例えば `.push_back()` や `+=` が呼ばれると、より広い `m_allocated_capacity` の値で配列を再確保し、既存の文字列を新しい配列にコピーしたのち、新しい追加の文字列が格納されます。古い配列が使っていたメモリは解放されます。
 
 
 ## 1.2 `std::string` の内部構造 (2)
@@ -1682,9 +1682,9 @@ int main()
 ```
 ```txt:出力
 at
-ode
-oder
-
+tcoder
+atcode
+er
 ```
 
 
