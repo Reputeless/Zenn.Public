@@ -1012,10 +1012,25 @@ int main()
 - `std::vector` に対する範囲ベース for ループは、**配列の要素数がループ中に変更されない**という前提で動作するため、絶対にループ内でその配列の要素数を増減させる操作をしてはいけません（8.3 参照）。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+
+	// 要素の個数だけ繰り返すループ、word は順に各要素への const 参照
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+apple
+bird
+cat
 ```
 
 ## 8.2 範囲ベース `for` 文を使い、各要素に参照でアクセスする
@@ -1023,18 +1038,58 @@ int main()
 - `std::vector` に対する範囲ベース for ループは、**配列の要素数がループ中に変更されない**という前提で動作するため、絶対にループ内でその文字列の要素数を増減させる操作をしてはいけません（8.3 参照）。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+
+	// 要素の個数だけ繰り返すループ、word は順に各要素への参照
+	for (auto& word : words)
+	{
+		word.push_back('!');
+	}
+
+	for (const auto& word : words) // 変更しないので const 参照でよい
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+apple!
+bird!
+cat!
 ```
 
 ## 8.3 範囲ベース `for` 文を使うとき、要素数を変更してはいけない
 - `std::vector` に対する範囲ベース for ループは、**配列の要素数がループ中に変更されない**という前提で動作するため、絶対にループ内でその文字列の要素数を増減させる操作をしてはいけません。
 
 ```cpp:誤りのプログラム
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "apple", "bird", "cat" };
+
+	// 要素の個数だけ繰り返すループ、word は順に各要素への参照
+	for (auto& word : words)
+	{
+		word.push_back('!');
+		words.push_back("dog"); // これは絶対にダメ！
+	}
+
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
+
 
 ## 8.4 初期化式をともなう、範囲ベースの `for` 文を使う
 - C++20 から、範囲ベースの `for` 文に初期化式を追加できるようになりました。
