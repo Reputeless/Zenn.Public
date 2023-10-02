@@ -16,12 +16,12 @@ free: true
 
 int main()
 {
-	std::vector<int> v = { 1, 2, 3, 4, 5 };
-	int a = std::reduce(v.begin(), v.end());
+	std::vector<int> v1 = { 1, 2, 3, 4, 5 };
+	int a = std::reduce(v1.begin(), v1.end());
 	std::cout << a << '\n';
 
-	std::vector<double> v = { 0.1, 0.2, 0.3, 0.4, 0.5 };
-	double b = std::reduce(v.begin(), v.end());
+	std::vector<double> v2 = { 0.1, 0.2, 0.3, 0.4, 0.5 };
+	double b = std::reduce(v2.begin(), v2.end());
 	std::cout << b << '\n';
 }
 ```
