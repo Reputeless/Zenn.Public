@@ -7,7 +7,7 @@ chapters:
   - string
   - string-functions
   - vector
-  - library-numeric
+  - numeric
   - library-unordered_set
   - library-algorithm
   - library-tuple
@@ -24,5 +24,4 @@ chapters:
   - fast-io
   - support
   - acknowledgments
-  - numeric
   
