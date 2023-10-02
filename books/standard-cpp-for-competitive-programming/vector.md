@@ -1485,10 +1485,25 @@ two
 - そのため、`.push_back()` による要素追加は、償却計算量（ならし計算量） $O(1)$ です。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	numbers.push_back(500); // 末尾に要素を追加する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+1 5 10 50 100 500
 ```
 
 ## 10.2 先頭に要素を追加する
@@ -1498,30 +1513,79 @@ two
 	- 先頭への要素追加を $O(1)$ で行うことができる`std::deque` と比べると、`std::vector` での先頭への要素追加は重い操作であることがわかります。競技プログラミングにおいては避けるべきです。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	numbers.insert(numbers.begin(), 500); // 先頭に要素を追加する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+500 1 5 10 50 100
 ```
 
 ## 10.3 末尾に配列を追加する
 - `v.insert(v.end(), oter.begin(), other.end())` で、配列の末尾に別の配列 `other` を追加します。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	std::vector<int> other = { 500, 1000, 2000, 5000, 10000 };
+
+	numbers.insert(numbers.end(), other.begin(), other.end()); // 末尾に配列を追加する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+1 5 10 50 100 500 1000 2000 5000 10000
 ```
 
 - C++23 になると、`v.append_range(other)` を使うことで同じ操作ができます。
 - AtCoder の gcc 12.2 では実装されていません。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	std::vector<int> other = { 500, 1000, 2000, 5000, 10000 };
+
+	numbers.append_range(other); // 末尾に配列を追加する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+1 5 10 50 100 500 1000 2000 5000 10000
 ```
 
 
@@ -1534,10 +1598,25 @@ two
 - 空の配列で使うと範囲外アクセスになるため注意が必要です。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	numbers.pop_back(); // 末尾の要素を削除する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+1 5 10 50
 ```
 
 ## 11.2 先頭の要素を削除する
@@ -1547,10 +1626,25 @@ two
 	- 先頭要素の削除を $O(1)$ で行うことができる `std::deque` と比べると、`std::vector` での先頭要素の削除は重い操作であることがわかります。競技プログラミングにおいては避けるべきです。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	numbers.erase(numbers.begin()); // 先頭の要素を削除する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+5 10 50 100
 ```
 
 
@@ -1560,10 +1654,25 @@ two
 - `.end() - N` が範囲外にならないように注意してください。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	numbers.erase((numbers.end() - 3), numbers.end()); // 末尾の 3 個の要素を削除する
+
+	for (const auto& number : numbers)
+	{
+		std::cout << number << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+1 5
 ```
 
 
@@ -1573,15 +1682,49 @@ two
 - 確保した配列のサイズを、現在の要素数に合わせてコンパクトにするには、追加で `.shrink_to_fit()` を使います。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 1, 5, 10, 50, 100 };
+
+	for (int i = 0; i < numbers.size(); i++)
+	{
+		std::cout << numbers[i] << ' ';
+	}
+
+	std::cout << '\n';
+	std::cout << numbers.size() << '\n';
+	std::cout << numbers.capacity() << '\n';
+
+	std::cout << "----\n";
+
+	numbers.clear(); // 要素を全消去する
+	std::cout << numbers.size() << '\n';
+	std::cout << numbers.capacity() << '\n';
+
+	std::cout << "----\n";
+
+	numbers.shrink_to_fit(); // 確保している配列のサイズを現在の要素数に合わせてコンパクトにする
+	std::cout << numbers.size() << '\n';
+	std::cout << numbers.capacity() << '\n';
+}
 ```
 ```txt:出力例
-
+1 5 10 50 100
+5
+5
+----
+0
+5
+----
+0
+0
 ```
 
 
 # 12. `std::vector` の交換
-
 
 ## 12.1 二つの `std::vector` を交換する
 - 2 つの `std::vector<Type>` 型の変数 `a`, `b` の中身を入れ替えたい場合は `std::swap(a, b)` を使います。
@@ -1589,19 +1732,69 @@ two
 - 実際に配列の要素をひとつずつ入れ替えるのではなく、内部のポインタなど、数個の変数を交換するだけなので、格納している配列の要素数によらず、計算量は $O(1)$ です。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> v1 = { 1, 5, 10, 50, 100 };
+
+	std::vector<int> v2 = { 11, 22, 33 };
+
+	std::swap(v1, v2);
+
+	for (const auto& e : v1)
+	{
+		std::cout << e << " ";
+	}
+
+	std::cout << '\n';
+
+	for (const auto& e : v2)
+	{
+		std::cout << e << " ";
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+11 22 33
+1 5 10 50 100
 ```
 
 - C++20 以降では、同じ操作をより汎用的に実現する `std::ranges::swap(a, b)` を使うことが推奨されます。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> v1 = { 1, 5, 10, 50, 100 };
+
+	std::vector<int> v2 = { 11, 22, 33 };
+
+	std::ranges::swap(v1, v2);
+
+	for (const auto& e : v1)
+	{
+		std::cout << e << " ";
+	}
+
+	std::cout << '\n';
+
+	for (const auto& e : v2)
+	{
+		std::cout << e << " ";
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+11 22 33
+1 5 10 50 100
 ```
 
 
@@ -1624,7 +1817,6 @@ two
 ## 13.4 先頭の前を指す逆イテレータを取得する
 - `.rend()` は配列の先頭の前を指す逆イテレータを返します。
 - 空の配列の場合 `.rbegin() == .rend()` です。
-
 
 
 # 14. `std::vector<bool>` の注意
