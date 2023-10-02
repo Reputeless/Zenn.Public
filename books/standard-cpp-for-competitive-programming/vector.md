@@ -1251,8 +1251,6 @@ zero
 - `std::views::reverse` を使うと、配列に対して逆順にアクセスするビューを作成できます。
 - 配列の要素を `std::reverse()` / `std::ranges::reverse()` のように実際に逆順に並べ替えるわけではないため、効率的です。
 
-![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v1.png =400x)
-
 ```cpp
 
 ```
@@ -1265,8 +1263,6 @@ zero
 - `std::views::take(N)` を使うと、配列の最初の N 個の要素にアクセスするビューを作成できます。
 - 要素数が N 未満の場合は、すべての要素にアクセスするビューを作成します。
 
-![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v2.png =400x)
-
 ```cpp
 
 ```
@@ -1278,8 +1274,6 @@ zero
 ## 9.3 最初の N 個の要素を除いた要素にアクセスするビュー [🟢C++20]
 - `std::views::drop(N)` を使うと、配列の最初の N 個の要素を除いた要素にアクセスするビューを作成できます。
 - 要素数が N 未満の場合は、空のビューを作成します。
-
-![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/zenn/competitive-programming/string/v3.png =400x)
 
 ```cpp
 
