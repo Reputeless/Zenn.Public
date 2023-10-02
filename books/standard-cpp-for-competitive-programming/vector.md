@@ -3,11 +3,6 @@ title: "std::vector（C++20 版）"
 free: true
 ---
 
-:::message
-執筆中のページです。
-:::
-
-
 `std::vector`（ベクター）は C++ で動的配列を便利に扱うためのクラスです。標準ライブラリの `<vector>` ヘッダに定義されています。
 
 C++ では `new` やスマートポインタを使って動的配列を扱うこともできますが、`std::vector` が最も簡潔に、かつ安全に動的配列を扱うことができます。特別な理由がない限り、C++ で動的配列を扱う際には `std::vector` を使うことが推奨されます。
@@ -1823,14 +1818,30 @@ int main()
 C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個分記録することで、単純な `bool` の配列よりもメモリ消費量を小さくするという特殊な仕様になっています。そのため、通常の `std::vector` とは一部の機能の挙動が異なります。
 
 ## 14.1 `std::vector<int>` と `std::vector<bool>` の挙動の違い
-- `std::vector<bool>` において、`v[index]` や `.front()`, `.back()`, `.at(index)` は、`bool` 型の参照ではなく「プロキシ」と呼ばれる特殊なオブジェクトを返します。そのため、次のように `auto` と組み合わせたときに、異なる挙動をします。
+- `std::vector<bool>` において、`v[index]` や `.front()`, `.back()`, `.at(index)` は、`bool` 型の参照ではなく「プロキシ」と呼ばれる特殊なオブジェクトを返します。
+- 次のように `auto` と組み合わせたときに、異なる挙動をします。
 - 個別の要素への参照やポインタを取得できないなどの制約があります。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<int> numbers = { 0, 0, 0 };
+	auto n = numbers.front(); // int 型
+	n = 1; // numbers[0] は変更されない
+	std::cout << numbers.front() << '\n';
+
+	std::vector<bool> booleans = { false, false, false };
+	auto b = booleans.front(); // プロキシ型
+	b = true; // booleans[0] を false から true に変更できてしまう
+	std::cout << std::boolalpha << booleans.front() << '\n';
+}
 ```
 ```txt:出力
-
+0
+true
 ```
 
 ## 14.2 `std::vector<bool>` 固有の機能
@@ -1838,15 +1849,32 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 - `.flip()` は配列内の `false` / `true` をすべて反転します。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<bool> booleans = { false, false, true, true };
+	
+	booleans.flip(); // 全要素の bool 値を反転する
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << boolean << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+true true false false
 ```
 
-## 14.3 `std::vector<bool>` の特殊な挙動を回避する方法
 
-`std::vector<bool>` の特殊性を理解していれば、実用上大きく困ることはありません。しかし、通常の `std::vector` の挙動に近い `bool` 型の動的配列を使いたい場合には、以下のような方法があります。
+## 14.3 `std::vector<bool>` の特殊な挙動を回避する方法
+`std::vector<bool>` の特殊性を理解していれば、実用上大きく困ることはありません。しかし、通常の `std::vector` の挙動に近い `bool` 型の動的配列を使いたい場合には、次のような方法があります。
 
 - 方式 A: `std::vector<char>` で代替する
 - 方式 B: `std::basic_string<bool>` で代替する
@@ -1854,15 +1882,42 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 
 ### 方式 A: `std::vector<char>` で代替する
 - 利点: `std::vector` と同じ操作方法が使えます。
+- `char(0)` を `false` として、`char(1)` を `true` として扱います。
 - 欠点: `char` → `bool` への明示的な変換が必要です。
 - 欠点: 配列の要素に `'A'` や `'z'` など、`bool` 型以外の値を代入できてしまいます。
 
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	std::vector<char> booleans(3, false);
+	
+	booleans.push_back(true);
+	
+	booleans.front() = true;
+
+	if (booleans.front())
+	{
+		std::cout << "booleans.front() is true\n";
+	}
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << static_cast<bool>(boolean) << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+booleans.front() is true
+true false false true
 ```
+
 
 ### 方式 B: `std::basic_string<bool>` で代替する
 - 利点: `std::vector` とほぼ同じ操作方法が使えます。
@@ -1870,11 +1925,37 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 - 欠点: `std::basic_string<bool> booleans(100);` のような、要素の個数のみでの構築ができません。代わりに `std::basic_string<bool> booleans(100, false);` を使います。
 
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	std::basic_string<bool> booleans(3, false);
+	
+	booleans.push_back(true);
+	
+	booleans.front() = true;
+
+	if (booleans.front())
+	{
+		std::cout << "booleans.front() is true\n";
+	}
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << boolean << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+booleans.front() is true
+true false false true
 ```
+
 
 ### 方式 C: `std::deque<bool>` で代替する
 - 利点: `std::vector` とほぼ同じ操作方法が使えます。
@@ -1882,8 +1963,33 @@ C++ 標準の `std::vector<bool>` は、1 バイトに `bool` 型の値を 8 個
 - 欠点: `std::deque` の性質として、要素がメモリ連続で配置されないため、使い方によっては実行時性能が低下することがあります。
 
 ```cpp
+#include <iostream>
+#include <deque>
 
+int main()
+{
+	std::deque<bool> booleans(3, false);
+	
+	booleans.push_back(true);
+	
+	booleans.front() = true;
+
+	if (booleans.front())
+	{
+		std::cout << "booleans.front() is true\n";
+	}
+
+	std::cout << std::boolalpha;
+
+	for (const auto& boolean : booleans)
+	{
+		std::cout << boolean << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+booleans.front() is true
+true false false true
 ```
