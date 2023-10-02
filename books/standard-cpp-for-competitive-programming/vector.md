@@ -1096,55 +1096,148 @@ int main()
 - 例えば、インデックスが偶数番目の要素を出力する際、変数 `i` を初期化式で定義することで、`i` のスコープをループ内に限定できます。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	for (int i = 0; const auto& word : words) // 変数 i のスコープがループ内に限定される
+	{
+		if ((i % 2) == 0)
+		{
+			std::cout << word << ' ';
+		}
+
+		++i;
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+zero two four
 ```
 
 - C++17 までは、次のように書く必要がありました。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	int i = 0; // 変数 i のスコープが広くなってしまう
+
+	for (const auto& word : words)
+	{
+		if ((i % 2) == 0)
+		{
+			std::cout << word << ' ';
+		}
+
+		++i;
+	}
+
+	std::cout << '\n';
+}
 ```
 ```txt:出力
-
+zero two four
 ```
 
 
 ## 8.5 インデックスを使って各要素にアクセスする
 - 通常の `for` 文で、インデックスを使って各要素にアクセスすることができます。
-- この方法は、特にループが複雑になった時に、インデックスに使う変数の取り違えや、それにともなう範囲外アクセスのコードを書いてしまうミスの原因になります。必要がない限りは範囲ベースの `for` 文や、10. で説明するビューを使うことを推奨します。
+- この方法は、特にループが複雑になった時に、インデックスに使う変数の取り違えや、それにともなう範囲外アクセスのコードを書いてしまうミスの原因になります。必要がない限りは範囲ベースの `for` 文や、9. で説明するビューを使うことを推奨します。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	for (std::size_t i = 0; i < words.size(); ++i)
+	{
+		std::cout << words[i] << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
+three
+four
+five
 ```
 
 
 ## 8.6 イテレータを使って各要素にアクセスする
 - `std::vector` は、イテレータを使って各要素にアクセスすることができます。
-- この方法は、特にループが複雑になった時に、イテレータに使う変数の取り違えや、それにともなう範囲外アクセスのコードを書いてしまうミスの原因になります。必要がない限りは範囲ベースの `for` 文や、10. で説明するビューを使うことを推奨します。
+- この方法は、特にループが複雑になった時に、イテレータに使う変数の取り違えや、それにともなう範囲外アクセスのコードを書いてしまうミスの原因になります。必要がない限りは範囲ベースの `for` 文や、9. で説明するビューを使うことを推奨します。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	for (auto it = words.begin(); it != words.end(); ++it)
+	{
+		// イテレータを使って各要素にアクセスする
+		std::cout << *it << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
+three
+four
+five
 ```
 
 
 ## 8.7 逆イテレータを使って各要素にアクセスする
 - `std::vector` は、逆イテレータを使って各要素にアクセスすることができます。
-- この方法は、特にループが複雑になった時に、イテレータに使う変数の取り違えや、それにともなう範囲外アクセスのコードを書いてしまうミスの原因になります。必要がない限りは 10. で説明するビューを使うことを推奨します。
+- この方法は、特にループが複雑になった時に、イテレータに使う変数の取り違えや、それにともなう範囲外アクセスのコードを書いてしまうミスの原因になります。必要がない限りは 9. で説明するビューを使うことを推奨します。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	for (auto it = words.rbegin(); it != words.rend(); ++it)
+	{
+		// 逆イテレータを使って各要素にアクセスする
+		std::cout << *it << '\n';
+	}
+}
 ```
 ```txt:出力
-
+five
+four
+three
+two
+one
+zero
 ```
 
 
