@@ -1252,10 +1252,29 @@ zero
 - 配列の要素を `std::reverse()` / `std::ranges::reverse()` のように実際に逆順に並べ替えるわけではないため、効率的です。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	// 逆順にアクセスするビュー
+	for (const auto& word : words | std::views::reverse)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+five
+four
+three
+two
+one
+zero
 ```
 
 
@@ -1264,10 +1283,34 @@ zero
 - 要素数が N 未満の場合は、すべての要素にアクセスするビューを作成します。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	// 最初の 3 個の要素にアクセスするビュー
+	for (auto& word : words | std::views::take(3))
+	{
+		word.push_back('!');
+	}
+
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero!
+one!
+two!
+three
+four
+five
 ```
 
 
@@ -1276,10 +1319,34 @@ zero
 - 要素数が N 未満の場合は、空のビューを作成します。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	// 最初の 3 個の要素を除いた要素にアクセスするビュー
+	for (auto& word : words | std::views::drop(3))
+	{
+		word.push_back('!');
+	}
+
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
+three!
+four!
+five!
 ```
 
 
@@ -1288,19 +1355,67 @@ zero
 - `std::views::drop(N) | std::views::take(M)` を使うと、配列の最初の N 個の要素を除いたあとの最初の M 個の要素にアクセスするビューを作成できます。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	// 最初の 3 個の要素を除いたあとの最初の 2 個の要素にアクセスするビュー
+	for (auto& word : words | std::views::drop(3) | std::views::take(2))
+	{
+		word.push_back('!');
+	}
+
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
+three!
+four!
+five
 ```
 
 - `std::views::counted(it, count)` を使って書くこともできます。イテレータ `it` の指す位置が範囲外にならないように注意してください。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	// インデックス 3 番目から 2 個の要素にアクセスするビューを作成する
+	for (auto& word : std::views::counted((words.begin() + 3), 2))
+	{
+		word.push_back('!');
+	}
+
+	for (const auto& word : words)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
+three!
+four!
+five
 ```
 
 
@@ -1308,20 +1423,56 @@ zero
 - `std::vector<Type>` に対するビューから新しい `std::vector<Type>` を構築するには、ビューのイテレータペアを使います。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	auto view = (words | std::views::take(3));
+
+	std::vector<std::string> words2(view.begin(), view.end());
+
+	for (const auto& word : words2)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
 ```
 
-- C++23 になると、`std::ranges::to<std::vector<Type>>()` を使うことで、ビューを `std::vector<Type>` に変換できるようになります。
+- C++23 になると、`std::ranges::to<std::vector>()` を使うことで、ビューを `std::vector` に変換できるようになります。
 - AtCoder の gcc 12.2 では実装されていません。
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ranges>
 
+int main()
+{
+	std::vector<std::string> words = { "zero", "one", "two", "three", "four", "five" };
+
+	std::vector<std::string> words2 = (words | std::views::take(3) | std::ranges::to<std::vector>());
+
+	for (const auto& word : words2)
+	{
+		std::cout << word << '\n';
+	}
+}
 ```
 ```txt:出力
-
+zero
+one
+two
 ```
 
 

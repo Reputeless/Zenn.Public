@@ -1273,6 +1273,7 @@ int main()
 	std::string s1 = "abcdefg";
 
 	auto view = (s1 | std::views::take(3));
+
 	std::string s2(view.begin(), view.end());
 
 	std::cout << s2 << '\n';
