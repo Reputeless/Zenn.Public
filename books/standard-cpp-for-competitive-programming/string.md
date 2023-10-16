@@ -1807,7 +1807,7 @@ false
 ## 15.4 ある文字列や文字列が最初に現れる位置を調べる
 - `.find(str)` は、文字列 `str` を先頭から検索し、最初に現れる位置を返します。見つからない場合は `std::string::npos` を返します。
 - `.find(ch)` は、文字 `ch` を先頭から検索し、最初に現れる位置を返します。見つからない場合は `std::string::npos` を返します。
-- `std::string::npos` は `std::size_t` 型の最大値で、AtCode の環境では `18446744073709551615` です。
+- `std::string::npos` は `std::size_t` 型の最大値で、AtCoder の環境では `18446744073709551615` です。
 
 ```cpp
 #include <iostream>
