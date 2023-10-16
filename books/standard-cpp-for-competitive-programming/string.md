@@ -1,5 +1,5 @@
 ---
-title: "std::string（C++20 版）"
+title: "std::string [🟢C++20 対応]"
 free: true
 ---
 
