@@ -1804,6 +1804,55 @@ false
 ```
 
 
+## 15.4 ある文字列や文字列が最初に現れる位置を調べる
+- `.find(str)` は、文字列 `str` を先頭から検索し、最初に現れる位置を返します。見つからない場合は `std::string::npos` を返します。
+- `.find(ch)` は、文字 `ch` を先頭から検索し、最初に現れる位置を返します。見つからない場合は `std::string::npos` を返します。
+- `std::string::npos` は `std::size_t` 型の最大値で、AtCode の環境では `18446744073709551615` です。
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "atcoder";
+
+	std::cout << s.find("at") << '\n'; // 0
+	std::cout << s.find("co") << '\n'; // 2
+	std::cout << s.find("der") << '\n'; // 4
+	std::cout << s.find("atcoder") << '\n'; // 0
+	std::cout << s.find("cpp") << '\n'; // 18446744073709551615
+	std::cout << s.find("atcoderr") << '\n'; // 18446744073709551615
+
+	std::cout << s.find('a') << '\n'; // 0
+	std::cout << s.find('c') << '\n'; // 2
+	std::cout << s.find('z') << '\n'; // 18446744073709551615
+
+	if (const auto index = s.find("code");
+		index != std::string::npos)
+	{
+		std::cout << "found at " << index << '\n';
+	}
+	else
+	{
+		std::cout << "not found\n";
+	}
+}
+```
+```txt:出力
+0
+2
+4
+0
+18446744073709551615
+18446744073709551615
+0
+2
+18446744073709551615
+found at 2
+```
+
+
 # 16. `std::string` のイテレータ
 削除や挿入の位置指定や、アルゴリズム関数で使うためのイテレータを、以下の関数で取得できます。イテレータを取得した時点から文字列のサイズが変更されると、それ以前のイテレータは無効になることがあるため、イテレータを変数に保存して長い間保持することは避けるべきです。
 
