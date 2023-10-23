@@ -10,6 +10,7 @@ free: true
 ### vs `std::set`
 - `std::set` が要素をソートして保持するのに対し、`std::unordered_set` は、ハッシュ値に基づき、コンピュータにとって都合の良い任意の順序で要素を保持します。
 - `std::set` の要素の検索や追加、削除にかかる計算量は $O(\log N)$ ですが、`std::unordered_set` は平均 $O(1)$, 最悪 $O(N)$ です。
+- `std::set` は要素どうしの比較 `<` が定義されている必要がありますが、`std::unordered_set` は要素のハッシュ関数と、比較 `==` が定義されている必要があります。
 
 ### vs `std::unordered_map`
 - `std::unordered_map` は、キーと値のペアを要素として、キーを検索して値を取得するのに対し、`std::unordered_set` ではキーのみを要素とします。
