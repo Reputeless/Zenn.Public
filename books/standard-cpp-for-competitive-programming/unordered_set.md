@@ -782,7 +782,7 @@ false
 
 int main()
 {
-	const std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
 
 	std::string s;
 	std::cin >> s;
@@ -826,7 +826,7 @@ colors does not contain pink
 
 int main()
 {
-	const std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
+	std::unordered_set<std::string> colors = { "red", "green", "blue", "yellow" };
 
 	std::string s;
 	std::cin >> s;
