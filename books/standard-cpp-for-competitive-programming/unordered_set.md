@@ -1,5 +1,5 @@
 ---
-title: "<unordered_set> [執筆中 | 🟢C++20 対応]"
+title: "<unordered_set> [🟢C++20 対応]"
 free: true
 ---
 
@@ -7,19 +7,19 @@ free: true
 
 # 1. 他のコンテナとの違い
 
-## 1.1 vs `std::set`
-- `std::set` が要素をソートして保持するのに対し、`std::unordered_set` は、ハッシュ値に基づきコンピュータに都合の良い任意の順序で要素を保持します。
+### vs `std::set`
+- `std::set` が要素をソートして保持するのに対し、`std::unordered_set` は、ハッシュ値に基づき、コンピュータにとって都合の良い任意の順序で要素を保持します。
 - `std::set` の要素の検索や追加、削除にかかる計算量は $O(\log N)$ ですが、`std::unordered_set` は平均 $O(1)$, 最悪 $O(N)$ です。
 
-## 1.2 vs `std::unordered_map`
-- `std::unordered_map` はキーと値のペアを要素として、キーを検索して値を取得するのに対し、`std::unordered_set` ではキーのみを要素とします。
+### vs `std::unordered_map`
+- `std::unordered_map` は、キーと値のペアを要素として、キーを検索して値を取得するのに対し、`std::unordered_set` ではキーのみを要素とします。
 
 
 # 2. `std::unordered_set` の構築
 
 ## 2.1 リストから構築する
 - `= { ... }` の中に値を用意してハッシュテーブルを初期化します。
-- リスト内の値に重複がある場合、そのうちの 1 つだけが追加されます。
+- リスト内の値に重複がある場合、そのうちの最初だけが追加されます。
 - データ構造の性質上、リストに記述した要素の順序は保存されず、`std:unordered_set` 内では実装依存の並び順になります。
 - リストの要素の型は `std::unordered_set<Type>` の `Type` に合わせます。
 
@@ -82,7 +82,7 @@ red
 ## 2.2 別の `std::vector` から構築する
 - `std::unordered_set<Type> table(itFirst, itLast);` は、範囲 `[itFirst, itLast)` の要素でハッシュテーブルを初期化します。
 - ある `std::vector` の `.begin()`, `.end()` を渡すことで、その配列のすべての要素をもとにハッシュテーブルを構築できます。
-- 要素に重複がある場合、そのうちの 1 つだけが追加されます。
+- 要素に重複がある場合、そのうちの最初だけが追加されます。
 - データ構造の性質上、元の範囲での要素の順序は保存されず、`std:unordered_set` 内では実装依存の並び順になります。
 - イテレータの指す値の型は `std::unordered_set<Type>` の要素の型 `Type` に変換できる必要があります。
 
@@ -361,7 +361,7 @@ red
 ```
 
 
-## 2.2 入力された値を `std::unordered_set` に追加する
+## 3.2 入力された値を `std::unordered_set` に追加する
 -  `std::vector<Type>` に全要素の入力を保存し、それをもとに `std::unordered_set<Type>` を構築します。
 -  `std::vector` に元の入力を保存できるため、入力された値の順序を保存したり、重複する入力をあとで使ったりしたい場合にこの方法を使います。
 

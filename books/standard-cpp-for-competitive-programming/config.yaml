@@ -8,7 +8,7 @@ chapters:
   - string-functions
   - vector
   - numeric
-  - library-unordered_set
+  - unordered_set
   - library-algorithm
   - library-tuple
   - library-ios-iomanip
@@ -24,5 +24,4 @@ chapters:
   - fast-io
   - support
   - acknowledgments
-  - unordered_set
   
