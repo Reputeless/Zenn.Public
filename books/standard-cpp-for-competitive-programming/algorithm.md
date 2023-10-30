@@ -1502,6 +1502,9 @@ troedca
 
 
 ## 4.3 配列の要素を、特定のメンバ変数だけを見てソートする [🟢C++20]
+- `std::ranges::sort(itFirst, itLast, comp, projection)` および `std::ranges::sort(range, comp, projection)` は、範囲 `[itFirst, itLast)` または `range` の要素を `projection` でプロジェクションした値を、`comp` による比較の結果でソートします。
+- `comp` に `{}` を指定すると、デフォルトの比較関数が使われます。
+- `projection` に、`&Person::age` のようにメンバ変数を指定すると、そのメンバ変数の値をプロジェクションします。
 
 ```cpp
 #include <iostream>
@@ -1563,7 +1566,61 @@ Bob(30) Alice(25) Charlie(20) Eve(18) Dave(15)
 ```
 
 
-## 4.4 小さい順にソートされているかを調べる
+## 4.4 ソートされているかを調べる
+- `std::is_sorted(itFirst, itLast)` および `std::ranges::is_sorted(itFirst, itLast)`, `std::ranges::is_sorted(range)` は、範囲 `[itFirst, itLast)` または `range` が昇順にソートされているかを調べます。
+- `std::is_sorted()` には `comp` を指定することもできます。
+- `std::ranges::is_sorted()` には `comp` と `projection` を指定することもできます。
+
+> - `is_sorted` の計算量: $O(N)$
+
+```cpp
+clude <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <utility>
+
+int main()
+{
+	std::cout << std::boolalpha;
+
+	{
+		std::vector<int> v = { 5, 1, 3, 2, 4 };
+
+		std::cout << std::ranges::is_sorted(v) << '\n';
+
+		std::ranges::sort(v);
+
+		std::cout << std::ranges::is_sorted(v) << '\n';
+	}
+
+	{
+		std::vector<std::pair<std::string, int>> v = {
+			{ "Alice", 25 },
+			{ "Bob", 30 },
+			{ "Charlie", 20 },
+			{ "Dave", 15 },
+			{ "Eve", 18 },
+		};
+
+		std::cout << std::ranges::is_sorted(v, std::ranges::greater{}, &std::pair<std::string, int>::second) << '\n';
+
+		// 年齢の降順にソートする
+		std::ranges::sort(v, std::ranges::greater{}, &std::pair<std::string, int>::second);
+
+		std::cout << std::ranges::is_sorted(v, std::ranges::greater{}, &std::pair<std::string, int>::second) << '\n';
+	}
+}
+```
+```txt:出力
+false
+true
+false
+true
+```
+
+
+## 4.5 上位 N 個までを求めるソートをする
 
 ```cpp
 
@@ -1573,27 +1630,7 @@ Bob(30) Alice(25) Charlie(20) Eve(18) Dave(15)
 ```
 
 
-## 4.5 大きい順にソートされているかを調べる
-
-```cpp
-
-```
-```txt:出力
-
-```
-
-
-## 4.6 上位 N 個までを求めるソートをする
-
-```cpp
-
-```
-```txt:出力
-
-```
-
-
-## 4.7 N 番目に小さい要素を求める
+## 4.6 N 番目に小さい要素を求める
 
 ```cpp
 
