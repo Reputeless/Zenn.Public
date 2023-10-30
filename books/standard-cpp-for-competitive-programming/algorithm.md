@@ -1976,9 +1976,7 @@ int main()
 		std::vector<int> v = { 1, 1, 5, 10, 10, 10, 500 };
 
 		std::cout << std::ranges::binary_search(v, 10) << '\n'; // true
-
 		std::cout << std::ranges::binary_search(v, 20) << '\n'; // false
-
 		std::cout << std::ranges::binary_search(v, 30) << '\n'; // false
 	}
 
@@ -1986,13 +1984,10 @@ int main()
 
 	{
 		std::string s = "atcoder";
-
 		std::ranges::sort(s);
 
 		std::cout << std::ranges::binary_search(s, 'a') << '\n'; // true
-
 		std::cout << std::ranges::binary_search(s, 'b') << '\n'; // false
-
 		std::cout << std::ranges::binary_search(s, 'c') << '\n'; // true
 	}
 }
@@ -2011,12 +2006,45 @@ true
 # 6. ソート済みの二つの範囲に対する集合演算や操作
 
 ## 6.1 指定した集合が部分集合であるかを調べる
+- `std::includes(itFirst1, itLast1, itFirst2, itLast2)` および `std::ranges::includes(itFirst1, itLast1, itFirst2, itLast2)`, `std::ranges::includes(range1, range2)` は、範囲 `[itFirst1, itLast1)` または `range1` が、範囲 `[itFirst2, itLast2)` または `range2` の部分集合であるかを `bool` 型で返します。
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::cout << std::boolalpha;
+
+	{
+		std::vector<int> v1 = { 1, 2, 3, 8, 9, 10 };
+		std::vector<int> v2 = { 1, 10 };
+		std::vector<int> v3 = { 1, 2, 3, 4 };
+
+		std::cout << std::ranges::includes(v1, v2) << '\n'; // true
+		std::cout << std::ranges::includes(v1, v3) << '\n'; // false
+	}
+
+	std::cout << "---\n";
+
+	{
+		std::string s1 = "abcdef";
+		std::string s2 = "ac";
+		std::string s3 = "abcdefg";
+
+		std::cout << std::ranges::includes(s1, s2) << '\n'; // true
+		std::cout << std::ranges::includes(s1, s3) << '\n'; // false
+	}
+}
 ```
 ```txt:出力
-
+true
+false
+---
+true
+false
 ```
 
 
