@@ -1739,27 +1739,169 @@ aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
 # 5. ソート済みの範囲に対する二分探索
 
 ## 5.1 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置 (lower_bound) を二分探索で取得する
+- `std::lower_bound(itFirst, itLast, value)` および `std::ranges::lower_bound(itFirst, itLast, value)`, `std::ranges::lower_bound(range, value)` は、範囲 `[itFirst, itLast)` または `range` において、`value` を挿入するとして、ソートされた状態を壊さない最も左の位置のイテレータを返します。
+- イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
+
+> - `lower_bound()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
+
+::: message
+`lower_bound()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。それぞれのコンテナのメンバ関数 `std::set::lower_bound()`, `std::multiset::lower_bound()` であれば、データ構造に合わせた実装になっているため、計算量は $O(\log N)$ です。
+:::
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	{
+		// ソート済みの状態
+		std::vector<int> v = { 1, 5, 10, 50, 100, 500 };
+
+		auto it = std::ranges::lower_bound(v, 0);
+		std::cout << "(0): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::lower_bound(v, 1);
+		std::cout << "(1): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::lower_bound(v, 2);
+		std::cout << "(2): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::lower_bound(v, 5);
+		std::cout << "(5): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::lower_bound(v, 499);
+		std::cout << "(499): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::lower_bound(v, 500);
+		std::cout << "(500): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::lower_bound(v, 501);
+		std::cout << "(501): " << std::ranges::distance(v.begin(), it) << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "cat" };
+
+		auto it = std::ranges::lower_bound(v, "alarm");
+		v.insert(it, "alarm");
+
+		it = std::ranges::lower_bound(v, "banana");
+		v.insert(it, "banana");
+
+		it = std::ranges::lower_bound(v, "dog");
+		v.insert(it, "dog");
+
+		// ソート済みの状態が保たれていることを確認する
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+}
 ```
 ```txt:出力
-
+(0): 0
+(1): 0
+(2): 1
+(5): 1
+(499): 5
+(500): 5
+(501): 6
+alarm apple banana bird cat dog
 ```
 
 
 ## 5.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置 (upper_bound) を二分探索で取得する
+- `std::upper_bound(itFirst, itLast, value)` および `std::ranges::upper_bound(itFirst, itLast, value)`, `std::ranges::upper_bound(range, value)` は、範囲 `[itFirst, itLast)` または `range` において、`value` を挿入するとして、ソートされた状態を壊さない最も右の位置のイテレータを返します。
+- イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
+
+> - `upper_bound()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(1)$, そうでなければ $O(N)$
+
+::: message
+`upper_bound()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。それぞれのコンテナのメンバ関数 `std::set::upper_bound()`, `std::multiset::upper_bound()` であれば、データ構造に合わせた実装になっているため、計算量は $O(\log N)$ です。
+:::
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	{
+		// ソート済みの状態
+		std::vector<int> v = { 1, 5, 10, 50, 100, 500 };
+
+		auto it = std::ranges::upper_bound(v, 0);
+		std::cout << "(0): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::upper_bound(v, 1);
+		std::cout << "(1): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::upper_bound(v, 2);
+		std::cout << "(2): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::upper_bound(v, 5);
+		std::cout << "(5): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::upper_bound(v, 499);
+		std::cout << "(499): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::upper_bound(v, 500);
+		std::cout << "(500): " << std::ranges::distance(v.begin(), it) << '\n';
+
+		it = std::ranges::upper_bound(v, 501);
+		std::cout << "(501): " << std::ranges::distance(v.begin(), it) << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "cat" };
+
+		auto it = std::ranges::upper_bound(v, "alarm");
+		v.insert(it, "alarm");
+
+		it = std::ranges::upper_bound(v, "banana");
+		v.insert(it, "banana");
+
+		it = std::ranges::upper_bound(v, "dog");
+		v.insert(it, "dog");
+
+		// ソート済みの状態が保たれていることを確認する
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+}
 ```
 ```txt:出力
-
+(0): 0
+(1): 1
+(2): 1
+(5): 2
+(499): 5
+(500): 6
+(501): 6
+alarm apple banana bird cat dog
 ```
-
 
 
 ## 5.3 lower_bound と upper_bound の結果を同時に取得する
+- `std::equal_range(itFirst, itLast, value)` および `std::ranges::equal_range(itFirst, itLast, value)`, `std::ranges::equal_range(range, value)` は、範囲 `[itFirst, itLast)` または `range` において、`value` を挿入するとして、ソートされた状態を壊さない最も左の位置のイテレータと、最も右の位置のイテレータの組を返します。
+- `std::equal_range(itFirst, itLast, value)` はイテレータの `std::pair` を返します。
+- `std::ranges::equal_range(itFirst, itLast, value)` および `std::ranges::equal_range(range, value)` はサブレンジを返します。
+
+::: message
+`equal_range()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。それぞれのコンテナのメンバ関数 `std::set::equal_range()`, `std::multiset::equal_range()` であれば、データ構造に合わせた実装になっているため、計算量は $O(\log N)$ です。
+:::
 
 ```cpp
 
@@ -1848,7 +1990,7 @@ aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
 ## 7.1 順列を作成する
 - `std::next_permutation(itFirst, itLast)` および `std::ranges::next_permutation(itFirst, itLast)`, `std::ranges::next_permutation(range)` は、範囲 `[itFirst, itLast)` または `range` の要素を、辞書順で次の順列に並び替えます。
 - `std::next_permutation(itFirst, itLast)` は、新しい順列が以前の順列よりも辞書順であとにある場合 `true`, 順列が終端に達して最初の順列に戻った場合 `false` を返します。
-- `std::ranges::next_permutation(itFirst, itLast)` および `std::ranges::next_permutation(range)` は、`bool` 型の代わりに `std::ranges::next_permutation_result` 型を返します。これは `{ itLast, bool found }` のような構造体です。新しい順列が以前の順列よりも辞書順であとにある場合、`found` は `true`, 順列が終端に達して最初の順列に戻った場合 `false` になります。
+- `std::ranges::next_permutation(itFirst, itLast)` および `std::ranges::next_permutation(range)` は、`bool` 型の代わりに `std::ranges::next_permutation_result` 型を返します。これは `{ itLast, bool found }` のようなクラスです。新しい順列が以前の順列よりも辞書順であとにある場合、`found` は `true`, 順列が終端に達して最初の順列に戻った場合 `false` になります。
 - すべての順列を列挙するためにはソート済みの状態から始めます。
 
 ```cpp
