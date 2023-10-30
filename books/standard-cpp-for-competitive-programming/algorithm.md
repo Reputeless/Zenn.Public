@@ -534,7 +534,7 @@ min: apple, max: dog
 ```
 
 
-## 1.11 ある値を、指定した最小値と最大値の範囲に収める [🟢C++20]
+## 1.11 ある値を、指定した最小値と最大値の範囲に収めた値を得る [🟢C++20]
 - `std::clamp(value, min, max)` および `std::ranges::clamp(value, min, max)` は、値 `value` を `min` 以上 `max` 以下の範囲に収めた値を返します。
 - `value` が範囲内であれば `value` を、`min` 未満なら `min` を、`max` より大きいなら `max` を返します。
 
@@ -622,6 +622,8 @@ true
 - 範囲が空の場合は `false` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
+> - `any_of` の計算量: $O(N)$
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -670,6 +672,8 @@ false
 - `std::none_of(itFirst, itLast, unaryPred)` あるいは `std::ranges::none_of(itFirst, itLast, unaryPred)`, `std::ranges::none_of(range, unaryPred)` は、範囲 `[itFirst, itLast)`　または `range` にある要素のうち、どの要素も条件 `unaryPred` を満たしていないかを `bool` 型の値で返します。
 - 範囲が空の場合は `true` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
+
+> - `none_of` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -941,6 +945,8 @@ Found cat at 3
 ## 3.1 範囲の要素を指定した値で埋める [🟢C++20]
 - `std::fill(itFirst, itLast, value)` および `std::ranges::fill(itFirst, itLast, value)`, `std::ranges::fill(range, value)` は、範囲 `[itFirst, itLast)` または `range` のすべての要素を `value` にします。
 
+> - `fill` の計算量: $O(N)$
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -1089,24 +1095,178 @@ prgrmming
 
 
 ## 3.4 範囲の要素を逆順にする [🟢C++20]
+- `std::reverse(itFirst, itLast)` および `std::ranges::reverse(itFirst, itLast)`, `std::ranges::reverse(range)` は、範囲 `[itFirst, itLast)` または `range` の要素を逆順に並び替えます。
+
+> - `reverse` の計算量: $O(N)$
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	{
+		std::vector<int> v = { 1, 3, 5, 2, 4, 0 };
+
+		// 逆順に並び替える
+		std::ranges::reverse(v);
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "cat", "dog", "elephant" };
+
+		// 逆順に並び替える
+		std::ranges::reverse(v);
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "atcoder";
+
+		// 逆順に並び替える
+		std::ranges::reverse(s);
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+0 4 2 5 3 1
+elephant dog cat bird apple
+redocta
+```
 
 
+## 3.5 指定した要素を別の値で置き換える [🟢C++20]
+- `std::replace(itFirst, itLast, oldValue, newValue)` および `std::ranges::replace(itFirst, itLast, oldValue, newValue)`, `std::ranges::replace(range, oldValue, newValue)` は、範囲 `[itFirst, itLast)` または `range` の要素のうち、`oldValue` と等しい要素を `newValue` に置き換えます。
+
+> - `replace` の計算量: $O(N)$
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		std::ranges::replace(v, 3, 30);
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "apple", "cat" };
+
+		std::ranges::replace(v, "apple", "orange");
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "atcoder";
+
+		std::ranges::replace(s, 'o', 'i');
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+5 30 30 2 4 2 4 30 5 1
+orange bird orange cat
+atcider
+```
 
 
+## 3.6 指定した条件を満たす要素を別の値で置き換える [🟢C++20]
+- `std::replace_if(itFirst, itLast, unaryPred, newValue)` および `std::ranges::replace_if(itFirst, itLast, unaryPred, newValue)`, `std::ranges::replace_if(range, unaryPred, newValue)` は、範囲 `[itFirst, itLast)` または `range` の要素のうち、条件 `unaryPred` を満たす要素を `newValue` に置き換えます。
+- `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
-## 3.5 指定した要素を異なる値で置き換える [🟢C++20]
+> - `replace_if` の計算量: $O(N)$
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		// 偶数をすべて -1 に置き換える
+		std::ranges::replace_if(v, [](int n) { return (n % 2 == 0); }, -1);
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "apple", "cat" };
+
+		// 4 文字以下の要素をすべて "banana" に置き換える
+		std::ranges::replace_if(v, [](const std::string& s) { return (s.size() <= 4); }, "banana");
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "atcoder";
+
+		// 'a' と 'o' をすべて 'i' に置き換える
+		std::ranges::replace_if(s, [](char c) { return ((c == 'a') || (c == 'o')); }, 'i');
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+5 3 3 -1 -1 -1 -1 3 5 1
+apple banana apple banana
+itcider
+```
 
 
+## 3.7 等しい値が隣同士にならないよう要素を削除する [🟢C++20]
 
 
-## 3.6 等しい値が隣同士にならないよう要素を削除する [🟢C++20]
+## 3.8 配列から重複する要素を無くす [🟢C++20]
 
 
-
-## 3.7 配列から重複する要素を無くす [🟢C++20]
-
-
-## 3.8 要素を回転させる [🟢C++20]
+## 3.9 要素を回転させる [🟢C++20]
 
 
 
