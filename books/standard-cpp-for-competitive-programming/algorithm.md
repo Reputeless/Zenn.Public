@@ -1899,28 +1899,113 @@ alarm apple banana bird cat dog
 - `std::equal_range(itFirst, itLast, value)` はイテレータの `std::pair` を返します。
 - `std::ranges::equal_range(itFirst, itLast, value)` および `std::ranges::equal_range(range, value)` はサブレンジを返します。
 
+> - `equal_range()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
+
 ::: message
 `equal_range()` に渡すイテレータがランダムアクセスイテレータでない場合（具体的には `std::set` や `std::multiset` のイテレータ）、関数内部でのイテレータの移動の処理に線形時間を要するため、計算量は $O(N)$ に悪化します。それぞれのコンテナのメンバ関数 `std::set::equal_range()`, `std::multiset::equal_range()` であれば、データ構造に合わせた実装になっているため、計算量は $O(\log N)$ です。
 :::
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	{
+		// ソート済みの状態
+		std::vector<int> v = { 1, 1, 5, 10, 10, 10, 500 };
+
+		auto p = std::ranges::equal_range(v, 0);
+		std::cout << "(0): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+
+		p = std::ranges::equal_range(v, 1);
+		std::cout << "(1): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+
+		p = std::ranges::equal_range(v, 2);
+		std::cout << "(2): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+
+		p = std::ranges::equal_range(v, 5);
+		std::cout << "(5): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+
+		p = std::ranges::equal_range(v, 10);
+		std::cout << "(10): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+
+		p = std::ranges::equal_range(v, 500);
+		std::cout << "(500): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+
+		p = std::ranges::equal_range(v, 501);
+		std::cout << "(501): " << std::ranges::distance(v.begin(), p.begin())
+			<< " - " << std::ranges::distance(v.begin(), p.end()) << '\n';
+	}
+}
 ```
 ```txt:出力
-
+(0): 0 - 0
+(1): 0 - 2
+(2): 2 - 2
+(5): 2 - 3
+(10): 3 - 6
+(500): 6 - 7
+(501): 7 - 7
 ```
 
 
 ## 5.4 指定した値と等しい要素が存在するかを調べる
+- `std::binary_search(itFirst, itLast, value)` および `std::ranges::binary_search(itFirst, itLast, value)`, `std::ranges::binary_search(range, value)` は、範囲 `[itFirst, itLast)` または `range` において、`value` と等しい要素が存在するかを `bool` 型で返します。
+
+> - `binary_search()` の計算量: イテレータがランダムアクセスイテレータの場合 $O(\log N)$, そうでなければ $O(N)$
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::cout << std::boolalpha;
+
+	{
+		std::vector<int> v = { 1, 1, 5, 10, 10, 10, 500 };
+
+		std::cout << std::ranges::binary_search(v, 10) << '\n'; // true
+
+		std::cout << std::ranges::binary_search(v, 20) << '\n'; // false
+
+		std::cout << std::ranges::binary_search(v, 30) << '\n'; // false
+	}
+
+	std::cout << "---\n";
+
+	{
+		std::string s = "atcoder";
+
+		std::ranges::sort(s);
+
+		std::cout << std::ranges::binary_search(s, 'a') << '\n'; // true
+
+		std::cout << std::ranges::binary_search(s, 'b') << '\n'; // false
+
+		std::cout << std::ranges::binary_search(s, 'c') << '\n'; // true
+	}
+}
 ```
 ```txt:出力
-
+true
+false
+false
+---
+true
+false
+true
 ```
-
-
 
 
 # 6. ソート済みの二つの範囲に対する集合演算や操作
