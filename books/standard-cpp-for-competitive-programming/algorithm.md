@@ -1004,7 +1004,8 @@ int main()
 	{
 		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
 
-		std::erase(v, 3); // 3 を削除する
+		// 3 と等しい要素を削除する
+		std::erase(v, 3);
 
 		for (const auto& e : v)
 		{
@@ -1016,7 +1017,8 @@ int main()
 	{
 		std::vector<std::string> v = { "apple", "bird", "cat", "apple" };
 
-		std::erase(v, "apple"); // "apple" を削除する
+		// "apple" と等しい要素を削除する
+		std::erase(v, "apple");
 	
 		for (const auto& e : v)
 		{
@@ -1028,7 +1030,8 @@ int main()
 	{
 		std::string s = "programming";
 
-		std::erase(s, 'm'); // 'm' を削除する
+		// 'm' と等しい要素を削除する
+		std::erase(s, 'm');
 
 		std::cout << s << '\n';
 	}
@@ -1057,7 +1060,8 @@ int main()
 	{
 		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
 
-		std::erase_if(v, [](int x) { return (x % 2 == 0); }); // 偶数の要素を削除する
+		// 偶数の要素を削除する
+		std::erase_if(v, [](int x) { return (x % 2 == 0); });
 
 		for (const auto& e : v)
 		{
@@ -1069,7 +1073,8 @@ int main()
 	{
 		std::vector<std::string> v = { "apple", "bird", "cat", "apple" };
 
-		std::erase_if(v, [](const std::string& s) { return (4 <= s.size()); }); // 4 文字以上の要素を削除する
+		// 4 文字以上の要素を削除する
+		std::erase_if(v, [](const std::string& s) { return (4 <= s.size()); });
 	
 		for (const auto& e : v)
 		{
@@ -1081,7 +1086,8 @@ int main()
 	{
 		std::string s = "programming";
 
-		std::erase_if(s, [](char c) { return ((c == 'a') || (c == 'o')); }); // 'a' と 'o' を削除する
+		// 'a' と 'o' を削除する
+		std::erase_if(s, [](char c) { return ((c == 'a') || (c == 'o')); });
 
 		std::cout << s << '\n';
 	}
@@ -1840,12 +1846,75 @@ aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
 # 7. 順列
 
 ## 7.1 順列を作成する
+- `std::next_permutation(itFirst, itLast)` および `std::ranges::next_permutation(itFirst, itLast)`, `std::ranges::next_permutation(range)` は、範囲 `[itFirst, itLast)` または `range` の要素を、辞書順で次の順列に並び替えます。
+- `std::next_permutation(itFirst, itLast)` は、新しい順列が以前の順列よりも辞書順であとにある場合 `true`, 順列が終端に達して最初の順列に戻った場合 `false` を返します。
+- `std::ranges::next_permutation(itFirst, itLast)` および `std::ranges::next_permutation(range)` は、`bool` 型の代わりに `std::ranges::next_permutation_result` 型を返します。これは `{ itLast, bool found }` のような構造体です。新しい順列が以前の順列よりも辞書順であとにある場合、`found` は `true`, 順列が終端に達して最初の順列に戻った場合 `false` になります。
+- すべての順列を列挙するためにはソート済みの状態から始めます。
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	{
+		std::vector<int> v = { 1, 2, 3, 4 };
+		
+		do
+		{
+			for (const auto& n : v)
+			{
+				std::cout << n << ' ';
+			}
+			std::cout << '\n';
+		
+		} while (std::ranges::next_permutation(v).found);
+	}
+
+	{
+		std::string s = "abc";
+
+		do
+		{
+			std::cout << s << '\n';
+
+		} while (std::ranges::next_permutation(s).found);
+	}
+}
 ```
 ```txt:出力
-
+1 2 3 4
+1 2 4 3
+1 3 2 4
+1 3 4 2
+1 4 2 3
+1 4 3 2
+2 1 3 4
+2 1 4 3
+2 3 1 4
+2 3 4 1
+2 4 1 3
+2 4 3 1
+3 1 2 4
+3 1 4 2
+3 2 1 4
+3 2 4 1
+3 4 1 2
+3 4 2 1
+4 1 2 3
+4 1 3 2
+4 2 1 3
+4 2 3 1
+4 3 1 2
+4 3 2 1
+abc
+acb
+bac
+bca
+cab
+cba
 ```
 
 
