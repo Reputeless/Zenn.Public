@@ -268,8 +268,8 @@ t
 - イテレータに `*` を付けると、そのイテレータが指す値にアクセスできます。
 - イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
 
-> - `min_element` の計算量: $O(N)$
-> - `distance` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
+> - `min_element()` の計算量: $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
 
 ```cpp
 #include <iostream>
@@ -333,8 +333,8 @@ apple at 1
 - イテレータに `*` を付けると、そのイテレータが指す値にアクセスできます。
 - イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
 
-> - `max_element` の計算量: $O(N)$
-> - `distance` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
+> - `max_element()` の計算量: $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
 
 ```cpp
 #include <iostream>
@@ -502,8 +502,8 @@ min: 2, max: 6
 - イテレータに `*` を付けると、そのイテレータが指す値にアクセスできます。
 - イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
 
-> - `minmax_element` の計算量: $O(N)$
-> - `distance` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
+> - `minmax_element()` の計算量: $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
 
 ```cpp
 #include <iostream>
@@ -572,7 +572,7 @@ int main()
 - 範囲が空の場合は `true` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
-> - `all_of` の計算量: $O(N)$
+> - `all_of()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -622,7 +622,7 @@ true
 - 範囲が空の場合は `false` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
-> - `any_of` の計算量: $O(N)$
+> - `any_of()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -673,7 +673,7 @@ false
 - 範囲が空の場合は `true` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
-> - `none_of` の計算量: $O(N)$
+> - `none_of()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -722,7 +722,7 @@ true
 ## 2.4 指定した値と等しい要素の個数を数える
 - `std::count(itFirst, itLast, value)` および `std::ranges::count(itFirst, itLast, value)`, `std::ranges::count(range, value)` は、範囲 `[itFirst, itLast)` または `range` に存在する、`value` と等しい要素の個数を返します。
 
-> - `count` の計算量: $O(N)$
+> - `count()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -802,8 +802,8 @@ int main()
 - イテレータに `*` を付けると、そのイテレータが指す値にアクセスできます。
 - イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
 
-> - `find` の計算量: $O(N)$
-> - `distance` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
+> - `find()` の計算量: $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
 
 ```cpp
 #include <iostream>
@@ -876,8 +876,8 @@ Found apple at 0
 - イテレータに `*` を付けると、そのイテレータが指す値にアクセスできます。
 - イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
 
-> - `find_if` の計算量: $O(N)$
-> - `distance` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
+> - `find_if()` の計算量: $O(N)$
+> - `distance()` の計算量: イテレータがランダムアクセスイテレータであれば $O(1)$, それ以外の場合は $O(N)$
 
 ```cpp
 #include <iostream>
@@ -945,7 +945,7 @@ Found cat at 3
 ## 3.1 範囲の要素を指定した値で埋める
 - `std::fill(itFirst, itLast, value)` および `std::ranges::fill(itFirst, itLast, value)`, `std::ranges::fill(range, value)` は、範囲 `[itFirst, itLast)` または `range` のすべての要素を `value` にします。
 
-> - `fill` の計算量: $O(N)$
+> - `fill()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -1097,7 +1097,7 @@ prgrmming
 ## 3.4 範囲の要素を逆順にする
 - `std::reverse(itFirst, itLast)` および `std::ranges::reverse(itFirst, itLast)`, `std::ranges::reverse(range)` は、範囲 `[itFirst, itLast)` または `range` の要素を逆順に並び替えます。
 
-> - `reverse` の計算量: $O(N)$
+> - `reverse()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -1153,7 +1153,7 @@ redocta
 ## 3.5 指定した要素を別の値で置き換える
 - `std::replace(itFirst, itLast, oldValue, newValue)` および `std::ranges::replace(itFirst, itLast, oldValue, newValue)`, `std::ranges::replace(range, oldValue, newValue)` は、範囲 `[itFirst, itLast)` または `range` の要素のうち、`oldValue` と等しい要素を `newValue` に置き換えます。
 
-> - `replace` の計算量: $O(N)$
+> - `replace()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -1207,7 +1207,7 @@ atcider
 - `std::replace_if(itFirst, itLast, unaryPred, newValue)` および `std::ranges::replace_if(itFirst, itLast, unaryPred, newValue)`, `std::ranges::replace_if(range, unaryPred, newValue)` は、範囲 `[itFirst, itLast)` または `range` の要素のうち、条件 `unaryPred` を満たす要素を `newValue` に置き換えます。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
-> - `replace_if` の計算量: $O(N)$
+> - `replace_if()` の計算量: $O(N)$
 
 ```cpp
 #include <iostream>
@@ -1419,7 +1419,7 @@ coderat
 - `std::sort(itFirst, itLast)` および `std::ranges::sort(itFirst, itLast)`, `std::ranges::sort(range)` は、範囲 `[itFirst, itLast)` または `range` の要素を昇順にソートします。
 - イテレータはランダムアクセスイテレータである必要があります。
 
-> - `sort` の計算量: $O(N \log N)$
+> - `sort()` の計算量: $O(N \log N)$
 
 ```cpp
 #include <iostream>
@@ -1566,12 +1566,12 @@ Bob(30) Alice(25) Charlie(20) Eve(18) Dave(15)
 ```
 
 
-## 4.4 ソートされているかを調べる
+## 4.4 配列がソートされているかを調べる
 - `std::is_sorted(itFirst, itLast)` および `std::ranges::is_sorted(itFirst, itLast)`, `std::ranges::is_sorted(range)` は、範囲 `[itFirst, itLast)` または `range` が昇順にソートされているかを調べます。
 - `std::is_sorted()` には `comp` を指定することもできます。
 - `std::ranges::is_sorted()` には `comp` と `projection` を指定することもできます。
 
-> - `is_sorted` の計算量: $O(N)$
+> - `is_sorted()` の計算量: $O(N)$
 
 ```cpp
 clude <iostream>
@@ -1620,28 +1620,114 @@ true
 ```
 
 
-## 4.5 上位 N 個までを求めるソートをする
+## 4.5 配列の要素について、上位 N 個までソートをする
+
+![](https://storage.googleapis.com/zenn-user-upload/piahsffvr41zhkm6b79507xvo7e0)
+
+- `std::partial_sort(itFirst, itMiddle, itLast)` および `std::ranges::partial_sort(itFirst, itMiddle, itLast)`, `std::ranges::partial_sort(range, itMiddle)` は、範囲 `[itFirst, itLast)` または `range` の要素をソートし、結果として `[itFirst, itMiddle)` の範囲に上位 `(itMiddle - itFirst)` 個の要素がソート済みで並ぶようにし、それ以降についてはソートが未完了のままにすることで、`sort()` より計算量を小さくします。
+
+> - `partial_sort()` の計算量: $O(N \log M)$
+
+::: message
+使用されているアルゴリズムの都合上、N が全体に対して大部分である場合は `sort()` よりも効率が悪くなる場合があります。その際は、代わりの手法として、`nth_element()` のあとに `sort()` による部分的なソートを行うと効率的です。下記が参考になります。
+
+- [sort() vs. partial_sort() vs. nth_element() + sort() in C++ STL](https://www.geeksforgeeks.org/sort-vs-partial_sort-vs-nth_element-sort-in-c-stl/), GeeksforGeeks
+:::
+
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	{
+		std::vector<int> v = { 1, 5, 0, 2, 4, 6, 3, 9, 8, 7 };
+
+		// 上位 4 個まで昇順にソートする
+		std::ranges::partial_sort(v, (v.begin() + 4));
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "atcoder";
+
+		// 上位 2 個まで昇順にソートする
+		std::ranges::partial_sort(s, (s.begin() + 2));
+
+		std::cout << s << '\n';
+	}
+}
 ```
-```txt:出力
-
+```txt:出力例
+0 1 2 3 5 6 4 9 8 7
+actoder
 ```
 
 
-## 4.6 N 番目に小さい要素を求める
+## 4.6 配列で N 番目に小さい要素を求める
+
+![](https://storage.googleapis.com/zenn-user-upload/hwom96sdwa49wi3tsv5il3ijrouk)
+
+- `std::nth_element(itFirst, itNth, itLast)` および `std::ranges::nth_element(itFirst, itNth, itLast)`, `std::ranges::nth_element(range, itNth)` は、範囲 `[itFirst, itLast)` または `range` にある要素を不完全にソートし、結果として `itNth` の位置に、完全なソートを行ったときと同じ要素が置かれるようにし、それより前はその要素より小さく、それ以降はその要素より大きい要素が並ぶということだけ保証する、部分的なソートを行います。
+- 上位 N 番目の要素を求めたいだけの時、`sort()` や `partial_sort()` を使うより計算量を小さくできます。
+
+> - `nth_element()` の計算量: 平均 $O(N)$
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	{
+		std::vector<int> v = { 1, 5, 0, 2, 4, 6, 3, 9, 8, 7 };
+
+		// 4 番目に小さい要素を探す
+		std::ranges::nth_element(v, (v.begin() + 3));
+
+		std::cout << "4th : " << v[3] << '\n';
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm";
+
+		// 2 番目に小さい要素を探す
+		std::ranges::nth_element(s, (s.begin() + 1));
+
+		std::cout << "2nd : " << s[1] << '\n';
+
+		std::cout << s << '\n';
+
+		// 完全なソート結果と比べる
+		std::ranges::sort(s);
+
+		std::cout << s << '\n';
+	}
+}
 ```
-```txt:出力
-
+```txt:出力例
+4th : 3
+0 1 2 3 4 5 6 7 8 9
+2nd : a
+aabbccddeeffgghhiijjkkllmmnnooppqqusystrwwvrtuxyvxzz
+aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
 ```
-
-
-
-
 
 
 # 5. ソート済みの範囲に対する二分探索
@@ -1654,7 +1740,6 @@ true
 ```txt:出力
 
 ```
-
 
 
 ## 5.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置 (upper_bound) を二分探索で取得する
