@@ -1262,36 +1262,220 @@ itcider
 
 ## 3.7 等しい値が隣同士にならないよう要素を削除する [🟢C++20]
 
+![](https://storage.googleapis.com/zenn-user-upload/ju1t0e4osdok3jw0g78dfjuvu4em)  
+![](https://storage.googleapis.com/zenn-user-upload/oal49bx7uj5j3pc46so8nx3ngnwm)  
+![](https://storage.googleapis.com/zenn-user-upload/ajffs25zekco5k7e1poxetj6but4)  
+
+
+- `std::unique(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の要素について、前半が、隣同士で重複する要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します。
+- `std::ranges::unique(itFirst, itLast)` および `std::ranges::unique(range)` は、範囲 `range` の要素について、前半が、隣同士で重複する要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、無効範囲のサブレンジを返します。
+- 有効範囲に残る要素の前後関係は元の順序が維持されます。
+- 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）。
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します。
+- `std::vector` の `.erase(itFirst, itLast)` において、`unique()` が返したイテレータを使うことで、無効範囲を削除することができます。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <ranges>
+
+int main()
+{
+	{
+		std::vector<int> v = { 1, 1, 1, 3, 4, 3, 3, 2, 0, 2 };
+
+		auto result = std::ranges::unique(v);
+
+		v.erase(result.begin(), result.end());
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "communication";
+
+		auto result = std::ranges::unique(s);
+
+		s.erase(result.begin(), result.end());
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+1 3 4 3 2 0 2
+comunication
+```
+
 
 ## 3.8 配列から重複する要素を無くす [🟢C++20]
+![](https://storage.googleapis.com/zenn-user-upload/8ad2ohrp1h314mi1ae53hundxxg6)  
+![](https://storage.googleapis.com/zenn-user-upload/wmw38txnyspy7lhguqp5ievf3nln)  
+![](https://storage.googleapis.com/zenn-user-upload/zdcgymqoz7tlorn7nq3bpsb7sbcw)  
+![](https://storage.googleapis.com/zenn-user-upload/2n8y9c8nlcrk1iz2q7ciicnqqtps)  
+
+- 配列において、ソートしてから「3.7 等しい値が隣同士にならないよう要素を削除する」を行うことで、重複する要素を配列から削除できます。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <ranges>
+
+int main()
+{
+	{
+		std::vector<int> v = { 1, 1, 1, 3, 4, 3, 3, 2, 0, 2 };
+
+		std::ranges::sort(v);
+
+		auto result = std::ranges::unique(v);
+
+		v.erase(result.begin(), result.end());
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "communication";
+
+		std::ranges::sort(s);
+
+		auto result = std::ranges::unique(s);
+
+		s.erase(result.begin(), result.end());
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+0 1 2 3 4
+acimnotu
+```
 
 
-## 3.9 要素を回転させる [🟢C++20]
+## 3.9 要素の前半と後半を入れ替える [🟢C++20]
 
+![](https://storage.googleapis.com/zenn-user-upload/00ubzrhcws3ywiv75aplss1u2tkj)  
+![](https://storage.googleapis.com/zenn-user-upload/4xyfcvmfvg63ulzjgvnoc7pwn29r)  
+![](https://storage.googleapis.com/zenn-user-upload/h39ztens5lp1erqgrudaomemgy9i)  
 
+- `std::rotate(itFirst, itMiddle, itLast)` および `std::ranges::rotate(itFirst, itMiddle, itLast)`, `std::ranges::rotate(range, itMiddle)` は、範囲 `[itFirst, itLast)` または `range` の要素を、`itMiddle` で指定した位置を境に、前半と後半を入れ替えます。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	{
+		std::vector<int> v = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+		// 0 1 2|3 4 5 6 7 8 9 
+		// 2 と 3 の間を境に、前半と後半を入れ替える
+		std::ranges::rotate(v, (v.begin() + 3));
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "atcoder";
+
+		// at|coder
+		// 't' と 'c' の間を境に、前半と後半を入れ替える
+		std::ranges::rotate(s, (s.begin() + 2));
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+3 4 5 6 7 8 9 0 1 2
+coderat
+```
 
 
 # 4. 範囲に対するソート
 
 ## 4.1 要素を小さい順にソートする [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 
 ## 4.2 要素を大きい順にソートする [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 
 
 ## 4.3 上位 N 個までを求めるソートをする [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 ## 4.4 N 番目に小さい要素を求める [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 ## 4.5 小さい順にソートされているかを調べる [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 ## 4.6 大きい順にソートされているかを調べる [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 
@@ -1300,16 +1484,44 @@ itcider
 
 ## 5.1 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も左の位置 (lower_bound) を二分探索で取得する [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 
 ## 5.2 ある値を範囲に挿入するとして、ソートされた状態を維持できる最も右の位置 (upper_bound) を二分探索で取得する [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 
 ## 5.3 lower_bound と upper_bound の結果を同時に取得する [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 ## 5.4 指定した値と等しい要素が存在するかを調べる [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 
@@ -1318,29 +1530,82 @@ itcider
 
 ## 6.1 指定した集合が部分集合であるかを調べる [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 ## 6.2 二つの集合の少なくとも片方に存在する要素からなる集合（和集合）を得る [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 ## 6.3 二つの集合の両方に存在する要素からなる集合（積集合）を得る [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 ## 6.4 二つの集合について、前者の中から後者に属する要素を取り除いた集合（差集合）を得る [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 ## 6.5 二つの集合のどちらか片方にしか存在しない要素からなる集合（対称差集合）を得る [🟢C++20]
 
+```cpp
+
+```
+```txt:出力
+
+```
+
 
 ## 6.6 二つのソート済みの集合をマージした、ソート済みの集合を得る [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
 
 # 7. 順列
 
 ## 7.1 順列を作成する [🟢C++20]
 
+```cpp
 
-## 7.2 ある数配列が別の配列の順列であるかを調べる [🟢C++20]
+```
+```txt:出力
+
+```
 
 
+## 7.2 ある配列が別の配列の順列であるかを調べる [🟢C++20]
+
+```cpp
+
+```
+```txt:出力
+
+```
 
