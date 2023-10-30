@@ -514,16 +514,16 @@ min: 2, max: 6
 int main()
 {
 	{
-		std::vector<int> numbers = { -5, 10, -30, 20, 50, 0 };
-		auto minmax = std::ranges::minmax_element(numbers);
+		std::vector<int> v = { -5, 10, -30, 20, 50, 0 };
+		auto minmax = std::ranges::minmax_element(v);
 		std::cout << "min: " << *minmax.min << ", max: " << *minmax.max << '\n'; // min: -30, max: 50
 	}
 
 	{
-		std::vector<std::string> words = { "cat", "apple", "bird", "dog" };
-		auto [itMin, itMax] = std::ranges::minmax_element(words);
+		std::vector<std::string> v = { "cat", "apple", "bird", "dog" };
+		auto [itMin, itMax] = std::ranges::minmax_element(v);
 		std::cout << "min: " << *itMin << ", max: " << *itMax << '\n'; // min: apple, max: dog
-		std::cout << std::ranges::distance(words.begin(), itMin) << ", " << std::ranges::distance(words.begin(), itMax) << '\n'; // 1, 3
+		std::cout << std::ranges::distance(v.begin(), itMin) << ", " << std::ranges::distance(v.begin(), itMax) << '\n'; // 1, 3
 	}
 }
 ```
@@ -567,7 +567,7 @@ int main()
 
 # 2. 範囲に対する検索
 
-## 2.1 全ての要素が条件を満たすかを調べる
+## 2.1 すべての要素が条件を満たすかを調べる [🟢C++20]
 - `std::all_of(itFirst, itLast, unaryPred)` あるいは `std::ranges::all_of(itFirst, itLast, unaryPred)`, `std::ranges::all_of(range, unaryPred)` は、範囲 `[itFirst, itLast)`　または `range` にある要素すべてが条件 `unaryPred` を満たしているかを `bool` 型の値で返します。
 - 範囲が空の場合は `true` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
@@ -617,7 +617,7 @@ true
 true
 ```
 
-##  2.2 条件を満たす要素があるかを調べる
+##  2.2 条件を満たす要素があるかを調べる [🟢C++20]
 - `std::any_of(itFirst, itLast, unaryPred)` あるいは `std::ranges::any_of(itFirst, itLast, unaryPred)`, `std::ranges::any_of(range, unaryPred)` は、範囲 `[itFirst, itLast)`　または `range` にある要素のうち、少なくとも 1 つが条件 `unaryPred` を満たしているかを `bool` 型の値で返します。
 - 範囲が空の場合は `false` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
@@ -666,7 +666,7 @@ false
 ```
 
 
-## 2.3 条件を満たす要素が存在しないかを調べる
+## 2.3 条件を満たす要素が存在しないかを調べる [🟢C++20]
 - `std::none_of(itFirst, itLast, unaryPred)` あるいは `std::ranges::none_of(itFirst, itLast, unaryPred)`, `std::ranges::none_of(range, unaryPred)` は、範囲 `[itFirst, itLast)`　または `range` にある要素のうち、どの要素も条件 `unaryPred` を満たしていないかを `bool` 型の値で返します。
 - 範囲が空の場合は `true` を返します。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
@@ -715,7 +715,7 @@ true
 ```
 
 
-## 2.4 指定した値と等しい要素の個数を数える
+## 2.4 指定した値と等しい要素の個数を数える [🟢C++20]
 - `std::count(itFirst, itLast, value)` および `std::ranges::count(itFirst, itLast, value)`, `std::ranges::count(range, value)` は、範囲 `[itFirst, itLast)` または `range` に存在する、`value` と等しい要素の個数を返します。
 
 > - `count` の計算量: $O(N)$
@@ -752,7 +752,7 @@ int main()
 ```
 
 
-## 2.5 条件を満たす要素の個数を数える
+## 2.5 条件を満たす要素の個数を数える [🟢C++20]
 - `std::count_if(itFirst, itLast, unaryPred)` および `std::ranges::count_if(itFirst, itLast, unaryPred)`, `std::ranges::count_if(range, unaryPred)` は、範囲 `[itFirst, itLast)` または `range` に存在する、条件 `unaryPred` を満たす要素の個数を返します。
 
 > - `count_if` の計算量: $O(N)$
@@ -789,7 +789,7 @@ int main()
 ```
 
 
-## 2.6 指定した値と等しい要素が最初に現れる位置を調べる
+## 2.6 指定した値と等しい要素が最初に現れる位置を調べる [🟢C++20]
 
 ![](https://storage.googleapis.com/zenn-user-upload/merltfiqqm7jouov7jnz4kvxewt7)
 
@@ -862,7 +862,7 @@ Found apple at 0
 ```
 
 
-## 2.7 条件を満たす要素が最初に現れる位置を調べる
+## 2.7 条件を満たす要素が最初に現れる位置を調べる [🟢C++20]
 
 ![](https://storage.googleapis.com/zenn-user-upload/y41i3iwzyzxs1pyxq7l2ym3bbzkx)
 
@@ -934,4 +934,182 @@ Found 2 at 3
 Not found
 Found cat at 3
 ```
+
+
+# 3. 範囲に対する一般的な操作
+
+## 3.1 範囲の要素を指定した値で埋める [🟢C++20]
+- `std::fill(itFirst, itLast, value)` および `std::ranges::fill(itFirst, itLast, value)`, `std::ranges::fill(range, value)` は、範囲 `[itFirst, itLast)` または `range` のすべての要素を `value` にします。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <ranges>
+
+int main()
+{
+	{
+		std::vector<int> v = { 1, 2, 4, 8 };
+
+		// 全要素を 0 にする
+		std::ranges::fill(v, 0);
+		
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "cat", "dog", "elephant" };
+
+		// 最初の三つの要素を "hello" にする
+		std::ranges::fill((v | std::views::take(3)), "hello");
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+}
+```
+```txt:出力
+0 0 0 0
+hello hello hello dog elephant
+```
+
+
+## 3.2 指定した値と等しい要素をすべて削除する [🟢C++20]
+- `std::erase(container, value)` は、コンテナ `container` にある、`value` と等しい要素をすべて削除します。
+- ここでのコンテナは `std::vector`, `std::deque`, `std::string` などです。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		std::erase(v, 3); // 3 を削除する
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "cat", "apple" };
+
+		std::erase(v, "apple"); // "apple" を削除する
+	
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "programming";
+
+		std::erase(s, 'm'); // 'm' を削除する
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+5 2 4 2 4 5 1
+bird cat
+prograing
+```
+
+
+## 3.3 条件を満たす要素をすべて削除する [🟢C++20]
+- `std::erase_if(container, unaryPred)` は、コンテナ `container` にある、条件 `unaryPred` を満たす要素をすべて削除します。
+- ここでのコンテナは `std::vector`, `std::deque`, `std::string` などです。
+- `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		std::erase_if(v, [](int x) { return (x % 2 == 0); }); // 偶数の要素を削除する
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::vector<std::string> v = { "apple", "bird", "cat", "apple" };
+
+		std::erase_if(v, [](const std::string& s) { return (4 <= s.size()); }); // 4 文字以上の要素を削除する
+	
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	{
+		std::string s = "programming";
+
+		std::erase_if(s, [](char c) { return ((c == 'a') || (c == 'o')); }); // 'a' と 'o' を削除する
+
+		std::cout << s << '\n';
+	}
+}
+```
+```txt:出力
+5 3 3 3 5 1
+cat
+prgrmming
+```
+
+
+## 3.4 範囲の要素を逆順にする [🟢C++20]
+
+
+
+
+
+## 3.5 要素を回転させる [🟢C++20]
+
+
+
+
+## 3.6 等しい値が隣同士にならないよう要素を削除する [🟢C++20]
+
+
+
+## 3.7 配列から重複する要素を無くす [🟢C++20]
+
+
+
+
+# 4. 範囲に対するソート
+
+
+
 

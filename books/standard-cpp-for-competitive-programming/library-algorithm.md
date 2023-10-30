@@ -355,7 +355,7 @@ int main()
 
 # 2. 範囲に対する検索操作
 
-## 2.1 全ての要素が条件を満たすか調べる
+## 2.1 すべての要素が条件を満たすか調べる
 - `std::all_of(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` にある要素すべてが条件 `unaryPred` を満たしているかを `bool` 型の値で返します
 - 範囲が空の場合は `true` を返します
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです
@@ -1762,7 +1762,7 @@ int main()
 ## 7.1 順列を作成する
 - `std::next_permutaion(itFirst, itLast)` は、範囲 `[itFirst, itLast)` について、辞書順で次にくる順列になるよう要素を並びかえます
 - 次の順列が存在する場合は `true`, それ以外の場合は `false` を返します
-- ソート済みの範囲から始め、`do while()` と組み合わせることで、全ての順列を列挙できます
+- ソート済みの範囲から始め、`do while()` と組み合わせることで、すべての順列を列挙できます
 > - `std::next_permutaion(itFirst, itLast)` の計算量: $O(N)$
 ```cpp
 #include <iostream>
