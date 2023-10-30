@@ -1860,6 +1860,7 @@ aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
 int main()
 {
 	{
+		// ソート済みの状態から始める
 		std::vector<int> v = { 1, 2, 3, 4 };
 		
 		do
@@ -1874,6 +1875,7 @@ int main()
 	}
 
 	{
+		// ソート済みの状態から始める
 		std::string s = "abc";
 
 		do
@@ -1916,14 +1918,3 @@ bca
 cab
 cba
 ```
-
-
-## 7.2 ある配列が別の配列の順列であるかを調べる
-
-```cpp
-
-```
-```txt:出力
-
-```
-
