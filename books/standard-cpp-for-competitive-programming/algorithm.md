@@ -2015,7 +2015,7 @@ true
 # 6. ソート済みの二つの範囲に対する集合演算や操作
 
 ## 6.1 指定した集合が部分集合であるかを調べる
-- `std::includes(itFirst1, itLast1, itFirst2, itLast2)` および `std::ranges::includes(itFirst1, itLast1, itFirst2, itLast2)`, `std::ranges::includes(range1, range2)` は、範囲 `[itFirst1, itLast1)` または `range1` が、範囲 `[itFirst2, itLast2)` または `range2` の部分集合であるかを `bool` 型で返します。
+- `std::includes(itFirst1, itLast1, itFirst2, itLast2)` および `std::ranges::includes(itFirst1, itLast1, itFirst2, itLast2)`, `std::ranges::includes(range1, range2)` は、範囲 `[itFirst2, itLast2)` または `range2` が、範囲 `[itFirst1, itLast1)` または `range1` の部分集合であるかを `bool` 型で返します。
 
 ```cpp
 #include <iostream>
