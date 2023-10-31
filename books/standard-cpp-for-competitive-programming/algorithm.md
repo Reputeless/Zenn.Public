@@ -480,7 +480,7 @@ int main()
 
 	{
 		std::vector<double> v = { 36.2, 36.6, 36.9, 40.1, 37.2 };
-		std::cout << std::ranges::all_of(v, IsOK) << '\n'; // ラムダ式を使う
+		std::cout << std::ranges::all_of(v, IsOK) << '\n'; // 関数を使う
 	}
 
 	{
@@ -530,7 +530,7 @@ int main()
 
 	{
 		std::vector<double> v = { 36.2, 36.6, 36.9, 40.1, 37.2 };
-		std::cout << std::ranges::any_of(v, IsNG) << '\n';
+		std::cout << std::ranges::any_of(v, IsNG) << '\n'; // 関数を使う
 	}
 
 	{
@@ -581,7 +581,7 @@ int main()
 
 	{
 		std::vector<double> v = { 36.2, 36.6, 36.9, 40.1, 37.2 };
-		std::cout << std::ranges::none_of(v, IsNG) << '\n';
+		std::cout << std::ranges::none_of(v, IsNG) << '\n'; // 関数を使う
 	}
 
 	{
