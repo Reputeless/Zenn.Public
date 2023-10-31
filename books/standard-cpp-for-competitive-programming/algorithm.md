@@ -989,7 +989,7 @@ apple bird hello hello hello
 ```
 
 
-## 3.2 指定した値と等しい要素をすべて削除する [🟢C++20]
+## 3.2 指定した値と等しい要素をすべて削除する (1) [🟢C++20]
 - `std::erase(container, value)` は、コンテナ `container` にある、`value` と等しい要素をすべて削除します。
 - ここでのコンテナは `std::vector`, `std::deque`, `std::string` などです。
 
@@ -1043,8 +1043,63 @@ bird cat
 prograing
 ```
 
+## 3.3 指定した値と等しい要素をすべて削除する (2)
 
-## 3.3 条件を満たす要素をすべて削除する [🟢C++20]
+![](https://storage.googleapis.com/zenn-user-upload/14n9ju6cs33n08nhzgt2guxhvfrs)  
+![](https://storage.googleapis.com/zenn-user-upload/9bnh7kb5j8n1auxnlqx0lvjakmpz)  
+![](https://storage.googleapis.com/zenn-user-upload/265t7mqtqmoln39qis2v6gtp645t)
+
+- `std::remove(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の要素について、前半が、`value` に等しい要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します。
+- `std::ranges::remove(itFirst, itLast)` および `std::ranges::remove(range)` は、範囲 `[itFirst, itLast)` または `range` の要素について、`value` に等しい要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、無効範囲のサブレンジを返します。
+- 有効範囲に残る要素の前後関係は元の順序が維持されます。
+- 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）。
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します。
+- `std::vector` の `.erase(itFirst, itLast)` において、`remove()` が返したイテレータを使うことで、無効範囲を削除することができます。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// std::remove
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		// 3 と等しい要素を削除する
+		v.erase(std::remove(v.begin(), v.end(), 3), v.end());
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	// std::ranges::remove
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		// 3 と等しい要素を削除する
+		auto subrange = std::ranges::remove(v, 3);
+		v.erase(subrange.begin(), subrange.end());
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+}
+```
+```txt:出力
+5 2 4 2 4 5 1
+5 2 4 2 4 5 1
+```
+
+
+## 3.4 条件を満たす要素をすべて削除する (1) [🟢C++20]
 - `std::erase_if(container, unaryPred)` は、コンテナ `container` にある、条件 `unaryPred` を満たす要素をすべて削除します。
 - ここでのコンテナは `std::vector`, `std::deque`, `std::string` などです。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
@@ -1099,8 +1154,63 @@ cat
 prgrmming
 ```
 
+## 3.5 条件を満たす要素をすべて削除する (2)
 
-## 3.4 範囲の要素を逆順にする
+![](https://storage.googleapis.com/zenn-user-upload/0eawt9k48qk0dsztugf6894is2g9)  
+![](https://storage.googleapis.com/zenn-user-upload/5c076a59mn7r67r3lmc686eifow5)  
+![](https://storage.googleapis.com/zenn-user-upload/10f3zfxoorsu6wdqgbgc8dmjl216)  
+
+- `std::remove_if(itFirst, itLast, unaryPred)` は、範囲 `[itFirst, itLast)` の要素について、前半が、条件 `unaryPred` を満たさない要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します。
+- `std::ranges::remove_if(itFirst, itLast, unaryPred)` および `std::ranges::remove_if(range, unaryPred)` は、範囲 `[itFirst, itLast)` または `range` の要素について、条件 `unaryPred` を満たさない要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、無効範囲のサブレンジを返します。
+- 有効範囲に残る要素の前後関係は元の順序が維持されます。
+- 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）。
+- `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します。
+- `std::vector` の `.erase(itFirst, itLast)` において、`remove_if()` が返したイテレータを使うことで、無効範囲を削除することができます。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// std::remove_if
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		// 偶数の要素を削除する
+		v.erase(std::remove_if(v.begin(), v.end(), [](int n) { return (n % 2 == 0); }), v.end());
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	// std::ranges::remove_if
+	{
+		std::vector<int> v = { 5, 3, 3, 2, 4, 2, 4, 3, 5, 1 };
+
+		// 偶数の要素を削除する
+		auto subrange = std::ranges::remove_if(v, [](int n) { return (n % 2 == 0); });
+		v.erase(subrange.begin(), subrange.end());
+
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+}
+```
+```txt:出力
+5 3 3 3 5 1
+5 3 3 3 5 1
+```
+
+
+## 3.6 範囲の要素を逆順にする
 - `std::reverse(itFirst, itLast)` および `std::ranges::reverse(itFirst, itLast)`, `std::ranges::reverse(range)` は、範囲 `[itFirst, itLast)` または `range` の要素を逆順に並び替えます。
 
 > - `reverse()` の計算量: $O(N)$
@@ -1156,7 +1266,7 @@ redocta
 ```
 
 
-## 3.5 指定した要素を別の値で置き換える
+## 3.7 指定した要素を別の値で置き換える
 - `std::replace(itFirst, itLast, oldValue, newValue)` および `std::ranges::replace(itFirst, itLast, oldValue, newValue)`, `std::ranges::replace(range, oldValue, newValue)` は、範囲 `[itFirst, itLast)` または `range` の要素のうち、`oldValue` と等しい要素を `newValue` に置き換えます。
 
 > - `replace()` の計算量: $O(N)$
@@ -1209,7 +1319,7 @@ atcider
 ```
 
 
-## 3.6 指定した条件を満たす要素を別の値で置き換える
+## 3.8 指定した条件を満たす要素を別の値で置き換える
 - `std::replace_if(itFirst, itLast, unaryPred, newValue)` および `std::ranges::replace_if(itFirst, itLast, unaryPred, newValue)`, `std::ranges::replace_if(range, unaryPred, newValue)` は、範囲 `[itFirst, itLast)` または `range` の要素のうち、条件 `unaryPred` を満たす要素を `newValue` に置き換えます。
 - `unaryPred` は、要素に対して条件を満たすかを返す関数や関数オブジェクトです。
 
@@ -1266,7 +1376,7 @@ itcider
 ```
 
 
-## 3.7 等しい値が隣同士にならないよう要素を削除する
+## 3.9 等しい値が隣同士にならないよう要素を削除する
 
 ![](https://storage.googleapis.com/zenn-user-upload/ju1t0e4osdok3jw0g78dfjuvu4em)  
 ![](https://storage.googleapis.com/zenn-user-upload/oal49bx7uj5j3pc46so8nx3ngnwm)  
@@ -1274,7 +1384,7 @@ itcider
 
 
 - `std::unique(itFirst, itLast)` は、範囲 `[itFirst, itLast)` の要素について、前半が、隣同士で重複する要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、有効範囲の終端イテレータを返します。
-- `std::ranges::unique(itFirst, itLast)` および `std::ranges::unique(range)` は、範囲 `range` の要素について、前半が、隣同士で重複する要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、無効範囲のサブレンジを返します。
+- `std::ranges::unique(itFirst, itLast)` および `std::ranges::unique(range)` は、範囲 `[itFirst, itLast)` または `range` の要素について、前半が、隣同士で重複する要素を除外した有効範囲となるよう並びかえ、それ以降は無効範囲とし、無効範囲のサブレンジを返します。
 - 有効範囲に残る要素の前後関係は元の順序が維持されます。
 - 無効範囲の要素がどうなっているかは未規定で、値を読み取っても意味はありません（除外した要素や古い要素がゴミとして残っています）。
 - `std::vector` の `.erase(itFirst, itLast)` は、イテレータで指定した範囲 `[itFirst, itLast)` の要素を配列から削除し、その分だけ配列の要素数を縮小します。
@@ -1289,12 +1399,27 @@ itcider
 
 int main()
 {
+	// std::unique
 	{
 		std::vector<int> v = { 1, 1, 1, 3, 4, 3, 3, 2, 0, 2 };
 
-		auto result = std::ranges::unique(v);
+		// 隣同士で重複する要素を除外する
+		v.erase(std::unique(v.begin(), v.end()), v.end());
 
-		v.erase(result.begin(), result.end());
+		for (const auto& e : v)
+		{
+			std::cout << e << ' ';
+		}
+		std::cout << '\n';
+	}
+
+	// std::ranges::unique
+	{
+		std::vector<int> v = { 1, 1, 1, 3, 4, 3, 3, 2, 0, 2 };
+
+		// 隣同士で重複する要素を除外する
+		auto subrange = std::ranges::unique(v);
+		v.erase(subrange.begin(), subrange.end());
 
 		for (const auto& e : v)
 		{
@@ -1306,9 +1431,8 @@ int main()
 	{
 		std::string s = "communication";
 
-		auto result = std::ranges::unique(s);
-
-		s.erase(result.begin(), result.end());
+		auto subrange = std::ranges::unique(s);
+		s.erase(subrange.begin(), subrange.end());
 
 		std::cout << s << '\n';
 	}
@@ -1316,11 +1440,12 @@ int main()
 ```
 ```txt:出力
 1 3 4 3 2 0 2
+1 3 4 3 2 0 2
 comunication
 ```
 
 
-## 3.8 配列から重複する要素を無くす
+## 3.10 配列から重複する要素を無くす
 ![](https://storage.googleapis.com/zenn-user-upload/8ad2ohrp1h314mi1ae53hundxxg6)  
 ![](https://storage.googleapis.com/zenn-user-upload/wmw38txnyspy7lhguqp5ievf3nln)  
 ![](https://storage.googleapis.com/zenn-user-upload/zdcgymqoz7tlorn7nq3bpsb7sbcw)  
