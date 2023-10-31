@@ -1379,7 +1379,7 @@ acimnotu
 ```
 
 
-## 3.9 要素の前半と後半を入れ替える
+## 3.11 要素の前半と後半を入れ替える
 
 ![](https://storage.googleapis.com/zenn-user-upload/00ubzrhcws3ywiv75aplss1u2tkj)  
 ![](https://storage.googleapis.com/zenn-user-upload/4xyfcvmfvg63ulzjgvnoc7pwn29r)  
