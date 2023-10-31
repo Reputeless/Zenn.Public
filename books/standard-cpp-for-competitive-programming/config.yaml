@@ -9,7 +9,7 @@ chapters:
   - vector
   - numeric
   - unordered_set
-  - library-algorithm
+  - algorithm
   - library-tuple
   - library-ios-iomanip
   - union-find
@@ -24,5 +24,5 @@ chapters:
   - fast-io
   - support
   - acknowledgments
-  - algorithm
+  - library-algorithm
   
