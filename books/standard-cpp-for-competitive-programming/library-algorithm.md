@@ -1,6 +1,6 @@
 ---
 title: "（古い記事、C++17 以前）<algorithm>"
-free: false
+free: true
 ---
 
 # 1. 最小値と最大値
