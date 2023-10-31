@@ -1,5 +1,5 @@
 ---
-title: "<algorithm> (C++17 以前)"
+title: "（古い記事、C++17 以前）<algorithm>"
 free: false
 ---
 
