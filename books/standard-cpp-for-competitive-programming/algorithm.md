@@ -341,8 +341,8 @@ min: 0.1, max: 0.4
 
 ## 1.8 空でない範囲の中から最小の要素と最大の要素を一度に得る [🟢C++20]
 - `std::ranges::minmax(range)` は、空でない範囲 `range` の中の最小値、最大値それぞれを格納した `std::ranges::min_max_result` を返します。
-- 戻り値を構造化束縛で受け取ることができます。
 - `range` の要素数が 0 の場合、実行時エラーになります。
+- 戻り値を構造化束縛で受け取ることができます。
 
 ```cpp
 #include <iostream>
@@ -383,6 +383,7 @@ min: 2, max: 6
 - `std::minmax_element(irFirst, itLast)` は、範囲 `[itFirst, itLast)` の中で最小の値、最大の値それぞれへのイテレータを組にした `std::pair` を返します。
 - `std::ranges::minmax_element(irFirst, itLast)` および `std::ranges::minmax_element(range)` は、範囲 `range` の中で最小の値、最大の値それぞれへのイテレータを組にした `std::minmax_element_result` を返します。
 - 範囲の要素数が 0 の場合、どちらも範囲の終端イテレータになります。
+- 戻り値を構造化束縛で受け取ることができます。
 - イテレータに `*` を付けると、そのイテレータが指す値にアクセスできます。
 - イテレータの指す値が、配列の何番目にあるかを整数値で得るには、`std::distance(itFirst, itLast)` または `std::ranges::distance(itFirst, itLast)` に、範囲の先頭イテレータと、戻り値のイテレータを渡すことで、その間の距離を求めます。
 
