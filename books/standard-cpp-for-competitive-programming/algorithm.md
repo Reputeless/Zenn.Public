@@ -34,11 +34,6 @@ int main()
 	}
 
 	{
-		char a = 'a', b = 'z';
-		std::cout << std::ranges::min(a, b) << '\n';
-	}
-
-	{
 		std::string a = "apple", b = "bird";
 		std::cout << std::ranges::min(a, b) << '\n';
 	}
@@ -48,20 +43,12 @@ int main()
 		std::size_t b = 60;
 		std::cout << std::ranges::min(a, static_cast<int>(b)) << '\n';
 	}
-
-	{
-		int a = 30;
-		std::size_t b = 60;
-		std::cout << std::ranges::min(static_cast<size_t>(a), b) << '\n';
-	}
 }
 ```
 ```txt:出力
 30
 -10.5
-a
 apple
-30
 30
 ```
 
@@ -90,11 +77,6 @@ int main()
 	}
 
 	{
-		char a = 'a', b = 'z';
-		std::cout << std::ranges::max(a, b) << '\n';
-	}
-
-	{
 		std::string a = "apple", b = "bird";
 		std::cout << std::ranges::max(a, b) << '\n';
 	}
@@ -104,20 +86,12 @@ int main()
 		std::size_t b = 60;
 		std::cout << std::ranges::max(a, static_cast<int>(b)) << '\n';
 	}
-
-	{
-		int a = 30;
-		std::size_t b = 60;
-		std::cout << std::ranges::max(static_cast<size_t>(a), b) << '\n';
-	}
 }
 ```
 ```txt:出力
 60
 0.5
-z
 bird
-60
 60
 ```
 
