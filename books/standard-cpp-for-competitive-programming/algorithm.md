@@ -1279,7 +1279,6 @@ itcider
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <ranges>
 
 int main()
 {
@@ -1342,7 +1341,6 @@ comunication
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <ranges>
 
 int main()
 {
