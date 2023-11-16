@@ -231,10 +231,10 @@ void Main()
 		throw Error{ U"Failed to open `tutorial2.bin`" };
 	}
 
-	// 書き込みたいテキストの長さ
+	// 読み込むテキストの長さを格納する変数
 	uint64 length = 0;
 
-	// 書き込みたいテキスト
+	// 読み込んだテキストの格納先
 	String text;
 
 	// テキストの長さを読み込む
