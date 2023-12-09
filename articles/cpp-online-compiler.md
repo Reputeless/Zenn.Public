@@ -6,6 +6,8 @@ topics: ["cpp"]
 published: true
 ---
 
+> [C++ Advent Calendar 2023](https://qiita.com/advent-calendar/2023/cxx), 9 日目の記事です。
+
 学校で C++ を教える場合、受講者に最初から Visual Studio Code や、Visual Studio, Xcode などの統合開発環境をインストールしてもらうのは難しいことがあります。
 
 とくにプログラミングが初めての学生、パソコンに不慣れな学生が多い場合は、なるべく環境構築に時間をかけず、スムーズに C++ プログラミングの学習に入れるよう、講義の序盤ではオンラインコンパイラの使用が選択肢として有効です。
