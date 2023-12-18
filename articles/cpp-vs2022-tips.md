@@ -6,12 +6,12 @@ topics: ["cpp"]
 published: false
 ---
 
-> [C++ Advent Calendar 2023](https://qiita.com/advent-calendar/2023/cxx), 18 日目の記事です。
+> [C++ Advent Calendar 2023](https://qiita.com/advent-calendar/2023/cxx) および [Siv3D Advent Calendar 2023](https://qiita.com/advent-calendar/2023/siv3d) 18 日目の記事です。
 
 本記事では、Visual Studio での C++ プログラミングの生産性向上に役立つ機能を、最近のバージョンで追加された無料機能を中心に紹介します。
 
 ## 1. コーディング用の合字フォント
-日本語環境の Visual Studio のデフォルトのフォントは **MS ゴシック** なので、フォントにこだわりのない人は MS ゴシックを使い続けているかもしれません。英語環境では Visual Studio 2022 から **Cascadia** がデフォルトのフォントになっています。
+日本語環境の Visual Studio のデフォルトのフォントは **MS ゴシック**なので、フォントにこだわりのない人は MS ゴシックを使い続けているかもしれません。英語環境では Visual Studio 2022 から **Cascadia** がデフォルトのフォントになっています。
 
 Cascadia は、Microsoft が 2019 年にリリースしたコーディング用のオープンソースフォントです。合字（リガチャ）の有無に応じて **Cascadia Code** と **Cascadia Mono** があります。合字を有効にすると特定の 2 つ以上の文字が、より洗練された 1 つのグリフで表現されます。人によって好みは分かれますが、一般にコードの可読性を向上させると考えられています。C++ のコードにおいては、`!=` や `>=`, `<=`, `++`, `<<`, `>>`, `^=`, `/=`, `::`, `&&`, `||`, `//`, `///` などの見た目が影響を受けます。
 
@@ -19,7 +19,7 @@ Cascadia は、Microsoft が 2019 年にリリースしたコーディング用�
 *Cascadia Code に収録されているおもな合字*
 
 ![](https://storage.googleapis.com/zenn-user-upload/b1655934400b-20231218.gif)
-*Cascadia Code（合字あり）と Cascadia Mono（合字なし）の比較。<br>合字を有効にしても本来の字幅は維持される*
+*Cascadia Code（合字あり）と Cascadia Mono（合字なし）の比較アニメーション。<br>合字を有効にしても本来の字幅は維持される*
 
 同じコードを、MS ゴシック、以前の英語版 Visual Studio のデフォルトフォント Consolas, そして Cascadia Code で比較してみましょう。
 
@@ -28,13 +28,13 @@ Cascadia は、Microsoft が 2019 年にリリースしたコーディング用�
 | ![](https://storage.googleapis.com/zenn-user-upload/a46eaa30efa0-20231218.png) | ![](https://storage.googleapis.com/zenn-user-upload/d7ce83191a5c-20231218.png) | ![](https://storage.googleapis.com/zenn-user-upload/e47b6127db5f-20231218.png) |
 
 #### 設定の手順
-Cascadia は標準でインストールされています。*メニュー > ツール > オプション > 環境 > フォントおよび色* からフォントを変更できます。
+Cascadia は標準でインストールされています。**メニュー > ツール > オプション > 環境 > フォントおよび色** からフォントを変更できます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/1bf510e2d084-20231218.png)
 
 
 ## 2. Doxygen スタイルのコメントの補助
-Visual Studio 2019 16.6 から、XML コメントおよび Doxygen スタイルのコメントを補助する機能が追加されました。例えば C++ のコードにおいて、関数の前に `///` で始まるコメントを入力すると、関数の引数や戻り値の型、関数の説明を入力するためのテンプレートが自動的に挿入されます。
+Visual Studio 2019 16.6 から、**XML コメントおよび Doxygen スタイルのコメントを補助する機能**が追加されました。例えば C++ のコードにおいて、関数の前に `///` で始まるコメントを入力すると、関数の引数や戻り値の型、関数の説明を入力するためのテンプレートが自動的に挿入されます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/05a8c7ab8292-20231218.gif)
 *XML コメントの補助*
