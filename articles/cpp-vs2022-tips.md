@@ -105,7 +105,7 @@ struct Line
 
 :::
 
-:::details 例 2
+:::details 例 2. アライメントの違い
 ```cpp
 struct Float4
 {
@@ -120,7 +120,7 @@ struct alignas(16) Float4A
 
 :::
 
-:::details 例 3
+:::details 例 3. メンバの並び順の違い
 ```cpp
 struct Object1
 {
@@ -141,7 +141,7 @@ struct Object2
 
 :::
 
-:::details 例 4
+:::details 例 4. ビットフィールド
 ```cpp
 struct HeightFieldPixel
 {
@@ -155,7 +155,7 @@ struct HeightFieldPixel
 
 :::
 
-:::details 例 5
+:::details 例 5. union
 ```cpp
 union FloatUint
 {
