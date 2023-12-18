@@ -85,8 +85,11 @@ Visual Studio 2022 17.8 から、`class` や `struct`, `union` のサイズや�
 ![](https://storage.googleapis.com/zenn-user-upload/086edc2914fe-20231218.png)
 *▲ サイズやアライメントがツールチップ上に表示される*
 
+![](https://storage.googleapis.com/zenn-user-upload/b029ce2fe464-20231218.png)
+*▲ 大きい！*
+
 ![](https://storage.googleapis.com/zenn-user-upload/f53df9689885-20231218.png)
-*▲ 各メンバのオフセットがビジュアルで確認できる*
+*▲ 各メンバのオフセットをビジュアルで確認できる*
 
 #### メモリレイアウトの可視化の例
 
@@ -118,7 +121,8 @@ struct alignas(16) Float4A
 	float x, y, z, w;
 };
 ```
-
+![](https://storage.googleapis.com/zenn-user-upload/ff25483569f4-20231218.png)
+![](https://storage.googleapis.com/zenn-user-upload/3ad4bcfb434e-20231218.png)
 :::
 
 :::details 例 3. メンバの並び順の違い
@@ -139,7 +143,8 @@ struct Object2
 	double d;
 };
 ```
-
+![](https://storage.googleapis.com/zenn-user-upload/34876996d3f4-20231218.png)
+![](https://storage.googleapis.com/zenn-user-upload/11a90919b760-20231218.png)
 :::
 
 :::details 例 4. ビットフィールド
@@ -153,7 +158,7 @@ struct HeightFieldPixel
 	unsigned unused : 1;
 };
 ```
-
+![](https://storage.googleapis.com/zenn-user-upload/6a05e75cde17-20231218.png)
 :::
 
 :::details 例 5. union
@@ -164,9 +169,8 @@ union FloatUint
 	unsigned i;
 };
 ```
-
+![](https://storage.googleapis.com/zenn-user-upload/21b46760b8fc-20231218.png)
 :::
-
 
 
 #### 設定の手順
