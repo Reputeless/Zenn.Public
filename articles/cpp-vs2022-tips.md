@@ -96,13 +96,72 @@ struct Point
 {
 	int x, y;
 };
+
+struct Line
+{
+	Point start, end;
+};
 ```
 
 :::
 
 :::details 例 2
 ```cpp
+struct Float4
+{
+	float x, y, z, w;
+};
 
+struct alignas(16) Float4A
+{
+	float x, y, z, w;
+};
+```
+
+:::
+
+:::details 例 3
+```cpp
+struct Object1
+{
+	short a;
+	int b;
+	short c;
+	double d;
+};
+
+struct Object2
+{
+	int b;
+	short a;
+	short c;
+	double d;
+};
+```
+
+:::
+
+:::details 例 4
+```cpp
+struct HeightFieldPixel
+{
+	int height : 16;
+	unsigned materialIndex0 : 7;
+	unsigned tessellationFlag : 1;
+	unsigned materialIndex1 : 7;
+	unsigned unused : 1;
+};
+```
+
+:::
+
+:::details 例 5
+```cpp
+union FloatUint
+{
+	float f;
+	unsigned i;
+};
 ```
 
 :::
@@ -114,5 +173,5 @@ struct Point
 
 
 ## まとめ
-本記事では、Visual Studio での C++ プログラミングの生産性・品質向上に役立つ機能を 5 つ紹介しました。いずれも最近のバージョンで追加された無料機能です。ぜひ活用してみてください。
+本記事では、Visual Studio での C++ プログラミングの生産性向上に役立つ機能を 5 つ紹介しました。いずれも最近のバージョンで追加された無料機能です。ぜひ活用してみてください。
 
