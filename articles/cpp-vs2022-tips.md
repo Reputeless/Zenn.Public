@@ -19,7 +19,7 @@ Cascadia は、Microsoft が 2019 年にリリースしたコーディング用�
 *Cascadia Code に収録されているおもな合字*
 
 ![](https://storage.googleapis.com/zenn-user-upload/b1655934400b-20231218.gif)
-*Cascadia Code（合字あり）と Cascadia Mono（合字なし）の比較。合字を有効にしても本来の字幅は維持される*
+*Cascadia Code（合字あり）と Cascadia Mono（合字なし）の比較。<br>合字を有効にしても本来の字幅は維持される*
 
 同じコードを、MS ゴシック、以前の英語版 Visual Studio のデフォルトフォント Consolas, そして Cascadia Code で比較してみましょう。
 
