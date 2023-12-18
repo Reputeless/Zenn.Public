@@ -1,5 +1,5 @@
 ---
-title: "Visual Studio での C++ プログラミング生産性向上に役立つ機能（2023）"
+title: "C++ プログラミングの生産性を少し改善する Visual Studio の機能（2023）"
 emoji: "⌨️"
 type: "tech"
 topics: ["cpp"]
@@ -28,7 +28,7 @@ Cascadia は、Microsoft が 2019 年にリリースしたコーディング用�
 | ![](https://storage.googleapis.com/zenn-user-upload/a46eaa30efa0-20231218.png) | ![](https://storage.googleapis.com/zenn-user-upload/d7ce83191a5c-20231218.png) | ![](https://storage.googleapis.com/zenn-user-upload/e47b6127db5f-20231218.png) |
 
 #### 設定の手順
-メニュー > ツール > オプション > 環境 > フォントおよび色 からフォントを変更できます。
+Cascadia は標準でインストールされています。*メニュー > ツール > オプション > 環境 > フォントおよび色* からフォントを変更できます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/1bf510e2d084-20231218.png)
 
@@ -36,19 +36,29 @@ Cascadia は、Microsoft が 2019 年にリリースしたコーディング用�
 ## 2. Doxygen スタイルのコメントの補助
 Visual Studio 2019 16.6 から、XML コメントおよび Doxygen スタイルのコメントを補助する機能が追加されました。例えば C++ のコードにおいて、関数の前に `///` で始まるコメントを入力すると、関数の引数や戻り値の型、関数の説明を入力するためのテンプレートが自動的に挿入されます。
 
+![](https://storage.googleapis.com/zenn-user-upload/05a8c7ab8292-20231218.gif)
+*XML コメントの補助*
+
+![](https://storage.googleapis.com/zenn-user-upload/d8031a172c69-20231218.gif)
+*Doxygen スタイルのコメントの補助*
+
 また、XML コメントと Doxygen スタイルのコメントどちらの内容も、ツールチップによるヒント表示に反映されるようになりました。
 
+![](https://storage.googleapis.com/zenn-user-upload/3459b5d3e49a-20231218.png)
+*ツールチップによるヒント表示*
 
 #### 設定の手順
+
+![](https://storage.googleapis.com/zenn-user-upload/c048311df87f-20231218.png)
 
 
 ## 3. コンパイラのメッセージの色分け
-Visual Studio の拡張機能 [VSColorOutput64](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64) を使うと、コンパイラのメッセージを色分けして表示できます。例えば、エラーメッセージを赤、警告メッセージをオレンジ色で表示するように設定すると、大量のコンパイラのメッセージの中から重要な情報を見つけやすくなります。
+Visual Studio の拡張機能 [**VSColorOutput64**](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64) を使うと、コンパイラのメッセージを色分けして表示できます。例えば、エラーメッセージを赤、警告メッセージをオレンジ色で表示するように設定すると、大量のコンパイラのメッセージの中から重要な情報を見つけやすくなります。
 
 #### 設定の手順
-Visual Studio Marketplace または Visual Studio の拡張機能マネージャーから VSColorOutput64 をインストールします。インストール後、メニュー > ツール > オプション > VSColorOutput64 から設定画面を開き、各項目の色を変更します。
+Visual Studio Marketplace または Visual Studio の拡張機能マネージャーから VSColorOutput64 をインストールします。インストール後、**メニュー > ツール > オプション > VSColorOutput64** から設定画面を開き、各項目の色を変更します。
 
-この拡張を有効にすると、コンパイラのメッセージに作者への寄付を促すメッセージが表示されます。`Yes I Donated!` オプションを `True` にすると、このメッセージが表示されなくなります。私は [GitHub Sponsors で作者に寄付](https://github.com/sponsors/mike-ward)をしたので、このオプションを `True` にしています。
+この拡張を有効にすると、コンパイラのメッセージに作者への寄付を促すメッセージが表示されるようになりますが、`Yes I Donated!` オプションを `True` に変更すると、メッセージを非表示にできます。[私は GitHub Sponsors で作者に寄付をした](https://github.com/sponsors/mike-ward)ので、このオプションを `True` にしています。
 
 ![](https://storage.googleapis.com/zenn-user-upload/2fda1e98cfa4-20231218.png)
 
