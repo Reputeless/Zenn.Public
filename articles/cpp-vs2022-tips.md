@@ -3,12 +3,12 @@ title: "C++ プログラミングの生産性を少し改善する Visual Studio
 emoji: "⌨️"
 type: "tech"
 topics: ["cpp"]
-published: false
+published: true
 ---
 
 > [C++ Advent Calendar 2023](https://qiita.com/advent-calendar/2023/cxx) および [Siv3D Advent Calendar 2023](https://qiita.com/advent-calendar/2023/siv3d) 18 日目の記事です。
 
-本記事では、Visual Studio での C++ プログラミングの生産性向上に役立つ機能を、最近のバージョンで追加された無料機能を中心に紹介します。
+本記事では、Visual Studio での C++ プログラミングの生産性向上に役立つ IDE の機能を、最近のバージョンで追加された無料機能を中心に紹介します。
 
 ## 1. コーディング用の合字フォント
 日本語環境の Visual Studio のデフォルトのフォントは **MS ゴシック**なので、フォントにこだわりのない人は MS ゴシックを使い続けているかもしれません。英語環境では Visual Studio 2022 から **Cascadia** がデフォルトのフォントになっています。
@@ -34,7 +34,7 @@ Cascadia は標準でインストールされています。**メニュー > ツ
 
 
 ## 2. Doxygen スタイルのコメントの補助
-Visual Studio 2019 16.6 から、**XML コメントおよび Doxygen スタイルのコメントを補助する機能**が追加されました。C++ のコードにおいて、例えば関数の前に `///` で始まるコメントを入力すると、引数や戻り値、関数の説明を入力するためのテンプレートが自動的に挿入されます。
+Visual Studio 2019 16.6 から、**XML コメントおよび Doxygen スタイルのコメントを補助する機能**が追加されました。C++ のコードにおいて `///` で始まるコメントを入力すると、例えば関数の前であれば、引数や戻り値、関数の説明を入力するためのテンプレートが自動的に挿入されます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/05a8c7ab8292-20231218.gif)
 *▲ XML コメントの補助*
@@ -54,7 +54,7 @@ Visual Studio 2019 16.6 から、**XML コメントおよび Doxygen スタイ�
 
 
 ## 3. コンパイラのメッセージの色分け
-Visual Studio の拡張機能 [**VSColorOutput64**](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64) を使うと、コンパイラのメッセージを色分けして表示できます。例えば、エラーメッセージを赤、警告メッセージをオレンジ色で表示するように設定すると、大量のコンパイラのメッセージの中から重要な情報を見つけやすくなります。
+Visual Studio の拡張機能 [**VSColorOutput64**](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64) を使うと、コンパイラのメッセージを色分けして表示できます。例えば、エラーメッセージを赤、警告メッセージをオレンジ色で表示するように設定すると、大量のメッセージの中から重要な情報を見つけやすくなります。
 
 ![](https://storage.googleapis.com/zenn-user-upload/b6d5f3346408-20231218.png)
 *▲ 色分けされたメッセージ*
@@ -68,10 +68,10 @@ Visual Studio Marketplace または Visual Studio の拡張機能マネージャ
 
 
 ## 4. スペルチェック
-Visual Studio 2022 17.5 から、コードに含まれる英単語のスペルミスを検出する機能が追加されました。
+Visual Studio 2022 17.5 から、コードに含まれる英単語のスペルミスを検出する機能が追加されました。ツールチップから修正候補を選択して、一括修正することもできます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/edd7e7fb4bee-20231218.png)
-*▲ スペルミスが検出された箇所に青波線が表示される。<br>ツールチップから修正案を選択できる。*
+*▲ スペルミスが検出された箇所に青波線が表示される*
 
 #### 設定の手順
 2023 年 2 月にリリースされた Visual Studio 2022 17.5 から標準で搭載されています。**メニュー > 編集 > 詳細 > スペルチェッカーを切り替える** から有効無効を切り替えられます。Visual Studio のメインツールバー上のボタンからも切り替えられます。
@@ -80,7 +80,7 @@ Visual Studio 2022 17.5 から、コードに含まれる英単語のスペル�
 
 
 ## 5. クラスや union のメモリレイアウトの可視化
-Visual Studio 2022 17.8 から、`class` や `struct`, `union` のサイズやアライメントがツールチップ上で表示されるようになり、Visual Studio 2022 17.9 からは各メンバのオフセット（メモリレイアウト）を、ビジュアルで確認できるようになりました。
+Visual Studio 2022 17.8 から、`class` や `struct`, `union` のサイズやアライメントがツールチップ上で表示されるようになりました。また、Visual Studio 2022 17.9 からは各メンバのオフセット（メモリレイアウト）を、ビジュアルで確認できるようになりました。
 
 ![](https://storage.googleapis.com/zenn-user-upload/086edc2914fe-20231218.png)
 *▲ サイズやアライメントがツールチップ上に表示される*
@@ -174,9 +174,9 @@ union FloatUint
 
 
 #### 設定の手順
-ツールチップでのサイズやアライメントの表示は 2023 年 11 月にリリースされた Visual Studio 2022 17.8 から標準で有効になっています。メモリレイアウトの可視化は Visual Studio 2022 17.9 Preview から標準で有効になっていて、ツールチップ上の「メモリレイアウト」をクリックすることで新しいタブに表示されます。
+ツールチップでのサイズやアライメントの表示は 2023 年 11 月にリリースされた Visual Studio 2022 17.8 から標準で有効になっています。メモリレイアウトの可視化は Visual Studio 2022 17.9 Preview から標準で有効になっていています。前述のサイズ・アライメントツールチップ上の「メモリレイアウト」をクリックすることで新しいタブに表示されます。
 
 
 ## まとめ
-本記事では、Visual Studio での C++ プログラミングの生産性向上に役立つ機能を 5 つ紹介しました。いずれも最近のバージョンで追加された無料機能です。ぜひ活用してみてください。
+本記事では、Visual Studio での C++ プログラミングの生産性向上に役立つ最近の IDE 機能を 5 つ紹介しました。いずれも無料で利用できます。ぜひ活用してみてください。
 
