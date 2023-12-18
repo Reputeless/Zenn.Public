@@ -33,7 +33,7 @@ Cascadia は標準でインストールされています。**メニュー > ツ
 ![](https://storage.googleapis.com/zenn-user-upload/1bf510e2d084-20231218.png)
 
 
-## 2. Doxygen スタイルのコメントの補助
+## 2. Doxygen スタイルのコメントの入力補助
 Visual Studio 2019 16.6 から、**XML コメントおよび Doxygen スタイルのコメントの記述を補助する機能**が追加されました。C++ のコードにおいて `///` で始まるコメントを入力すると、例えば関数の前であれば、引数や戻り値、関数の説明を入力するためのテンプレートが自動的に挿入されます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/05a8c7ab8292-20231218.gif)
