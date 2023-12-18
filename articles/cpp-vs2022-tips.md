@@ -90,7 +90,7 @@ Visual Studio 2022 17.8 から、`class` や `struct`, `union` のサイズや�
 
 #### メモリレイアウトの可視化の例
 
-:::details 例 1
+:::details 例 1. 他クラスをメンバに持つクラス
 ```cpp
 struct Point
 {
@@ -102,7 +102,8 @@ struct Line
 	Point start, end;
 };
 ```
-
+![](https://storage.googleapis.com/zenn-user-upload/1db46e8e6bee-20231218.png)
+![](https://storage.googleapis.com/zenn-user-upload/71dbfa67a084-20231218.png)
 :::
 
 :::details 例 2. アライメントの違い
