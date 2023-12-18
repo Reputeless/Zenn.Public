@@ -60,11 +60,11 @@ Visual Studio の拡張機能 [**VSColorOutput64**](https://marketplace.visualst
 *▲ 色分けされたメッセージ*
 
 #### 設定の手順
-Visual Studio Marketplace または Visual Studio の拡張機能マネージャーから VSColorOutput64 をインストールします。インストール後、**メニュー > ツール > オプション > VSColorOutput64** から設定画面を開き、各項目の色を変更します。
-
-この拡張を有効にすると、コンパイラのメッセージに作者への寄付を促すメッセージが表示されるようになりますが、`Yes I Donated!` オプションを `True` に変更すると、メッセージを非表示にできます。[私は GitHub Sponsors で作者に寄付をした](https://github.com/sponsors/mike-ward)ので、このオプションを `True` にしています。
+Visual Studio Marketplace または Visual Studio の拡張機能マネージャーから VSColorOutput64 をインストールします。インストール後、**メニュー > ツール > オプション > VSColorOutput64** から設定画面を開き、各項目の色を変更できます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/2fda1e98cfa4-20231218.png)
+
+この拡張を有効にすると、コンパイラのメッセージに作者への寄付を促すテキストが表示されるようになりますが、上記の `Yes I Donated!` オプションを `True` に変更すれば非表示にできます。[筆者は GitHub Sponsors で作者に寄付をした](https://github.com/sponsors/mike-ward)ので、このオプションを `True` にしています。
 
 
 ## 4. スペルチェック
@@ -80,12 +80,37 @@ Visual Studio 2022 17.5 から、コードに含まれる英単語のスペル�
 
 
 ## 5. クラスや union のメモリレイアウトの可視化
+Visual Studio 2022 17.8 から、`class` や `struct`, `union` のサイズやアライメントがツールチップ上で表示されるようになり、Visual Studio 2022 17.9 からは各メンバのオフセット（メモリレイアウト）を、ビジュアルで確認できるようになりました。
 
+![](https://storage.googleapis.com/zenn-user-upload/086edc2914fe-20231218.png)
+*▲ サイズやアライメントがツールチップ上に表示される*
+
+![](https://storage.googleapis.com/zenn-user-upload/f53df9689885-20231218.png)
+*▲ 各メンバのオフセットがビジュアルで確認できる*
+
+#### メモリレイアウトの可視化の例
+
+:::details 例 1
+```cpp
+struct Point
+{
+	int x, y;
+};
+```
+
+:::
+
+:::details 例 2
+```cpp
+
+```
+
+:::
 
 
 
 #### 設定の手順
-2023 年 11 月にリリースされた Visual Studio 2022 17.8 から標準で有効になっています。
+ツールチップでのサイズやアライメントの表示は 2023 年 11 月にリリースされた Visual Studio 2022 17.8 から標準で有効になっています。メモリレイアウトの可視化は Visual Studio 2022 17.9 Preview から標準で有効になっていて、ツールチップ上の「メモリレイアウト」をクリックすることで新しいタブに表示されます。
 
 
 ## まとめ
