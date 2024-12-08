@@ -3,7 +3,7 @@ title: "C++ で [[lifetimebound]] 属性を用いてダングリング参照の�
 emoji: "⌛"
 type: "tech"
 topics: ["cpp"]
-published: false
+published: true
 ---
 
 > [C++ Advent Calendar 2024](https://qiita.com/advent-calendar/2024/cxx), 8 日目の記事です。
@@ -137,23 +137,7 @@ int main()
 
 
 ### 2.2 `std::minmax` での事例
-もう少し複雑な例が、標準ライブラリ関数 `std::minmax` の誤用です。`std::minmax` は、2 つの要素を比較して最小値と最大値を返す関数で、通常は次のように使用します。
-
-```cpp
-#include <iostream>
-#include <algorithm>
-#include <string>
-
-int main()
-{
-	std::string a = "cat cat cat cat cat cat cat cat", b = "dog dog dog dog dog dog dog dog";
-	auto result = std::minmax(a, b);
-	// result は std::pair<const std::string&, const std::string&> 型
-	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // OK
-}
-```
-
-`std::minmax` の戻り値は `std::pair<const T&, const T&>` 型で、最小値と最大値への参照を保持します。この挙動が、特定の状況でダングリング参照を引き起こします。次のコードがその例です。
+もう少し複雑な例が、標準ライブラリ関数 `std::minmax` の誤用です。`std::minmax` の戻り値は `std::pair<const T&, const T&>` 型で、最小値と最大値への参照を保持します。この挙動が、特定の状況でダングリング参照を引き起こします。次のコードがその例です。
 
 ```cpp
 #include <iostream>
@@ -348,7 +332,7 @@ public:
 	StringPiece() = default;
 	StringPiece(const std::string& s LIFETIMEBOUND)
 		: data{ s.data() }
-		, size(s.size()) {}
+		, size{ s.size() } {}
 
 	const char* data = nullptr;
 	size_t size = 0;
@@ -385,7 +369,7 @@ int main()
 	{
 		std::vector<int> v = { 200, 100 };
 		auto result = std::minmax(v[0], v[1]);
-		v.resize(1000);
+		v.resize(1000); // ここで参照先が無効化される
 		std::cout << result.first << ' ' << result.second << '\n';
 	}
 
@@ -394,7 +378,7 @@ int main()
 		{
 			std::string s = MakeString();
 			sp = StringPiece{ s };
-		}
+		} // ここで s が破棄される
 
 		std::cout << std::string_view{ sp.data, sp.size } << '\n';
 	}
@@ -420,12 +404,9 @@ GCC の新しい警告や、Visual Studio, Clang の `[[lifetimebound]]` 属性�
 ## 5. 周辺の話題
 現時点で `[[lifetimebound]]` を C++ 標準に追加する提案はありませんが、次のような動きがあります。
 
-Clang では、より幅広いケースでダングリング参照を検出するための拡張が研究されています。
-
-- [LLVM: [RFC] Lifetime annotations for C++](https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377)
-
-借用チェック（borrow checking）を用いて、より包括的なライフタイム安全性の提供を目指す提言も発表されています。
-
-- [D3390: Safe C++](https://safecpp.org/draft.html)
+- Clang では、より幅広いケースでダングリング参照を検出するための拡張が研究されています。
+    - [LLVM: [RFC] Lifetime annotations for C++](https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377)
+- 借用チェック（borrow checking）を用いて、より包括的なライフタイム安全性の提供を目指す提言も発表されています。
+    - [D3390: Safe C++](https://safecpp.org/draft.html)
 
 実現や実用化には相当な時間がかかると思われますが、C++ のライフタイム安全性の向上に向けた取り組みは、今後も進展していくことが期待されます。
