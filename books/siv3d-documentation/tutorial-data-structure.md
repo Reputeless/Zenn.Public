@@ -478,7 +478,7 @@ void Main()
 
 
 ## 6.4 ハッシュセット
-キーと値のみを格納し、高速にキーを検索できるハッシュセットとして、Siv3D は `HashSet<Key>` クラステンプレートを提供しています。`std::unordered_set` よりも高速な実装を持ち、Siv3D のクラスや関数とも連係が容易です。`std::unordered_set` と同様に、各エントリは追加した順番とは異なる順序で格納されます。
+キーのみを格納し、高速にキーを検索できるハッシュセットとして、Siv3D は `HashSet<Key>` クラステンプレートを提供しています。`std::unordered_set` よりも高速な実装を持ち、Siv3D のクラスや関数とも連係が容易です。`std::unordered_set` と同様に、各エントリは追加した順番とは異なる順序で格納されます。
 ![](/images/doc_v6/tutorial/6/4.png)
 ```cpp
 # include <Siv3D.hpp>
