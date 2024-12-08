@@ -8,22 +8,22 @@ published: false
 
 > [C++ Advent Calendar 2024](https://qiita.com/advent-calendar/2024/cxx), 8 日目の記事です。
 
-#### ポイント
+## ポイント
 - 近年の C++ コンパイラでは、ダングリング参照（生存期間が終了したオブジェクトへの参照）の検出が強化されつつある。
 - 一部のコンパイラでは、コンパイラ拡張 `[[lifetimebound]]` 属性を用いることで、特定のケースにおけるダングリング参照をコンパイル時に検出できる。
 - この機能によってすべてのダングリング参照を防げるわけではないが、ライブラリ作者が `[[lifetimebound]]` を適切な関数やコンストラクタに付与することで、ユーザコードにおけるダングリング参照のリスクを軽減できる。
 
 ## 1. 概要
-GCC 13 以降では、新たに導入された `-Wdangling-reference` 警告によって、一時オブジェクトの有効期間に関連するダングリング参照を検出できるようになりました。
+GCC 13 以降では、新たに導入された `-Wdangling-reference` 警告によって、一時オブジェクトのライフタイムに関連するダングリング参照の問題を検出できるようになりました。
 
 - [GCC Add warnings for common dangling problems](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106393)
 
-また、Visual Studio 2022（17.7 以降）や Clang 7 以降ではコンパイラ拡張として **[[lifetimebound]]** 属性が利用可能になりました。これを使うと、関数の呼び出し後もオブジェクトの有効性が期待されるようなケースでの一時オブジェクトの使用を警告できます。
+また、Visual Studio 2022（17.7 以降）や Clang 7 以降ではコンパイラ拡張として **[[lifetimebound]]** 属性が利用可能になりました。これを使うと、関数の呼び出し後もオブジェクトの有効性が期待されるようなケースでの一時オブジェクトの使用が検査され、警告を出せます。
 
 - [Warning C26815 | Microsoft Learn](https://learn.microsoft.com/en-us/cpp/code-quality/c26815?view=msvc-170)
 - [LLVM: [P0936R0] add [[clang::lifetimebound]] attribute](https://reviews.llvm.org/D49922)
 
-次のコードは、GCC の新しい警告や、Visual Studio や Clang における `[[lifetimebound]]` 属性の使用によって、一時オブジェクト由来のダングリング参照が検出されます。
+次のコードでは、そうした GCC の新しい警告や `[[lifetimebound]]` 属性の使用によって、一時オブジェクト由来のダングリング参照の問題がコンパイラによって警告されます。
 
 ```cpp
 #include <iostream>
@@ -51,19 +51,19 @@ const std::string& GetOption(const std::string& userOption LIFETIMEBOUND, const 
 
 std::string MakeDefaultOption()
 {
-	return "default:ddddddddddddddddddddddddddddd";
+	return "The quick brown fox jumps over the lazy dog.";
 }
 
 int main()
 {
 	const std::string emptyOption = "";
-	const std::string userOption = "user:aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	const std::string userOption = "The quick brown fox jumps over the lazy dog.";
 	const std::string defaultOption = MakeDefaultOption();
 
 	const std::string& s1 = GetOption(userOption, defaultOption);
 	// ✅ OK
 	
-	const std::string& s2 = GetOption("user:bbbbbbbbbbbbbbbbbbbbbbbbbbbbb", defaultOption);
+	const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
 	// ⚠️ 警告
 	
 	const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
@@ -78,28 +78,28 @@ int main()
 GCC での警告例:
 ```sh
 prog.cc: In function 'int main()':
-prog.cc:38:24: warning: possibly dangling reference to a temporary [-Wdangling-reference]
-   38 |     const std::string& s2 = GetOption("user:bbbbbbbbbbbbbbbbbbbbbbbbbbbbb", defaultOption);
-	  |                        ^~
-prog.cc:38:39: note: 'const std::string' {aka 'const std::__cxx11::basic_string<char>'} temporary created here
-   38 |     const std::string& s2 = GetOption("user:bbbbbbbbbbbbbbbbbbbbbbbbbbbbb", defaultOption);
-	  |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-prog.cc:41:24: warning: possibly dangling reference to a temporary [-Wdangling-reference]
-   41 |     const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
-	  |                        ^~
-prog.cc:41:69: note: 'std::string' {aka 'std::__cxx11::basic_string<char>'} temporary created here
-   41 |     const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
-	  |                                                    ~~~~~~~~~~~~~~~~~^~
+prog.cc:38:28: warning: possibly dangling reference to a temporary [-Wdangling-reference]
+   38 |         const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
+      |                            ^~
+prog.cc:38:43: note: 'const std::string' {aka 'const std::__cxx11::basic_string<char>'} temporary created here
+   38 |         const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+prog.cc:41:28: warning: possibly dangling reference to a temporary [-Wdangling-reference]
+   41 |         const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
+      |                            ^~
+prog.cc:41:73: note: 'std::string' {aka 'std::__cxx11::basic_string<char>'} temporary created here
+   41 |         const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
+      |                                                        ~~~~~~~~~~~~~~~~~^~
 ```
 
 Clang での警告例:
 ```sh
-prog.cc:38:39: warning: temporary bound to local reference 's2' will be destroyed at the end of the full-expression [-Wdangling]
-   38 |     const std::string& s2 = GetOption("user:bbbbbbbbbbbbbbbbbbbbbbbbbbbbb", defaultOption);
-	  |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-prog.cc:41:52: warning: temporary bound to local reference 's3' will be destroyed at the end of the full-expression [-Wdangling]
-   41 |     const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
-	  |                                                    ^~~~~~~~~~~~~~~~~~~
+prog.cc:38:36: warning: temporary bound to local reference 's2' will be destroyed at the end of the full-expression [-Wdangling]
+   38 |         const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+prog.cc:41:49: warning: temporary bound to local reference 's3' will be destroyed at the end of the full-expression [-Wdangling]
+   41 |         const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
+      |                                                        ^~~~~~~~~~~~~~~~~~~
 ```
 
 Visual Studio での Code Analysis による警告例:
@@ -111,10 +111,10 @@ C:\***\Main.cpp(41): warning C26815: このポインターは、破棄された�
 
 
 ## 2. 背景
-C++ では、コピーを回避する効率的なコードを書くために参照やポインタが使われます。しかし、ローカル変数や一時オブジェクトへの参照を取得すると、オブジェクトが破棄されたあとも参照し続けるダングリング参照につながります。
+C++ では、コピーを回避する効率的なコードを書くために参照やポインタが使われます。しかし、ローカル変数や一時オブジェクトへの参照を取得することは、オブジェクトが破棄されたあともそれらを参照し続けるダングリング参照の問題につながります。
 
 ### 2.1 ローカル変数の参照を返してしまう事例
-次の例では、関数 `Concat` が関数終了とともに破棄されるローカル変数 `result` への参照を返しているため、戻り値はダングリング参照となります。
+次の例では、関数 `Concat` が、関数終了とともに破棄されるローカル変数 `result` への参照を返しているため、戻り値はダングリング参照となります。
 
 ```cpp
 #include <iostream>
@@ -133,7 +133,7 @@ int main()
 }
 ```
 
-この問題は従来から検出が容易で、多くのコンパイラが警告を発します。
+このようなケースは検出が容易で、従来からほとんどのコンパイラが警告を発します。
 
 
 ### 2.2 `std::minmax` での事例
@@ -147,10 +147,8 @@ int main()
 int main()
 {
 	std::string a = "cat cat cat cat cat cat cat cat", b = "dog dog dog dog dog dog dog dog";
-	
 	auto result = std::minmax(a, b);
 	// result は std::pair<const std::string&, const std::string&> 型
-	
 	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n';
 }
 ```
@@ -176,14 +174,13 @@ int main()
 {
 	// 一時オブジェクトへの参照を返すため NG
 	auto result = std::minmax(GetCat(), GetDog());
-
 	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n';
 }
 ```
 
-`GetCat()` と `GetDog()` が返す一時オブジェクトは、`std::minmax` の呼び出し後すぐに寿命が終わります。すると、以降の `result.first` や `result.second` はダングリング参照となり、未定義動作を引き起こします。
+`GetCat()` と `GetDog()` が返す一時オブジェクトは、`std::minmax` の呼び出し後すぐにライフタイムが終わります。すると、以降の `result.first` や `result.second` はダングリング参照となり、アクセスすると未定義動作を引き起こします。
 
-この問題を避けるには、一時オブジェクトではなく、寿命が十分に長い変数を用います。
+この問題を避けるには、一時オブジェクトではなく、ライフタイムが十分に長い変数を用います。
 
 ```cpp
 #include <iostream>
@@ -202,16 +199,16 @@ std::string GetDog()
 
 int main()
 {
-	// OK: 戻り値を変数で受け取り、寿命を維持する
+	// OK: 戻り値を変数で受け取り、ライフタイムを延ばす
 	std::string a = GetCat(), b = GetDog();
-	
 	auto result = std::minmax(a, b);
-
 	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n';
 }
 ```
 
-以前のコンパイラでは `std::minmax` の誤用を検出できませんでしたが、新しい警告や、標準ライブラリ関数 `std::minmax` への `[[lifetimebound]]` 属性の適用によって、こうしたケースを警告できるようになりました。
+以前のコンパイラは、このような `std::minmax` の誤用を検出できませんでしたが、新しい警告や `std::minmax` への `[[lifetimebound]]` 属性の適用によって、こうしたケースで警告を発生させらるようになりました。
+
+- []
 
 - [libc++ における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/llvm/llvm-project/blob/6b1c357acc312961743bef05f99120e7c68b2e25/libcxx/include/__cxx03/__algorithm/minmax.h#L28)
 - [MSVC STL における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/microsoft/STL/commit/7c7cc0c13dd75957b2d23952cb9b99a17193004b)
@@ -300,19 +297,19 @@ const std::string& GetOption(const std::string& userOption LIFETIMEBOUND, const 
 
 std::string MakeDefaultOption()
 {
-	return "default:ddddddddddddddddddddddddddddd";
+	return "The quick brown fox jumps over the lazy dog.";
 }
 
 int main()
 {
 	const std::string emptyOption = "";
-	const std::string userOption = "user:aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	const std::string userOption = "The quick brown fox jumps over the lazy dog.";
 	const std::string defaultOption = MakeDefaultOption();
 
 	const std::string& s1 = GetOption(userOption, defaultOption);
 	// ✅ OK
 	
-	const std::string& s2 = GetOption("user:bbbbbbbbbbbbbbbbbbbbbbbbbbbbb", defaultOption);
+	const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
 	// ⚠️ 警告
 	
 	const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
@@ -385,11 +382,8 @@ int main()
 {
 	{
 		std::vector<int> v = { 200, 100 };
-
 		auto result = std::minmax(v[0], v[1]);
-
 		v.resize(1000);
-
 		std::cout << result.first << ' ' << result.second << '\n';
 	}
 
@@ -397,7 +391,6 @@ int main()
 		StringPiece sp;
 		{
 			std::string s = MakeString();
-
 			sp = StringPiece{ s };
 		}
 
