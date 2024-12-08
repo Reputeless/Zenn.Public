@@ -388,12 +388,14 @@ Of course, this alone does not eliminate all dangling references. More powerful 
 
 For library authors, adding `[[lifetimebound]]` to appropriate functions and constructors helps reduce the risk of dangling references in the codebases of library users.
 
-## 5. Additional Notes
-There is currently no proposal to add `[[lifetimebound]]` to the C++ standard, but related initiatives are underway:
+## 5. Related Developments
+Currently, there are no active proposals to add `[[lifetimebound]]` to the C++ standard. However, there have been related initiatives:
 
-- Clang is exploring lifetime annotations for a wider range of dangling reference scenarios.
+- A proposal was made to introduce a `[[parameter_dependency]]` attribute to help compilers and tools detect dangling references by describing dependencies between parameters, but the committee rejected it.  
+	- [P2742: Indirect dangling identification](https://github.com/cplusplus/papers/issues/1435)
+- Clang is exploring extensions to detect dangling references in a broader range of scenarios.  
 	- [LLVM: [RFC] Lifetime annotations for C++](https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377)
-- Proposals for more comprehensive lifetime safety, such as borrow checking, have also been published.
+- Proposals aiming to provide more comprehensive lifetime safety by employing borrow checking have also surfaced.  
 	- [D3390: Safe C++](https://safecpp.org/draft.html)
 
-While practical implementation may still be far off, these efforts represent ongoing progress toward more robust lifetime safety in C++.
+While these ideas are still far from becoming practical or standardized, ongoing research and discussions suggest that efforts to enhance lifetime safety in C++ will continue to evolve.
