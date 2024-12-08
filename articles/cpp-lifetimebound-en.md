@@ -318,7 +318,8 @@ struct StringPiece
 {
 	StringPiece() = default;
 	StringPiece(const std::string& s LIFETIMEBOUND)
-		: data{s.data()}, size{s.size()} {}
+		: data{ s.data() }
+		, size{ s.size() } {}
 
 	const char* data = nullptr;
 	size_t size = 0;
