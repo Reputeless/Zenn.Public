@@ -28,46 +28,48 @@ In the example below, recent GCC versions and compilers supporting `[[lifetimebo
 #include <string>
 
 #if defined(_MSC_VER) // MSVC
-    #define LIFETIMEBOUND [[msvc::lifetimebound]]
-    #include <CppCoreCheck/Warnings.h>
-    #pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS) // Enable lifetimebound warnings
+	#define LIFETIMEBOUND [[msvc::lifetimebound]]
+	#include <CppCoreCheck/Warnings.h>
+	#pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS) // Enable lifetimebound warnings
 #elif defined(__clang__) // Clang
-    #define LIFETIMEBOUND [[clang::lifetimebound]]
+	#define LIFETIMEBOUND [[clang::lifetimebound]]
 #else
-    #define LIFETIMEBOUND
+	#define LIFETIMEBOUND
 #endif
 
 const std::string& GetOption(const std::string& userOption LIFETIMEBOUND, const std::string& defaultOption LIFETIMEBOUND)
 {
-    if (userOption.empty()) {
-        return defaultOption;
-    }
-    return userOption;
+	if (userOption.empty())
+	{
+		return defaultOption;
+	}
+	
+	return userOption;
 }
 
 std::string MakeDefaultOption()
 {
-    return "The quick brown fox jumps over the lazy dog.";
+	return "The quick brown fox jumps over the lazy dog.";
 }
 
 int main()
 {
-    const std::string emptyOption = "";
-    const std::string userOption = "The quick brown fox jumps over the lazy dog.";
-    const std::string defaultOption = MakeDefaultOption();
+	const std::string emptyOption = "";
+	const std::string userOption = "The quick brown fox jumps over the lazy dog.";
+	const std::string defaultOption = MakeDefaultOption();
 
-    const std::string& s1 = GetOption(userOption, defaultOption);
-    // ✅ OK
+	const std::string& s1 = GetOption(userOption, defaultOption);
+	// ✅ OK
 
-    const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
-    // ⚠️ Warning
+	const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
+	// ⚠️ Warning
 
-    const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
-    // ⚠️ Warning
+	const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
+	// ⚠️ Warning
 
-    std::cout << s1 << '\n';
-    std::cout << s2 << '\n';
-    std::cout << s3 << '\n';
+	std::cout << s1 << '\n';
+	std::cout << s2 << '\n';
+	std::cout << s3 << '\n';
 }
 ```
 
@@ -117,14 +119,14 @@ In the following example, `Concat` returns a reference to a local variable `resu
 
 const std::string& Concat(const std::string& a, const std::string& b)
 {
-    const std::string result = (a + b);
-    return result; // Returns a reference to a local variable → Dangling
+	const std::string result = (a + b);
+	return result; // Returns a reference to a local variable → Dangling
 }
 
 int main()
 {
-    const std::string& result = Concat("Cat", "Dog");
-    std::cout << result << '\n'; // Undefined behavior
+	const std::string& result = Concat("Cat", "Dog");
+	std::cout << result << '\n'; // Undefined behavior
 }
 ```
 
@@ -140,19 +142,19 @@ A more subtle scenario involves misusing `std::minmax`. This function returns a 
 
 std::string GetCat()
 {
-    return "cat cat cat cat cat cat cat cat";
+	return "cat cat cat cat cat cat cat cat";
 }
 
 std::string GetDog()
 {
-    return "dog dog dog dog dog dog dog dog";
+	return "dog dog dog dog dog dog dog dog";
 }
 
 int main()
 {
-    // Not OK: Returns references to temporaries
-    auto result = std::minmax(GetCat(), GetDog());
-    std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // Undefined behavior
+	// Not OK: Returns references to temporaries
+	auto result = std::minmax(GetCat(), GetDog());
+	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // Undefined behavior
 }
 ```
 
@@ -173,20 +175,20 @@ To avoid these issues, ensure that you use variables with adequate lifetimes rat
 
 std::string GetCat()
 {
-    return "cat cat cat cat cat cat cat cat";
+	return "cat cat cat cat cat cat cat cat";
 }
 
 std::string GetDog()
 {
-    return "dog dog dog dog dog dog dog dog";
+	return "dog dog dog dog dog dog dog dog";
 }
 
 int main()
 {
-    // OK: Store return values in variables, prolonging their lifetimes
-    std::string a = GetCat(), b = GetDog();
-    auto result = std::minmax(a, b);
-    std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // OK
+	// OK: Store return values in variables, prolonging their lifetimes
+	std::string a = GetCat(), b = GetDog();
+	auto result = std::minmax(a, b);
+	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // OK
 }
 ```
 
@@ -206,38 +208,40 @@ If a referenced object is a temporary that will be destroyed before the referenc
 #include <string>
 
 #if defined(_MSC_VER) // MSVC
-    #define LIFETIMEBOUND [[msvc::lifetimebound]]
-    #include <CppCoreCheck/Warnings.h>
-    #pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS)
+	#define LIFETIMEBOUND [[msvc::lifetimebound]]
+	#include <CppCoreCheck/Warnings.h>
+	#pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS)
 #elif defined(__clang__) // Clang
-    #define LIFETIMEBOUND [[clang::lifetimebound]]
+	#define LIFETIMEBOUND [[clang::lifetimebound]]
 #else
-    #define LIFETIMEBOUND
+	#define LIFETIMEBOUND
 #endif
 
-struct Holder {
-    std::string value;
+struct Holder
+{
+	std::string value;
 
-    const std::string& getValue() const LIFETIMEBOUND {
-        return value;
-    }
+	const std::string& getValue() const LIFETIMEBOUND
+	{
+		return value;
+	}
 };
 
 int main()
 {
-    {
-        Holder holder;
-        holder.value = "The quick brown fox jumps over the lazy dog.";
-        const std::string& value = holder.getValue();
-        // ✅ OK
-        std::cout << value << '\n';
-    }
+	{
+		Holder holder;
+		holder.value = "The quick brown fox jumps over the lazy dog.";
+		const std::string& value = holder.getValue();
+		// ✅ OK
+		std::cout << value << '\n';
+	}
 
-    {
-        const std::string& value = Holder{ "The quick brown fox jumps over the lazy dog." }.getValue();
-        // ⚠️ Warning
-        std::cout << value << std::endl;
-    }
+	{
+		const std::string& value = Holder{ "The quick brown fox jumps over the lazy dog." }.getValue();
+		// ⚠️ Warning
+		std::cout << value << std::endl;
+	}
 }
 ```
 
@@ -248,46 +252,48 @@ int main()
 #include <string>
 
 #if defined(_MSC_VER) // MSVC
-    #define LIFETIMEBOUND [[msvc::lifetimebound]]
-    #include <CppCoreCheck/Warnings.h>
-    #pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS)
+	#define LIFETIMEBOUND [[msvc::lifetimebound]]
+	#include <CppCoreCheck/Warnings.h>
+	#pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS)
 #elif defined(__clang__) // Clang
-    #define LIFETIMEBOUND [[clang::lifetimebound]]
+	#define LIFETIMEBOUND [[clang::lifetimebound]]
 #else
-    #define LIFETIMEBOUND
+	#define LIFETIMEBOUND
 #endif
 
 const std::string& GetOption(const std::string& userOption LIFETIMEBOUND, const std::string& defaultOption LIFETIMEBOUND)
 {
-    if (userOption.empty()) {
-        return defaultOption;
-    }
-    return userOption;
+	if (userOption.empty())
+	{
+		return defaultOption;
+	}
+	
+	return userOption;
 }
 
 std::string MakeDefaultOption()
 {
-    return "The quick brown fox jumps over the lazy dog.";
+	return "The quick brown fox jumps over the lazy dog.";
 }
 
 int main()
 {
-    const std::string emptyOption = "";
-    const std::string userOption = "The quick brown fox jumps over the lazy dog.";
-    const std::string defaultOption = MakeDefaultOption();
+	const std::string emptyOption = "";
+	const std::string userOption = "The quick brown fox jumps over the lazy dog.";
+	const std::string defaultOption = MakeDefaultOption();
 
-    const std::string& s1 = GetOption(userOption, defaultOption);
-    // ✅ OK
+	const std::string& s1 = GetOption(userOption, defaultOption);
+	// ✅ OK
 
-    const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
-    // ⚠️ Warning
+	const std::string& s2 = GetOption("The quick brown fox jumps over the lazy dog.", defaultOption);
+	// ⚠️ Warning
 
-    const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
-    // ⚠️ Warning
+	const std::string& s3 = GetOption(emptyOption, MakeDefaultOption());
+	// ⚠️ Warning
 
-    std::cout << s1 << '\n';
-    std::cout << s2 << '\n';
-    std::cout << s3 << '\n';
+	std::cout << s1 << '\n';
+	std::cout << s2 << '\n';
+	std::cout << s3 << '\n';
 }
 ```
 
@@ -299,44 +305,44 @@ While GCC’s `-Wdangling-reference` does not cover this scenario, Visual Studio
 #include <string>
 
 #if defined(_MSC_VER) // MSVC
-    #define LIFETIMEBOUND [[msvc::lifetimebound]]
-    #include <CppCoreCheck/Warnings.h>
-    #pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS)
+	#define LIFETIMEBOUND [[msvc::lifetimebound]]
+	#include <CppCoreCheck/Warnings.h>
+	#pragma warning(default: CPPCORECHECK_LIFETIME_WARNINGS)
 #elif defined(__clang__) // Clang
-    #define LIFETIMEBOUND [[clang::lifetimebound]]
+	#define LIFETIMEBOUND [[clang::lifetimebound]]
 #else
-    #define LIFETIMEBOUND
+	#define LIFETIMEBOUND
 #endif
 
-struct StringPiece {
-public:
-    StringPiece() = default;
-    StringPiece(const std::string& s LIFETIMEBOUND)
-        : data{s.data()}, size{s.size()} {}
+struct StringPiece
+{
+	StringPiece() = default;
+	StringPiece(const std::string& s LIFETIMEBOUND)
+		: data{s.data()}, size{s.size()} {}
 
-    const char* data = nullptr;
-    size_t size = 0;
+	const char* data = nullptr;
+	size_t size = 0;
 };
 
 std::string MakeString()
 {
-    return "The quick brown fox jumps over the lazy dog.";
+	return "The quick brown fox jumps over the lazy dog.";
 }
 
 int main()
 {
-    {
-        const std::string s = MakeString();
-        const StringPiece sp{ s };
-        // ✅ OK
-        std::cout << std::string_view{ sp.data, sp.size } << '\n';
-    }
+	{
+		const std::string s = MakeString();
+		const StringPiece sp{ s };
+		// ✅ OK
+		std::cout << std::string_view{ sp.data, sp.size } << '\n';
+	}
 
-    {
-        const StringPiece sp{ MakeString() };
-        // ⚠️ Warning
-        std::cout << std::string_view{ sp.data, sp.size } << '\n';
-    }
+	{
+		const StringPiece sp{ MakeString() };
+		// ⚠️ Warning
+		std::cout << std::string_view{ sp.data, sp.size } << '\n';
+	}
 }
 ```
 
@@ -346,22 +352,22 @@ int main()
 ```cpp
 int main()
 {
-    {
-        std::vector<int> v = { 200, 100 };
-        auto result = std::minmax(v[0], v[1]);
-        v.resize(1000); // Invalidate references by reallocation
-        std::cout << result.first << ' ' << result.second << '\n';
-    }
+	{
+		std::vector<int> v = { 200, 100 };
+		auto result = std::minmax(v[0], v[1]);
+		v.resize(1000); // Invalidate references by reallocation
+		std::cout << result.first << ' ' << result.second << '\n';
+	}
 
-    {
-        StringPiece sp;
-        {
-            std::string s = MakeString();
-            sp = StringPiece{ s };
-        } // s is destroyed here
+	{
+		StringPiece sp;
+		{
+			std::string s = MakeString();
+			sp = StringPiece{ s };
+		} // s is destroyed here
 
-        std::cout << std::string_view{ sp.data, sp.size } << '\n';
-    }
+		std::cout << std::string_view{ sp.data, sp.size } << '\n';
+	}
 }
 ```
 
@@ -383,8 +389,8 @@ For library authors, adding `[[lifetimebound]]` to appropriate functions and con
 There is currently no proposal to add `[[lifetimebound]]` to the C++ standard, but related initiatives are underway:
 
 - Clang is exploring lifetime annotations for a wider range of dangling reference scenarios.
-    - [LLVM: [RFC] Lifetime annotations for C++](https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377)
+	- [LLVM: [RFC] Lifetime annotations for C++](https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377)
 - Proposals for more comprehensive lifetime safety, such as borrow checking, have also been published.
-    - [D3390: Safe C++](https://safecpp.org/draft.html)
+	- [D3390: Safe C++](https://safecpp.org/draft.html)
 
 While practical implementation may still be far off, these efforts represent ongoing progress toward more robust lifetime safety in C++.
