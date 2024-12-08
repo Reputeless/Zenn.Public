@@ -9,7 +9,7 @@ published: false
 > [C++ Advent Calendar 2024](https://qiita.com/advent-calendar/2024/cxx), 8 日目の記事です。
 
 ## ポイント
-- 近年の C++ コンパイラでは、ダングリング参照（生存期間が終了したオブジェクトへの参照）の検出が強化されつつある。
+- 近年の C++ コンパイラでは、ダングリング参照（ライフタイムが終了したオブジェクトへの参照）の検出が強化されつつある。
 - 一部のコンパイラでは、コンパイラ拡張 `[[lifetimebound]]` 属性を用いることで、特定のケースにおけるダングリング参照をコンパイル時に検出できる。
 - この機能によってすべてのダングリング参照を防げるわけではないが、ライブラリ作者が `[[lifetimebound]]` を適切な関数やコンストラクタに付与することで、ユーザコードにおけるダングリング参照のリスクを軽減できる。
 
@@ -149,7 +149,7 @@ int main()
 	std::string a = "cat cat cat cat cat cat cat cat", b = "dog dog dog dog dog dog dog dog";
 	auto result = std::minmax(a, b);
 	// result は std::pair<const std::string&, const std::string&> 型
-	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n';
+	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // OK
 }
 ```
 
@@ -174,13 +174,20 @@ int main()
 {
 	// 一時オブジェクトへの参照を返すため NG
 	auto result = std::minmax(GetCat(), GetDog());
-	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n';
+	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // 未定義動作
 }
 ```
 
 `GetCat()` と `GetDog()` が返す一時オブジェクトは、`std::minmax` の呼び出し後すぐにライフタイムが終わります。すると、以降の `result.first` や `result.second` はダングリング参照となり、アクセスすると未定義動作を引き起こします。
 
-この問題を避けるには、一時オブジェクトではなく、ライフタイムが十分に長い変数を用います。
+以前のコンパイラは、このような `std::minmax` の誤用を検出できませんでしたが、新しい警告や `std::minmax` への `[[lifetimebound]]` 属性の適用によって、こうしたケースで警告を発生させらるようになりました。
+
+- [Clang 16 での結果](https://wandbox.org/permlink/5ntl9vYpObzTByOj)
+- [Clang 17 での結果](https://wandbox.org/permlink/TDgPdXtwxQUlZDVO)
+- [libc++ における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/llvm/llvm-project/blob/6b1c357acc312961743bef05f99120e7c68b2e25/libcxx/include/__cxx03/__algorithm/minmax.h#L28)
+- [MSVC STL における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/microsoft/STL/commit/7c7cc0c13dd75957b2d23952cb9b99a17193004b)
+
+なお、この問題を避けるには、一時オブジェクトではなく、ライフタイムが十分に長い変数を用います。
 
 ```cpp
 #include <iostream>
@@ -202,25 +209,18 @@ int main()
 	// OK: 戻り値を変数で受け取り、ライフタイムを延ばす
 	std::string a = GetCat(), b = GetDog();
 	auto result = std::minmax(a, b);
-	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n';
+	std::cout << "Min: " << result.first << ", Max: " << result.second << '\n'; // OK
 }
 ```
 
-以前のコンパイラは、このような `std::minmax` の誤用を検出できませんでしたが、新しい警告や `std::minmax` への `[[lifetimebound]]` 属性の適用によって、こうしたケースで警告を発生させらるようになりました。
-
-- []
-
-- [libc++ における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/llvm/llvm-project/blob/6b1c357acc312961743bef05f99120e7c68b2e25/libcxx/include/__cxx03/__algorithm/minmax.h#L28)
-- [MSVC STL における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/microsoft/STL/commit/7c7cc0c13dd75957b2d23952cb9b99a17193004b)
-
 
 ## 3. `[[lifetimebound]]` 属性の使い方と効果
-関数の引数や戻り値、メンバ関数、コンストラクタ引数に付与することで、次のような注意をコンパイラに伝えることができます。
+Visual Studio 2022（17.7 以降）や Clang 7 以降では、`[[lifetimebound]]` 属性を関数の引数や戻り値、メンバ関数、コンストラクタ引数に付与することで、次のような注意をコンパイラに伝えることができます。
 
 - ① メンバ関数に付けた場合:
 	- このメンバ関数の戻り値は、このオブジェクトを参照する。
 - ② 関数の引数に付けた場合:
-	- この関数の戻り値は、この引数を参照する。
+	- この関数の戻り値は、この引数のオブジェクトを参照する。
 - ③ コンストラクタ引数に付けた場合:
 	- ここで構築するオブジェクトは、この引数のオブジェクトを参照する。
 
@@ -323,7 +323,7 @@ int main()
 
 
 ### 3.3 コンストラクタ引数に付ける
-このケースは GCC の `-Wdangling-reference` はカバーしていませんが、Visual Studio や Clang の `[[lifetimebound]]` では警告が発生します。
+GCC の `-Wdangling-reference` はこのケースをカバーしませんが、Visual Studio や Clang の `[[lifetimebound]]` では警告が発生します。
 
 ```cpp
 #include <iostream>
@@ -375,7 +375,7 @@ int main()
 ```
 
 ### 3.4 `[[lifetimebound]]` 属性が役に立たないケース
-`[[lifetimebound]]` 属性は、一時オブジェクトへの参照など、とくに検出が容易なケースのみに有効です。次のコードのように、複雑なケースやコンテナ操作による間接的な参照無効化などでは役に立たない制約があります。
+`[[lifetimebound]]` 属性は、一時オブジェクトへの参照など、とくに検出が容易なケースのみに有効です。次のコードのように、複雑なケースやコンテナ操作による間接的な参照無効化などでは役に立たないという点に注意が必要です。
 
 ```cpp
 int main()
