@@ -403,8 +403,10 @@ GCC の新しい警告や、Visual Studio, Clang の `[[lifetimebound]]` 属性�
 
 
 ## 5. 周辺の話題
-現時点で `[[lifetimebound]]` を C++ 標準に追加する提案はありませんが、次のような動きがあります。
+現時点で `[[lifetimebound]]` を C++ 標準に追加するアクティブな提案はありませんが、次のような動きがあります。
 
+- 引数の依存関係を記述して、コンパイラやツールによるダングリングの検出を支援する `[[parameter_dependency]]` 属性の追加が提案されましたが、委員会では否決されました。
+	- [P2742 indirect dangling identification](https://github.com/cplusplus/papers/issues/1435)
 - Clang では、より幅広いケースでダングリング参照を検出するための拡張が研究されています。
     - [LLVM: [RFC] Lifetime annotations for C++](https://discourse.llvm.org/t/rfc-lifetime-annotations-for-c/61377)
 - 借用チェック（borrow checking）を用いて、より包括的なライフタイム安全性の提供を目指す提言も発表されています。
