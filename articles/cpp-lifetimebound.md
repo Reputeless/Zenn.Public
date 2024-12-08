@@ -164,10 +164,9 @@ int main()
 
 `GetCat()` と `GetDog()` が返す一時オブジェクトは、`std::minmax` の呼び出し後すぐにライフタイムが終わります。すると、以降の `result.first` や `result.second` はダングリング参照となり、アクセスすると未定義動作を引き起こします。
 
-以前のコンパイラは、このような `std::minmax` の誤用を検出できませんでしたが、新しい警告や `std::minmax` への `[[lifetimebound]]` 属性の適用によって、こうしたケースで警告を発生させらるようになりました。
+以前のコンパイラは、このような `std::minmax` の誤用を検出できませんでしたが、新しい警告や `std::minmax` への `[[lifetimebound]]` 属性の適用によって、こうしたケースで警告を発生させられるようになりました。
 
-- [Clang 16 での結果](https://wandbox.org/permlink/5ntl9vYpObzTByOj)
-- [Clang 17 での結果](https://wandbox.org/permlink/TDgPdXtwxQUlZDVO)
+- [Clang 16 での結果](https://wandbox.org/permlink/5ntl9vYpObzTByOj) → [Clang 17 での結果](https://wandbox.org/permlink/TDgPdXtwxQUlZDVO)
 - [libc++ における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/llvm/llvm-project/blob/6b1c357acc312961743bef05f99120e7c68b2e25/libcxx/include/__cxx03/__algorithm/minmax.h#L28)
 - [MSVC STL における std::minmax 関数の引数への lifetimebound 属性の使用](https://github.com/microsoft/STL/commit/7c7cc0c13dd75957b2d23952cb9b99a17193004b)
 
