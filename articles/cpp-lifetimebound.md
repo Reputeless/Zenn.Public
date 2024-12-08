@@ -215,7 +215,7 @@ int main()
 
 
 ## 3. `[[lifetimebound]]` 属性の使い方と効果
-Visual Studio 2022（17.7 以降）や Clang 7 以降では、`[[lifetimebound]]` 属性を関数の引数や戻り値、メンバ関数、コンストラクタ引数に付与することで、次のような注意をコンパイラに伝えることができます。
+Visual Studio 2022（17.7 以降）や Clang 7 以降では、`[[lifetimebound]]` 属性を、関数の引数や戻り値、メンバ関数、コンストラクタ引数に付与することで、次のような注意をコンパイラに伝えることができます。
 
 - ① メンバ関数に付けた場合:
 	- このメンバ関数の戻り値は、このオブジェクトを参照する。
@@ -223,6 +223,8 @@ Visual Studio 2022（17.7 以降）や Clang 7 以降では、`[[lifetimebound]]
 	- この関数の戻り値は、この引数のオブジェクトを参照する。
 - ③ コンストラクタ引数に付けた場合:
 	- ここで構築するオブジェクトは、この引数のオブジェクトを参照する。
+
+そして、参照されたオブジェクトが一時変数で、参照する側の変数よりも先に破棄される場合、コンパイラは警告を発生させます。
 
 ### 3.1 メンバ関数に付ける
 
@@ -400,7 +402,7 @@ int main()
 ```
 
 ### 3.5 実際の使用例
-次のような有名ライブラリで、`[[lifetimebound]]` 属性がすでに導入されています。
+`[[lifetimebound]]` 属性は、次のような有名ライブラリのソースコードで既に導入されています。
 
 - [MSVC STL](https://github.com/microsoft/STL): `std::min`, `std::max`, `std::minmax`, `std::clamp` など
 - [libc++](https://github.com/llvm/llvm-project): `std::min`, `std::max`, `std::minmax`, `std::clamp`, `std::move`, `std::forward`, `std::forward_like` など
