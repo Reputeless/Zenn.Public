@@ -3,8 +3,10 @@ title: "Reducing Dangling References in C++ with [[lifetimebound]]"
 emoji: "⌛"
 type: "tech"
 topics: ["cpp"]
-published: false
+published: true
 ---
+
+- [日本語](https://zenn.dev/reputeless/articles/cpp-lifetimebound)
 
 ## Key Points
 - Modern C++ compilers are increasingly capable of detecting dangling references—references to objects that have already been destroyed.

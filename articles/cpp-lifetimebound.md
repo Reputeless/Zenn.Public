@@ -8,6 +8,8 @@ published: true
 
 > [C++ Advent Calendar 2024](https://qiita.com/advent-calendar/2024/cxx), 8 日目の記事です。
 
+- [English](https://zenn.dev/reputeless/articles/cpp-lifetimebound-en)
+
 ## ポイント
 - 近年の C++ コンパイラでは、ダングリング参照（ライフタイムが終了したオブジェクトへの参照）の検出が強化されつつある。
 - 一部のコンパイラでは、コンパイラ拡張 `[[lifetimebound]]` 属性を用いることで、特定のケースにおけるダングリング参照をコンパイル時に検出できる。
