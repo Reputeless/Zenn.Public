@@ -1,5 +1,5 @@
 ---
-title: "Reducing the Risk of Dangling References in C++ Using the [[lifetimebound]] Attribute"
+title: "Reducing Dangling References in C++ with [[lifetimebound]]"
 emoji: "⌛"
 type: "tech"
 topics: ["cpp"]
