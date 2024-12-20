@@ -242,7 +242,7 @@ int main()
 	{
 		const std::string& value = Holder{ "The quick brown fox jumps over the lazy dog." }.getValue();
 		// ⚠️ Warning
-		std::cout << value << std::endl;
+		std::cout << value << '\n';
 	}
 }
 ```
