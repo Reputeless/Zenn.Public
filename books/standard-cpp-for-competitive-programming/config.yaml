@@ -5,6 +5,7 @@ published: true # falseだと下書き
 price: 800
 chapters:
   - main-function
+  - comments
   - string
   - string-functions
   - vector
