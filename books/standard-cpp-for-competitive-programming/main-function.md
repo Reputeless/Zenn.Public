@@ -1,4 +1,8 @@
-# main 関数
+---
+title: "main 関数"
+free: true
+---
+
 - 読み方: メイン関数
 
 ## 1. main 関数の役割
