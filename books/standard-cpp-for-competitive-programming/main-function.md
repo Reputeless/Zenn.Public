@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 ## 3. 実際の main 関数のコード例
 - 次のコードは、実際の競技プログラミングの問題を解く main 関数の例
 
-> [✅ AtCoder practice contest A - Welcome to AtCoder](https://atcoder.jp/contests/practice/tasks/practice_1)
+> [✅ AtCoder practice contest A - Welcome to AtCoder](https://atcoder.jp/contests/practice)
 ```cpp
 // 必要な標準ライブラリのヘッダファイルをインクルードする
 #include <iostream>
