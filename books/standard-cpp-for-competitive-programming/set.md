@@ -451,12 +451,12 @@ int main()
 		int c, x;
 		std::cin >> c >> x;
 
-		if (c == 1) // クエリ: 木材を x で切断
+		if (c == 1) // クエリ「木材を x で切断」
 		{
 			// 切断位置を追加する
 			cutPoints.insert(x);
 		}
-		else // クエリ: x を含む木材の長さを出力
+		else // クエリ「x を含む木材の長さを出力」
 		{
 			// x より大きい最小の切断位置を指すイテレータを取得する
 			const auto itRight = cutPoints.lower_bound(x);
