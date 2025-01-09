@@ -255,7 +255,6 @@ int main()
 :::details コード
 ```cpp
 #include <iostream>
-#include <vector>
 #include <set>
 
 int main()
