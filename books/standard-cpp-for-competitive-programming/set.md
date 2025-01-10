@@ -142,7 +142,7 @@ int main()
 ## 4. 使用上の注意
 - `std::set` の要素の二分探索を行う場合、必ずメンバ関数版の `.lower_bound()`, `.upper_bound()` を使うこと
 	- メンバ関数版の `.lower_bound()`, `.upper_bound()` は、`std::set` の内部実装にとって最適な探索を行うため、計算量が $O(\log N)$ で済む
-	- 一方、`std::ranges::lower_bound()`, `std::ranges::upper_bound()` は `std::set` の双方向イテレータと相性が悪く、計算量が $O(N)$ に悪化する
+	- 一方、`std::lower_bound()`, `std::upper_bound()` は `std::set` の双方向イテレータと相性が悪く、計算量が $O(N)$ に悪化する
 - `k` 番目の要素を取得したい場合、`std::advance(it, k)` でイテレータを進めるという手段があるが、計算量が $O(k)$ かかるため避けるべき
 - 要素数が小さければ、`std::set` の代わりに `std::vector` + `std::sort` + `std::unique` を使っても十分速い場合がある（キャッシュ効率が良い）
 
