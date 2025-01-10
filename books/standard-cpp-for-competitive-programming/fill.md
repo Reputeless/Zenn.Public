@@ -8,20 +8,17 @@ free: true
 - `<algorithm>` ヘッダに含まれる
 - 指定した範囲のすべての要素に、指定した値を代入する
 
-#### (1)
-- `std::fill(it1, it2, value)`
+#### (1) `std::fill(it1, it2, value)`
 - イテレータ `it1` から `it2` の範囲の要素に値 `value` を代入する
 - 計算量: `std::distance(it1, it2)` に対して $O(N)$
 
-#### (2)
-- `std::ranges::fill(it1, it2, value)`
+#### (2) `std::ranges::fill(it1, it2, value)`
 - イテレータ `it1` から `it2` の範囲の要素に値 `value` を代入する
 - 戻り値: 範囲の終端イテレータ
 - 計算量: `std::distance(it1, it2)` に対して $O(N)$
 - C++20～
 
-#### (3)
-- `std::ranges::fill(range, value)`
+#### (3) `std::ranges::fill(range, value)`
 - 範囲 `range` の要素に値 `value` を代入する
 - 戻り値: 範囲の終端イテレータ
 - 計算量: `std::ranges::size(range)` に対して $O(N)$
