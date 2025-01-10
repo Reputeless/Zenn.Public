@@ -1,13 +1,12 @@
 ---
-title: "std::fill"
+title: "std::fill()"
 free: true
 ---
 
+## 1. 概要
 - 読み方: フィル
 - `<algorithm>` ヘッダに含まれる
 - 指定した範囲のすべての要素に、指定した値を代入する
-
-## 1. 概要
 
 #### (1)
 - `std::fill(it1, it2, value)`
@@ -30,7 +29,7 @@ free: true
 
 ## 2. 使い方
 
-### 2.1 要素をすべて同じ値にする
+### 2.1 配列やコンテナのすべての要素に、指定した値を代入する
 - `std::string` の要素をすべて `'a'` にする
 
 ```cpp
@@ -91,8 +90,8 @@ int main()
 }
 ```
 
-### 2.2 範囲を指定して要素をすべて同じ値にする
-- `std::vector` の `begin()` から `begin() + 3` の範囲の要素をすべて `-1` にする
+### 2.2 配列やコンテナの一部範囲の要素に、指定した値を代入する
+- `std::vector` の `.begin()` から `(.begin() + 3)` の範囲の要素をすべて `-1` にする
 
 ```cpp
 #include <iostream>
@@ -103,7 +102,7 @@ int main()
 {
 	std::vector<int> v = { 1, 2, 3, 4, 5 };
 
-	std::ranges::fill(v.begin(), v.begin() + 3, -1);
+	std::ranges::fill(v.begin(), (v.begin() + 3), -1);
 
 	for (const auto& elem : v)
 	{
@@ -114,7 +113,7 @@ int main()
 }
 ```
 
-- 配列の `begin()` から `begin() + 3` の範囲の要素をすべて `-1` にする
+- 配列の `begin()` から `(begin() + 3)` の範囲の要素をすべて `-1` にする
 
 ```cpp
 #include <iostream>
@@ -149,7 +148,8 @@ int main()
 
 int main()
 {
-	std::string s(5, 'a'); // 5 個の 'a'
+	// 5 個の 'a'
+	std::string s(5, 'a');
 
 	std::cout << s << '\n'; // aaaaa
 }
@@ -164,7 +164,8 @@ int main()
 
 int main()
 {
-	std::vector<int> v(5, -1); // 5 個の -1
+	// 5 個の -1
+	std::vector<int> v(5, -1);
 
 	for (const auto& elem : v)
 	{
@@ -175,26 +176,6 @@ int main()
 }
 ```
 
-### 3.3 すべての要素が同じ `std::deque`
-- すべての要素が同じ値 `std::deque` を新しく作成する場合、`std::deque` のコンストラクタを使うのが効率的
-
-```cpp
-#include <iostream>
-#include <deque>
-
-int main()
-{
-	std::deque<int> d(5, -1); // 5 個の -1
-
-	for (const auto& elem : d)
-	{
-		std::cout << elem << ' '; // -1 -1 -1 -1 -1
-	}
-
-	std::cout << '\n';
-}
-```
-
 ### 4. 関連する関数
-- ラムダ式などで生成した値を指定範囲に代入したい場合は `std::generate()` 系のアルゴリズム関数を使う
-- 「整数を 1 ずつ増やしながら代入する」など、単調増加列を作りたい場合は `std::iota()` 系のアルゴリズム関数を使う
+- ラムダ式などで生成した値を指定範囲に代入したい場合は `std::generate()`
+- 「整数を 1 ずつ増やしながら代入する」など、単調増加列を作りたい場合は `std::iota()`
