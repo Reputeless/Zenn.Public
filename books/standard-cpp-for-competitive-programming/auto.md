@@ -42,10 +42,10 @@ int main()
 - ただし、上記のような状況では、`auto` を使うよりも型名を明示的に書くほうが好ましい
 
 ```cpp
-	int a = 123;
-	double b = 3.14;
-	bool c = IsEven(12);
-	const int d = 456;
+int a = 123;
+double b = 3.14;
+bool c = IsEven(12);
+const int d = 456;
 ```
 
 - 実際に `auto` を使うべきケースは、「4. 活用する場面」で説明する
@@ -54,7 +54,7 @@ int main()
 
 ### 1.3 参照や const の除去
 - `auto` では、参照や `const` は推論の型から除去される
-	- トップレベルの `const` は外れるが、参照先の `const` は外れない
+	- ただし、トップレベルの `const` は外れるが、参照先の `const` は外れない
 
 ```cpp
 #include <iostream>
@@ -107,7 +107,7 @@ int main()
 ## 2. `auto` が使えないケース
 
 ### 2.1 初期化子が無い場合
-- あとで値を代入していたとしても `auto` は使えない
+- あとで値を代入するとしても `auto` は使えない
 
 ```cpp
 int main()
