@@ -304,6 +304,26 @@ int main()
 	- `bool`: 追加に成功したかを表す `bool` 値
 - 計算量: $O(\log N)$
 
+:::details コード
+```cpp
+#include <iostream>
+#include <set>
+#include <utility>
+
+int main()
+{
+	std::set<std::pair<int, int>> s;
+
+	for (int i = 0; i < 10; ++i)
+	{
+		// s.insert({ i, (i * i) });
+
+		s.emplace(i, (i * i));
+	}
+}
+```
+:::
+
 ### 🌟 要素を削除する ① | `.erase(value)`
 - 指定した要素を削除する。存在しない場合は何もしない
 - 戻り値: `size_t`: 削除した要素の個数（0 または 1）
