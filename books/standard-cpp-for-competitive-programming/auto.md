@@ -53,8 +53,8 @@ int main()
 
 
 ### 1.3 参照や const の除去
-- `auto` ではトップレベルの修飾子が除去される
-	- 参照や `const` は推論の型から除去される
+- `auto` では、参照や `const` は推論の型から除去される
+	- トップレベルの `const` は外れるが、参照先の `const` は外れない
 
 ```cpp
 #include <iostream>
@@ -78,7 +78,7 @@ int main()
 ```
 
 - 必要に応じて `const` や `&` を明示的に書く
-	- 参照やポインタの先が `const` であることは保持される
+	- 参照先が `const` であることは保持される
 
 ```cpp
 #include <iostream>
@@ -87,7 +87,7 @@ int main()
 void Show(const std::string& s)
 {
 	const auto& t = s; // t は const std::string& 型, コピーは発生しない
-	auto& u = s; // u も const std::string& 型, コピーは発生しない
+	auto& u = s; // 参照先が const であることは保持され, u も const std::string& 型, コピーは発生しない
 	//t.push_back('!');
 	//u.push_back('!');
 	std::cout << t << ' ' << u << '\n';
