@@ -7,6 +7,7 @@ chapters:
   - main-function
   - comments
   - identifiers
+  - auto
   - io
   - set
   - string
