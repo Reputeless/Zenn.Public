@@ -11,6 +11,7 @@ chapters:
   - io
   - set
   - fill
+  - iota
   - string
   - string-functions
   - vector
