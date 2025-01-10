@@ -10,6 +10,7 @@ chapters:
   - auto
   - io
   - set
+  - fill
   - string
   - string-functions
   - vector
