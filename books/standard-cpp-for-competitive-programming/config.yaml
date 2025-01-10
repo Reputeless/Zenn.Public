@@ -7,6 +7,7 @@ chapters:
   - main-function
   - comments
   - identifiers
+  - io
   - set
   - string
   - string-functions
@@ -15,7 +16,6 @@ chapters:
   - unordered_set
   - algorithm
   - library-tuple
-  - library-ios-iomanip
   - union-find
   - weighted-union-find
   - minimum-spanning-tree
@@ -25,7 +25,7 @@ chapters:
   - bellman-ford
   - floyd-warshall
   - dijkstra
-  - fast-io
   - support
+  - library-ios-iomanip
   - library-algorithm
   
