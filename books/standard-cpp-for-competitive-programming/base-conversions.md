@@ -69,7 +69,7 @@ int main()
 
 ## 2. 練習問題
 
-> [✅ 第五回 アルゴリズム実技検定 過去問 C - 三十六進法](https://atcoder.jp/contests/past202012-open/tasks/past202012_c)
+### [✅ 第五回 アルゴリズム実技検定 過去問 C - 三十六進法](https://atcoder.jp/contests/past202012-open/tasks/past202012_c)
 
 :::details コード
 ```cpp
@@ -118,7 +118,7 @@ int main()
 :::
 
 
-> [✅ ABC220B - Base K](https://atcoder.jp/contests/abc220/tasks/abc220_b)
+### [✅ ABC220B - Base K](https://atcoder.jp/contests/abc220/tasks/abc220_b)
 
 :::details コード
 ```cpp
@@ -145,7 +145,7 @@ int main()
 :::
 
 
-> [✅ 競プロ典型 90 問 067 - Base 8 to 9（★2）](https://atcoder.jp/contests/typical90/tasks/typical90_bo)
+### [✅ 競プロ典型 90 問 067 - Base 8 to 9（★2）](https://atcoder.jp/contests/typical90/tasks/typical90_bo)
 
 :::details コード
 ```cpp

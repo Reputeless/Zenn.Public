@@ -49,7 +49,7 @@ int main()
 
 ## 5. 練習問題
 
-> [✅ ABC136B - Uneven Numbers](https://atcoder.jp/contests/abc136/tasks/abc136_b)
+### [✅ ABC136B - Uneven Numbers](https://atcoder.jp/contests/abc136/tasks/abc136_b)
 
 :::details コード
 ```cpp
@@ -79,7 +79,7 @@ int main()
 ```
 :::
 
-> [✅ ABC192C - Kaprekar Number](https://atcoder.jp/contests/abc192/tasks/abc192_c)
+### [✅ ABC192C - Kaprekar Number](https://atcoder.jp/contests/abc192/tasks/abc192_c)
 
 :::details コード
 ```cpp

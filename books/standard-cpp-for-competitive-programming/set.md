@@ -393,7 +393,7 @@ int main()
 
 ## 7. 練習問題
 
-> [✅ ABC236C - Route Map](https://atcoder.jp/contests/abc236/tasks/abc236_c)
+### [✅ ABC236C - Route Map](https://atcoder.jp/contests/abc236/tasks/abc236_c)
 
 :::details コード
 ```cpp
@@ -440,7 +440,7 @@ int main()
 ```
 
 
-> [✅ ABC294D - Bank](https://atcoder.jp/contests/abc294/tasks/abc294_d)
+### [✅ ABC294D - Bank](https://atcoder.jp/contests/abc294/tasks/abc294_d)
 
 :::details コード
 ```cpp
@@ -493,7 +493,7 @@ int main()
 :::
 
 
-> [✅ ABC217D - Cutting Woods](https://atcoder.jp/contests/abc217/tasks/abc217_d)
+### [✅ ABC217D - Cutting Woods](https://atcoder.jp/contests/abc217/tasks/abc217_d)
 
 :::details コード
 ```cpp
