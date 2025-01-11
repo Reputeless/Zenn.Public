@@ -37,7 +37,7 @@ free: true
 - `base` は 2 から 36 までの整数
 
 #### 備考
-- (1)～(6) は、いずれも先頭に続く空白文字、先頭に続く `0` は無視される
+- (1)～(6) は、いずれも先頭に続く空白文字、先頭に続く `0` を無視する
 - (4)～(6) で基数が 11 以上のとき（アルファベットが登場するとき）、アルファベットの小文字・大文字は問わない
 
 
@@ -45,7 +45,7 @@ free: true
 
 ### 2.1 文字列を整数に変換する
 - 十進数の文字列を整数に変換する
-    - "123" -> 123
+	- "123" -> 123
 
 ```cpp
 #include <iostream>
@@ -53,18 +53,21 @@ free: true
 
 int main()
 {
-    std::string s = "123";
+	std::string s = "123";
 
-    // 文字列を整数に変換する
-    int n = std::stoi(s);
+	// 文字列を整数に変換する
+	int n = std::stoi(s);
 
-    std::cout << n << '\n'; // 123
+	std::cout << n << '\n'; // 123
+
+	// 先頭に続く 0 は無視される
+	std::cout << std::stoi("000456") << '\n'; // 456
 }
 ```
 
 ### 2.2 二進数を整数に変換する
 - 二進数の文字列を整数に変換する
-    - "1110" -> 14
+	- "1110" -> 14
 
 ```cpp
 #include <iostream>
@@ -72,18 +75,18 @@ int main()
 
 int main()
 {
-    std::string s = "1110";
+	std::string s = "1110";
 
-    // 二進数を整数に変換する
-    int n = std::stoi(s, nullptr, 2);
+	// 二進数を整数に変換する
+	int n = std::stoi(s, nullptr, 2);
 
-    std::cout << n << '\n'; // 14
+	std::cout << n << '\n'; // 14
 }
 ```
 
 ### 2.3 十六進数を整数に変換する
 - 十六進数の文字列を整数に変換する
-    - "1A" -> 26
+	- "1A" -> 26
 
 ```cpp
 #include <iostream>
@@ -91,18 +94,18 @@ int main()
 
 int main()
 {
-    std::string s = "1A";
+	std::string s = "1A";
 
-    // 十六進数を整数に変換する
-    int n = std::stoi(s, nullptr, 16);
+	// 十六進数を整数に変換する
+	int n = std::stoi(s, nullptr, 16);
 
-    std::cout << n << '\n'; // 26
+	std::cout << n << '\n'; // 26
 }
 ```
 
 ### 2.4 三十六進数を整数に変換する
 - 三十六進数の文字列を整数に変換する
-    - "Z0" -> 1260
+	- "Z0" -> 1260
 
 ```cpp
 #include <iostream>
@@ -110,12 +113,12 @@ int main()
 
 int main()
 {
-    std::string s = "Z0";
+	std::string s = "Z0";
 
-    // 三十六進数を整数に変換する
-    int n = std::stoi(s, nullptr, 36);
+	// 三十六進数を整数に変換する
+	int n = std::stoi(s, nullptr, 36);
 
-    std::cout << n << '\n'; // 1260
+	std::cout << n << '\n'; // 1260
 }
 ```
 

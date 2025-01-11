@@ -15,7 +15,6 @@ chapters:
   - to_string
   - stoi
   - string
-  - string-functions
   - vector
   - numeric
   - unordered_set
