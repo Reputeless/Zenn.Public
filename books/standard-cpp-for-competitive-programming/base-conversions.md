@@ -10,13 +10,13 @@ free: true
 #include <algorithm>
 #include <stdexcept>
 
-/// @brief	数値を指定した基数の文字列表現に変換します。
-/// @param	n 変換する数値
-/// @param	base 基数（2～36）
-/// @return	変換後の文字列。0 は "0" を返します。
-/// @throw	std::invalid_argument 基数が範囲外の場合
-/// @note	変換後の最大桁数は 64 桁（base が 2 の場合）
-/// @author	"競プロのための標準 C++"
+/// @brief 数値を指定した基数の文字列表現に変換します。
+/// @param n 変換する数値
+/// @param base 基数（2～36）
+/// @return 変換後の文字列。0 は "0" を返します。
+/// @throw std::invalid_argument 基数が範囲外の場合
+/// @note 変換後の最大桁数は 64 桁（base が 2 の場合）
+/// @author "競プロのための標準 C++"
 [[nodiscard]]
 constexpr std::string ToBaseN(unsigned long long n, const unsigned int base)
 {
@@ -41,7 +41,7 @@ constexpr std::string ToBaseN(unsigned long long n, const unsigned int base)
 
 
 ## 2. N 進数文字列を整数に変換する
-- [`std::stoi()`](stoi.md) などの関数を使う
+- [`std::stoi()`](./stoi) などの関数を使う
 	- 2 から 36 までの基数に対応する
 
 ```cpp
