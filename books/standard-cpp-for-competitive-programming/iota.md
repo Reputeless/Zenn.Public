@@ -41,6 +41,7 @@ int main()
 {
 	std::vector<int> v(10);
 
+	// 要素を 0, 1, 2, 3, ... に変更する
 	std::ranges::iota(v, 0);
 
 	for (const auto& elem : v)
@@ -62,6 +63,7 @@ int main()
 {
 	std::vector<int> v(10);
 
+	// 要素を 1, 2, 3, 4, ... に変更する
 	std::ranges::iota(v, 1);
 
 	for (const auto& elem : v)
@@ -85,6 +87,7 @@ int main()
 	// 個数のみ指定のコンストラクタは無いので、26 個の 'a' で初期化
 	std::string s(26, 'a');
 
+	// 要素を 'a', 'b', 'c', ... に変更する
 	std::ranges::iota(s, 'a');
 
 	std::cout << s << '\n'; // abcdefghijklmnopqrstuvwxyz

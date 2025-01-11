@@ -40,6 +40,7 @@ int main()
 {
 	std::string s = "hello";
 
+	// すべての要素を 'a' に変更する
 	std::ranges::fill(s, 'a');
 
 	std::cout << s << '\n'; // aaaaa
@@ -57,6 +58,7 @@ int main()
 {
 	std::vector<int> v = { 1, 2, 3, 4, 5 };
 
+	// すべての要素を -1 に変更する
 	std::ranges::fill(v, -1);
 
 	for (const auto& elem : v)
@@ -78,6 +80,7 @@ int main()
 {
 	int a[] = { 1, 2, 3, 4, 5 };
 
+	// すべての要素を -1 に変更する
 	std::ranges::fill(a, -1);
 
 	for (const auto& elem : a)
@@ -101,6 +104,7 @@ int main()
 {
 	std::vector<int> v = { 1, 2, 3, 4, 5 };
 
+	// 先頭 3 つの要素を -1 に変更する
 	std::ranges::fill(v.begin(), (v.begin() + 3), -1);
 
 	for (const auto& elem : v)
@@ -122,6 +126,7 @@ int main()
 {
 	int a[] = { 1, 2, 3, 4, 5 };
 
+	// 先頭 3 つの要素を -1 に変更する
 	std::ranges::fill(std::begin(a), (std::begin(a) + 3), -1);
 
 	for (const auto& elem : a)
@@ -147,7 +152,7 @@ int main()
 
 int main()
 {
-	// 5 個の 'a'
+	// 5 個の 'a' からなる std::string を作成する
 	std::string s(5, 'a');
 
 	std::cout << s << '\n'; // aaaaa
@@ -163,7 +168,7 @@ int main()
 
 int main()
 {
-	// 5 個の -1
+	// 5 個の -1 からなる std::vector を作成する
 	std::vector<int> v(5, -1);
 
 	for (const auto& elem : v)
