@@ -13,6 +13,7 @@ chapters:
   - fill
   - iota
   - to_string
+  - stoi
   - string
   - string-functions
   - vector
