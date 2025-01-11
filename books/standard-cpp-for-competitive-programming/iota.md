@@ -16,15 +16,15 @@ free: true
 #### (2) `std::ranges::iota(it1, it2, value)`
 - イテレータ `it1` から `it2` の範囲の要素に `value` から `++` 演算子で単調増加していく値を代入する
 - 戻り値: `iota_result`
-    - `.out` には範囲の終端イテレータが格納される
-    - `.value` には最後に代入した値が格納される
+	- `.out` には範囲の終端イテレータが格納される
+	- `.value` には最後に代入した値が格納される
 - 計算量: `std::distance(it1, it2)` に対して $O(N)$
 
 #### (3) `std::ranges::iota(range, value)`
 - 範囲 `range` の要素に `value` から `++` 演算子で単調増加していく値を代入する
 - 戻り値: `iota_result`
-    - `.out` には範囲の終端イテレータが格納される
-    - `.value` には最後に代入した値が格納される
+	- `.out` には範囲の終端イテレータが格納される
+	- `.value` には最後に代入した値が格納される
 - 計算量: `std::ranges::size(range)` に対して $O(N)$
 
 
@@ -39,9 +39,9 @@ free: true
 
 int main()
 {
-    std::vector<int> v(10);
+	std::vector<int> v(10);
 
-    std::ranges::iota(v, 0);
+	std::ranges::iota(v, 0);
 
 	for (const auto& elem : v)
 	{
@@ -60,16 +60,16 @@ int main()
 
 int main()
 {
-    std::vector<int> v(10);
+	std::vector<int> v(10);
 
-    std::ranges::iota(v, 1);
+	std::ranges::iota(v, 1);
 
-    for (const auto& elem : v)
-    {
-        std::cout << elem << ' '; // 1 2 3 4 5 6 7 8 9 10
-    }
+	for (const auto& elem : v)
+	{
+		std::cout << elem << ' '; // 1 2 3 4 5 6 7 8 9 10
+	}
 
-    std::cout << '\n';
+	std::cout << '\n';
 }
 ```
 
@@ -82,12 +82,12 @@ int main()
 
 int main()
 {
-    // 個数のみ指定のコンストラクタは無いので、26 個の 'a' で初期化
-    std::string s(26, 'a');
+	// 個数のみ指定のコンストラクタは無いので、26 個の 'a' で初期化
+	std::string s(26, 'a');
 
-    std::ranges::iota(s, 'a');
+	std::ranges::iota(s, 'a');
 
-    std::cout << s << '\n'; // abcdefghijklmnopqrstuvwxyz
+	std::cout << s << '\n'; // abcdefghijklmnopqrstuvwxyz
 }
 ```
 

@@ -25,15 +25,16 @@ free: true
 
 int main()
 {
-    int n = 123456;
+	int n = 123456;
 
-    std::string s = std::to_string(n);
+	// 整数を文字列に変換する
+	std::string s = std::to_string(n);
 
-    std::cout << s << '\n'; // 123456
+	std::cout << s << '\n'; // 123456
 
-    std::ranges::reverse(s);
+	std::ranges::reverse(s);
 
-    std::cout << s << '\n'; // 654321
+	std::cout << s << '\n'; // 654321
 }
 ```
 
