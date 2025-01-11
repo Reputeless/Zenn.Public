@@ -21,6 +21,7 @@ chapters:
   - algorithm
   - library-tuple
   - base-conversions
+  - grid-bfs
   - union-find
   - weighted-union-find
   - minimum-spanning-tree
