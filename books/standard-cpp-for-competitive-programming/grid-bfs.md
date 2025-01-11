@@ -155,7 +155,7 @@ for (const auto& start : startPoints)
 
 ## 3. 練習問題
 
-> [✅ ABC007C - 幅優先探索](https://atcoder.jp/contests/abc007/tasks/abc007_3)
+### [✅ ABC007C - 幅優先探索](https://atcoder.jp/contests/abc007/tasks/abc007_3)
 
 :::details コード
 ```cpp
@@ -271,7 +271,7 @@ int main()
 :::
 
 
-> [✅ ABC088D - Grid Repainting](https://atcoder.jp/contests/abc088/tasks/abc088_d)
+### [✅ ABC088D - Grid Repainting](https://atcoder.jp/contests/abc088/tasks/abc088_d)
 
 :::details コード
 ```cpp
@@ -403,7 +403,7 @@ int main()
 :::
 
 
-> [✅ AGC033A - Darker and Darker](https://atcoder.jp/contests/agc033/tasks/agc033_a)
+### [✅ AGC033A - Darker and Darker](https://atcoder.jp/contests/agc033/tasks/agc033_a)
 - 複数のスタート地点からの幅優先探索を使用する問題
 
 :::details コード
@@ -518,7 +518,7 @@ int main()
 :::
 
 
-> [✅ 九州大学プログラミングコンテスト 2018 C - Ito Campus](https://atcoder.jp/contests/qupc2018/tasks/qupc2018_c)
+### [✅ 九州大学プログラミングコンテスト 2018 C - Ito Campus](https://atcoder.jp/contests/qupc2018/tasks/qupc2018_c)
 - 複数のスタート地点からの幅優先探索を使用する問題
 
 :::details コード
