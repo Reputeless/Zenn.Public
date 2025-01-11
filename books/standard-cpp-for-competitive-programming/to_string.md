@@ -44,7 +44,7 @@ int main()
 
 ## 4. 関連する関数
 - 文字列を整数に変換したい場合は `std::stoi()`, `std::stoll()`, `std::stoull()`
-- 基数を指定して整数を文字列に変換したい場合は `std::to_chars()`
+- 基数を指定して整数を文字列に変換したい場合は [基数変換](./base-conversions) または `std::to_chars()`
 
 
 ## 5. 練習問題
