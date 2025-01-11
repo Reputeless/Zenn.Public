@@ -32,5 +32,6 @@ chapters:
   - dijkstra
   - support
   - library-ios-iomanip
+  - string-functions
   - library-algorithm
   
