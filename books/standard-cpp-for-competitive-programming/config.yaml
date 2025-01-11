@@ -12,6 +12,7 @@ chapters:
   - set
   - fill
   - iota
+  - to_string
   - string
   - string-functions
   - vector
