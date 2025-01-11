@@ -393,6 +393,53 @@ int main()
 
 ## 7. 練習問題
 
+> [✅ ABC236C - Route Map](https://atcoder.jp/contests/abc236/tasks/abc236_c)
+
+:::details コード
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <set>
+
+int main()
+{
+	// N 個の駅, M 個の急行停車駅
+	int N, M;
+	std::cin >> N >> M;
+
+	// すべての駅名
+	std::vector<std::string> S(N);
+	for (auto& s : S)
+	{
+		std::cin >> s;
+	}
+
+	// 急行停車駅
+	std::set<std::string> T;
+	while (M--)
+	{
+		std::string s;
+		std::cin >> s;
+		T.insert(s);
+	}
+
+	// 各駅について
+	for (const auto& s : S)
+	{
+		if (T.contains(s)) // 急行停車駅に含まれている場合
+		{
+			std::cout << "Yes\n";
+		}
+		else // 含まれていない場合
+		{
+			std::cout << "No\n";
+		}
+	}
+}
+```
+
+
 > [✅ ABC294D - Bank](https://atcoder.jp/contests/abc294/tasks/abc294_d)
 
 :::details コード
