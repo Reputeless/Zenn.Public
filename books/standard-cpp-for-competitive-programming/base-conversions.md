@@ -16,7 +16,7 @@ free: true
 /// @return 変換後の文字列。0 は "0" を返します。
 /// @throw std::invalid_argument 基数が範囲外の場合
 /// @note 変換後の最大桁数は 64 桁（base が 2 の場合）
-/// @author "競プロのための標準 C++"
+/// @note 出典『競プロのための標準 C++』
 [[nodiscard]]
 constexpr std::string ToBaseN(unsigned long long n, const unsigned int base)
 {
