@@ -50,6 +50,8 @@ if (distances[ny][nx] != -1) continue; // 訪問済みチェック
 
 ### 2.1 スタート地点から各マスまでの最短距離を求める幅優先探索
 
+https://www.youtube.com/watch?v=yj6PPd5-7XY
+
 ```cpp
 #include <vector>
 #include <string>
@@ -133,6 +135,9 @@ std::vector<std::vector<int>> GridBFS(const std::vector<std::string>& grid, cons
 ```
 
 ### 2.2 複数のスタート地点からの幅優先探索
+
+https://www.youtube.com/watch?v=pMEMq81aCl4
+
 - 複数のスタート地点から同時に探索を開始する幅優先探索も可能
 - 以下のような状況で特に有用:
 	- 任意のスタート地点から最も近い目的地を見つける
