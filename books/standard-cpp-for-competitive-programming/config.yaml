@@ -22,10 +22,10 @@ chapters:
   - library-tuple
   - base-conversions
   - grid-bfs
+  - topological-sort
   - union-find
   - weighted-union-find
   - minimum-spanning-tree
-  - topological-sort
   - lis
   - binary-indexed-tree
   - bellman-ford
