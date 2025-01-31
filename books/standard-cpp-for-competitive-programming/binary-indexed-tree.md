@@ -361,7 +361,7 @@ int main()
 
 	for (int i = 0; i < N; ++i)
 	{
-		answer += bit.sum(A[i], N);
+		answer += (i - bit.sum(A[i]));
 		bit.add(A[i], 1);
 	}
 
