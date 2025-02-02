@@ -37,7 +37,7 @@ public:
 	explicit BIT(const std::vector<long long>& v)
 		: BIT(v.size())
 	{
-		for (int i = 0; i < v.size(); ++i)
+		for (int i = 0; i < static_cast<int>(v.size()); ++i)
 		{
 			add((i + 1), v[i]);
 		}
@@ -65,7 +65,7 @@ public:
 	// 数列の i 番目の要素を加算 (1-based indexing)
 	void add(int i, long long value)
 	{
-		for (; i < m_bit.size(); i += (i & -i))
+		for (; i < static_cast<int>(m_bit.size()); i += (i & -i))
 		{
 			m_bit[i] += value;
 		}
@@ -100,7 +100,7 @@ public:
 	explicit BIT(const std::vector<long long>& v)
 		: BIT(v.size())
 	{
-		for (int i = 0; i < v.size(); ++i)
+		for (int i = 0; i < static_cast<int>(v.size()); ++i)
 		{
 			add((i + 1), v[i]);
 		}
@@ -128,7 +128,7 @@ public:
 	// 数列の i 番目の要素を加算 (1-based indexing)
 	void add(int i, long long value)
 	{
-		for (; i < m_bit.size(); i += (i & -i))
+		for (; i < static_cast<int>(m_bit.size()); i += (i & -i))
 		{
 			m_bit[i] += value;
 		}
@@ -218,7 +218,7 @@ public:
 	explicit BIT(const std::vector<long long>& v)
 		: BIT(v.size())
 	{
-		for (int i = 0; i < v.size(); ++i)
+		for (int i = 0; i < static_cast<int>(v.size()); ++i)
 		{
 			add((i + 1), v[i]);
 		}
@@ -246,7 +246,7 @@ public:
 	// 数列の i 番目の要素を加算 (1-based indexing)
 	void add(int i, long long value)
 	{
-		for (; i < m_bit.size(); i += (i & -i))
+		for (; i < static_cast<int>(m_bit.size()); i += (i & -i))
 		{
 			m_bit[i] += value;
 		}
@@ -305,7 +305,7 @@ public:
 	explicit BIT(const std::vector<long long>& v)
 		: BIT(v.size())
 	{
-		for (int i = 0; i < v.size(); ++i)
+		for (int i = 0; i < static_cast<int>(v.size()); ++i)
 		{
 			add((i + 1), v[i]);
 		}
@@ -333,7 +333,7 @@ public:
 	// 数列の i 番目の要素を加算 (1-based indexing)
 	void add(int i, long long value)
 	{
-		for (; i < m_bit.size(); i += (i & -i))
+		for (; i < static_cast<int>(m_bit.size()); i += (i & -i))
 		{
 			m_bit[i] += value;
 		}
@@ -393,7 +393,7 @@ public:
 	explicit BIT(const std::vector<long long>& v)
 		: BIT(v.size())
 	{
-		for (int i = 0; i < v.size(); ++i)
+		for (int i = 0; i < static_cast<int>(v.size()); ++i)
 		{
 			add((i + 1), v[i]);
 		}
@@ -421,7 +421,7 @@ public:
 	// 数列の i 番目の要素を加算 (1-based indexing)
 	void add(int i, long long value)
 	{
-		for (; i < m_bit.size(); i += (i & -i))
+		for (; i < static_cast<int>(m_bit.size()); i += (i & -i))
 		{
 			m_bit[i] += value;
 		}
@@ -490,7 +490,7 @@ public:
 	explicit BIT(const std::vector<long long>& v)
 		: BIT(v.size())
 	{
-		for (int i = 0; i < v.size(); ++i)
+		for (int i = 0; i < static_cast<int>(v.size()); ++i)
 		{
 			add((i + 1), v[i]);
 		}
@@ -518,7 +518,7 @@ public:
 	// 数列の i 番目の要素を加算 (1-based indexing)
 	void add(int i, long long value)
 	{
-		for (; i < m_bit.size(); i += (i & -i))
+		for (; i < static_cast<int>(m_bit.size()); i += (i & -i))
 		{
 			m_bit[i] += value;
 		}
