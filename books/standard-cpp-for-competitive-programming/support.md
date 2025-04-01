@@ -18,6 +18,8 @@ https://github.com/Reputeless/Zenn.Public/issues
 
 - [@atree4728](https://twitter.com/atree4728) さん
   - [typo 報告](https://twitter.com/atree4728/status/1389898648880697345)
+- [@juten10x](https://github.com/juten10x) さん
+  - [typo 修正](https://github.com/Reputeless/Zenn.Public/pull/21)
 - [@tatyam_prime](https://twitter.com/tatyam_prime) さん
   - [ハッシュ関数の実装について](https://twitter.com/tatyam_prime/status/1387440282484953095)
   - [`tuple` の型推論における std::string リテラルの使用](https://twitter.com/tatyam_prime/status/1494754791615991808)
