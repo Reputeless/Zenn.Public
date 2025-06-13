@@ -4,8 +4,6 @@ topics: ["cpp", "siv3d", "game", "gamedev", "クリエイティブコーディ�
 published: true # falseだと下書き
 price: 0
 chapters:
-  - introduction
-  - setup
   - tutorial-basic
   - tutorial-shape
   - tutorial-animation
