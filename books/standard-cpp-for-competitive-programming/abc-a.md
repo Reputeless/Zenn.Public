@@ -1,5 +1,5 @@
 ---
-title: "AtCoder Beginner Contest (ABC) A 問題 C++ 解法"
+title: "ABC A 問題 C++ 解法"
 free: true
 ---
 - AtCoder Beginner Contest (ABC) A 問題について、C++ 標準機能を効果的に活用した解法を紹介します
