@@ -1,8 +1,8 @@
 ---
-title: "AtCoder Beginner Contest (ABC) A 問題、C++ 解法"
+title: "AtCoder Beginner Contest (ABC) A 問題 C++ 解法"
 free: true
 ---
-- AtCoder Beginner Contest (ABC) A 問題について、C++ 標準ライブラリを積極的に活用した解法を紹介します。
+- AtCoder Beginner Contest (ABC) A 問題について、C++ 標準機能を効果的に活用した解法を紹介します
 
 
 ## ABC410～ABC412
@@ -351,7 +351,7 @@ int main()
 
 
 
-:::details ABC 401
+:::details ABC 401 A - Status Code
 ```cpp
 #include <iostream>
 
