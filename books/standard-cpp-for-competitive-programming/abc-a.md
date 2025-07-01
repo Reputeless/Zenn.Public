@@ -3,9 +3,11 @@ title: "ABC A 問題 C++ 解法"
 free: true
 ---
 
-- 標準 C++ 機能を効果的に活用した、AtCoder Beginner Contest (ABC) A 問題のクリーンな解答コード例
-- 🟢: C++20 の機能を活用
-- 🟣: C++23 の機能を活用
+- AtCoder Beginner Contest (ABC) A 問題
+- 標準 C++ 機能を効果的に活用したクリーンな解答コードです
+- マークの意味:
+	- 🟢: C++20 の機能を活用
+	- 🟣: C++23 の機能を活用
 
 ## ABC410～
 
@@ -71,7 +73,7 @@ int main()
 :::
 
 
-:::details 🟢 ABC410 A - G1
+:::details ABC410 A - G1 🟢
 ### [ABC410 A - G1](https://atcoder.jp/contests/abc410/tasks/abc410_a)
 ```cpp
 #include <iostream>
@@ -263,7 +265,7 @@ int main()
 :::
 
 
-:::details 🟣 ABC404 A - Not Found
+:::details ABC404 A - Not Found 🟣
 ### [ABC404 A - Not Found](https://atcoder.jp/contests/abc404/tasks/abc404_a)
 ```cpp
 #include <iostream>
