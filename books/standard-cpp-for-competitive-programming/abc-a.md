@@ -2,8 +2,8 @@
 title: "ABC A 問題 C++ 解法"
 free: true
 ---
-- AtCoder Beginner Contest (ABC) A 問題の模範解答
-- C++ 標準機能を効果的に活用しています
+- AtCoder Beginner Contest (ABC) A 問題
+- 標準 C++ 機能を効果的に活用したクリーンなコード例
 
 ## ABC410～
 
