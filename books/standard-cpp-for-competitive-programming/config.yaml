@@ -4,6 +4,7 @@ topics: ["cpp", "競プロ", "競技プログラミング", "atcoder"] # トピ�
 published: true # falseだと下書き
 price: 1000
 chapters:
+  - abc-a
   - main-function
   - comments
   - identifiers
@@ -33,7 +34,6 @@ chapters:
   - dijkstra
   - support
   - library-ios-iomanip
-  - abc-a
   - string-functions
   - library-algorithm
   

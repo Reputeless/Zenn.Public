@@ -4,11 +4,11 @@ free: true
 ---
 - AtCoder Beginner Contest (ABC) A 問題の模範解答
 - C++ 標準機能を効果的に活用しています
-- 問題文は [AtCoder Problems](https://kenkoooo.com/atcoder#/table/) 参照
 
 ## ABC410～
 
 :::details ABC412 A - Task Failed Successfully
+- [ABC412 A - Task Failed Successfully](https://atcoder.jp/contests/abc412/tasks/abc412_a)
 ```cpp
 #include <iostream>
 
@@ -40,6 +40,7 @@ int main()
 
 
 :::details ABC411 A - Required Length
+- [ABC411 A - Required Length](https://atcoder.jp/contests/abc411/tasks/abc411_a)
 ```cpp
 #include <iostream>
 #include <string>
@@ -68,7 +69,8 @@ int main()
 :::
 
 
-:::details ABC410 A - G1 
+:::details ABC410 A - G1
+- [ABC410 A - G1](https://atcoder.jp/contests/abc410/tasks/abc410_a)
 ```cpp
 #include <iostream>
 #include <vector>
