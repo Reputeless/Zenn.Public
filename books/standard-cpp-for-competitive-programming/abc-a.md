@@ -404,6 +404,7 @@ int main()
 ## ABC390～ABC399
 
 :::details ABC399 A - Hamming Distance
+### [ABC399 A - Hamming Distance](https://atcoder.jp/contests/abc399/tasks/abc399_a)
 ```cpp
 
 ```
@@ -411,6 +412,7 @@ int main()
 
 
 :::details ABC398 A - Doors in the Center
+### [ABC398 A - Doors in the Center](https://atcoder.jp/contests/abc398/tasks/abc398_a)
 ```cpp
 
 ```
@@ -418,6 +420,7 @@ int main()
 
 
 :::details ABC397 A - Thermometer
+### [ABC397 A - Thermometer](https://atcoder.jp/contests/abc397/tasks/abc397_a)
 ```cpp
 
 ```
@@ -425,6 +428,7 @@ int main()
 
 
 :::details ABC396 A - Triple Four
+### [ABC396 A - Triple Four](https://atcoder.jp/contests/abc396/tasks/abc396_a)
 ```cpp
 
 ```
@@ -432,6 +436,7 @@ int main()
 
 
 :::details ABC395 A - Strictly Increasing?
+### [ABC395 A - Strictly Increasing?](https://atcoder.jp/contests/abc395/tasks/abc395_a)
 ```cpp
 
 ```
@@ -439,6 +444,7 @@ int main()
 
 
 :::details ABC394 A - 22222
+### [ABC394 A - 22222](https://atcoder.jp/contests/abc394/tasks/abc394_a)
 ```cpp
 
 ```
@@ -446,6 +452,7 @@ int main()
 
 
 :::details ABC393 A - Poisonous Oyster
+### [ABC393 A - Poisonous Oyster](https://atcoder.jp/contests/abc393/tasks/abc393_a)
 ```cpp
 
 ```
@@ -453,6 +460,7 @@ int main()
 
 
 :::details ABC392 A - Shuffled Equation
+### [ABC392 A - Shuffled Equation](https://atcoder.jp/contests/abc392/tasks/abc392_a)
 ```cpp
 
 ```
@@ -460,6 +468,7 @@ int main()
 
 
 :::details ABC391 A - Lucky Direction
+### [ABC391 A - Lucky Direction](https://atcoder.jp/contests/abc391/tasks/abc391_a)
 ```cpp
 
 ```
@@ -467,6 +476,7 @@ int main()
 
 
 :::details ABC390 A - 12435
+### [ABC390 A - 12435](https://atcoder.jp/contests/abc390/tasks/abc390_a)
 ```cpp
 
 ```
@@ -476,6 +486,7 @@ int main()
 ## ABC380～ABC389
 
 :::details ABC389 A - 9x9
+### [ABC389 A - 9x9](https://atcoder.jp/contests/abc389/tasks/abc389_a)
 ```cpp
 
 ```
@@ -483,6 +494,7 @@ int main()
 
 
 :::details ABC388 A - ?UPC
+### [ABC388 A - ?UPC](https://atcoder.jp/contests/abc388/tasks/abc388_a)
 ```cpp
 
 ```
@@ -490,6 +502,7 @@ int main()
 
 
 :::details ABC387 A - Happy New Year 2025
+### [ABC387 A - Happy New Year 2025](https://atcoder.jp/contests/abc387/tasks/abc387_a)
 ```cpp
 
 ```
@@ -497,6 +510,7 @@ int main()
 
 
 :::details ABC386 A - Full House 2
+### [ABC386 A - Full House 2](https://atcoder.jp/contests/abc386/tasks/abc386_a)
 ```cpp
 
 ```
@@ -504,6 +518,7 @@ int main()
 
 
 :::details ABC385 A - Equally
+### [ABC385 A - Equally](https://atcoder.jp/contests/abc385/tasks/abc385_a)
 ```cpp
 
 ```
@@ -511,6 +526,7 @@ int main()
 
 
 :::details ABC384 A - aaaadaa
+### [ABC384 A - aaaadaa](https://atcoder.jp/contests/abc384/tasks/abc384_a)
 ```cpp
 
 ```
@@ -518,6 +534,7 @@ int main()
 
 
 :::details ABC383 A - Humidifier 1
+### [ABC383 A - Humidifier 1](https://atcoder.jp/contests/abc383/tasks/abc383_a)
 ```cpp
 
 ```
@@ -525,6 +542,7 @@ int main()
 
 
 :::details ABC382 A - Daily Cookie
+### [ABC382 A - Daily Cookie](https://atcoder.jp/contests/abc382/tasks/abc382_a)
 ```cpp
 
 ```
@@ -532,6 +550,7 @@ int main()
 
 
 :::details ABC381 A - 11/22 String
+### [ABC381 A - 11/22 String](https://atcoder.jp/contests/abc381/tasks/abc381_a)
 ```cpp
 
 ```
@@ -539,6 +558,7 @@ int main()
 
 
 :::details ABC380 A - 123233
+### [ABC380 A - 123233](https://atcoder.jp/contests/abc380/tasks/abc380_a)
 ```cpp
 
 ```
