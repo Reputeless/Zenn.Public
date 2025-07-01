@@ -251,14 +251,7 @@ int main()
 		}
 	}
 
-	if (rated)
-	{
-		std::cout << "Yes\n";
-	}
-	else
-	{
-		std::cout << "No\n";
-	}
+	std::cout << (rated ? "Yes\n" : "No\n");
 }
 ```
 :::
