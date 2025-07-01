@@ -2,10 +2,10 @@
 title: "ABC A 問題 C++ 解法"
 free: true
 ---
-- AtCoder Beginner Contest (ABC) A 問題について、C++ 標準機能を効果的に活用した解法を紹介します
+- AtCoder Beginner Contest (ABC) A 問題の模範解答
+- C++ 標準機能を効果的に活用しています
 
-
-## ABC410～ABC412
+## ABC410～
 
 :::details ABC412 A - Task Failed Successfully
 ```cpp
@@ -202,7 +202,7 @@ int main()
 	std::cin >> C >> D;
 
 	// 時と分をまとめて 1 つの整数に変換して、比較しやすくする
-	// 例: 12 時 34 分 → 12 * 100 + 34 = 1234
+	// 例: 12 時 34 分 → (12 * 100 + 34) = 1234
 	if ((C * 100 + D) <= (A * 100 + B))
 	{
 		// 締切前に提出
@@ -232,6 +232,7 @@ int main()
 	int X;
 	std::cin >> X;
 
+	// Rated 対象であるか
 	bool rated = false;
 
 	if (X == 1) // Div.1
