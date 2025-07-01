@@ -6,8 +6,8 @@ free: true
 - AtCoder Beginner Contest (ABC) A 問題
 - 標準 C++ 機能を効果的に活用したクリーンな解答コードです
 - マークの意味:
-	- 🟢: C++20 の機能を活用
-	- 🟣: C++23 の機能を活用
+	- 🟢 C++20 の機能を活用
+	- 🟣 C++23 の機能を活用
 
 ## ABC410～
 
@@ -408,7 +408,31 @@ int main()
 :::details ABC399 A - Hamming Distance
 ### [ABC399 A - Hamming Distance](https://atcoder.jp/contests/abc399/tasks/abc399_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 長さ N の文字列
+	int N;
+	std::cin >> N;
+
+	std::string S, T;
+	std::cin >> S >> T;
+
+	// ハミング距離
+	int count = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		if (S[i] != T[i])
+		{
+			++count;
+		}
+	}
+
+	std::cout << count << '\n';
+}
 ```
 :::
 
@@ -416,7 +440,32 @@ int main()
 :::details ABC398 A - Doors in the Center
 ### [ABC398 A - Doors in the Center](https://atcoder.jp/contests/abc398/tasks/abc398_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 長さ N の文字列
+	int N;
+	std::cin >> N;
+
+	// すべて '-' で埋められた長さ N の文字列を作成する
+	std::string s(N, '-');
+
+	if ((N % 2) == 0) // N が偶数の場合
+	{
+		// 中央の 2 文字を '=' に置き換える
+		s[N / 2 - 1] = '=';
+		s[N / 2] = '=';
+	}
+	else // N が奇数の場合
+	{
+		// 中央の 1 文字を '=' に置き換える
+		s[N / 2] = '=';
+	}
+
+	std::cout << s << '\n';
+}
 ```
 :::
 
@@ -424,7 +473,27 @@ int main()
 :::details ABC397 A - Thermometer
 ### [ABC397 A - Thermometer](https://atcoder.jp/contests/abc397/tasks/abc397_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 体温 X
+	double X;
+	std::cin >> X;
+
+	if (38.0 <= X) // 高熱
+	{
+		std::cout << "1\n";
+	}
+	else if (37.5 <= X) // 発熱
+	{
+		std::cout << "2\n";
+	}
+	else // 平熱
+	{
+		std::cout << "3\n";
+	}
+}
 ```
 :::
 
@@ -432,7 +501,50 @@ int main()
 :::details ABC396 A - Triple Four
 ### [ABC396 A - Triple Four](https://atcoder.jp/contests/abc396/tasks/abc396_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 長さ N の整数列
+	int N;
+	std::cin >> N;
+
+	// 現在続いている整数
+	int current = 0;
+
+	// その連続個数
+	int count = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// 新しい整数
+		int a;
+		std::cin >> a;
+
+		if (a == current) // 前回の整数と同じ場合
+		{
+			// 連続個数を増やす
+			++count;
+
+			if (count == 3)
+			{
+				// 3 回連続した場合 Yes を出力して終了する
+				std::cout << "Yes\n";
+				return 0;
+			}
+		}
+		else // 前回の整数と異なる場合
+		{
+			// リセットする
+			current = a;
+
+			// 連続個数を 1 にする（現在の整数の分）
+			count = 1;
+		}
+	}
+
+	std::cout << "No\n";
+}
 ```
 :::
 
@@ -440,7 +552,36 @@ int main()
 :::details ABC395 A - Strictly Increasing?
 ### [ABC395 A - Strictly Increasing?](https://atcoder.jp/contests/abc395/tasks/abc395_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 長さ N の正整数列
+	int N;
+	std::cin >> N;
+
+	// 前回の整数
+	int last = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// 新しい整数
+		int a;
+		std::cin >> a;
+
+		// 新しい整数が前回の整数以下で、狭義単調増加が成り立たない場合
+		if (a <= last)
+		{
+			std::cout << "No\n";
+			return 0;
+		}
+
+		// 前回の整数を新しい整数に更新する
+		last = a;
+	}
+
+	std::cout << "Yes\n";
+}
 ```
 :::
 
