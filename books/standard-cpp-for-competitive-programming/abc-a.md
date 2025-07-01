@@ -4,6 +4,7 @@ free: true
 ---
 - AtCoder Beginner Contest (ABC) A 問題の模範解答
 - C++ 標準機能を効果的に活用しています
+- 問題文は [AtCoder Problems](https://kenkoooo.com/atcoder#/table/) 参照
 
 ## ABC410～
 
