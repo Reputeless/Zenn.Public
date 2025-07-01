@@ -2,8 +2,10 @@
 title: "ABC A 問題 C++ 解法"
 free: true
 ---
-- AtCoder Beginner Contest (ABC) A 問題
-- 標準 C++ 機能を効果的に活用したクリーンなコード例
+
+- 標準 C++ 機能を効果的に活用した、AtCoder Beginner Contest (ABC) A 問題のクリーンな解答コード例
+- 🟢: C++20 の機能を活用
+- 🟣: C++23 の機能を活用
 
 ## ABC410～
 
@@ -69,7 +71,7 @@ int main()
 :::
 
 
-:::details ABC410 A - G1
+:::details 🟢 ABC410 A - G1
 ### [ABC410 A - G1](https://atcoder.jp/contests/abc410/tasks/abc410_a)
 ```cpp
 #include <iostream>
@@ -261,7 +263,7 @@ int main()
 :::
 
 
-:::details ABC404 A - Not Found
+:::details 🟣 ABC404 A - Not Found
 ### [ABC404 A - Not Found](https://atcoder.jp/contests/abc404/tasks/abc404_a)
 ```cpp
 #include <iostream>
@@ -401,70 +403,70 @@ int main()
 
 ## ABC390～ABC399
 
-:::details ABC399 
+:::details ABC399 A - Hamming Distance
 ```cpp
 
 ```
 :::
 
 
-:::details ABC398 
+:::details ABC398 A - Doors in the Center
 ```cpp
 
 ```
 :::
 
 
-:::details ABC397 
+:::details ABC397 A - Thermometer
 ```cpp
 
 ```
 :::
 
 
-:::details ABC396 
+:::details ABC396 A - Triple Four
 ```cpp
 
 ```
 :::
 
 
-:::details ABC395 
+:::details ABC395 A - Strictly Increasing?
 ```cpp
 
 ```
 :::
 
 
-:::details ABC394 
+:::details ABC394 A - 22222
 ```cpp
 
 ```
 :::
 
 
-:::details ABC393 
+:::details ABC393 A - Poisonous Oyster
 ```cpp
 
 ```
 :::
 
 
-:::details ABC392 
+:::details ABC392 A - Shuffled Equation
 ```cpp
 
 ```
 :::
 
 
-:::details ABC391 
+:::details ABC391 A - Lucky Direction
 ```cpp
 
 ```
 :::
 
 
-:::details ABC390 
+:::details ABC390 A - 12435
 ```cpp
 
 ```
@@ -473,70 +475,70 @@ int main()
 
 ## ABC380～ABC389
 
-:::details ABC389 
+:::details ABC389 A - 9x9
 ```cpp
 
 ```
 :::
 
 
-:::details ABC388 
+:::details ABC388 A - ?UPC
 ```cpp
 
 ```
 :::
 
 
-:::details ABC387 
+:::details ABC387 A - Happy New Year 2025
 ```cpp
 
 ```
 :::
 
 
-:::details ABC386 
+:::details ABC386 A - Full House 2
 ```cpp
 
 ```
 :::
 
 
-:::details ABC385 
+:::details ABC385 A - Equally
 ```cpp
 
 ```
 :::
 
 
-:::details ABC384 
+:::details ABC384 A - aaaadaa
 ```cpp
 
 ```
 :::
 
 
-:::details ABC383 
+:::details ABC383 A - Humidifier 1
 ```cpp
 
 ```
 :::
 
 
-:::details ABC382 
+:::details ABC382 A - Daily Cookie
 ```cpp
 
 ```
 :::
 
 
-:::details ABC381 
+:::details ABC381 A - 11/22 String
 ```cpp
 
 ```
 :::
 
 
-:::details ABC380 
+:::details ABC380 A - 123233
 ```cpp
 
 ```
