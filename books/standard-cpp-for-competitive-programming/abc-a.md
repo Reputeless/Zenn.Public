@@ -247,18 +247,12 @@ int main()
 	if (X == 1) // Div.1
 	{
 		// 1600～2999 が Rated 対象
-		if ((1600 <= R) && (R <= 2999))
-		{
-			rated = true;
-		}
+		rated = ((1600 <= R) && (R <= 2999));
 	}
 	else // Div.2
 	{
 		// 1200～2399 が Rated 対象
-		if ((1200 <= R) && (R <= 2399))
-		{
-			rated = true;
-		}
+		rated = ((1200 <= R) && (R <= 2399));
 	}
 
 	std::cout << (rated ? "Yes\n" : "No\n");
@@ -279,9 +273,10 @@ int main()
 	std::string S;
 	std::cin >> S;
 
+	// 'a' から 'z' までの各文字に対して
 	for (char c = 'a'; c <= 'z'; ++c)
 	{
-		// 文字 c が S に含まれていない場合
+		// S が文字 c を含まない場合
 		if (!S.contains(c))
 		{
 			// その文字を出力する
@@ -343,7 +338,7 @@ int main()
 	// 各文字について
 	for (const auto& c : S)
 	{
-		// その文字が英大文字であれば
+		// その文字が英大文字であれば出力する
 		if (std::isupper(c))
 		{
 			std::cout << c;
@@ -405,4 +400,146 @@ int main()
 
 
 ## ABC390～ABC399
+
+:::details ABC399 
+```cpp
+
+```
+:::
+
+
+:::details ABC398 
+```cpp
+
+```
+:::
+
+
+:::details ABC397 
+```cpp
+
+```
+:::
+
+
+:::details ABC396 
+```cpp
+
+```
+:::
+
+
+:::details ABC395 
+```cpp
+
+```
+:::
+
+
+:::details ABC394 
+```cpp
+
+```
+:::
+
+
+:::details ABC393 
+```cpp
+
+```
+:::
+
+
+:::details ABC392 
+```cpp
+
+```
+:::
+
+
+:::details ABC391 
+```cpp
+
+```
+:::
+
+
+:::details ABC390 
+```cpp
+
+```
+:::
+
+
+## ABC380～ABC389
+
+:::details ABC389 
+```cpp
+
+```
+:::
+
+
+:::details ABC388 
+```cpp
+
+```
+:::
+
+
+:::details ABC387 
+```cpp
+
+```
+:::
+
+
+:::details ABC386 
+```cpp
+
+```
+:::
+
+
+:::details ABC385 
+```cpp
+
+```
+:::
+
+
+:::details ABC384 
+```cpp
+
+```
+:::
+
+
+:::details ABC383 
+```cpp
+
+```
+:::
+
+
+:::details ABC382 
+```cpp
+
+```
+:::
+
+
+:::details ABC381 
+```cpp
+
+```
+:::
+
+
+:::details ABC380 
+```cpp
+
+```
+:::
+
 
