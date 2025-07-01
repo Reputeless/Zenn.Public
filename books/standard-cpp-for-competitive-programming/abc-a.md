@@ -7,7 +7,7 @@ free: true
 
 ## ABC410～ABC412
 
-:::details ABC 412 A - Task Failed Successfully
+:::details ABC412 A - Task Failed Successfully
 ```cpp
 #include <iostream>
 
@@ -38,7 +38,7 @@ int main()
 :::
 
 
-:::details ABC 411 A - Required Length
+:::details ABC411 A - Required Length
 ```cpp
 #include <iostream>
 #include <string>
@@ -66,7 +66,7 @@ int main()
 :::
 
 
-:::details ABC 410 A - G1 
+:::details ABC410 A - G1 
 ```cpp
 #include <iostream>
 #include <vector>
@@ -98,7 +98,7 @@ int main()
 
 ## ABC400～ABC410
 
-:::details ABC 409 A - Conflict
+:::details ABC409 A - Conflict
 ```cpp
 #include <iostream>
 #include <string>
@@ -133,7 +133,7 @@ int main()
 :::
 
 
-:::details ABC 408 A - Timeout
+:::details ABC408 A - Timeout
 ```cpp
 #include <iostream>
 
@@ -169,7 +169,7 @@ int main()
 :::
 
 
-:::details ABC 407 A - Approximation
+:::details ABC407 A - Approximation
 ```cpp
 #include <iostream>
 #include <cmath>
@@ -187,7 +187,7 @@ int main()
 :::
 
 
-:::details ABC 406 A - Not Acceptable
+:::details ABC406 A - Not Acceptable
 ```cpp
 #include <iostream>
 
@@ -218,7 +218,7 @@ int main()
 :::
 
 
-:::details ABC 405 A - Is it rated?
+:::details ABC405 A - Is it rated?
 ```cpp
 #include <iostream>
 
@@ -264,7 +264,7 @@ int main()
 :::
 
 
-:::details ABC 404 A - Not Found
+:::details ABC404 A - Not Found
 ```cpp
 #include <iostream>
 #include <string>
@@ -290,7 +290,7 @@ int main()
 :::
 
 
-:::details ABC 403 A - Odd Position Sum
+:::details ABC403 A - Odd Position Sum
 ```cpp
 #include <iostream>
 
@@ -322,7 +322,7 @@ int main()
 
 
 
-:::details ABC 402 A - CBC
+:::details ABC402 A - CBC
 ```cpp
 #include <iostream>
 #include <string>
@@ -351,7 +351,7 @@ int main()
 
 
 
-:::details ABC 401 A - Status Code
+:::details ABC401 A - Status Code
 ```cpp
 #include <iostream>
 
@@ -374,7 +374,7 @@ int main()
 :::
 
 
-:::details ABC 400 A - ABC400 Party
+:::details ABC400 A - ABC400 Party
 ```cpp
 #include <iostream>
 
