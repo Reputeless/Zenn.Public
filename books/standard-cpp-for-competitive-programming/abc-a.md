@@ -54,6 +54,7 @@ int main()
 	int L;
 	std::cin >> L;
 
+	// パスワードの長さが L 以上の場合
 	if (L <= P.size())
 	{
 		std::cout << "Yes\n";
