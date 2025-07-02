@@ -3,7 +3,7 @@ title: "ABC A 問題 C++ 解法"
 free: true
 ---
 
-- AtCoder Beginner Contest (ABC) A 問題
+- AtCoder Beginner Contest（ABC）A 問題
 - 標準機能を効果的に活用した、クリーンな C++ コードによる解答例です
 - マークの意味:
 	- 🟢 C++20 の機能を活用
