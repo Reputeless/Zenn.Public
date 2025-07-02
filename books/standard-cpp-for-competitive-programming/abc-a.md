@@ -741,7 +741,20 @@ int main()
 :::details ABC389 A - 9x9
 ### [ABC389 A - 9x9](https://atcoder.jp/contests/abc389/tasks/abc389_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	int a, c;
+	char b;
+	
+	// 最初の整数は a に読み込まれる
+	// 次の 'x' は b に読み込まれる
+	// 最後の整数は c に読み込まれる
+	std::cin >> a >> b >> c;
+
+	std::cout << (a * c) << '\n';
+}
 ```
 :::
 
@@ -749,7 +762,16 @@ int main()
 :::details ABC388 A - ?UPC
 ### [ABC388 A - ?UPC](https://atcoder.jp/contests/abc388/tasks/abc388_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 先頭の 1 文字を読み込む
+	char c;
+	std::cin >> c;
+
+	std::cout << c << "UPC\n";
+}
 ```
 :::
 
@@ -757,7 +779,17 @@ int main()
 :::details ABC387 A - Happy New Year 2025
 ### [ABC387 A - Happy New Year 2025](https://atcoder.jp/contests/abc387/tasks/abc387_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 正整数 A, B
+	int A, B;
+	std::cin >> A >> B;
+
+	// A + B の二乗を出力する
+	std::cout << ((A + B) * (A + B)) << '\n';
+}
 ```
 :::
 
@@ -765,7 +797,48 @@ int main()
 :::details ABC386 A - Full House 2
 ### [ABC386 A - Full House 2](https://atcoder.jp/contests/abc386/tasks/abc386_a)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	// 4 枚のカードの整数
+	std::vector<int> C(4);
+	for (auto& c : C)
+	{
+		std::cin >> c;
+	}
+
+	std::ranges::sort(C);
+
+	// ツーペアであるかを判定する
+	if ((C[0] == C[1]) && (C[2] == C[3]) && (C[0] != C[2]))
+	{
+		// ツーペアであればフルハウスを作れる
+		std::cout << "Yes\n";
+		return 0;
+	}
+
+	// 先頭 3 枚でスリーカードであるかを判定する
+	if ((C[0] == C[1]) && (C[1] == C[2]) && (C[3] != C[0]))
+	{
+		// スリーカードであればフルハウスを作れる
+		std::cout << "Yes\n";
+		return 0;
+	}
+
+	// 末尾 3 枚でスリーカードであるかを判定する
+	if ((C[1] == C[2]) && (C[2] == C[3]) && (C[0] != C[3]))
+	{
+		// スリーカードであればフルハウスを作れる
+		std::cout << "Yes\n";
+		return 0;
+	}
+
+	// それ以外はフルハウスを作れない
+	std::cout << "No\n";
+}
 ```
 :::
 
@@ -773,15 +846,57 @@ int main()
 :::details ABC385 A - Equally
 ### [ABC385 A - Equally](https://atcoder.jp/contests/abc385/tasks/abc385_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 3 つの整数
+	int A, B, C;
+	std::cin >> A >> B >> C;
+
+	// すべてのグループ分けパターンで 1 つでも成り立つかを調べる
+	if (((A + B) == C)
+		|| ((A + C) == B)
+		|| ((B + C) == A)
+		|| ((A == B) && (B == C)))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
 :::
 
 
-:::details ABC384 A - aaaadaa
+:::details ABC384 A - aaaadaa 🟢
 ### [ABC384 A - aaaadaa](https://atcoder.jp/contests/abc384/tasks/abc384_a)
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	// 長さ N の文字列
+	int N;
+	std::cin >> N;
+
+	// 2 つの英小文字
+	char c1, c2;
+	std::cin >> c1 >> c2;
+
+	// 文字列
+	std::string S;
+	std::cin >> S;
+
+	// c1 でないものを c2 に置き換える
+	std::ranges::replace_if(S, [c1](char c) { return (c != c1); }, c2);
+
+	std::cout << S << '\n';
+}
 ```
 :::
 
@@ -789,15 +904,62 @@ int main()
 :::details ABC383 A - Humidifier 1
 ### [ABC383 A - Humidifier 1](https://atcoder.jp/contests/abc383/tasks/abc383_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// N 回水を追加する
+	int N;
+	std::cin >> N;
+
+	// 現在の水の量
+	int water = 0;
+
+	// 最後に水を追加した時刻
+	int lastTime = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// 時刻 T に V リットルの水を追加
+		int T, V;
+		std::cin >> T >> V;
+
+		// 時間経過に応じて水の量を減らす（0 未満にはならない）
+		water = std::max(0, (water - (T - lastTime)));
+
+		// 水を追加する
+		water += V;
+
+		// 最後に水を追加した時刻を更新する
+		lastTime = T;
+	}
+
+	std::cout << water << '\n';
+}
 ```
 :::
 
 
-:::details ABC382 A - Daily Cookie
+:::details ABC382 A - Daily Cookie 🟢
 ### [ABC382 A - Daily Cookie](https://atcoder.jp/contests/abc382/tasks/abc382_a)
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	// N 個の箱、D 日間
+	int N, D;
+	std::cin >> N >> D;
+
+	// 各箱の状態（'@' がクッキー入り, '.' が空箱）
+	std::string S;
+	std::cin >> S;
+
+	// 初期の空き箱の個数に、D 日間で新たに空き箱になる個数を加える
+	std::cout << (std::ranges::count(S, '.') + D) << '\n';
+}
 ```
 :::
 
@@ -805,15 +967,56 @@ int main()
 :::details ABC381 A - 11/22 String
 ### [ABC381 A - 11/22 String](https://atcoder.jp/contests/abc381/tasks/abc381_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 文字列の長さ N
+	int N;
+	std::cin >> N;
+
+	// 文字列 S
+	std::string S;
+	std::cin >> S;
+
+	// 偶数文字では不成立
+	if ((N % 2) == 0)
+	{
+		std::cout << "No\n";
+		return 0;
+	}
+
+	// 長さ N の正しい 11/22 文字列を作る
+	std::string target;
+	target += std::string((N / 2), '1');
+	target += '/';
+	target += std::string((N / 2), '2');
+
+	std::cout << ((S == target) ? "Yes\n" : "No\n");
+}
 ```
 :::
 
 
-:::details ABC380 A - 123233
+:::details ABC380 A - 123233 🟢
 ### [ABC380 A - 123233](https://atcoder.jp/contests/abc380/tasks/abc380_a)
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	// 6 桁の正整数 N
+	std::string N;
+	std::cin >> N;
+
+	// 条件を満たす場合、ソートすれば "122333" になる
+	std::ranges::sort(N);
+
+	std::cout << ((N == "122333") ? "Yes\n" : "No\n");
+}
 ```
 :::
 
