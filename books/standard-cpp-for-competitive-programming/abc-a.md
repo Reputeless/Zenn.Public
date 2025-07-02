@@ -1051,3 +1051,366 @@ int main()
 :::
 
 
+## ABC370～ABC379
+
+:::details ABC379 A - Cyclic
+### [ABC379 A - Cyclic](https://atcoder.jp/contests/abc379/tasks/abc379_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 整数の各桁
+	char a, b, c;
+	std::cin >> a >> b >> c;
+
+	std::cout << b << c << a << ' ' << c << a << b << '\n';
+}
+```
+:::
+
+
+:::details ABC378 A - Pairing 🟢
+### [ABC378 A - Pairing](https://atcoder.jp/contests/abc378/tasks/abc378_a)
+```cpp
+#include <iostream>
+#include <set>
+
+int main()
+{
+	// 所持しているボールの色を格納するセット
+	std::set<int> set;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		// 新しいボールの色
+		int a;
+		std::cin >> a;
+
+		// 既に同じ色のボールを持っている場合
+		if (set.contains(a))
+		{
+			// その色のボールをセットから削除する
+			set.erase(a);
+		}
+		else // まだ持っていない色のボールの場合
+		{
+			// セットにその色のボールを追加する
+			set.insert(a);
+		}
+	}
+
+	// （4 - 現在持っているボール）を 2 で割った値が捨てた回数
+	std::cout << ((4 - set.size()) / 2) << '\n';
+}
+```
+:::
+
+
+:::details ABC377 A - Rearranging ABC 🟢
+### [ABC377 A - Rearranging ABC](https://atcoder.jp/contests/abc377/tasks/abc377_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	// 長さ 3 の英大文字列
+	std::string S;
+	std::cin >> S;
+
+	// ソートして "ABC" になるか確認すれば OK
+	std::ranges::sort(S);
+
+	std::cout << ((S == "ABC") ? "Yes\n" : "No\n");
+}
+```
+:::
+
+
+:::details ABC376 A - Candy Button
+### [ABC376 A - Candy Button](https://atcoder.jp/contests/abc376/tasks/abc376_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// ボタンを N 回押す, 経過時間 C 秒未満は飴をもらえない
+	int N, C;
+	std::cin >> N >> C;
+
+	// 最後に飴をもらった時刻（初回に必ずもらえるよう -1000 に設定）
+	int lastT = -1000;
+
+	// 飴の数
+	int count = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// ボタンを押した時刻
+		int T;
+		std::cin >> T;
+
+		if (C <= (T - lastT))
+		{
+			// 飴をもらえる
+			++count;
+
+			// 最後に飴をもらった時刻を更新する
+			lastT = T;
+		}
+	}
+	
+	std::cout << count << '\n';
+}
+```
+:::
+
+
+:::details ABC375 A - Seats
+### [ABC375 A - Seats](https://atcoder.jp/contests/abc375/tasks/abc375_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// N 個の座席
+	int N;
+	std::cin >> N;
+
+	// 座席の状態（#: 人が座っている, .: 座っていない）
+	std::string S;
+	std::cin >> S;
+
+	// 左右に人が座っている空席の個数
+	int count = 0;
+
+	for (int i = 1; i < (N - 1); ++i)
+	{
+		if ((S[i] == '.') && (S[i - 1] == '#') && (S[i + 1] == '#'))
+		{
+			++count;
+		}
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
+
+:::details ABC374 A - Takahashi san 2 🟢
+### [ABC374 A - Takahashi san 2](https://atcoder.jp/contests/abc374/tasks/abc374_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 英小文字のみからなる文字列
+	std::string S;
+	std::cin >> S;
+
+	// 文字列 S が "san" で終わっているかを調べる
+	std::cout << (S.ends_with("san") ? "Yes\n" : "No\n");
+}
+```
+:::
+
+
+:::details ABC373 A - September
+### [ABC373 A - September](https://atcoder.jp/contests/abc373/tasks/abc373_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 条件を満たす S の個数
+	int count = 0;
+
+	for (int i = 1; i <= 12; ++i)
+	{
+		std::string S;
+		std::cin >> S;
+
+		// S の長さが i
+		if (S.size() == i)
+		{
+			++count;
+		}
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
+
+:::details ABC372 A - delete .
+### [ABC372 A - delete .](https://atcoder.jp/contests/abc372/tasks/abc372_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 英小文字および . からなる文字列
+	std::string S;
+	std::cin >> S;
+
+	// 文字列 S の各要素について
+	for (const auto& c : S)
+	{
+		// . でなければ出力する
+		if (c != '.')
+		{
+			std::cout << c;
+		}
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+
+:::details ABC371 A - Jiro
+### [ABC371 A - Jiro](https://atcoder.jp/contests/abc371/tasks/abc371_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 3 人の年齢関係
+	char sAB, sAC, sBC;
+	std::cin >> sAB >> sAC >> sBC;
+
+	if (sAB != sAC) // 「A < B && A > C」または「A > B && A < C」の場合
+	{
+		std::cout << "A\n";
+	}
+	else if (sAB == sBC) // 「A < B && B < C」または「A > B && B > C」の場合
+	{
+		std::cout << "B\n";
+	}
+	else // それ以外の場合
+	{
+		std::cout << "C\n";
+	}
+}
+```
+:::
+
+
+:::details ABC370 A - Raise Both Hands
+### [ABC370 A - Raise Both Hands](https://atcoder.jp/contests/abc370/tasks/abc370_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 左手, 右手を挙げているか（0: 挙げていない, 1: 挙げている）
+	int L, R;
+	std::cin >> L >> R;
+
+	if ((L == 1) && (R == 0)) // 左手のみを挙げている場合
+	{
+		std::cout << "Yes\n";
+	}
+	else if ((L == 0) && (R == 1)) // 右手のみを挙げている場合
+	{
+		std::cout << "No\n";
+	}
+	else // それ以外の場合
+	{
+		std::cout << "Invalid \n";
+	}
+}
+```
+:::
+
+
+<!-- ## ABC360～ABC369
+
+:::details ABC369 A - 369
+### [ABC369 A - 369](https://atcoder.jp/contests/abc369/tasks/abc369_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC368 A - Cut
+### [ABC368 A - Cut](https://atcoder.jp/contests/abc368/tasks/abc368_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC367 A - Shout Everyday
+### [ABC367 A - Shout Everyday](https://atcoder.jp/contests/abc367/tasks/abc367_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC366 A - Election 2
+### [ABC366 A - Election 2](https://atcoder.jp/contests/abc366/tasks/abc366_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC365 A - Leap Year
+### [ABC365 A - Leap Year](https://atcoder.jp/contests/abc365/tasks/abc365_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC364 A - Glutton Takahashi
+### [ABC364 A - Glutton Takahashi](https://atcoder.jp/contests/abc364/tasks/abc364_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC363 A - Piling Up
+### [ABC363 A - Piling Up](https://atcoder.jp/contests/abc363/tasks/abc363_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC362 A - Buy a Pen
+### [ABC362 A - Buy a Pen](https://atcoder.jp/contests/abc362/tasks/abc362_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC361 A - Insert
+### [ABC361 A - Insert](https://atcoder.jp/contests/abc361/tasks/abc361_a)
+```cpp
+
+```
+:::
+
+
+:::details ABC360 A - A Healthy Breakfast
+### [ABC360 A - A Healthy Breakfast](https://atcoder.jp/contests/abc360/tasks/abc360_a)
+```cpp
+
+```
+:::
+ -->
