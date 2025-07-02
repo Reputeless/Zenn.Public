@@ -502,6 +502,36 @@ int main()
 ### [ABC396 A - Triple Four](https://atcoder.jp/contests/abc396/tasks/abc396_a)
 ```cpp
 #include <iostream>
+#include <vector>
+
+int main()
+{
+	// 長さ N の整数列
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	for (int i = 0; i < (N - 2); ++i)
+	{
+		// 3 個連続して同じ整数があるかを調べる
+		if ((A[i] == A[i + 1]) && (A[i + 1] == A[i + 2]))
+		{
+			std::cout << "Yes\n";
+			return 0;
+		}
+	}
+
+	std::cout << "No\n";
+}
+```
+- 別解
+```cpp
+#include <iostream>
 
 int main()
 {
