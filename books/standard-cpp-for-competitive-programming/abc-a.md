@@ -1332,3 +1332,294 @@ int main()
 ```
 :::
 
+
+## ABC360～ABC369
+
+:::details ABC369 A - 369
+### [ABC369 A - 369](https://atcoder.jp/contests/abc369/tasks/abc369_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 整数 A, B
+	int A, B;
+	std::cin >> A >> B;
+
+	if (A == B)
+	{
+		// x, A, B
+		std::cout << "1\n";
+	}
+	else if (((A - B) % 2) == 0)
+	{
+		// x, A, B
+		// A, y, B
+		// A, B, z
+		std::cout << "3\n";
+	}
+	else
+	{
+		// x, A, B
+		// A, B, y
+		std::cout << "2\n";
+	}
+}
+```
+:::
+
+
+:::details ABC368 A - Cut 🟢
+### [ABC368 A - Cut](https://atcoder.jp/contests/abc368/tasks/abc368_a)
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// N 枚のカード, K 枚取り出す
+	int N, K;
+	std::cin >> N >> K;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	// 終端から K 枚の位置で、前半と後半を入れ替える
+	std::ranges::rotate(A, (A.end() - K));
+
+	for (const auto& a : A)
+	{
+		std::cout << a << ' ';
+	}
+}
+```
+:::
+
+
+:::details ABC367 A - Shout Everyday
+### [ABC367 A - Shout Everyday](https://atcoder.jp/contests/abc367/tasks/abc367_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// A 時になると叫ぶ, 高橋君は B 時に就寝して C 時に起床する
+	int A, B, C;
+	std::cin >> A >> B >> C;
+
+	// B 時が C 時より前の場合
+	if (B < C)
+	{
+		// A が就寝中の時間帯（B～C）の間にあれば "No"
+		std::cout << ((B < A) && (A < C) ? "No\n" : "Yes\n");
+	}
+	else
+	{
+		// A が起床中の時間帯（C～B）の間にあれば "Yes"
+		std::cout << ((C < A) && (A < B) ? "Yes\n" : "No\n");
+	}
+}
+```
+:::
+
+
+:::details ABC366 A - Election 2
+### [ABC366 A - Election 2](https://atcoder.jp/contests/abc366/tasks/abc366_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 有効票 N（奇数）, 高橋 T 票, 青木 A 票
+	int N, T, A;
+	std::cin >> N >> T >> A;
+
+	// どちらかが過半数を獲得していれば
+	if (((N / 2) < T) || ((N / 2) < A))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+
+:::details ABC365 A - Leap Year
+### [ABC365 A - Leap Year](https://atcoder.jp/contests/abc365/tasks/abc365_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 西暦 Y 年
+	int Y;
+	std::cin >> Y;
+
+	// うるう年の判定
+	const bool isLeapYear = (((Y % 4 == 0) && (Y % 100 != 0)) || (Y % 400 == 0));
+
+	std::cout << (isLeapYear ? "366\n" : "365\n");
+}
+```
+:::
+
+
+:::details ABC364 A - Glutton Takahashi
+### [ABC364 A - Glutton Takahashi](https://atcoder.jp/contests/abc364/tasks/abc364_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// N 個の料理
+	int N;
+	std::cin >> N;
+
+	// 食べた料理の数
+	int totalCount = 0;
+
+	// 連続して食べた甘い料理の数
+	int sweetCount = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// 甘い料理が 2 つ連続した場合、次の料理を断念する
+		if (sweetCount == 2)
+		{
+			std::cout << "No\n";
+			return 0;
+		}
+
+		std::string S;
+		std::cin >> S;
+
+		if (S == "sweet")
+		{
+			++sweetCount;
+		}
+		else
+		{
+			sweetCount = 0;
+		}
+	}
+
+	std::cout << "Yes\n";
+}
+```
+:::
+
+
+:::details ABC363 A - Piling Up
+### [ABC363 A - Piling Up](https://atcoder.jp/contests/abc363/tasks/abc363_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 現在のレート
+	int R;
+	std::cin >> R;
+
+	std::cout << (100 - R % 100) << '\n';
+}
+```
+:::
+
+
+:::details ABC362 A - Buy a Pen
+### [ABC362 A - Buy a Pen](https://atcoder.jp/contests/abc362/tasks/abc362_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	// 赤色 R 円, 緑色 G 円, 青色 B 円
+	int R, G, B;
+	std::cin >> R >> G >> B;
+
+	// 嫌いな色 C
+	std::string C;
+	std::cin >> C;
+
+	if (C == "Red")
+	{
+		std::cout << std::min(G, B) << '\n';
+	}
+	else if (C == "Green")
+	{
+		std::cout << std::min(R, B) << '\n';
+	}
+	else
+	{
+		std::cout << std::min(R, G) << '\n';
+	}
+}
+```
+:::
+
+
+:::details ABC361 A - Insert
+### [ABC361 A - Insert](https://atcoder.jp/contests/abc361/tasks/abc361_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 長さ N の整数列, K 要素目の直後に X を 1 つ挿入
+	int N, K, X;
+	std::cin >> N >> K >> X;
+
+	// 1 から N
+	for (int i = 1; i <= N; ++i)
+	{
+		int A;
+		std::cin >> A;
+
+		std::cout << A << ' ';
+
+		// K 要素目なら X を追加で出力する
+		if (i == K)
+		{
+			std::cout << X << ' ';
+		}
+	}
+}
+```
+:::
+
+
+:::details ABC360 A - A Healthy Breakfast
+### [ABC360 A - A Healthy Breakfast](https://atcoder.jp/contests/abc360/tasks/abc360_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 皿の並べ方（R: ご飯, M: 味噌汁, S: サラダ）
+	std::string S;
+	std::cin >> S;
+
+	// R の位置が M の位置よりも前にある場合
+	if (S.find('R') < S.find('M'))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
