@@ -307,13 +307,14 @@ int main()
 	// 合計を記録する変数
 	int sum = 0;
 
-	for (int i = 0; i < N; ++i)
+	// 1 から N
+	for (int i = 1; i <= N; ++i)
 	{
 		int a;
 		std::cin >> a;
 
-		// i が偶数のとき, a を合計に加える
-		if ((i % 2) == 0)
+		// i が奇数のとき, a を合計に加える
+		if ((i % 2) == 1)
 		{
 			sum += a;
 		}
