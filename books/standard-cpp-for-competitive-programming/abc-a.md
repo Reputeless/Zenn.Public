@@ -586,10 +586,21 @@ int main()
 :::
 
 
-:::details ABC394 A - 22222
+:::details ABC394 A - 22222 🟢
 ### [ABC394 A - 22222](https://atcoder.jp/contests/abc394/tasks/abc394_a)
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// S に含まれる '2' の個数を数えて、その個数の '2' からなる文字列を出力する
+	std::cout << std::string(std::ranges::count(S, '2'), '2') << '\n';
+}
 ```
 :::
 
@@ -597,7 +608,36 @@ int main()
 :::details ABC393 A - Poisonous Oyster
 ### [ABC393 A - Poisonous Oyster](https://atcoder.jp/contests/abc393/tasks/abc393_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 高橋君、青木君の状態
+	std::string S1, S2;
+	std::cin >> S1 >> S2;
+
+	// それぞれがお腹を壊したか
+	const bool s1 = (S1 == "sick");
+	const bool s2 = (S2 == "sick");
+
+	if (s1 && s2) // 2 人ともお腹を壊した
+	{
+		std::cout << "1\n";
+	}
+	else if (s1) // 高橋君だけお腹を壊した
+	{
+		std::cout << "2\n";
+	}
+	else if (s2) // 青木君だけお腹を壊した
+	{
+		std::cout << "3\n";
+	}
+	else // 2 人ともお腹を壊していない
+	{
+		std::cout << "4\n";
+	}
+}
 ```
 :::
 
@@ -605,7 +645,23 @@ int main()
 :::details ABC392 A - Shuffled Equation
 ### [ABC392 A - Shuffled Equation](https://atcoder.jp/contests/abc392/tasks/abc392_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	int a, b, c;
+	std::cin >> a >> b >> c;
+
+	// 並び替えパターンをすべてチェックし、1 つでも条件を満たす場合
+	if (((a * b) == c) || ((a * c) == b) || ((b * c) == a))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
 :::
 
@@ -613,7 +669,38 @@ int main()
 :::details ABC391 A - Lucky Direction
 ### [ABC391 A - Lucky Direction](https://atcoder.jp/contests/abc391/tasks/abc391_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 方角
+	std::string D;
+	std::cin >> D;
+
+	// 各文字について反対の方角の文字を出力する
+	for (const auto& c : D)
+	{
+		if (c == 'N')
+		{
+			std::cout << 'S';
+		}
+		else if (c == 'S')
+		{
+			std::cout << 'N';
+		}
+		else if (c == 'E')
+		{
+			std::cout << 'W';
+		}
+		else
+		{
+			std::cout << 'E';
+		}
+	}
+
+	std::cout << '\n';
+}
 ```
 :::
 
@@ -621,7 +708,30 @@ int main()
 :::details ABC390 A - 12435
 ### [ABC390 A - 12435](https://atcoder.jp/contests/abc390/tasks/abc390_a)
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	// (1, 2, 3, 4, 5) を並び替えた整数列
+	std::vector<int> A(5);
+	for (auto& a: A)
+	{
+		std::cin >> a;
+	}
+
+	if ((A == std::vector{ 2, 1, 3, 4, 5 })		// 1 と 2 を入れ替えたパターン
+		|| (A == std::vector{ 1, 3, 2, 4, 5 })	// 2 と 3 を入れ替えたパターン 
+		|| (A == std::vector{ 1, 2, 4, 3, 5 })	// 3 と 4 を入れ替えたパターン
+		|| (A == std::vector{ 1, 2, 3, 5, 4 }))	// 4 と 5 を入れ替えたパターン
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
 :::
 
