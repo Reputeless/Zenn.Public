@@ -11,6 +11,33 @@ free: true
 
 ## ABC410～
 
+:::details ABC413 A - Content Too Large
+### [ABC413 A - Content Too Large](https://atcoder.jp/contests/abc413/tasks/abc413_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 個の品物, カバンの大きさ M
+	int N, M;
+	std::cin >> N >> M;
+
+	// 品物の大きさの合計
+	int sum = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		int A;
+		std::cin >> A;
+
+		sum += A;
+	}
+
+	std::cout << ((sum <= M) ? "Yes\n" : "No\n");
+}
+```
+:::
+
 :::details ABC412 A - Task Failed Successfully
 ### [ABC412 A - Task Failed Successfully](https://atcoder.jp/contests/abc412/tasks/abc412_a)
 ```cpp
