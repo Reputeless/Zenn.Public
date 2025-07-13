@@ -11,6 +11,37 @@ free: true
 
 ## ABC410～
 
+:::details ABC414 A - Streamer Takahashi
+### [ABC414 A - Streamer Takahashi](https://atcoder.jp/contests/abc414/tasks/abc414_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 人のリスナー, 配信は L 時から R 時
+	int N, L, R;
+	std::cin >> N >> L >> R;
+
+	int count = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// リスナーは X 時から Y 時まで配信を見ることができる
+		int X, Y;
+		std::cin >> X >> Y;
+
+		// リスナーが配信を見ることができる場合
+		if ((X <= L) && (R <= Y))
+		{
+			++count;
+		}
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
 :::details ABC413 A - Content Too Large
 ### [ABC413 A - Content Too Large](https://atcoder.jp/contests/abc413/tasks/abc413_a)
 ```cpp
