@@ -14,49 +14,197 @@ free: true
 :::details ABC426 A - OS Versions
 ### [ABC426 A - OS Versions](https://atcoder.jp/contests/abc426/tasks/abc426_a)
 ```cpp
+#include <iostream>
+#include <map>
+#include <string>
 
+int main()
+{
+	// バージョン名と、バージョン番号の対応表
+	std::map<std::string, int> versions =
+	{
+		{ "Ocelot", 1 },
+		{ "Serval", 2 },
+		{ "Lynx", 3 }
+	};
+
+	// バージョン名 X, Y
+	std::string X, Y;
+	std::cin >> X >> Y;
+
+	// X が Y 以降のバージョンかどうかを判定する
+	if (versions[Y] <= versions[X])
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
 :::
 
-:::details ABC425 A - Isosceles
-### [ABC425 A - Isosceles](https://atcoder.jp/contests/abc425/tasks/abc425_a)
+:::details ABC425 A - Sigma Cubes
+### [ABC425 A - Sigma Cubes](https://atcoder.jp/contests/abc425/tasks/abc425_a)
 ```cpp
+#include <iostream>
 
+// (-1)^i * i^3 を返す関数
+int F(int i)
+{
+	if (i % 2 == 0)
+	{
+		return i * i * i;
+	}
+	else
+	{
+		return -(i * i * i);
+	}
+}
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	int sum = 0;
+
+	for (int i = 1; i <= N; ++i)
+	{
+		sum += F(i);
+	}
+
+	std::cout << sum << '\n';
+}
 ```
 :::
 
-:::details ABC424 A - 
-### [ABC424 A - ](https://atcoder.jp/contests/abc424/tasks/abc424_a)
+:::details ABC424 A - Isosceles
+### [ABC424 A - Isosceles](https://atcoder.jp/contests/abc424/tasks/abc424_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 三角形の各辺の長さ a, b, c
+	int a, b, c;
+	std::cin >> a >> b >> c;
+
+	// いずれかの 2 辺の長さが等しいか判定する
+	if ((a == b) || (b == c) || (c == a))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
 :::
 
 :::details ABC423 A - Scary Fee
 ### [ABC423 A - Scary Fee](https://atcoder.jp/contests/abc423/tasks/abc423_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 残高 X 円、1000 円あたりの引き出し手数料 C 円
+	int X, C;
+	std::cin >> X >> C;
+
+	// 引き出し 1 単位あたりの手数料を含む金額
+	int unit = (1000 + C);
+
+	// 引き出せる単位数
+	int count = (X / unit);
+
+	// 引き出せる金額（単位数 × 1000 円）
+	std::cout << (count * 1000) << '\n';
+}
 ```
 :::
 
 :::details ABC422 A - Stage Clear
 ### [ABC422 A - Stage Clear](https://atcoder.jp/contests/abc422/tasks/abc422_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// ワールド番号, ステージ番号を読み込む
+	int world, stage;
+	// 区切り文字を読み飛ばす用の変数
+	char separator;
+	std::cin >> world >> separator >> stage;
+
+	if (stage == 8)
+	{
+		// ステージ番号が 8 の場合、次のワールドのステージ 1
+		std::cout << (world + 1) << "-1\n";
+	}
+	else
+	{
+		// それ以外の場合、同じワールドの次のステージ
+		std::cout << world << "-" << (stage + 1) << "\n";
+	}
+}
 ```
 :::
 
-:::details ABC421 A - What month is it?
-### [ABC421 A - What month is it?](https://atcoder.jp/contests/abc421/tasks/abc421_a)
+:::details ABC421 A - Misdelivery
+### [ABC421 A - Misdelivery?](https://atcoder.jp/contests/abc421/tasks/abc421_a)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
 
+int main()
+{
+	// N 号室までの N 個の部屋
+	int N;
+	std::cin >> N;
+
+	// 1 号室から N 号室までの住人の名前
+	std::vector<std::string> S(N);
+	for (auto& s : S)
+	{
+		std::cin >> s;
+	}
+
+	// 宛先が X 号室の Y さん
+	int X;
+	std::string Y;
+	std::cin >> X >> Y;
+
+	// 宛先が正しいか判定する
+	if (S[X - 1] == Y)
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
 :::
 
-:::details ABC420 A - 
-### [ABC420 A - ](https://atcoder.jp/contests/abc420/tasks/abc420_a)
+:::details ABC420 A - What month is it?
+### [ABC420 A - What month is it?](https://atcoder.jp/contests/abc420/tasks/abc420_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// X 月の Y か月後を求める
+	int X, Y;
+	std::cin >> X >> Y;
+
+	std::cout << ((X + Y - 1) % 12 + 1) << '\n';
+}
 ```
 :::
 
