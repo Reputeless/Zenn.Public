@@ -116,10 +116,10 @@ int main()
 	std::cin >> X >> C;
 
 	// 引き出し 1 単位あたりの手数料を含む金額
-	int unit = (1000 + C);
+	const int unit = (1000 + C);
 
 	// 引き出せる単位数
-	int count = (X / unit);
+	const int count = (X / unit);
 
 	// 引き出せる金額（単位数 × 1000 円）
 	std::cout << (count * 1000) << '\n';
