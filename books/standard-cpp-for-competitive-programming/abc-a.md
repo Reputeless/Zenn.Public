@@ -9,7 +9,210 @@ free: true
 	- 🟢 C++20 の機能を活用
 	- 🟣 C++23 の機能を活用
 
+## ABC420～
+
+:::details ABC426 A - OS Versions
+### [ABC426 A - OS Versions](https://atcoder.jp/contests/abc426/tasks/abc426_a)
+```cpp
+
+```
+:::
+
+:::details ABC425 A - Isosceles
+### [ABC425 A - Isosceles](https://atcoder.jp/contests/abc425/tasks/abc425_a)
+```cpp
+
+```
+:::
+
+:::details ABC424 A - 
+### [ABC424 A - ](https://atcoder.jp/contests/abc424/tasks/abc424_a)
+```cpp
+
+```
+:::
+
+:::details ABC423 A - Scary Fee
+### [ABC423 A - Scary Fee](https://atcoder.jp/contests/abc423/tasks/abc423_a)
+```cpp
+
+```
+:::
+
+:::details ABC422 A - Stage Clear
+### [ABC422 A - Stage Clear](https://atcoder.jp/contests/abc422/tasks/abc422_a)
+```cpp
+
+```
+:::
+
+:::details ABC421 A - What month is it?
+### [ABC421 A - What month is it?](https://atcoder.jp/contests/abc421/tasks/abc421_a)
+```cpp
+
+```
+:::
+
+:::details ABC420 A - 
+### [ABC420 A - ](https://atcoder.jp/contests/abc420/tasks/abc420_a)
+```cpp
+
+```
+:::
+
 ## ABC410～
+
+:::details ABC419 A - AtCoder Language
+### [ABC419 A - AtCoder Language](https://atcoder.jp/contests/abc419/tasks/abc419_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	if (S == "red")
+	{
+		std::cout << "SSS\n";
+	}
+	else if (S == "blue")
+	{
+		std::cout << "FFF\n";
+	}
+	else if (S == "green")
+	{
+		std::cout << "MMM\n";
+	}
+	else
+	{
+		std::cout << "Unknown\n";
+	}
+}
+```
+:::
+
+:::details ABC418 A - I'm a teapot 🟢
+### [ABC418 A - I'm a teapot](https://atcoder.jp/contests/abc418/tasks/abc418_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 長さ N の文字列
+	int N;
+	std::cin >> N;
+
+	std::string S;
+	std::cin >> S;
+
+	// 文字列 S が "tea" で終わるかを判定する
+	if (S.ends_with("tea"))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC417 A - A Substring
+### [ABC417 A - A Substring](https://atcoder.jp/contests/abc417/tasks/abc417_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 長さ N の文字列
+	int N;
+	std::cin >> N;
+
+	// 先頭から A 文字, 末尾から B 文字取り除く
+	int A, B;
+	std::cin >> A >> B;
+
+	std::string S;
+	std::cin >> S;
+
+	// A 文字目から (N - A - B) 文字分を出力する
+	std::cout << S.substr(A, (N - A - B)) << '\n';
+}
+```
+:::
+
+:::details ABC416 A - Vacation Validation 🟢
+### [ABC416 A - Vacation Validation](https://atcoder.jp/contests/abc416/tasks/abc416_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	// 長さ N の文字列, L 文字目から R 文字目
+	int N, L, R;
+	std::cin >> N >> L >> R;
+
+	std::string S;
+	std::cin >> S;
+
+	// L 文字目から R 文字目までがすべて 'o' であるか
+	if (std::ranges::all_of((S.begin() + L - 1), (S.begin() + R),
+		[](char ch) { return (ch == 'o'); }))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC415 A - Unsupported Type
+### [ABC415 A - Unsupported Type](https://atcoder.jp/contests/abc415/tasks/abc415_a)
+```cpp
+#include <iostream>
+#include <set>
+
+int main()
+{
+	// 長さ N の整数列
+	int N;
+	std::cin >> N;
+
+	// 整数列に含まれる整数を格納するセット
+	std::set<int> set;
+	for (int i = 0; i < N; ++i)
+	{
+		int a;
+		std::cin >> a;
+		set.insert(a);
+	}
+
+	// 含まれているか判定したい整数
+	int X;
+	std::cin >> X;
+
+	// セットが X を含んでいるか判定
+	if (set.contains(X))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
 
 :::details ABC414 A - Streamer Takahashi
 ### [ABC414 A - Streamer Takahashi](https://atcoder.jp/contests/abc414/tasks/abc414_a)
