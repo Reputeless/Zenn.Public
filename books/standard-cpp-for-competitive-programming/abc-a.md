@@ -1894,9 +1894,6 @@ int main()
 	int N;
 	std::cin >> N;
 
-	// 食べた料理の数
-	int totalCount = 0;
-
 	// 連続して食べた甘い料理の数
 	int sweetCount = 0;
 
@@ -1905,6 +1902,7 @@ int main()
 		// 甘い料理が 2 つ連続した場合、次の料理を断念する
 		if (sweetCount == 2)
 		{
+			// 断念したということは完食失敗
 			std::cout << "No\n";
 			return 0;
 		}
