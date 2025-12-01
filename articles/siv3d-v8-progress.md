@@ -53,7 +53,8 @@ https://github.com/Siv3D/siv8
 
 #### レンダリングエンジン
 - 乗算済みアルファを標準で採用
-- BCn（DDS）テクスチャ形式をサポート（Windows 版）
+- R8 / R8G8 / R16F テクスチャ形式をサポート
+- BCn（DDS）テクスチャ形式をサポート
 - 複数のレンダーターゲット（MRT: Multiple Render Targets）対応
 - Compute Shader を活用できる機能を追加
 
@@ -100,7 +101,7 @@ https://github.com/Siv3D/siv8
 #### API の破壊的変更
 - いくつかのクラスや関数名について、より技術的に正確で、伝わりやすい名前への変更を複数実施
 - 例:
-    - `BinaryRaader` → `BinaryFileReader`
+    - `BinaryReader` → `BinaryFileReader`
     - `BinaryWriter` → `BinaryFileWriter`
     - `HashSet` / `HashTable` → `HashSet` / `HashMap`
     - `std::set` / `OrderedTable` → `BTreeSet` / `BTreeMap`
