@@ -13,18 +13,36 @@ published: false
 ## 1. フォント管理
 - フォントファイルの読み込みや形式サポートに関する機能
 
+### 1.1 一般的なフォント形式の読み込み
+- TrueType (.ttf) / OpenType (.otf) などのロードに対応する
+
+:::details Siv3D v0.8 での例
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// Font{ 基本サイズ, フォントファイル名 }
+	const Font font{ 32, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(Vec2{ 20, 20 });
+	}
+}
+```
+:::
+
+
+### 1.2 フォントコレクション対応
+- TTC/OTC など、1 ファイルに複数書体が含まれる形式に対応する
+
 :::details Siv3D v0.8 での例
 ```cpp
 
 ```
 :::
 
-
-### 1.1 一般的なフォント形式の読み込み
-- TrueType (.ttf) / OpenType (.otf) などのロードに対応する
-
-### 1.2 フォントコレクション対応
-- TTC/OTC など、1 ファイルに複数書体が含まれる形式に対応する
 
 ### 1.3 カラーフォント対応
 - ビットマップやベクター (COLRv1 など) を含むカラーフォントに対応する
