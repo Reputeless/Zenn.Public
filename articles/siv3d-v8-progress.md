@@ -6,7 +6,7 @@ topics: ["siv3d", "cpp"]
 published: true
 ---
 
-> [C++ Advent Calendar 2025](https://qiita.com/advent-calendar/2025/siv3d), 1 日目の記事です。
+> [Siv3D Advent Calendar 2025](https://qiita.com/advent-calendar/2025/siv3d), 1 日目の記事です。
 
 ## 1. 現行世代 Siv3D v0.6
 2025 年 12 月現在、メインで利用されている Siv3D は v0.6 世代です。2021 年 9 月リリースの v0.6.0 に始まり、4 年にわたって多くの機能追加と改善が行われてきました。最新の v0.6.16 は過去リリースの中で最高クラスの安定性とユーザ数を誇るバージョンへと進化しました。
