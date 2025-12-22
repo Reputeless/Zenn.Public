@@ -377,7 +377,29 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+
+	while (System::Update())
+	{
+		font(U"TopLeft").draw(40, Arg::topLeft(20, 20), ColorF{ 0.1 });
+		font(U"TopRight").draw(40, Arg::topRight(780, 20), ColorF{ 0.1 });
+
+		font(U"BottomLeft").draw(40, Arg::bottomLeft(20, 580), ColorF{ 0.1 });
+		font(U"BottomRight").draw(40, Arg::bottomRight(780, 580), ColorF{ 0.1 });
+
+		Rect{ 200, 100, 400, 100 }.draw(ColorF{ 0.8, 0.9, 1.0 });
+		font(U"MiddleLeft").draw(20, Arg::middleLeft(200, 150), ColorF{ 0.1 });
+		font(U"MiddleRight").draw(20, Arg::middleRight(600, 150), ColorF{ 0.1 });
+
+		font(U"Center").draw(40, Arg::center(400, 300), ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -387,7 +409,39 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font1{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+	const Font font2{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		// ベースラインがそろわない
+		font1(text).draw(30, Vec2{ 40, 100 }, ColorF{ 0.1 });
+		font2(text).draw(20, Vec2{ 280, 100 }, ColorF{ 0.1 });
+		font2(text).draw(50, Vec2{ 440, 100 }, ColorF{ 0.1 });
+
+		Rect{ 0, 300, 800, 10 }.draw(Palette::Skyblue);
+
+		// (40, 400) がベースラインの開始位置になるようテキストを描画
+		font1(text).drawBase(30, Vec2{ 40, 300 }, ColorF{ 0.1 });
+		Circle{ 40, 300 , 5 }.drawFrame(2, Palette::Red);
+
+		// (280, 400) がベースラインの開始位置になるようテキストを描画
+		font2(text).drawBase(20, Vec2{ 280, 300 }, ColorF{ 0.1 });
+		Circle{ 280, 300 , 5 }.drawFrame(2, Palette::Red);
+
+		// (440, 400) がベースラインの開始位置になるようテキストを描画
+		font2(text).drawBase(50, Vec2{ 440, 300 }, ColorF{ 0.1 });
+		Circle{ 440, 300 , 5 }.drawFrame(2, Palette::Red);
+	}
+}
 ```
 :::
 
@@ -400,7 +454,29 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	String text;
+	for (int32 i = 0; i < 5; ++i)
+	{
+		text += U"こんにちは、Siv3D！\n";
+	}
+
+	while (System::Update())
+	{
+		// 通常の行間（1.0）
+		font(text).draw(TextStyle{ .lineSpacing = 1.0 }, 30, Vec2{ 40, 40 }, ColorF{ 0.1 });
+
+		// 行間を少し広げる（1.2）
+		font(text).draw(TextStyle{ .lineSpacing = 1.2 }, 30, Vec2{ 400, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -410,7 +486,31 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String text = U"こんにちは、Siv3D！";
+
+	while (System::Update())
+	{
+		// 字間を狭める（-1.5px）
+		font(text).draw(TextStyle{ .characterSpacing = -1.5 }, 32, Vec2{ 40, 40 }, ColorF{ 0.1 });
+
+		// 通常の字間（0.0）
+		font(text).draw(TextStyle{ .characterSpacing = 0.0 }, 32, Vec2{ 40, 100 }, ColorF{ 0.1 });
+
+		// 字間を少し広げる（2px）
+		font(text).draw(TextStyle{ .characterSpacing = 2.0 }, 32, Vec2{ 40, 160 }, ColorF{ 0.1 });
+
+		// 字間を広げる（4px）
+		font(text).draw(TextStyle{ .characterSpacing = 4.0 }, 32, Vec2{ 40, 220 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -420,7 +520,25 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String text = U"int main()\n{\n\tint n = 0;\n}";
+
+	while (System::Update())
+	{
+		font.setTabSize(4);
+		font(text).draw(32, Vec2{ 40, 40 }, ColorF{ 0.1 });
+
+		font.setTabSize(8);
+		font(text).draw(32, Vec2{ 40, 280 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -433,7 +551,22 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox jumps over the lazy dog.";
+	const Rect rect{ 40, 40, 420, 120 };
+
+	while (System::Update())
+	{
+		rect.draw();
+		font(text).draw(24, rect.stretched(-20), ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -443,7 +576,22 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox jumps over the lazy dog.";
+	const Rect rect{ 40, 40, 240, 120 };
+
+	while (System::Update())
+	{
+		rect.draw();
+		font(text).draw(24, rect.stretched(-20), ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
