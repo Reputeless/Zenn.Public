@@ -1,5 +1,5 @@
 ---
-title: "ゲームエンジンを自作する場合のテキスト描画機能を考える"
+title: "ゲームエンジンを自作する場合のテキスト描画機能"
 emoji: "🔠"
 type: "tech"
 topics: ["siv3d", "cpp"]
@@ -22,6 +22,8 @@ published: false
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	// Font{ 基本サイズ, フォントファイル名 }
 	const Font font{ 32, U"RocknRollOne-Regular.ttf" };
 
@@ -39,7 +41,22 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Font{ 基本サイズ, フォントファイル名, フォントインデックス }
+	const Font font1{ 32, U"meiryo.ttc", 0 };
+	const Font font2{ 32, U"meiryo.ttc", 2 };
+
+	while (System::Update())
+	{
+		font1(U"こんにちは Siv3D!（メイリオ）").draw(Vec2{ 20, 20 });
+		font2(U"こんにちは Siv3D!（Meiryo UI）").draw(Vec2{ 20, 80 });
+	}
+}
 ```
 :::
 
@@ -49,7 +66,20 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// COLRv1 形式のカラーフォントをロード
+	const Font font{ 64, U"KalniaGlaze-VariableFont_wdth,wght.ttf", U"Bold" };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(Vec2{ 20, 20 });
+	}
+}
 ```
 :::
 
@@ -60,7 +90,35 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const FilePath fontPath = U"Inter-VariableFont_opsz,wght.ttf";
+
+	// フォントファイルに含まれる全ての定義済みスタイルと Variation Axis の情報を表示
+	for (const auto& face : Font::GetFaces(fontPath))
+	{
+		Print << face.styleName;
+
+		for (const auto& axis : face.variationAxes)
+		{
+			Print << U"\t{}: {}"_fmt(axis.name, axis.value);
+		}
+	}
+
+	// Font{ 基本サイズ, フォントファイル名, 定義済みスタイル名 }
+	const Font font1{ 48, fontPath, U"Medium" };
+	const Font font2{ 48, fontPath, U"Black" };
+
+	while (System::Update())
+	{
+		font1(U"Hello, Siv3D!").draw(Vec2{ 200, 20 });
+		font2(U"Hello, Siv3D!").draw(Vec2{ 200, 80 });
+	}
+}
 ```
 :::
 
@@ -70,7 +128,22 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Font{ 基本サイズ, フォントファイル名, フォントスタイル }
+	const Font font1{ 16, U"msgothic.ttc" };
+	const Font font2{ 16, U"msgothic.ttc", FontStyle::Bitmap };
+
+	while (System::Update())
+	{
+		font1(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, Palette::Black);
+		font2(U"こんにちは Siv3D!").draw(Vec2{ 20, 60 }, Palette::Black);
+	}
+}
 ```
 :::
 
@@ -80,7 +153,33 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// フォントファイルのメタ情報を表示
+	for (const auto& face : Font::GetFaces(U"RocknRollOne-Regular.ttf"))
+	{
+		Print << U"Family Name: " << face.familyName;
+		Print << U"Style Name: " << face.styleName;
+		Print << U"PostScript Name: " << face.postscriptName;
+		Print << U"Version: " << face.version;
+		Print << U"Number of Glyphs: " << face.numGlyphs;
+		Print << U"Units per EM: " << face.unitsPerEM;
+		Print << U"Is Bold: " << (face.isBold ? U"Yes" : U"No");
+		Print << U"Is Italic: " << (face.isItalic ? U"Yes" : U"No");
+		Print << U"Is Scalable: " << (face.isScalable ? U"Yes" : U"No");
+		Print << U"Is Variable: " << (face.isVariable ? U"Yes" : U"No");
+		Print << U"Has Color: " << (face.hasColor ? U"Yes" : U"No");
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 :::
 
@@ -90,7 +189,25 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 48, Typeface::Icon_MaterialDesign };
+
+	// グリフインデックス 0 から 19 までのグリフ名を表示
+	for (GlyphIndex i = 0; i < 20; ++i)
+	{
+		Print << font.getGlyphNameByGlyphIndex(i);
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 :::
 
@@ -101,7 +218,29 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// 標準で同梱される日本語フォントの 1 つ
+	const Font fontRegular{ 32, Typeface::CJK_Regular_JP };
+
+	// 標準で同梱されるカラー絵文字フォント
+	const Font fontEmoji{ 32, Typeface::ColorEmoji };
+
+	// 標準で同梱されるアイコンフォント
+	const Font fontIcon{ 32, Typeface::Icon_MaterialDesign };
+
+	while (System::Update())
+	{
+		fontRegular(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+		fontEmoji(U"😀😃😄😁😆😅😂🤣😊😇").draw(Vec2{ 20, 70 });
+		fontIcon(U"\U000F0493\U000F0787\U000F018C").draw(Vec2{ 20, 120 }, ColorF{ 0.1 });
+
+	}
+}
 ```
 :::
 
@@ -111,10 +250,37 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font0{ 36, Typeface::Medium };
+	const Font font1{ 36, Typeface::Medium };
+	const Font font2{ 36, Typeface::Medium };
+
+	const Font fontCJK{ 36, Typeface::CJK_Regular_JP };
+	const Font fontEmoji{ 36, Typeface::ColorEmoji };
+
+	// font1 にはフォールバックフォントを 1 つ追加する
+	font1.addFallback(fontCJK);
+
+	// font2 にはフォールバックフォントを 2 つ追加する
+	font2.addFallback(fontCJK);
+	font2.addFallback(fontEmoji);
+
+	const String text = U"Hello! こんにちは 你好 안녕하세요 🐈🐕🚀";
+
+	while (System::Update())
+	{
+		font0(U"font0:\n" + text).draw(Vec2{ 40, 40 }, ColorF{ 0.1 });
+		font1(U"font1:\n" + text).draw(Vec2{ 40, 200 }, ColorF{ 0.1 });
+		font2(U"font2:\n" + text).draw(Vec2{ 40, 360 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
-
 
 
 
@@ -126,17 +292,45 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::Bitmap, 40, Typeface::Bold };
+	const String text = U"こんにちは Siv3D!";
+
+	while (System::Update())
+	{
+		font(text).draw(40, Vec2{ 20, 20 }, ColorF{ 0.1 });
+		font(text).draw(160, Vec2{ 20, 60 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
 
 ### 2.2 SDF / MSDF 生成
-- 拡大縮小に強い Signed Distance Field (SDF) / Multi-channel SDF（MSDF）形式でのグリフ生成・描画
+- 拡大に強い Signed Distance Field (SDF) / Multi-channel SDF（MSDF）形式でのグリフ生成・描画
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 40, Typeface::Bold };
+	const String text = U"こんにちは Siv3D!";
+
+	while (System::Update())
+	{
+		font(text).draw(40, Vec2{ 20, 20 }, ColorF{ 0.1 });
+		font(text).draw(160, Vec2{ 20, 60 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -144,19 +338,31 @@ void Main()
 ### 2.3 静的テクスチャアトラス
 - ビルド時やロード時に、必要な文字一覧からアトラスを事前生成する
 
-:::details Siv3D v0.8 での例
-```cpp
-
-```
-:::
-
-
 ### 2.4 動的テクスチャアトラス
 - 実行時に必要な文字を順次テクスチャに書き込み、キャッシュを管理する
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 36, Typeface::CJK_Regular_JP };
+	const String text = U"Siv3D（シブスリーディー）は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。";
+
+	while (System::Update())
+	{
+		font(text).draw(Rect{ 1280, 720 }.stretched(-20), ColorF{ 0.1 });
+
+		// テクスチャアトラスを表示
+		const auto& texture = font.getTexture();
+		Rect{ 20, 240, texture.size() }.draw(ColorF{ 0.0 });
+		texture.draw(Vec2{ 20, 240 });
+	}
+}
 ```
 :::
 
