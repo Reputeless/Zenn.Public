@@ -601,7 +601,20 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		font(U"「横」書きの、\n文章の表示。").draw(Vec2{ 40, 40 }, ColorF{ 0.1 });
+		font(ReadingDirection::TopToBottom, U"「縦」書きの、\n文章の表示。").draw(Vec2{ 700, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -611,17 +624,46 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, U"NotoSansArabic-Regular.ttf"};
+
+	while (System::Update())
+	{
+		// Siv3D v0.8 は RTL のみ対応。BiDi には未対応
+		font(ReadingDirection::RightToLeft, U"هذا نصّ عربيّ للاختبار فقط.").draw(Vec2{ 40, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
 
 ### 3.12 合字制御
-- fi や ff などの合字機能の On/Off 切り替え
+- ff や fi などの合字機能の On/Off 切り替え
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		// デフォルトでは合字が有効
+		font(U"Effect").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
+
+		// 合字を無効にしてグリフを処理
+		DrawableText{ font, U"Effect", ReadingDirection::LeftToRight, EnableLigatures::No }.draw(48, Vec2{ 40, 100 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -640,7 +682,24 @@ https://x.com/Reputeless/status/1706452398947152133
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		// テキストの領域を取得
+		const RectF region = font(U"Hello, Siv3D!").region(36, Vec2{ 40, 40 });
+
+		region.draw(ColorF{ 0.9 });
+
+		font(U"Hello, Siv3D!").draw(36, Vec2{ 40, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
