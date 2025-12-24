@@ -14,7 +14,7 @@ published: false
 - フォントファイルの読み込みや形式サポートに関する機能
 
 ### 1.1 一般的なフォント形式の読み込み
-- TrueType (.ttf) / OpenType (.otf) などのロードに対応する
+- フォント資産を活用しデザインの自由度を確保するため、標準的な TTF/OTF 形式の読み込みに対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -37,7 +37,7 @@ void Main()
 
 
 ### 1.2 フォントコレクション対応
-- TTC/OTC など、1 ファイルに複数書体が含まれる形式に対応する
+- システムフォントや複数ウェイトを含むアセットを扱えるよう、TTC/OTC など、1 ファイルに複数書体が含まれる形式に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -62,7 +62,7 @@ void Main()
 
 
 ### 1.3 カラーフォント対応
-- ビットマップやベクター (COLRv1 など) を含むカラーフォントに対応する
+- チャットや演出における表現力を高めるため、色情報を持つ絵文字フォントの描画をサポートする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -85,8 +85,7 @@ void Main()
 
 
 ### 1.4 Variable Font 対応
-- Variable Font の軸パラメータ（Weight, Widthなど）を動的に制御する
-- あるいは、既定のパラメータが設定された定義済みのスタイルを選択する
+- アプリ容量を削減しつつ動的なウェイト変更などの演出を可能にするため、Variable Font の軸制御や、定義済みスタイルの選択に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -124,7 +123,8 @@ void Main()
 
 
 ### 1.5 埋め込みビットマップ対応
-- ベクターフォントに含まれるビットマップデータ（MS ゴシック等の EBDT）の利用有無を制御する
+- レトロな表現や低解像度での視認性を確保するため、フォントに内包されたビットマップデータの利用を選択可能にする
+- 例えば、MS ゴシックには 16px などの小さいサイズ向けのビットマップグリフが含まれている
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -149,7 +149,7 @@ void Main()
 
 
 ### 1.6 フォントメタデータ取得
-- ファミリー名、バージョン、グリフ数などの基本情報を取得する
+- ユーザーによるフォント選択 UI や MOD ツール等の実装を支援するため、フォント名、グリフ数、対応スタイルなどの内部情報を取得可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -185,7 +185,7 @@ void Main()
 
 
 ### 1.7 グリフ名取得
-- フォントデータ内のグリフ名テーブルを参照し、グリフ名を取得する
+- アイコンフォント等を直感的に扱えるよう、コードポイントではなく文字名での指定や検索を可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -213,8 +213,7 @@ void Main()
 
 
 ### 1.8 デフォルトフォント内蔵
-- プラットフォームに依存せず、共通の見た目のフォントを利用できるようにする
-- Noto Sans, Noto Color Emoji, Material Design Icons など、標準的なフォントをエンジンに同梱・利用可能にする
+- プロトタイピングの高速化と環境間の表示差異を解消するため、標準的なフォントセットをエンジンに同梱する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -224,13 +223,13 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// 標準で同梱される日本語フォントの 1 つ
+	// Siv3D において標準で同梱される日本語フォントの 1 つ
 	const Font fontRegular{ 32, Typeface::CJK_Regular_JP };
 
-	// 標準で同梱されるカラー絵文字フォント
+	// Siv3D において標準で同梱されるカラー絵文字フォント
 	const Font fontEmoji{ 32, Typeface::ColorEmoji };
 
-	// 標準で同梱されるアイコンフォント
+	// Siv3D において標準で同梱されるアイコンフォント
 	const Font fontIcon{ 32, Typeface::Icon_MaterialDesign };
 
 	while (System::Update())
@@ -246,7 +245,7 @@ void Main()
 
 
 ### 1.9 フォールバックシステム
-- 指定フォントに文字がない場合、自動的に別のフォントを参照する
+- 多言語対応や異体字表示における「豆腐文字」を防ぐため、不足グリフを代替フォントから自動補完する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -288,7 +287,7 @@ void Main()
 - 文字をどのように描画用データに変換・保持するかの機能
 
 ### 2.1 ビットマップラスタライズ
-- 一般的なピクセルベースでのグリフ生成
+- 小さいサイズでの可読性とドット単位の正確な UI 表示を実現するため、基本的なピクセルベースの描画を提供する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -312,7 +311,8 @@ void Main()
 
 
 ### 2.2 SDF / MSDF 生成
-- 拡大に強い Signed Distance Field (SDF) / Multi-channel SDF（MSDF）形式でのグリフ生成・描画
+- アニメーションでの拡大表示や 3D 空間での表示に耐えうる高品質な描画を実現するため、距離場を用いたレンダリングに対応する
+- Multi-channel SDF（MSDF）形式が有効
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -336,10 +336,10 @@ void Main()
 
 
 ### 2.3 静的テクスチャアトラス
-- ビルド時やロード時に、必要な文字一覧からアトラスを事前生成する
+- パフォーマンスを最大化するため、使用文字が確定している場合にテクスチャを事前生成する機能を提供する
 
 ### 2.4 動的テクスチャアトラス
-- 実行時に必要な文字を順次テクスチャに書き込み、キャッシュを管理する
+- チャットやユーザー入力など予測不能なテキストに対応しつつメモリ効率を維持するため、実行時に必要なグリフをキャッシュする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -373,7 +373,7 @@ void Main()
 - 文字をどこに、どのように配置するかを決定する機能
 
 ### 3.1 アンカー配置
-- 座標の原点指定（左上、中央、右下など）による描画位置の制御
+- 解像度が異なる環境での UI 崩れを防ぐため、端や中央を基準とした相対的な配置指定を可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -404,7 +404,7 @@ void Main()
 
 
 ### 3.2 ベースライン配置
-- ベースラインを基準とした配置制御
+- サイズの異なる文字やフォントが混在しても整った見た目を維持するため、ベースラインに合わせた配置制御を行う
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -446,10 +446,10 @@ void Main()
 
 
 ### 3.3 均等割付
-- 指定した幅に合わせて文字間隔を調整し、行頭・行末を揃える
+- 長文ドキュメントの品質を高めるため、行の左右を揃える雑誌のようなレイアウト処理を実装する
 
 ### 3.4 行間制御
-- 行送りの倍率を調整する
+- 読みやすさの調整や限られたスペースへの格納を容易にするため、行送りの倍率や間隔を制御可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -480,7 +480,7 @@ void Main()
 
 
 ### 3.5 字間制御
-- 字間の調整
+- 演出のため、文字ごとの間隔を動的に調整可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -512,7 +512,7 @@ void Main()
 
 
 ### 3.6 タブ制御
-- タブ文字の幅設定およびタブ位置揃え
+- プログラムコードの表示においてインデントを揃えるため、タブ文字の幅制御に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -540,10 +540,10 @@ void Main()
 
 
 ### 3.7 禁則処理・ハイフネーション
-- 行頭・行末の禁止文字処理や、欧文の単語分割処理
+- 言語ごとのルールに基づいた自動調整を行い、行頭・行末での不自然な区切りを防ぎ、高品質なテキスト表示を担保する
 
 ### 3.8 自動改行
-- 指定した矩形幅に合わせて自動的に折り返す
+- 可変長のテキストを吹き出しやウィンドウ内に収めるため、指定した矩形幅に応じた自動折り返し処理を実装する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -568,7 +568,7 @@ void Main()
 
 
 ### 3.9 省略記号
-- 矩形に入り切らない場合、末尾を「...」などで省略表示する
+- 表示領域不足を明示し UI の破綻を防ぐため、テキスト末尾を「...」などで自動省略する機能を提供する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -593,7 +593,7 @@ void Main()
 
 
 ### 3.10 縦書き
-- 日本語などの縦書きレイアウトと、縦書き用グリフの使用に対応する
+- 日本語特有の和風表現や小説的演出をサポートするため、縦書きレイアウトおよび専用グリフへの置換に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -615,7 +615,7 @@ void Main()
 
 
 ### 3.11 RTL / BiDi 対応
-- アラビア語などの右横書き (RTL) および、混在時の双方向テキスト (BiDi) アルゴリズム
+- ラビア語圏などへのグローバル展開を可能にするため、右横書き（RTL）および双方向テキストの混在処理（BiDi）に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -637,7 +637,7 @@ void Main()
 
 
 ### 3.12 合字制御
-- ff や fi などの合字機能の On/Off 切り替え
+- デザイン性と演出上の都合（1 文字ずつの表示など）を両立するため、合字機能の有効・無効を切り替え可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -662,16 +662,16 @@ void Main()
 
 
 ### 3.13 ルビ表示
-- 文字に対してルビを配置・レンダリングする
+- 難読語を含むコンテンツのアクセシビリティを向上させるため、文字に対するふりがなの自動配置をサポートする
 
 ### 3.14 自然言語分割
-- 日本語の文節など、意味のまとまりで改行候補を算出する
-- BudouX などのライブラリを活用できる
+- 文節途中での不自然な改行を防ぎ読みやすさを向上させるため、意味のまとまりに基づいた改行位置判定を行う
+- 日本語では BudouX などのライブラリを活用できる
 
 https://x.com/Reputeless/status/1706452398947152133
 
 ### 3.15 テキスト領域計測
-- 実際に描画を行わず、レイアウト後のバウンディングボックスサイズのみを取得する
+- 動的な UI 調整を行うため、描画前にテキストのバウンディングボックスを取得可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -702,7 +702,7 @@ void Main()
 - 文字データの扱いに関する基本機能
 
 ### 4.1 Unicode 完全対応
-- サロゲートペアなどを正しく扱う
+- 多言語文字や特殊な漢字によるバグを防ぐため、サロゲートペアを含む Unicode 仕様を正しく処理する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -723,7 +723,7 @@ void Main()
 
 
 ### 4.2 絵文字対応
-- カラー絵文字や ZWJ シーケンス（家族の絵文字など合成されるもの）の正しい描画
+- ZWJ シーケンスなど複数のコードで構成される絵文字の描画に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -744,7 +744,7 @@ void Main()
 
 
 ### 4.3 アイコンフォント対応
-- 私用領域 (PUA) などに割り当てられたアイコンフォントを正しく扱う
+- 画像素材なしで軽量かつ高品質な UI アイコンを利用できるよう、私用領域（PUA）等の特殊マッピングに対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -765,7 +765,7 @@ void Main()
 
 
 ### 4.4 グリフ存在確認
-- 指定した文字に対応するグリフがフォント内に存在するか確認する
+- 未収録文字による表示不具合を回避し、ロバストな UI を構築するため、フォント内のグリフ有無を事前に判定可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -793,7 +793,7 @@ void Main()
 - 見た目を装飾する機能
 
 ### 5.1 擬似ボールド / イタリック
-- フォントデータがない場合に、ジオメトリ操作で太字・斜体を再現する
+- 専用データがないフォントでも強調表現を行えるよう、ジオメトリ操作による太字・斜体の生成機能を提供する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -819,7 +819,7 @@ void Main()
 
 
 ### 5.2 カラー
-- テキスト全体の色指定
+- 情報の重要度やゲームの状態を直感的に伝えるため、テキスト全体の RGBA カラー指定に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -842,7 +842,7 @@ void Main()
 
 
 ### 5.3 グラデーション
-- 文字の上下方向、テキストの横方向などに沿ったグラデーション塗りつぶし
+- タイトルロゴや演出などでリッチな質感を表現するため、文字単位や全体へのグラデーション塗りに対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -867,7 +867,7 @@ void Main()
 
 
 ### 5.3 アウトライン
-- 文字の輪郭線を描画する
+- 背景色と同化することを防ぎ視認性を確保するため、文字の縁取り（袋文字）描画を実装する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -891,7 +891,7 @@ void Main()
 
 
 ### 5.4 ドロップシャドウ
-- 文字の影を描画する
+- 奥行きを与えるため、文字の影を描画する機能を提供する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -915,7 +915,7 @@ void Main()
 
 
 ### 5.5 光彩
-- 文字の外側に発光表現を加える
+- 強調や発光表現を行うため、文字周囲へのぼかし発光エフェクトを実装する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -945,7 +945,7 @@ void Main()
 
 
 ### 5.6 下線・取り消し線
-- 文字の装飾線を描画する
+- ハイパーリンクやステータス変化（達成済みなど）を視覚化するため、文字への装飾線描画に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -975,55 +975,153 @@ void Main()
 
 
 ### 5.7 インライン画像
-- テキスト中に画像を埋め込む
+- チュートリアル等で操作説明をスムーズに行うため、テキストの途中にアイコン画像等を埋め込む機能を提供する
 
 
-### 5.8 カスタムシェーダー
-- 標準の描画シェーダーをユーザー定義のものでオーバーライドする機能
+### 5.8 カスタムシェーダ
+- 標準機能では表現できないグリッチや燃焼などの特殊演出を実現するため、描画シェーダのオーバーライドを可能にする
+
+:::details Siv3D v0.8 での例
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+	const PixelShader pixelShader{ ... }; // カスタムシェーダ
+
+	while (System::Update())
+	{
+		{
+			const ScopedCustomShader2D shader{ pixelShader };
+			font(U"こんにちは Siv3D!").draw(TextStyle::CustomTextFontShader(), Vec2{ 20, 20 }, ColorF{ 0.1 });
+		}
+	}
+}
+:::
 
 
 ## 6. アニメーション・変形
 - ゲーム特有の動的な表現機能
 
 ### 6.1 タイプライター演出
-- 1 文字ずつ時間をずらして表示する
+- 会話シーンで読むペースを制御し臨場感を出すため、時間経過に伴う文字の順次表示をサポートする
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+	const String text = U"こんにちは Siv3D!";
+
+	Stopwatch sw{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		// 100ms ごとに表示する文字数が増える
+		const int32 count = (sw.ms() / 100);
+		font(text.subview(0, count)).draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
 
 ### 6.2 文字単位アニメーション
-- 個別の文字に対し、位置・回転・スケール・色を動的に操作する
+- 感情表現や動的な演出を強化するため、個別の文字に対する位置・回転・色の操作を可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+class TextWave : public TextEffect::BasicTextEffect
+{
+public:
+
+	using TextEffect::BasicTextEffect::BasicTextEffect;
+
+	void draw(const TextureRegion& textureRegion, const GlyphContext& glyphContext) const override
+	{
+		const double offsetY = (Math::Sin(glyphContext.index * 25_deg) * -30);
+		const Vec2 pos = glyphContext.pos.withOffsetY(offsetY);
+		textureRegion.draw(pos, m_color);
+	}
+};
+
+class ZebraColor : public ITextEffect
+{
+public:
+
+	using ITextEffect::ITextEffect;
+
+	void draw(const TextureRegion& textureRegion, const GlyphContext& glyphContext) const override
+	{
+		const ColorF color{ IsEven(glyphContext.index) ? 0.1 : 1.0};
+		textureRegion.draw(glyphContext.pos, color);
+	}
+};
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"The quick brown fox jumps over the lazy dog.").draw(Vec2{ 20, 60 }, TextWave{ ColorF{ 0.1, 0.5, 0.4 } });
+		font(U"The quick brown fox jumps over the lazy dog.").draw(Vec2{ 20, 160 }, ZebraColor{});
+	}
+}
 ```
 :::
 
 
 ### 6.3 鏡文字・反転
-- 文字を左右・上下に反転して描画する
+- 鏡面世界や特殊なパズル演出を手軽に実装するため、行列計算なしでの文字反転描画を提供する
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"左右反転あいうえお").draw(Vec2{ 40, 40 }, TextEffect::FlipX{ ColorF{ 0.1, 0.5, 0.4 } });
+		font(U"上下反転あいうえお").draw(Vec2{ 40, 100 }, TextEffect::VerticalScale(-1.0, 0.5, ColorF{ 0.4, 0.5, 0.1 }));
+	}
+}
 ```
 :::
 
 
 ### 6.4 メッシュ変形
-- 円形配置や波打ちなど、テキスト全体または文字単位でメッシュを変形させる
+- UI デザインの自由度を高めるため、円形配置や波打ちなど矩形に縛られないテキスト変形に対応する
 
 ### 6.5 反射
-- テキストの下部に鏡面反射のような描画を追加する
+- 高級感の演出などのため、文字下部への鏡面反射描画をサポートする
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.1 });
+	const Font font{ FontMethod::MSDF, 48, 4, Typeface::Bold };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(Vec2{ 40, 40 },
+			TextEffect::Reflection{ 0.5, 0.5, 0.0, ColorF{ 0.2, 0.8, 1.0 } });
+	}
+}
 ```
 :::
 
@@ -1034,44 +1132,132 @@ void Main()
 - レンダリング以外でのデータ利用
 
 ### 7.1 輪郭パス取得
-- 文字の輪郭をベクターパスや座標配列として取得する
+- 輪郭に沿ったエフェクト描画への応用のため、グリフのアウトラインデータの取得に対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+Array<LineString> ToLineStrings(const Vec2& basePos, const Array<OutlineGlyph>& glyphs)
+{
+	Array<LineString> lines;
+
+	Vec2 penPos{ basePos };
+
+	for (const auto& glyph : glyphs)
+	{
+		for (const auto& ring : glyph.rings)
+		{
+			lines << ring.movedBy(penPos + glyph.getOffset());
+		}
+
+		penPos.x += glyph.advance;
+	}
+
+	return lines;
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.1 });
+	const Font font{ 80, Typeface::CJK_Regular_JP };
+
+	const String text = U"こんにちは、Siv3D!";
+	const Array<LineString> lines = ToLineStrings(Vec2{ 20, 20 }, font.renderOutlines(text));
+
+	while (System::Update())
+	{
+		for (size_t i = 0; i < lines.size(); ++i)
+		{
+			lines[i].drawClosed(2, HSV{ (i * 50) });
+		}
+	}
+}
 ```
 :::
 
 
 ### 7.2 メッシュデータ取得
-- グリフを構成する三角形ポリゴンを生成・取得する
+- 特殊なエフェクトや 3D テキスト表現、物理演算への応用のため、グリフを構成する三角形ポリゴンを取得可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+Array<Polygon> ToPolygons(const Vec2& basePos, const Array<PolygonGlyph>& glyphs)
+{
+	Array<Polygon> polygons;
+	Vec2 penPos{ basePos };
+
+	for (const auto& glyph : glyphs)
+	{
+		for (const auto& polygon : glyph.polygons)
+		{
+			polygons << polygon.movedBy(penPos + glyph.getOffset());
+		}
+
+		penPos.x += glyph.advance;
+	}
+
+	return polygons;
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 80, Typeface::CJK_Regular_JP };
+	const String text = U"こんにちは、Siv3D!";
+	const Array<Polygon> polygons = ToPolygons(Vec2{ 20, 20 }, font.renderPolygons(text));
+
+	while (System::Update())
+	{
+		for (const auto& polygon : polygons)
+		{
+			polygon.draw();
+			polygon.drawWireframe(1, ColorF{ 0.1 });
+		}
+	}
+}
 ```
 :::
 
 
 ### 7.3 ビットマップ書き出し
-- グリフをビットマップ画像として取得・保存する
+- 画像処理やテクスチャ生成への応用のため、グリフやテキストのレンダリング結果をビットマップ画像として取得・保存可能にする
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 80, Typeface::CJK_Regular_JP };
+
+	// 「あ」のビットマップを保存
+	font.renderBitmap(U'あ').image.save(U"あ.png");
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 :::
 
 
 
-
 ## 8. その他
+- パフォーマンスや開発効率に関わるインフラ部分
 
 ### 8.1 バッチング
-- 複数の文字をまとめて 1 回のドローコールで描画する
+- 大量のテキスト表示における描画負荷を低減するため、ドローコールを自動的に結合する最適化を行う
 
 ### 8.2 レイアウトキャッシュ
-- 計算コストの高い文字配置結果をキャッシュし、再利用する
+- 静的なテキスト表示の CPU 負荷を低減するため、計算コストの高いレイアウト結果を再利用可能にする
 
 ### 8.3 リッチテキスト
-- HTML タグ風や Markdown 風のマークアップによる書式指定をパースし、スタイルを適用する
+- データドリブンでのテキスト管理効率化のため、HTML や Markdown のようなマークアップによる書式指定とパース機能を提供する
+
