@@ -338,7 +338,7 @@ void Main()
 ### 2.2 SDF / MSDF 生成
 - アニメーションでの拡大表示や 3D 空間での表示に耐えうる高品質な描画を実現するため、距離場を用いたレンダリングに対応する
 - 小さな解像度のテクスチャだけで、どれだけ拡大してもクッキリと滑らかに描画される
-- Multi-channel SDF（MSDF）形式が有効
+- 品質は Multi-channel SDF（MSDF）が最も高いが、生成コストが大きい
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/2.2.png)
 
@@ -636,7 +636,7 @@ void Main()
 
 
 ### 3.10 縦書き
-- 日本語特有の和風表現や小説的演出をサポートするため、縦書きレイアウトおよび専用グリフへの置換に対応する
+- 和風表現や小説的演出をサポートするため、縦書きレイアウトおよび専用グリフへの置換に対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.10.png)]
 
@@ -660,7 +660,7 @@ void Main()
 
 
 ### 3.11 RTL / BiDi 対応
-- ラビア語圏などへのグローバル展開を可能にするため、右横書き（RTL）および双方向テキストの混在処理（BiDi）に対応する
+- アラビア語圏などへのグローバル展開を可能にするため、右横書き（RTL）および双方向テキストの混在処理（BiDi）に対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.11.png)
 
