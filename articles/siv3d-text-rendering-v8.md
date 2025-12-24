@@ -637,8 +637,9 @@ void Main()
 
 ### 3.10 縦書き
 - 和風表現や小説的演出をサポートするため、縦書きレイアウトおよび専用グリフへの置換に対応する
+- 例えば括弧や句読点は、横書きとは異なる形状・位置で表示される
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.10.png)]
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.10.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -687,6 +688,7 @@ void Main()
 - デザイン性と演出上の都合（1 文字ずつの表示など）を両立するため、合字機能の有効・無効を切り替え可能にする
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.12.png)
+*上: ff が合字として結合される場合、下: 合字を無効にした場合*
 
 :::details Siv3D v0.8 での例
 ```cpp
