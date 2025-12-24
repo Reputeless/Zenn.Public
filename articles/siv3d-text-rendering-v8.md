@@ -93,7 +93,7 @@ void Main()
 
 
 ### 1.4 Variable Font 対応
-- アプリ容量を削減しつつ動的なウェイト変更などの演出を可能にするため、Variable Font の軸制御や、定義済みスタイルの選択に対応する
+- アプリ容量を削減しつつ動的なウェイト変更などの演出を可能にするため、[Variable Font](https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts) の軸制御や、定義済みスタイルの選択に対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.4.png)
 
@@ -338,7 +338,7 @@ void Main()
 ### 2.2 SDF / MSDF 生成
 - アニメーションでの拡大表示や 3D 空間での表示に耐えうる高品質な描画を実現するため、距離場を用いたレンダリングに対応する
 - 小さな解像度のテクスチャだけで、どれだけ拡大してもクッキリと滑らかに描画される
-- 品質は Multi-channel SDF（MSDF）が最も高いが、生成コストが大きい
+- 品質は [Multi-channel SDF（MSDF）](https://github.com/Chlumsky/msdfgen)が最も高いが、生成コストが大きい
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/2.2.png)
 
@@ -660,7 +660,7 @@ void Main()
 
 
 ### 3.11 RTL / BiDi 対応
-- アラビア語圏などへのグローバル展開を可能にするため、右横書き（RTL）および双方向テキストの混在処理（BiDi）に対応する
+- アラビア語圏などへのグローバル展開を可能にするため、右横書き（RTL）および双方向テキスト（BiDi）に対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.11.png)
 
