@@ -290,6 +290,7 @@ void Main()
 
 ### 2.1 ビットマップラスタライズ
 - 小さいサイズでの可読性とドット単位の正確な UI 表示を実現するため、基本的なピクセルベースの描画を提供する
+- 拡大表示するとぼやける、巨大なサイズでのキャッシュはメモリを圧迫するなどの欠点がある
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -306,6 +307,7 @@ void Main()
 	{
 		font(text).draw(40, Vec2{ 20, 20 }, ColorF{ 0.1 });
 		font(text).draw(160, Vec2{ 20, 60 }, ColorF{ 0.1 });
+		font(text).draw(280, Vec2{ 20, 200 }, ColorF{ 0.1 });
 	}
 }
 ```
@@ -314,6 +316,7 @@ void Main()
 
 ### 2.2 SDF / MSDF 生成
 - アニメーションでの拡大表示や 3D 空間での表示に耐えうる高品質な描画を実現するため、距離場を用いたレンダリングに対応する
+- 小さな解像度のテクスチャだけで、どれだけ拡大してもクッキリと滑らかに描画される
 - Multi-channel SDF（MSDF）形式が有効
 
 :::details Siv3D v0.8 での例
@@ -331,6 +334,7 @@ void Main()
 	{
 		font(text).draw(40, Vec2{ 20, 20 }, ColorF{ 0.1 });
 		font(text).draw(160, Vec2{ 20, 60 }, ColorF{ 0.1 });
+		font(text).draw(280, Vec2{ 20, 200 }, ColorF{ 0.1 });
 	}
 }
 ```
@@ -352,7 +356,7 @@ void Main()
 	Window::Resize(1280, 720);
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font font{ FontMethod::MSDF, 36, Typeface::CJK_Regular_JP };
+	const Font font{ FontMethod::MSDF, 40, Typeface::Bold };
 	const String text = U"Siv3D（シブスリーディー）は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。";
 
 	while (System::Update())
@@ -384,7 +388,7 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-	const Font font{ FontMethod::MSDF, 48 };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
@@ -523,9 +527,7 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
 	const String text = U"int main()\n{\n\tint n = 0;\n}";
 
 	while (System::Update())
@@ -964,10 +966,10 @@ void Main()
 		const RectF rect1 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
 		rect1.bottom().withOffsetY(-6).draw(3, ColorF{ 0.0 });
 
-		const RectF rect2 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 100 }, ColorF{ 0.4 });
+		const RectF rect2 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 100 }, ColorF{ 0.1 });
 		rect2.middleHorizontal().withOffsetY(3).draw(3, ColorF{ 0.0 });
 
-		const RectF rect3 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 180 }, ColorF{ 0.4 });
+		const RectF rect3 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 180 }, ColorF{ 0.1 });
 		rect3.middleHorizontal().draw(3, ColorF{ 0.0 });
 		rect3.middleHorizontal().withOffsetY(6).draw(3, ColorF{ 0.0 });
 	}
@@ -984,6 +986,7 @@ void Main()
 - 標準機能では表現できないグリッチや燃焼などの特殊演出を実現するため、描画シェーダのオーバーライドを可能にする
 
 :::details Siv3D v0.8 での例
+```cpp
 # include <Siv3D.hpp>
 
 void Main()
@@ -1000,6 +1003,7 @@ void Main()
 		}
 	}
 }
+```
 :::
 
 
