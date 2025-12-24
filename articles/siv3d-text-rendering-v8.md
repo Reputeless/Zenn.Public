@@ -39,7 +39,7 @@ void Main()
 
 
 ### 1.2 フォントコレクション対応
-- システムフォントや複数ウェイトを含むアセットを扱えるよう、TTC / OTC など、1 ファイルに複数書体が含まれる形式に対応する
+- TTC / OTC など、1 ファイルに複数書体が含まれる形式で、特定の書体を選択して読み込む機能を提供する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.2.png)
 
@@ -66,7 +66,7 @@ void Main()
 
 
 ### 1.3 カラーフォント対応
-- チャットや演出における表現力を高めるため、色情報を持つフォントの描画をサポートする
+- チャットや演出における表現力を高めるため、色情報を持つフォント（絵文字フォントなど）の描画をサポートする
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.3.png)
 
@@ -133,11 +133,11 @@ void Main()
 
 
 ### 1.5 埋め込みビットマップ対応
-- レトロな表現や低解像度での視認性を確保するため、フォントに内包されたビットマップデータの利用を選択可能にする
-- 例えば、MS ゴシックには 16px などの小さいサイズ向けのビットマップグリフが含まれている
+- レトロな表現や低解像度での視認性を確保するため、フォントに含まれるビットマップデータの利用を選択可能にする
+- 例えば MS ゴシックには、ベクターデータだけでなく、小さいサイズ向けの EBDT（Embedded Bitmap Data）が含まれている
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.5.png)
-*拡大図*
+*拡大図（上: ベクターデータ、下: ビットマップデータ）*
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -1215,7 +1215,7 @@ void Main()
 - レンダリング以外でのデータ利用
 
 ### 7.1 輪郭パス取得
-- 輪郭に沿ったエフェクト描画への応用のため、グリフのアウトラインデータの取得に対応する
+- 輪郭に沿ったエフェクトを実現するため、グリフのアウトラインデータの取得に対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/7.1.png)
 
@@ -1262,7 +1262,7 @@ void Main()
 :::
 
 
-### 7.2 メッシュデータ取得
+### 7.2 ポリゴンデータ取得
 - 特殊なエフェクトや 3D テキスト表現、物理演算への応用のため、グリフを構成する三角形ポリゴンを取得可能にする
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/7.2.png)
