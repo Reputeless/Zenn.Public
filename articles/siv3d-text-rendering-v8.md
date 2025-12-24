@@ -29,7 +29,7 @@ void Main()
 
 	while (System::Update())
 	{
-		font(U"Hello, Siv3D!").draw(Vec2{ 20, 20 });
+		font(U"Hello, Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
 	}
 }
 ```
@@ -53,8 +53,8 @@ void Main()
 
 	while (System::Update())
 	{
-		font1(U"こんにちは Siv3D!（メイリオ）").draw(Vec2{ 20, 20 });
-		font2(U"こんにちは Siv3D!（Meiryo UI）").draw(Vec2{ 20, 80 });
+		font1(U"こんにちは Siv3D!（メイリオ）").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+		font2(U"こんにちは Siv3D!（Meiryo UI）").draw(Vec2{ 20, 80 }, ColorF{ 0.1 });
 	}
 }
 ```
@@ -78,7 +78,7 @@ void Main()
 
 	while (System::Update())
 	{
-		font1(U"Hello, Siv3D!").draw(Vec2{ 20, 20 });
+		font1(U"Hello, Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
 		font2(U"🍎🍊🍇").draw(Vec2{ 20, 100 });
 	}
 }
@@ -116,8 +116,8 @@ void Main()
 
 	while (System::Update())
 	{
-		font1(U"Hello, Siv3D!").draw(Vec2{ 200, 20 });
-		font2(U"Hello, Siv3D!").draw(Vec2{ 200, 80 });
+		font1(U"Hello, Siv3D!").draw(Vec2{ 200, 20 }, ColorF{ 0.1 });
+		font2(U"Hello, Siv3D!").draw(Vec2{ 200, 80 }, ColorF{ 0.1 });
 	}
 }
 ```
@@ -142,8 +142,8 @@ void Main()
 
 	while (System::Update())
 	{
-		font1(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, Palette::Black);
-		font2(U"こんにちは Siv3D!").draw(Vec2{ 20, 60 }, Palette::Black);
+		font1(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+		font2(U"こんにちは Siv3D!").draw(Vec2{ 20, 60 }, ColorF{ 0.1 });
 	}
 }
 ```
