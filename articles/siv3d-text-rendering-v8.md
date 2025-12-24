@@ -8,13 +8,13 @@ published: true
 
 > [Siv3D Advent Calendar 2025](https://qiita.com/advent-calendar/2025/siv3d) および [グラフィックス全般 Advent Calendar 2025](https://qiita.com/advent-calendar/2025/graphics) の記事です。
 
-ゲームエンジン／ライブラリを自作する際に、**テキスト描画**についてどのような機能を実装・提供すべきかを整理しました。
+ゲームエンジン / ライブラリを自作する際に、**テキスト描画**についてどのような機能を実装・提供すべきかを整理しました。
 
 ## 1. フォント管理
 - フォントファイルの読み込みや形式サポートに関する機能
 
 ### 1.1 一般的なフォント形式の読み込み
-- デザインの自由度を確保するため、標準的な TTF/OTF 形式の読み込みに対応する
+- デザインの自由度を確保するため、標準的な TTF / OTF 形式の読み込みに対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.1.png)
 
@@ -39,7 +39,7 @@ void Main()
 
 
 ### 1.2 フォントコレクション対応
-- システムフォントや複数ウェイトを含むアセットを扱えるよう、TTC/OTC など、1 ファイルに複数書体が含まれる形式に対応する
+- システムフォントや複数ウェイトを含むアセットを扱えるよう、TTC / OTC など、1 ファイルに複数書体が含まれる形式に対応する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.2.png)
 
