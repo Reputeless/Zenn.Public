@@ -16,6 +16,8 @@ published: false
 ### 1.1 一般的なフォント形式の読み込み
 - デザインの自由度を確保するため、標準的な TTF/OTF 形式の読み込みに対応する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.1.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -38,6 +40,8 @@ void Main()
 
 ### 1.2 フォントコレクション対応
 - システムフォントや複数ウェイトを含むアセットを扱えるよう、TTC/OTC など、1 ファイルに複数書体が含まれる形式に対応する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.2.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -64,6 +68,8 @@ void Main()
 ### 1.3 カラーフォント対応
 - チャットや演出における表現力を高めるため、色情報を持つフォントの描画をサポートする
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.3.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -88,6 +94,8 @@ void Main()
 
 ### 1.4 Variable Font 対応
 - アプリ容量を削減しつつ動的なウェイト変更などの演出を可能にするため、Variable Font の軸制御や、定義済みスタイルの選択に対応する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.4.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -128,6 +136,9 @@ void Main()
 - レトロな表現や低解像度での視認性を確保するため、フォントに内包されたビットマップデータの利用を選択可能にする
 - 例えば、MS ゴシックには 16px などの小さいサイズ向けのビットマップグリフが含まれている
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.5.png)
+*拡大図*
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -152,6 +163,8 @@ void Main()
 
 ### 1.6 フォントメタデータ取得
 - ユーザーによるフォント選択 UI や MOD ツール等の実装を支援するため、フォント名、グリフ数、対応スタイルなどの内部情報を取得可能にする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.6.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -189,6 +202,8 @@ void Main()
 ### 1.7 グリフ名取得
 - アイコンフォント等を直感的に扱えるよう、コードポイントではなく文字名での指定や検索を可能にする
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.7.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -216,6 +231,8 @@ void Main()
 
 ### 1.8 デフォルトフォント内蔵
 - プロトタイピングの高速化、環境間の表示差異解消のため、標準的なフォントセットをエンジンに同梱する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.8.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -248,6 +265,8 @@ void Main()
 
 ### 1.9 フォールバックシステム
 - 多言語対応や異体字表示における「豆腐文字」を防ぐため、不足グリフを代替フォントから自動補完する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.9.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -292,6 +311,8 @@ void Main()
 - 小さいサイズでの可読性とドット単位の正確な UI 表示を実現するため、基本的なピクセルベースの描画を提供する
 - 拡大表示するとぼやける、巨大なサイズでのキャッシュはメモリを圧迫するなどの欠点がある
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/2.1.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -318,6 +339,8 @@ void Main()
 - アニメーションでの拡大表示や 3D 空間での表示に耐えうる高品質な描画を実現するため、距離場を用いたレンダリングに対応する
 - 小さな解像度のテクスチャだけで、どれだけ拡大してもクッキリと滑らかに描画される
 - Multi-channel SDF（MSDF）形式が有効
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/2.2.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -346,6 +369,8 @@ void Main()
 
 ### 2.4 動的テクスチャアトラス
 - チャットやユーザー入力など予測不能なテキストに対応しつつメモリ効率を維持するため、実行時に必要なグリフをキャッシュする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/2.4.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -381,6 +406,8 @@ void Main()
 ### 3.1 アンカー配置
 - 解像度が異なる環境での UI 崩れを防ぐため、端や中央を基準とした相対的な配置指定を可能にする
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.1.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -411,6 +438,8 @@ void Main()
 
 ### 3.2 ベースライン配置
 - サイズの異なる文字やフォントが混在しても整った見た目を維持するため、ベースラインに合わせた配置制御を行う
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.2.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -457,6 +486,8 @@ void Main()
 ### 3.4 行間制御
 - 読みやすさの調整や限られたスペースへの格納を容易にするため、行送りの倍率や間隔を制御可能にする
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.4.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -487,6 +518,8 @@ void Main()
 
 ### 3.5 字間制御
 - 演出のため、文字ごとの間隔を動的に調整可能にする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.5.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -520,6 +553,8 @@ void Main()
 ### 3.6 タブ制御
 - プログラムコードの表示においてインデントを揃えるため、タブ文字の幅制御に対応する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.6.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -549,6 +584,8 @@ void Main()
 ### 3.8 自動改行
 - 可変長のテキストを吹き出しやウィンドウ内に収めるため、指定した矩形幅に応じた自動折り返し処理を実装する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.8.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -573,6 +610,8 @@ void Main()
 
 ### 3.9 省略記号
 - 表示領域不足を明示し UI の破綻を防ぐため、テキスト末尾を「...」などで自動省略する機能を提供する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.9.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -599,6 +638,8 @@ void Main()
 ### 3.10 縦書き
 - 日本語特有の和風表現や小説的演出をサポートするため、縦書きレイアウトおよび専用グリフへの置換に対応する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.10.png)]
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -621,6 +662,8 @@ void Main()
 ### 3.11 RTL / BiDi 対応
 - ラビア語圏などへのグローバル展開を可能にするため、右横書き（RTL）および双方向テキストの混在処理（BiDi）に対応する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.11.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -642,6 +685,8 @@ void Main()
 
 ### 3.12 合字制御
 - デザイン性と演出上の都合（1 文字ずつの表示など）を両立するため、合字機能の有効・無効を切り替え可能にする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.12.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -677,6 +722,8 @@ https://x.com/Reputeless/status/1706452398947152133
 ### 3.15 テキスト領域計測
 - 動的な UI 調整を行うため、描画前にテキストのバウンディングボックスを取得可能にする
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.15.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -708,6 +755,8 @@ void Main()
 ### 4.1 Unicode 完全対応
 - 多言語文字や特殊な漢字によるバグを防ぐため、サロゲートペアを含む Unicode 仕様を正しく処理する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/4.1.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -728,6 +777,8 @@ void Main()
 
 ### 4.2 絵文字対応
 - ZWJ シーケンスなど複数のコードで構成される絵文字の描画に対応する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/4.2.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -750,6 +801,8 @@ void Main()
 ### 4.3 アイコンフォント対応
 - 画像素材なしで軽量かつ高品質な UI アイコンを利用できるよう、私用領域（PUA）等の特殊マッピングに対応する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/4.3.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -770,6 +823,8 @@ void Main()
 
 ### 4.4 グリフ存在確認
 - 未収録文字による表示不具合を回避し、ロバストな UI を構築するため、フォント内のグリフ有無を事前に判定可能にする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/4.4.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -794,10 +849,12 @@ void Main()
 
 
 ## 5. 装飾
-- 見た目を装飾する機能
+- 見た目を装飾する機能。複数の装飾を組み合わせて使用できるようにする
 
 ### 5.1 擬似ボールド / イタリック
 - 専用データがないフォントでも強調表現を行えるよう、ジオメトリ操作による太字・斜体の生成機能を提供する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.1.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -825,6 +882,8 @@ void Main()
 ### 5.2 カラー
 - 情報の重要度やゲームの状態を直感的に伝えるため、テキスト全体の RGBA カラー指定に対応する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.2.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -847,6 +906,8 @@ void Main()
 
 ### 5.3 グラデーション
 - タイトルロゴや演出などでリッチな質感を表現するため、文字単位や全体へのグラデーション塗りに対応する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.3.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -873,6 +934,8 @@ void Main()
 ### 5.4 アウトライン
 - 背景色と同化することを防ぎ視認性を確保するため、文字の縁取り（袋文字）描画を実装する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.4.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -897,6 +960,8 @@ void Main()
 ### 5.5 ドロップシャドウ
 - 奥行きを与えるため、文字の影を描画する機能を提供する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.5.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -920,6 +985,8 @@ void Main()
 
 ### 5.6 光彩
 - 強調や発光表現を行うため、文字周囲へのぼかし発光エフェクトを実装する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.6.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -950,6 +1017,8 @@ void Main()
 
 ### 5.7 下線・取り消し線
 - ハイパーリンクやステータス変化（達成済みなど）を視覚化するため、文字への装飾線描画に対応する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/5.7.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -1013,6 +1082,8 @@ void Main()
 ### 6.1 タイプライター演出
 - 会話シーンで読むペースを制御し臨場感を出すため、時間経過に伴う文字の順次表示をサポートする
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/6.1.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -1038,6 +1109,8 @@ void Main()
 
 ### 6.2 文字単位アニメーション
 - 感情表現や動的な演出を強化するため、個別の文字に対する位置・回転・色の操作を可能にする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/6.2.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -1088,6 +1161,8 @@ void Main()
 ### 6.3 鏡文字・反転
 - 鏡面世界や特殊なパズル演出を手軽に実装するため、行列計算なしでの文字反転描画を提供する
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/6.3.png)
+
 :::details Siv3D v0.8 での例
 ```cpp
 # include <Siv3D.hpp>
@@ -1112,6 +1187,8 @@ void Main()
 
 ### 6.5 反射
 - 高級感の演出などのため、文字下部への鏡面反射描画をサポートする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/6.5.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -1139,6 +1216,8 @@ void Main()
 
 ### 7.1 輪郭パス取得
 - 輪郭に沿ったエフェクト描画への応用のため、グリフのアウトラインデータの取得に対応する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/7.1.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -1185,6 +1264,8 @@ void Main()
 
 ### 7.2 メッシュデータ取得
 - 特殊なエフェクトや 3D テキスト表現、物理演算への応用のため、グリフを構成する三角形ポリゴンを取得可能にする
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/7.2.png)
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -1266,4 +1347,8 @@ void Main()
 
 ### 8.3 リッチテキスト
 - データドリブンでのテキスト管理効率化のため、HTML や Markdown のようなマークアップによる書式指定とパース機能を提供する
+
+---
+
+これ以外にも取り上げるべき機能があれば、コメントで教えてください！
 
