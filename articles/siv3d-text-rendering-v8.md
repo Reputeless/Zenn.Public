@@ -14,7 +14,7 @@ published: false
 - フォントファイルの読み込みや形式サポートに関する機能
 
 ### 1.1 一般的なフォント形式の読み込み
-- フォント資産を活用しデザインの自由度を確保するため、標準的な TTF/OTF 形式の読み込みに対応する
+- デザインの自由度を確保するため、標準的な TTF/OTF 形式の読み込みに対応する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -62,7 +62,7 @@ void Main()
 
 
 ### 1.3 カラーフォント対応
-- チャットや演出における表現力を高めるため、色情報を持つ絵文字フォントの描画をサポートする
+- チャットや演出における表現力を高めるため、色情報を持つフォントの描画をサポートする
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -73,11 +73,13 @@ void Main()
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	// COLRv1 形式のカラーフォントをロード
-	const Font font{ 64, U"KalniaGlaze-VariableFont_wdth,wght.ttf", U"Bold" };
+	const Font font1{ 64, U"KalniaGlaze-VariableFont_wdth,wght.ttf", U"Bold" };
+	const Font font2{ 64, Typeface::ColorEmoji };
 
 	while (System::Update())
 	{
-		font(U"Hello, Siv3D!").draw(Vec2{ 20, 20 });
+		font1(U"Hello, Siv3D!").draw(Vec2{ 20, 20 });
+		font2(U"🍎🍊🍇").draw(Vec2{ 20, 100 });
 	}
 }
 ```
@@ -213,7 +215,7 @@ void Main()
 
 
 ### 1.8 デフォルトフォント内蔵
-- プロトタイピングの高速化と環境間の表示差異を解消するため、標準的なフォントセットをエンジンに同梱する
+- プロトタイピングの高速化、環境間の表示差異解消のため、標準的なフォントセットをエンジンに同梱する
 
 :::details Siv3D v0.8 での例
 ```cpp
@@ -732,11 +734,11 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-	const Font font{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
+	const Font font{ 48, Typeface::ColorEmoji };
 
 	while (System::Update())
 	{
-		font(U"🍎🍊🇦🇺🏄🏾‍♀️👨‍👩‍👧‍👧").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
+		font(U"🍎🍊🇦🇺🏄🏾‍♀️👨‍👩‍👧‍👧").draw(48, Vec2{ 40, 40 });
 	}
 }
 ```
