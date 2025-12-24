@@ -3,12 +3,12 @@ title: "ゲームエンジンを自作する場合のテキスト描画機能"
 emoji: "🔠"
 type: "tech"
 topics: ["siv3d", "cpp"]
-published: false
+published: true
 ---
 
 > [Siv3D Advent Calendar 2025](https://qiita.com/advent-calendar/2025/siv3d) および [グラフィックス全般 Advent Calendar 2025](https://qiita.com/advent-calendar/2025/graphics) の記事です。
 
-ゲームエンジン・ライブラリを自作する場合に、テキスト描画に関してどのような機能を実装・提供すべきかを整理しました。
+ゲームエンジン／ライブラリを自作する際に、**テキスト描画**についてどのような機能を実装・提供すべきかを整理しました。
 
 ## 1. フォント管理
 - フォントファイルの読み込みや形式サポートに関する機能
@@ -230,7 +230,7 @@ void Main()
 
 
 ### 1.8 デフォルトフォント内蔵
-- プロトタイピングの高速化、環境間の表示差異解消のため、標準的なフォントセットをエンジンに同梱する
+- プロトタイピングの高速化や、環境間の表示差異解消のため、標準的なフォントセットをエンジンに同梱する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.8.png)
 
@@ -437,7 +437,7 @@ void Main()
 
 
 ### 3.2 ベースライン配置
-- サイズの異なる文字やフォントが混在しても整った見た目を維持するため、ベースラインに合わせた配置制御を行う
+- サイズの異なるフォントや異種のフォントが混在しても整った見た目を維持するため、ベースラインに合わせた配置制御を行う
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.2.png)
 
