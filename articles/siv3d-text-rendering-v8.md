@@ -66,7 +66,8 @@ void Main()
 
 
 ### 1.3 カラーフォント対応
-- チャットや演出における表現力を高めるため、色情報を持つフォント（絵文字フォントなど）の描画をサポートする
+- チャットや演出における表現力を高めるため、色情報を持つ特殊なフォント（絵文字フォントなど）の描画をサポートする
+- [COLRv1](https://developer.chrome.com/blog/colrv1-fonts) 形式のラスタライズは FreeType 単体ではできない。Siv3D v0.8 では Skia を利用して実装している
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/1.3.png)
 
