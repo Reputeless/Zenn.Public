@@ -688,7 +688,7 @@ void Main()
 - デザイン性と演出上の都合（1 文字ずつの表示など）を両立するため、合字機能の有効・無効を切り替え可能にする
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/refs/heads/main/zenn/text2025/3.12.png)
-*上: ff が合字として結合される場合、下: 合字を無効にした場合*
+*上: ff が結合され 1 つのグリフになっている、下: 2 つの f が別々のグリフ*
 
 :::details Siv3D v0.8 での例
 ```cpp
