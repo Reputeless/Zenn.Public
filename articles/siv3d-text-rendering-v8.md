@@ -1199,7 +1199,7 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.1 });
-	const Font font{ FontMethod::MSDF, 48, 4, Typeface::Bold };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
