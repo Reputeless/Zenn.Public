@@ -382,7 +382,6 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48 };
 
 	while (System::Update())
@@ -459,7 +458,6 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	String text;
@@ -491,9 +489,7 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
 	const String text = U"こんにちは、Siv3D！";
 
 	while (System::Update())
@@ -606,7 +602,6 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
@@ -629,7 +624,6 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, U"NotoSansArabic-Regular.ttf"};
 
 	while (System::Update())
@@ -652,7 +646,6 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
@@ -661,7 +654,7 @@ void Main()
 		font(U"Effect").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
 
 		// 合字を無効にしてグリフを処理
-		DrawableText{ font, U"Effect", ReadingDirection::LeftToRight, EnableLigatures::No }.draw(48, Vec2{ 40, 100 }, ColorF{ 0.1 });
+		DrawableText{ font, U"Effect", EnableLigatures::No }.draw(48, Vec2{ 40, 100 }, ColorF{ 0.1 });
 	}
 }
 ```
@@ -687,7 +680,6 @@ https://x.com/Reputeless/status/1706452398947152133
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
@@ -714,7 +706,18 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
+
+	while (System::Update())
+	{
+		font(U"𩸽").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -724,7 +727,18 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
+
+	while (System::Update())
+	{
+		font(U"🍎🍊🇦🇺🏄🏾‍♀️👨‍👩‍👧‍👧").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -734,7 +748,18 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Icon_MaterialDesign };
+
+	while (System::Update())
+	{
+		font(U"\U000F0493\U000F0787\U000F018C").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -744,7 +769,20 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
+
+	Print << font.hasGlyph(U"𰻞");
+
+	while (System::Update())
+	{
+		font(U"𰻞𰻞麺").draw(48, Vec2{ 40, 40 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
@@ -759,17 +797,46 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+	const Font fontBold{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf", FontStyle::Bold };
+	const Font fontItalic{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf", FontStyle::Italic };
+
+	while (System::Update())
+	{
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+		fontBold(U"こんにちは Siv3D! (Bold)").draw(Vec2{ 20, 100 }, ColorF{ 0.1 });
+		fontItalic(U"こんにちは Siv3D! (Italic)").draw(Vec2{ 20, 180 }, ColorF{ 0.1 });
+	}
+}
 ```
 :::
 
 
-### 5.2 頂点カラー
-- 文字全体、または上下左右の頂点ごとの色指定
+### 5.2 カラー
+- テキスト全体の色指定
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 100 }, ColorF{ 0.0, 0.7, 0.4 });
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 180 }, ColorF{ 0.0, 0.4, 0.7 });
+	}
+}
 ```
 :::
 
@@ -779,7 +846,22 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 },
+			TextEffect::VerticalGradient{ ColorF{ 0.9, 0.3, 0.3 }, ColorF{ 0.3, 0.3, 0.9 } });
+
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 100 },
+			TextEffect::HorizontalGradient{ ColorF{ 0.9, 0.3, 0.3 }, ColorF{ 0.3, 0.3, 0.9 }, 20, (20 + font(U"こんにちは Siv3D!").region().w) });
+	}
+}
 ```
 :::
 
@@ -789,7 +871,21 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, 4, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"こんにちは Siv3D!").draw(TextStyle::Outline(0.0, 0.25, ColorF{ 0.0 }), Vec2{ 20, 20 }, ColorF{ 0.3, 0.9, 0.9 });
+
+		font(U"こんにちは Siv3D!").draw(TextStyle::Outline(0.0, 0.1, ColorF{ 0.0, 0.5, 0.0 }), Vec2{ 20, 100 },
+			TextEffect::VerticalGradient{ ColorF{ 1.6 }, ColorF{ 0.0, 0.6, 0.3 } });
+	}
+}
 ```
 :::
 
@@ -799,7 +895,21 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, 4, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"こんにちは Siv3D!").draw(TextStyle::Shadow(Vec2{ 4, 4 }, ColorF{ 0.0 }), Vec2{ 20, 20 }, ColorF{ 1.0 });
+
+		font(U"こんにちは Siv3D!").draw(TextStyle::OutlineShadow(0.0, 0.05, Vec2{ 0, 4 }, ColorF{ 0.0 }), Vec2{ 20, 100 },
+			TextEffect::VerticalGradient{ ColorF{ 1.6 }, ColorF{ 0.0, 0.6, 0.3 } });
+	}
+}
 ```
 :::
 
@@ -809,7 +919,27 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, 6, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"こんにちは Siv3D!").draw(TextStyle::Glow(0.8), Vec2{ 20, 20 }, ColorF{ 0.3, 0.5, 0.8 });
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 1.0 });
+
+		font(U"こんにちは Siv3D!").draw(TextStyle::Glow(0.25), Vec2{ 20, 100 }, ColorF{ 0.2 });
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 100 },
+			TextEffect::VerticalGradient{ ColorF{ 1.6 }, ColorF{ 0.0, 0.6, 0.3 } });
+
+		Rect{ 0, 180, 800, 80 }.draw(ColorF{ 0.0 });
+		font(U"こんにちは Siv3D!").draw(TextStyle::Glow(0.8), Vec2{ 20, 180 }, ColorF{ 1.0, 0.8, 0.0 });
+		font(U"こんにちは Siv3D!").draw(Vec2{ 20, 180 }, ColorF{ 0.0 });
+	}
+}
 ```
 :::
 
@@ -819,7 +949,27 @@ void Main()
 
 :::details Siv3D v0.8 での例
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, U"RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		const RectF rect1 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 20 }, ColorF{ 0.1 });
+		rect1.bottom().withOffsetY(-6).draw(3, ColorF{ 0.0 });
+
+		const RectF rect2 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 100 }, ColorF{ 0.4 });
+		rect2.middleHorizontal().withOffsetY(3).draw(3, ColorF{ 0.0 });
+
+		const RectF rect3 = font(U"こんにちは Siv3D!").draw(Vec2{ 20, 180 }, ColorF{ 0.4 });
+		rect3.middleHorizontal().draw(3, ColorF{ 0.0 });
+		rect3.middleHorizontal().withOffsetY(6).draw(3, ColorF{ 0.0 });
+	}
+}
 ```
 :::
 
@@ -830,12 +980,6 @@ void Main()
 
 ### 5.8 カスタムシェーダー
 - 標準の描画シェーダーをユーザー定義のものでオーバーライドする機能
-
-:::details Siv3D v0.8 での例
-```cpp
-
-```
-:::
 
 
 ## 6. アニメーション・変形
