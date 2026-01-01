@@ -9,7 +9,289 @@ free: true
 	- 🟢 C++20 の機能を活用
 	- 🟣 C++23 の機能を活用
 
-## ABC420～
+## ABC430～
+
+:::details ABC438 A - First Contest of the Year
+### [ABC438 A - First Contest of the Year](https://atcoder.jp/contests/abc438/tasks/abc438_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 1 年の長さが D 日, 7 日ごとにコンテスト開催,
+	// ある年の初回コンテストが F 日目の場合, 次の年の初回コンテストは何日目か
+	int D, F;
+	std::cin >> D >> F;
+
+	// ある年の初回以降の残り日数
+	const int remainingDays = (D - F);
+
+	// ある年の最後のコンテスト以降の残り日数
+	const int daysAfterLastContest = (remainingDays % 7);
+
+	std::cout << (7 - daysAfterLastContest) << '\n';
+}
+```
+:::
+
+:::details ABC437 A - Feet
+### [ABC437 A - Feet](https://atcoder.jp/contests/abc437/tasks/abc437_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// A フィート B インチは何インチか
+	int A, B;
+	std::cin >> A >> B;
+
+	std::cout << (A * 12 + B) << '\n';
+}
+```
+:::
+
+:::details ABC436 A - o-padding
+### [ABC436 A - o-padding](https://atcoder.jp/contests/abc436/tasks/abc436_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// 長さが N になるまで S の前に 'o' を追加した文字列を出力する
+	int N;
+	std::string S;
+	std::cin >> N >> S;
+
+	std::cout << std::string((N - S.size()), 'o') << S << '\n';
+}
+```
+:::
+
+:::details ABC435 A - Triangular Number
+### [ABC435 A - Triangular Number](https://atcoder.jp/contests/abc435/tasks/abc435_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 1 以上 N 以下の整数の和を求める
+	int N;
+	std::cin >> N;
+
+	// 等差数列の和の公式を使う
+	std::cout << (N * (N + 1)) / 2 << '\n';
+}
+```
+:::
+
+:::details ABC434 A - Balloon Trip
+### [ABC434 A - Balloon Trip](https://atcoder.jp/contests/abc434/tasks/abc434_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 体重 W kg, 風船 1 個あたり B g の浮力
+	int W, B;
+	std::cin >> W >> B;
+
+	std::cout << ((W * 1000 / B) + 1) << '\n';
+}
+```
+:::
+
+:::details ABC433 A - Happy Birthday! 4
+### [ABC433 A - Happy Birthday! 4](https://atcoder.jp/contests/abc433/tasks/abc433_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 高橋君 X 歳, 青木君 Y 歳
+	// 現在以降, 高橋君が青木君のちょうど Z 倍になることがあるか
+	int X, Y, Z;
+	std::cin >> X >> Y >> Z;
+
+	for (;;)
+	{
+		if ((Y * Z) == X) // ちょうど Z 倍
+		{
+			std::cout << "Yes\n";
+			break;
+		}
+		else if (X < (Y * Z)) // これ以降 Z 倍になることはない
+		{
+			std::cout << "No\n";
+			break;
+		}
+
+		++X;
+		++Y;
+	}
+}
+```
+:::
+
+:::details ABC432 A - Permute to Maximize 🟢
+### [ABC432 A - Permute to Maximize](https://atcoder.jp/contests/abc432/tasks/abc432_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	// 1 以上 9 以下の数字 A, B, C
+	char A, B, C;
+	std::cin >> A >> B >> C;
+
+	std::string result = { A, B, C };
+
+	// 降順にソートする
+	std::ranges::sort(result, std::greater{});
+
+	std::cout << result << '\n';
+}
+```
+:::
+
+:::details ABC431 A - Robot Balance
+### [ABC431 A - Robot Balance](https://atcoder.jp/contests/abc431/tasks/abc431_a)
+```cpp
+#include <iostream>
+#include <algorithm>
+
+int main()
+{
+	// 頭パーツの重さ H, 体パーツの重さ B
+	int H, B;
+	std::cin >> H >> B;
+
+	std::cout << std::max((H - B), 0) << '\n';
+}
+```
+:::
+
+:::details ABC430 A - Candy Cookie Law
+### [ABC430 A - Candy Cookie Law](https://atcoder.jp/contests/abc430/tasks/abc430_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 飴 A 個以上所持ならクッキー B 個以上所持していないと違反
+	// 飴 C 個、クッキー D 個所持は違反か
+	int A, B, C, D;
+	std::cin >> A >> B >> C >> D;
+
+	if ((A <= C) && (D < B)) // 違反
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+
+## ABC420～ABC429
+
+:::details ABC429 A - Too Many Requests
+### [ABC429 A - Too Many Requests](https://atcoder.jp/contests/abc429/tasks/abc429_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 行出力、目標値 M
+	int N, M;
+	std::cin >> N >> M;
+
+	for (int i = 0; i < N; ++i)
+	{
+		if ((i + 1) <= M)
+		{
+			std::cout << "OK\n";
+		}
+		else
+		{
+			std::cout << "Too Many Requests\n";
+		}
+	}
+}
+```
+:::
+
+:::details ABC428 A - Grandma's Footsteps
+### [ABC428 A - Grandma's Footsteps](https://atcoder.jp/contests/abc428/tasks/abc428_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 毎秒 S メートルの速さで A 秒間進み、その後 B 秒間休む
+	// X 秒間で何メートル進むか
+	int S, A, B, X;
+	std::cin >> S >> A >> B >> X;
+
+	// 現在のセッションで走る残り時間
+	int runCount = A;
+
+	// 現在のセッションで休む残り時間
+	int restCount = B;
+
+	// 進んだ距離
+	int distance = 0;
+
+	// X 秒の各ステップについて
+	for (int i = 0; i < X; ++i)
+	{
+		if (runCount) // 走る時間が残っていれば
+		{
+			distance += S;
+			--runCount;
+		}
+		else if (restCount) // 休む時間が残っていれば
+		{
+			--restCount;
+
+			// 休む時間が終わったら次から新規セッション開始
+			if (restCount == 0)
+			{
+				runCount = A;
+				restCount = B;
+			}
+		}
+	}
+
+	std::cout << distance << '\n';
+}
+```
+:::
+
+:::details ABC427 A - ABC -> AC
+### [ABC427 A - ABC -> AC](https://atcoder.jp/contests/abc427/tasks/abc427_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 中央の文字を削除する
+	S.erase(S.begin() + (S.size() / 2));
+
+	std::cout << S << '\n';
+}
+```
+:::
+
 
 :::details ABC426 A - OS Versions
 ### [ABC426 A - OS Versions](https://atcoder.jp/contests/abc426/tasks/abc426_a)
