@@ -2313,3 +2313,581 @@ int main()
 }
 ```
 :::
+
+
+## ABC350～ABC359
+
+:::details ABC359 A - Count Takahashi
+### [ABC359 A - Count Takahashi](https://atcoder.jp/contests/abc359/tasks/abc359_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 個の文字列, "Takahashi" をカウント
+	int N;
+	std::cin >> N;
+
+	int count = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		std::string S;
+		std::cin >> S;
+
+		if (S == "Takahashi")
+		{
+			++count;
+		}
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
+:::details ABC358 A - Welcome to AtCoder Land
+### [ABC358 A - Welcome to AtCoder Land](https://atcoder.jp/contests/abc358/tasks/abc358_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// S が "AtCoder", T が "Land" であるかを判定
+	std::string S, T;
+	std::cin >> S >> T;
+
+	if ((S == "AtCoder") && (T == "Land"))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC357 A - Sanitize Hands
+### [ABC357 A - Sanitize Hands](https://atcoder.jp/contests/abc357/tasks/abc357_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 人の宇宙人, M 本の手を消毒できる消毒液
+	int N, M;
+	std::cin >> N >> M;
+
+	// 消毒を完遂できる宇宙人の数
+	int count = 0;
+
+	// 各宇宙人について
+	for (int i = 0; i < N; ++i)
+	{
+		// H 本の手
+		int H;
+		std::cin >> H;
+
+		if (H <= M)
+		{
+			++count;
+			M -= H;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
+:::details ABC356 A - Subsegment Reverse 🟢
+### [ABC356 A - Subsegment Reverse](https://atcoder.jp/contests/abc356/tasks/abc356_a)
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+int main()
+{
+	// 正の整数 N, L, R
+	int N, L, R;
+	std::cin >> N >> L >> R;
+
+	std::vector<int> A(N);
+	
+	// 1 から N までの整数を順に格納
+	std::iota(A.begin(), A.end(), 1);
+
+	// 区間 [L, R] の要素を反転
+	std::ranges::reverse((A.begin() + L - 1), (A.begin() + R));
+
+	for (const auto& a : A)
+	{
+		std::cout << a << ' ';
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+:::details ABC355 A - Who Ate the Cake?
+### [ABC355 A - Who Ate the Cake?](https://atcoder.jp/contests/abc355/tasks/abc355_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// A は犯人でない, B も犯人でない
+	int A, B;
+	std::cin >> A >> B;
+
+	if (A != B)
+	{
+		std::cout << (6 - (A + B)) << '\n';
+	}
+	else
+	{
+		std::cout << "-1\n";
+	}
+}
+```
+:::
+
+:::details ABC354 A - Exponential Plant
+### [ABC354 A - Exponential Plant](https://atcoder.jp/contests/abc354/tasks/abc354_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 高橋君の身長 H
+	int H;
+	std::cin >> H;
+
+	int day = 0;
+	int plantHeight = 0;
+
+	for (;;)
+	{
+		// 2^day だけ植物が成長する
+		plantHeight += (1 << day);
+
+		++day;
+
+		if (H < plantHeight)
+		{
+			std::cout << day << '\n';
+			break;
+		}
+	}
+}
+```
+:::
+
+:::details ABC353 A - Buildings
+### [ABC353 A - Buildings](https://atcoder.jp/contests/abc353/tasks/abc353_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 個のビル
+	int N;
+	std::cin >> N;
+
+	// 左から 1 番目のビルの高さ H1
+	int H1;
+	std::cin >> H1;
+
+	for (int i = 1; i < N; ++i)
+	{
+		// i + 1 番目のビルの高さ
+		int H;
+		std::cin >> H;
+
+		if (H1 < H)
+		{
+			std::cout << (i + 1) << '\n';
+			return 0;
+		}
+	}
+
+	std::cout << "-1\n";
+}
+```
+:::
+
+:::details ABC352 A - AtCoder Line
+### [ABC352 A - AtCoder Line](https://atcoder.jp/contests/abc352/tasks/abc352_a)
+```cpp
+#include <iostream>
+#include <algorithm>
+
+int main()
+{
+	// N 個の駅, 駅 X から駅 Y まで移動, 駅 Z に止まるか
+	int N, X, Y, Z;
+	std::cin >> N >> X >> Y >> Z;
+
+	if ((std::min(X, Y) < Z) && (Z < std::max(X, Y)))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC351 A - The bottom of the ninth
+### [ABC351 A - The bottom of the ninth](https://atcoder.jp/contests/abc351/tasks/abc351_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// A チームの合計点
+	int aScore = 0;
+
+	for (int i = 0; i < 9; ++i)
+	{
+		int A;
+		std::cin >> A;
+		aScore += A;
+	}
+
+	// B チームの合計点
+	int bScore = 0;
+
+	for (int i = 0; i < 8; ++i)
+	{
+		int B;
+		std::cin >> B;
+		bScore += B;
+	}
+
+	std::cout << (aScore - bScore + 1) << '\n';
+}
+```
+:::
+
+:::details ABC350 A - Past ABCs
+### [ABC350 A - Past ABCs](https://atcoder.jp/contests/abc350/tasks/abc350_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	const int n = ((S[3] - '0') * 100 + (S[4] - '0') * 10 + (S[5] - '0'));
+
+	if ((1 <= n) && (n <= 349) && (n != 316))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+
+## ABC340～ABC349
+
+:::details ABC349 A - Zero Sum Game
+### [ABC349 A - Zero Sum Game](https://atcoder.jp/contests/abc349/tasks/abc349_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 人
+	int N;
+	std::cin >> N;
+
+	// A_1 ～ A_(N - 1) の合計点
+	int sum = 0;
+
+	for (int i = 1; i < N; ++i)
+	{
+		int A;
+		std::cin >> A;
+		sum += A;
+	}
+
+	std::cout << (0 - sum) << '\n';
+}
+```
+:::
+
+:::details ABC348 A - Penalty Kick
+### [ABC348 A - Penalty Kick](https://atcoder.jp/contests/abc348/tasks/abc348_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 回のペナルティキック
+	int N;
+	std::cin >> N;
+
+	for (int i = 1; i <= N; ++i)
+	{
+		// 3 の倍数は失敗, それ以外は成功
+		if (i % 3 == 0)
+		{
+			std::cout << 'x';
+		}
+		else
+		{
+			std::cout << 'o';
+		}
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+:::details ABC347 A - Divisible
+### [ABC347 A - Divisible](https://atcoder.jp/contests/abc347/tasks/abc347_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 長さ N の数列, K の倍数の要素を抽出し K で割った商を出力
+	int N, K;
+	std::cin >> N >> K;
+
+	for (int i = 0; i < N; ++i)
+	{
+		int a;
+		std::cin >> a;
+
+		if (a % K == 0)
+		{
+			std::cout << (a / K) << ' ';
+		}
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+:::details ABC346 A - Adjacent Product
+### [ABC346 A - Adjacent Product](https://atcoder.jp/contests/abc346/tasks/abc346_a)
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	// N 個の整数
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	for (int i = 0; i < (N - 1); ++i)
+	{
+		std::cout << (A[i] * A[i + 1]) << ' ';
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+:::details ABC345 A - Leftrightarrow
+### [ABC345 A - Leftrightarrow](https://atcoder.jp/contests/abc345/tasks/abc345_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 期待される連続した '=' の個数
+	const int equalLength = (S.size() - 2);
+
+	if ((S.front() == '<') &&
+		(S.back() == '>') &&
+		(S.substr(1, equalLength) == std::string(equalLength, '=')))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC344 A - Spoiler
+### [ABC344 A - Spoiler](https://atcoder.jp/contests/abc344/tasks/abc344_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 削除対象であるかを示すフラグ
+	bool inside = false;
+
+	for (const auto& c : S)
+	{
+		if (c == '|')
+		{
+			inside = !inside;
+		}
+		else if (!inside)
+		{
+			std::cout << c;
+		}
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+:::details ABC343 A - Wrong Answer
+### [ABC343 A - Wrong Answer](https://atcoder.jp/contests/abc343/tasks/abc343_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int A, B;
+	std::cin >> A >> B;
+
+	for (int i = 0; i <= 9; ++i)
+	{
+		if (i != (A + B))
+		{
+			std::cout << i << '\n';
+			break;
+		}
+	}
+}
+```
+:::
+
+:::details ABC342 A - Yay! 🟢
+### [ABC342 A - Yay!](https://atcoder.jp/contests/abc342/tasks/abc342_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// ソート結果の先頭と末尾より 2 種類の文字を取得
+	std::string S2 = S;
+	std::ranges::sort(S2);
+	const char c1 = S2.front();
+	const char c2 = S2.back();
+
+	// S2[1] でないほうの文字が 1 回のみ出現する文字
+	if (c1 != S2[1]) // 1 回のみ出現するのは c1
+	{
+		std::cout << (S.find(c1) + 1) << '\n';
+	}
+	else // 1 回のみ出現するのは c2
+	{
+		std::cout << (S.find(c2) + 1) << '\n';
+	}
+}
+```
+:::
+
+:::details ABC341 A - Print 341
+### [ABC341 A - Print 341](https://atcoder.jp/contests/abc341/tasks/abc341_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	for (int i = 0; i < N; ++i)
+	{
+		std::cout << "10";
+	}
+
+	std::cout << "1\n";
+}
+```
+:::
+
+:::details ABC340 A - Arithmetic Progression
+### [ABC340 A - Arithmetic Progression](https://atcoder.jp/contests/abc340/tasks/abc340_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 初項 A, 末項 B, 公差 D
+	int A, B, D;
+	std::cin >> A >> B >> D;
+
+	for (int i = A; i <= B; i += D)
+	{
+		std::cout << i << ' ';
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+
+## ～ABC339
+
+:::details ABC339 A - TLD
+### [ABC339 A - TLD ](https://atcoder.jp/contests/abc339/tasks/abc339_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	std::cout << S.substr(S.rfind('.') + 1) << '\n';
+}
+```
+:::
