@@ -4,12 +4,478 @@ free: true
 ---
 
 - AtCoder Beginner Contest（ABC）A 問題
-- 標準機能を効果的に活用した、クリーンな C++ コードによる解答例です
-- マークの意味:
-	- 🟢 C++20 の機能を活用
-	- 🟣 C++23 の機能を活用
+- C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コードによる模範解答集です
+- 🟢 マーク → C++20 の機能を使用 / 🟣 マーク → C++23 の機能を使用
+
+
+## ABC460～
+
+:::details ABC461 A - Armor
+### [ABC461 A - Armor](https://atcoder.jp/contests/abc461/tasks/abc461_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 威力 A の攻撃, D まで防げる鎧
+	int A, D;
+	std::cin >> A >> D;
+	std::cout << ((A <= D) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC460 A - Mod While Positive
+### [ABC460 A - Mod While Positive](https://atcoder.jp/contests/abc460/tasks/abc460_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int N, M;
+	std::cin >> N >> M;
+
+	// 操作の回数
+	int count = 0;
+
+	while (M != 0)
+	{
+		const int x = (N % M);
+		M = x;
+		++count;
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
+
+## ABC450～
+
+:::details ABC459 A - Hell, World!
+### [ABC459 A - Hell, World!](https://atcoder.jp/contests/abc459/tasks/abc459_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int X;
+	std::cin >> X;
+
+	// "HelloWorld" の X 番目の文字を削除する
+	std::string s = "HelloWorld";
+	s.erase(s.begin() + (X - 1));
+
+	std::cout << s << '\n';
+}
+```
+:::
+
+:::details ABC458 A - Chompers
+### [ABC458 A - Chompers](https://atcoder.jp/contests/abc458/tasks/abc458_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	int N;
+	std::cin >> N;
+
+	// S の先頭 N 文字と末尾 N 文字を除いた文字列を出力する
+	std::cout << S.substr(N, (S.size() - 2 * N)) << '\n';
+}
+```
+:::
+
+:::details ABC457 A - Array
+### [ABC457 A - Array](https://atcoder.jp/contests/abc457/tasks/abc457_a)
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	// 数列の長さ N
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	// X 番目の要素を出力
+	int X;
+	std::cin >> X;
+	std::cout << A[X - 1] << '\n';
+}
+```
+:::
+
+:::details ABC456 A - Dice
+### [ABC456 A - Dice](https://atcoder.jp/contests/abc456/tasks/abc456_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int X;
+	std::cin >> X;
+	std::cout << (((3 <= X) && (X <= 18)) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC455 A - 455
+### [ABC455 A - 455](https://atcoder.jp/contests/abc455/tasks/abc455_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int A, B, C;
+	std::cin >> A >> B >> C;
+	std::cout << (((A != B) && (B == C)) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC454 A - Closed interval
+### [ABC454 A - Closed interval](https://atcoder.jp/contests/abc454/tasks/abc454_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// L 以上 R 以下の整数の個数を求める
+	int L, R;
+	std::cin >> L >> R;
+	std::cout << (R - L + 1) << '\n';
+}
+```
+:::
+
+:::details ABC453 A - Trimo 🟢
+### [ABC453 A - Trimo](https://atcoder.jp/contests/abc453/tasks/abc453_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::string S;
+	std::cin >> S;
+
+	// o から始まるなら、先頭の文字を削除することを繰り返す
+	while (S.starts_with('o'))
+	{
+		S.erase(S.begin());
+	}
+
+	std::cout << S << '\n';
+}
+```
+:::
+
+:::details ABC452 A - Gothec
+### [ABC452 A - Gothec](https://atcoder.jp/contests/abc452/tasks/abc452_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// M 月 D 日
+	int M, D;
+	std::cin >> M >> D;
+
+	// 日付を 1 つの整数に変換する
+	int x = (M * 100 + D);
+
+	if ((x == 107) || (x == 303) || (x == 505) || (x == 707) || (x == 909))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC451 A - illegal
+### [ABC451 A - illegal](https://atcoder.jp/contests/abc451/tasks/abc451_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// S の文字数が 5 の倍数であれば "Yes"、そうでなければ "No" を出力する
+	std::cout << (((S.size() % 5) == 0) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC450 A - 3,2,1,GO
+### [ABC450 A - 3,2,1,GO](https://atcoder.jp/contests/abc450/tasks/abc450_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	for (int i = N; 0 < i; --i)
+	{
+		// 最初の数字でない場合は、前にカンマを出力する
+		if (i != N)
+		{
+			std::cout << ',';
+		}
+
+		std::cout << i;
+	}
+
+	std::cout << '\n';
+}
+```
+:::
+
+
+## ABC440～
+
+:::details ABC449 A - π
+### [ABC449 A - π](https://atcoder.jp/contests/abc449/tasks/abc449_a)
+```cpp
+#include <iostream>
+#include <numbers>
+
+int main()
+{
+	// 直径 D
+	int D;
+	std::cin >> D;
+
+	// 半径 r
+	const double r = (D / 2.0);
+
+	// 面積 = πr^2
+	const double area = (std::numbers::pi * r * r);
+
+	// 小数第 6 位まで出力
+	std::cout << std::fixed << area << '\n';
+}
+```
+:::
+
+:::details ABC448 A - chmin
+### [ABC448 A - chmin](https://atcoder.jp/contests/abc448/tasks/abc448_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 個の整数, 初期最小値 X
+	int N, X;
+	std::cin >> N >> X;
+
+	for (int i = 0; i < N; ++i)
+	{
+		int a;
+		std::cin >> a;
+
+		if (a < X)
+		{
+			std::cout << "1\n";
+			X = a;
+		}
+		else
+		{
+			std::cout << "0\n";
+		}
+	}
+}
+```
+:::
+
+:::details ABC447 A - Seats 2
+### [ABC447 A - Seats 2](https://atcoder.jp/contests/abc447/tasks/abc447_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 個の座席、隣り合わないよう M 人座らせる
+	int N, M;
+	std::cin >> N >> M;
+	std::cout << (((M * 2 - 1) <= N) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC446 A - Handmaid
+### [ABC446 A - Handmaid](https://atcoder.jp/contests/abc446/tasks/abc446_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <cctype>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 先頭の文字を小文字に変換する
+	S[0] = std::tolower(S[0]);
+
+	std::cout << "Of" << S << '\n';
+}
+```
+:::
+
+:::details ABC445 A - Strong Word
+### [ABC445 A - Strong Word](https://atcoder.jp/contests/abc445/tasks/abc445_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 文字列 S の先頭と末尾の文字が同じかを判定する
+	std::cout << ((S.front() == S.back()) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC444 A - Repdigit
+### [ABC444 A - Repdigit](https://atcoder.jp/contests/abc444/tasks/abc444_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	// 111 の倍数であれば、すべての桁が同じ数字
+	std::cout << ((N % 111 == 0) ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC443 A - Append s
+### [ABC443 A - Append s](https://atcoder.jp/contests/abc443/tasks/abc443_a)
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+	std::cout << S << "s\n";
+}
+```
+:::
+
+:::details ABC442 A - Count . 🟢
+### [ABC442 A - Count .](https://atcoder.jp/contests/abc442/tasks/abc442_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// S に含まれる 'i' と 'j' の個数の合計を出力
+	std::cout << (std::ranges::count(S, 'i') + std::ranges::count(S, 'j')) << '\n';
+}
+```
+:::
+
+:::details ABC441 A - Black Square
+### [ABC441 A - Black Square](https://atcoder.jp/contests/abc441/tasks/abc441_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// マス (P, Q) を一番左上のマスとする 100x100 の領域が黒
+	int P, Q;
+	std::cin >> P >> Q;
+
+	// マス (X, Y) が黒か
+	int X, Y;
+	std::cin >> X >> Y;
+
+	if (((P <= X) && (X < (P + 100))) && ((Q <= Y) && (Y < (Q + 100))))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
 
 ## ABC430～
+
+:::details ABC440 A - Octave
+### [ABC440 A - Octave](https://atcoder.jp/contests/abc440/tasks/abc440_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 周波数 X ヘルツの音の高さを Y オクターブ上げる
+	int X, Y;
+	std::cin >> X >> Y;
+
+	// X * 2^Y
+	std::cout << (X * (1 << Y)) << '\n';
+}
+```
+:::
+
+:::details ABC439 A - 2^n
+### [ABC439 A - 2^n](https://atcoder.jp/contests/abc439/tasks/abc439_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	// 2^N - 2N
+	std::cout << ((1 << N) - 2 * N) << '\n';
+}
+```
+:::
 
 :::details ABC438 A - First Contest of the Year
 ### [ABC438 A - First Contest of the Year](https://atcoder.jp/contests/abc438/tasks/abc438_a)
