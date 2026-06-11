@@ -103,8 +103,6 @@ int main()
 	std::queue<Point> q;
 	q.emplace(1, 2); // キューは { (1, 2) }
 	q.emplace(3, 4); // キューは { (1, 2), (3, 4) }
-	Point p = q.emplace(5, 6); // キューは { (1, 2), (3, 4), (5, 6) }
-	std::cout << p.x << ' ' << p.y << '\n'; // 5 6
 }
 ```
 :::
@@ -186,12 +184,12 @@ int main()
 int main()
 {
 	std::queue<int> q;
-	std::cout << q.size() << '\n'; // size: 0
+	std::cout << q.size() << '\n'; // 0
 
 	q.push(1); // キューは { 1 }
 	q.push(2); // キューは { 1, 2 }
 
-	std::cout << q.size() << '\n'; // size: 2
+	std::cout << q.size() << '\n'; // 2
 }
 ```
 :::
