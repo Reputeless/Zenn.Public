@@ -514,70 +514,406 @@ int main()
 :::details ABC449 B - Deconstruct Chocolate
 ### [ABC449 B - Deconstruct Chocolate](https://atcoder.jp/contests/abc449/tasks/abc449_b)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// H 行, W 列のブロック, Q 個のクエリ
+	int H, W, Q;
+	std::cin >> H >> W >> Q;
+
+	while (Q--)
+	{
+		int i, n;
+		std::cin >> i >> n;
+
+		if (i == 1)
+		{
+			// n 行減らす
+			std::cout << (n * W) << '\n';
+			H -= n;
+		}
+		else
+		{
+			// n 列減らす
+			std::cout << (n * H) << '\n';
+			W -= n;
+		}
+	}
+}
 ```
 :::
 
 :::details ABC448 B - Pepper Addiction
 ### [ABC448 B - Pepper Addiction](https://atcoder.jp/contests/abc448/tasks/abc448_b)
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	// N 個の料理, M 種類のコショウ
+	int N, M;
+	std::cin >> N >> M;
+
+	// 各コショウの重量
+	std::vector<int> C(M);
+	for (auto& c : C)
+	{
+		std::cin >> c;
+	}
+
+	// 使用したコショウの総重量
+	int sum = 0;
+
+	// 各料理について
+	for (int i = 0; i < N; ++i)
+	{
+		// コショウ a を最大 b かけられる
+		int a, b;
+		std::cin >> a >> b;
+		--a; // 0-based index に変換
+
+		// この料理に使用できる最大のコショウの重量
+		const int p = std::min(C[a], b);
+
+		// コショウの残量を減らす
+		C[a] -= p;
+
+		// 使用したコショウの重量を加算する
+		sum += p;
+	}
+
+	std::cout << sum << '\n';
+}
 ```
 :::
 
-:::details ABC447 B - mpp
+:::details ABC447 B - mpp 🟢
 ### [ABC447 B - mpp](https://atcoder.jp/contests/abc447/tasks/abc447_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 各文字の出現回数
+	std::vector<int> counts(26);
+	for (const auto& ch : S)
+	{
+		++counts[ch - 'a'];
+	}
+
+	// 最も多く出現する文字の出現回数
+	const int maxCount = std::ranges::max(counts);
+
+	// 出現回数が maxCount である文字を S から削除する
+	std::erase_if(S, [&counts, maxCount](char ch) { return (counts[ch - 'a'] == maxCount); });
+
+	std::cout << S << '\n';
+}
 ```
 :::
 
 :::details ABC446 B - Greedy Draft
 ### [ABC446 B - Greedy Draft](https://atcoder.jp/contests/abc446/tasks/abc446_b)
 ```cpp
+#include <iostream>
+#include <vector>
 
+int main()
+{
+	// N 人の客, M 本の缶ジュース
+	int N, M;
+	std::cin >> N >> M;
+
+	// 各缶ジュースが残っているか（true: 残っている, false: 売り切れ）
+	std::vector<bool> available(M, true);
+
+	// 各客について
+	for (int i = 0; i < N; ++i)
+	{
+		// 長さ L の希望リスト
+		int L;
+		std::cin >> L;
+
+		// 希望リスト
+		std::vector<int> X(L);
+		for (auto& x : X)
+		{
+			std::cin >> x;
+			--x; // 0-based index に変換
+		}
+
+		// 缶ジュースが決まったか
+		bool found = false;
+
+		// 希望する各缶ジュースについて
+		for (const auto& x : X)
+		{
+			// もしその缶ジュースが残っていれば
+			if (available[x])
+			{
+				// その缶ジュースを出力する
+				std::cout << (x + 1) << '\n';
+
+				// その缶ジュースを売り切れにする
+				available[x] = false;
+				
+				// 缶ジュースが決まった
+				found = true;
+
+				break;
+			}
+		}
+
+		// もし缶ジュースが決まらなかったら, 0 を出力する
+		if (!found)
+		{
+			std::cout << "0\n";
+		}
+	}
+}
 ```
 :::
 
 :::details ABC445 B - Center Alignment
 ### [ABC445 B - Center Alignment](https://atcoder.jp/contests/abc445/tasks/abc445_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
 
+int main()
+{
+	// N 個の文字列
+	int N;
+	std::cin >> N;
+
+	std::vector<std::string> S(N);
+
+	// 最も長い文字列の長さ
+	size_t maxLength = 0;
+	
+	for (auto& s : S)
+	{
+		std::cin >> s;
+		maxLength = std::max(maxLength, s.size());
+	}
+
+	// 各文字列について
+	for (const auto& s : S)
+	{
+		// 左右にそれぞれ追加する「.」の数
+		const size_t padding = ((maxLength - s.size()) / 2);
+		
+		// 文字列の両端に追加する「.」列
+		const std::string dots(padding, '.');
+
+		std::cout << dots << s << dots << '\n';
+	}
+}
 ```
 :::
 
 :::details ABC444 B - Digit Sum
 ### [ABC444 B - Digit Sum](https://atcoder.jp/contests/abc444/tasks/abc444_b)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// N 以下の正整数で, 桁和が K であるものを数える
+	int N, K;
+	std::cin >> N >> K;
+
+	// 結果の個数
+	int count = 0;
+
+	// 1 から N までの各整数について
+	for (int i = 1; i <= N; ++i)
+	{
+		// 桁和
+		int sum = 0;
+
+		// i を文字列に変換して各桁を処理
+		for (const auto& ch : std::to_string(i))
+		{
+			sum += (ch - '0');
+		}
+
+		// 桁和が K と等しい場合, count を増やす
+		count += (sum == K);
+	}
+
+	std::cout << count << '\n';
+}
 ```
 :::
 
 :::details ABC443 B - Setsubun
 ### [ABC443 B - Setsubun](https://atcoder.jp/contests/abc443/tasks/abc443_b)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 現在 N 歳, 合計 K 個以上の豆を食べる
+	int N, K;
+	std::cin >> N >> K;
+
+	// 食べた豆の合計
+	int sum = 0;
+
+	// i 年後に食べる豆の数は N + i 個
+	for (int i = 0;; ++i)
+	{
+		sum += (N + i);
+
+		// 合計が K 個以上になったら終了
+		if (K <= sum)
+		{
+			std::cout << i << '\n';
+			break;
+		}
+	}
+}
 ```
 :::
 
 :::details ABC442 B - Music Player
 ### [ABC442 B - Music Player](https://atcoder.jp/contests/abc442/tasks/abc442_b)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// Q 回の操作
+	int Q;
+	std::cin >> Q;
+
+	// 音量
+	int volume = 0;
+
+	// 再生しているか
+	bool isPlaying = false;
+
+	while (Q--)
+	{
+		int A;
+		std::cin >> A;
+
+		if (A == 1)
+		{
+			// 音量を 1 上げる
+			++volume;
+		}
+		else if (A == 2)
+		{
+			// 音量が 1 以上なら, 音量を 1 下げる
+			if (1 <= volume)
+			{
+				--volume;
+			}
+		}
+		else
+		{
+			// 再生状態を反転させる
+			isPlaying = !isPlaying;
+		}
+
+		// 音量が 3 以上で再生しているか
+		std::cout << (((3 <= volume) && isPlaying) ? "Yes\n" : "No\n");
+	}
+}
 ```
 :::
 
 :::details ABC441 B - Two Languages
 ### [ABC441 B - Two Languages](https://atcoder.jp/contests/abc441/tasks/abc441_b)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 高橋語では長さ N の文字列 S, 青木語では長さ M の文字列 T に含まれる文字を使う
+	int N, M;
+	std::cin >> N >> M;
+	std::string S, T;
+	std::cin >> S >> T;
+
+	// Q 個の単語
+	int Q;
+	std::cin >> Q;
+
+	while (Q--)
+	{
+		std::string w;
+		std::cin >> w;
+
+		// w が S に含まれる文字だけで構成されているか（高橋語として成立するか）
+		// w.find_first_not_of(S) は、w の中から S に含まれない最初の文字の位置を返す
+		const bool validTakahashi = (w.find_first_not_of(S) == std::string::npos);
+
+		// w が T に含まれる文字だけで構成されているか（青木語として成立するか）
+		const bool validAoki = (w.find_first_not_of(T) == std::string::npos);
+
+		if (!validTakahashi) // 高橋語でないなら必ず青木語
+		{
+			std::cout << "Aoki\n";
+		}
+		else if (!validAoki) // 青木語でないなら必ず高橋語
+		{
+			std::cout << "Takahashi\n";
+		}
+		else
+		{
+			std::cout << "Unknown\n";
+		}
+	}
+}
 ```
 :::
 
-:::details ABC440 B - Trifecta
+:::details ABC440 B - Trifecta 🟢
 ### [ABC440 B - Trifecta](https://atcoder.jp/contests/abc440/tasks/abc440_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
 
+int main()
+{
+	// N 頭の馬
+	int N;
+	std::cin >> N;
+
+	// { 番号, 時間 } の配列
+	std::vector<std::pair<int, int>> T(N);
+	for (int i = 0; i < N; ++i)
+	{
+		int t;
+		std::cin >> t;
+		T[i] = { (i + 1), t };
+	}
+
+	// 時間（pair の second）の昇順でソート
+	std::ranges::sort(T, {}, [](const auto& p) { return p.second; });
+
+	// 上位 3 頭の番号を出力
+	for (int i = 0; i < 3; ++i)
+	{
+		std::cout << T[i].first << ' ';
+	}
+}
 ```
 :::
 
@@ -587,8 +923,55 @@ int main()
 :::details ABC439 B - Happy Number
 ### [ABC439 B - Happy Number](https://atcoder.jp/contests/abc439/tasks/abc439_b)
 ```cpp
+#include <iostream>
+#include <string>
+#include <set>
 
+// 十進法表記の各桁の数字の二乗和を取った整数を返す関数
+int Convert(int n)
+{
+	int sum = 0;
+
+	for (const auto& ch : std::to_string(n))
+	{
+		const int x = (ch - '0');
+		sum += (x * x);
+	}
+
+	return sum;
+}
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	// すでに出現した数を記録する set
+	std::set<int> used;
+
+	for (;;)
+	{
+		// 操作を行う
+		N = Convert(N);
+
+		// 1 になったらハッピー数
+		if (N == 1)
+		{
+			std::cout << "Yes\n";
+			break;
+		}
+
+		// すでに出現した数が出てきたらループしているためハッピー数ではない
+		if (used.contains(N))
+		{
+			std::cout << "No\n";
+			break;
+		}
+
+		// 出現した数を記録する
+		used.insert(N);
+	}
+}
 ```
 :::
-
 
