@@ -3,10 +3,9 @@ title: "ABC B 問題 C++ 解法"
 free: true
 ---
 
-- AtCoder Beginner Contest（ABC）B 問題
-- C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コードによる模範解答集です
+- AtCoder Beginner Contest（ABC）B 問題の模範解答
+- C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コード
 - 🟢 マーク → C++20 の機能を使用 / 🟣 マーク → C++23 の機能を使用
-
 
 ## ABC460～
 
