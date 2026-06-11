@@ -3,8 +3,8 @@ title: "ABC A 問題 C++ 解法"
 free: true
 ---
 
-- AtCoder Beginner Contest（ABC）A 問題の模範解答
-- C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コード
+- **AtCoder Beginner Contest（ABC）A 問題**
+- C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コードによる模範解答集
 - 🟢 → C++20 の機能を使用 / 🟣 → C++23 の機能を使用
 
 ## ABC460～
