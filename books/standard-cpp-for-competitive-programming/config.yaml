@@ -12,6 +12,7 @@ chapters:
   - auto
   - io
   - set
+  - queue
   - fill
   - iota
   - to_string
