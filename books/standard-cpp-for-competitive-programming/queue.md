@@ -42,6 +42,19 @@ free: true
 
 \* 内部コンテナが `std::deque` の場合の計算量
 
+:::details 空のキューを構築する
+
+```cpp
+#include <iostream>
+#include <queue>
+
+int main()
+{
+	std::queue<int> q; // 空のキューを構築する
+}
+```
+:::
+
 :::details void push(const T& value)
 - 要素をキューの末尾に追加する
 
