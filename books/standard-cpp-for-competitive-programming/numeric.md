@@ -1,5 +1,5 @@
 ---
-title: "<numeric> [🟢C++20 対応]"
+title: "<numeric>"
 free: true
 ---
 

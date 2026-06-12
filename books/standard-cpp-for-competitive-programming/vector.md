@@ -1,5 +1,5 @@
 ---
-title: "std::vector [🟢C++20 対応]"
+title: "std::vector"
 free: true
 ---
 

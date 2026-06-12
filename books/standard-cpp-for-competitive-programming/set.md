@@ -7,7 +7,7 @@ free: true
 - `<set>` ヘッダに含まれる
 - **重複しない要素**を**常にソートされた状態**で管理する連想コンテナ
 - `std::set<T>` は、型 `T` の要素を持つ集合を表す
-- 競技プログラミングでは、**値の集合管理**、**存在判定**、**ソート済みデータに対する二分探索**などでよく使われる
+- **値の集合管理**、**存在判定**、**ソート済みデータに対する二分探索**などでよく使われる
 
 ## 1. std::set の特徴
 
@@ -21,7 +21,7 @@ free: true
 
 #### 各種操作の計算量は $O(\log N)$
 - 挿入・検索・削除などの主要な操作は安定して $O(\log N)$ で行われる
-- 内部実装に自己平衡二分探索木（赤黒木など）を用いる
+- 多くの場合、内部実装に自己平衡二分探索木（赤黒木など）を用いる
 
 #### イテレータによる走査が可能
 - イテレータを使って各要素にアクセスしたり、範囲を指定して削除したりできる
@@ -65,7 +65,8 @@ free: true
 
 int main()
 {
-	std::set<int> s; // 空の set を構築する
+	// 空の set を構築する
+	std::set<int> s;
 }
 ```
 :::
@@ -93,7 +94,9 @@ int main()
 int main()
 {
 	std::set<int> t = { 3, 1, 4, 1, 5 };
-	std::set<int> s = t; // t をコピーして構築する
+
+	// t をコピーして構築する
+	std::set<int> s = t; // s は { 1, 3, 4, 5 }
 }
 ```
 :::
@@ -263,7 +266,7 @@ int main()
 	std::set<int> s = { 1, 2, 3, 4, 5 };
 
 	const auto first = s.find(3);
-	s.erase(first, s.end()); // [3, 5) を削除する。set は { 1, 2 }
+	s.erase(first, s.end()); // 3 以上の要素を削除する。set は { 1, 2 }
 }
 ```
 :::
@@ -497,7 +500,7 @@ int main()
 	// 範囲 for 文で全要素を走査する
 	for (const auto& elem : s)
 	{
-		std::cout << elem << ' ';　// 1 3 4 5
+		std::cout << elem << ' '; // 1 3 4 5
 	}
 
 	std::cout << '\n';
@@ -511,19 +514,20 @@ int main()
 ### 3.1 二分探索はメンバ関数版を使う
 - `std::set` に対して二分探索を行う場合は、必ずメンバ関数版の `.lower_bound()`、`.upper_bound()` を使う
 - メンバ関数版は `std::set` の内部実装を考慮した最適な探索を行うため、計算量が $O(\log N)$ で済む
-- 一方、汎用版の `std::lower_bound()`、`std::upper_bound()` は、`std::set` の双方向イテレータと相性が悪く、計算量が $O(N)$ に悪化する
+- 一方、汎用版の `std::lower_bound()`、`std::upper_bound()` は、`std::set` の双方向イテレータと相性が悪く、計算量が $O(N)$ に悪化する（イテレータを進める処理が $O(N)$ かかるため）
 
 ```cpp
 const auto it = s.lower_bound(x);                           // ✅ O(log N)
 // const auto it = std::lower_bound(s.begin(), s.end(), x); // ❌ O(N) に悪化
 ```
 
-### 3.2 i 番目の要素へのアクセスは苦手
-- `i` 番目の要素を取得したい場合、`std::advance(it, i)` でイテレータを進める手段があるが、計算量が $O(i)$ かかるため避けるべき
+### 3.2 k 番目の要素へのアクセスは O(N) かかる
+- `k` 番目の要素を取得したい場合、`std::advance(it, k)` でイテレータを進める手段があるが、計算量が $O(k)$ かかるため避けるべき
 
 ### 3.3 要素数が小さいときは vector + sort + unique も検討する
 - 要素数が小さければ、`std::set` の代わりに `std::vector` + `std::sort` + `std::unique` を使っても十分速い場合がある（キャッシュ効率が良い）
 - 構築後に集合を変更しないケースでは特に有効
+
 
 ## 4. よく使うパターン
 
@@ -533,6 +537,7 @@ const auto it = s.lower_bound(x);                           // ✅ O(log N)
 
 ```cpp
 #include <iostream>
+#include <iterator>
 #include <set>
 
 int main()
@@ -562,7 +567,7 @@ int main()
 	// 範囲 for 文で全要素を走査する
 	for (const auto& elem : s)
 	{
-		std::cout << elem << ' ';　// 1 3 4 5
+		std::cout << elem << ' '; // 1 3 4 5
 	}
 
 	std::cout << '\n';

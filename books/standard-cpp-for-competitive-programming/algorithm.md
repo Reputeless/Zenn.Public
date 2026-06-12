@@ -1,5 +1,5 @@
 ---
-title: "<algorithm> [🟢C++20 対応]"
+title: "<algorithm>"
 free: true
 ---
 
