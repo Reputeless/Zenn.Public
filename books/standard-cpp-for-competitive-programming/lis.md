@@ -392,6 +392,7 @@ int main()
 	std::cout << LIS(A) << '\n';
 }
 ```
+:::
 
 
 ### [ABC 006 D - トランプ挿入ソート](https://atcoder.jp/contests/abc006/tasks/abc006_4)

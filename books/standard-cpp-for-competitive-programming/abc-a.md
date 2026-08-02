@@ -7,7 +7,207 @@ free: true
 - C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コードによる模範解答集
 - 🟢 → C++20 の機能を使用 / 🟣 → C++23 の機能を使用
 
-## ABC460～
+## ABC460～ABC469
+
+:::details ABC469 A - Train Car
+### [ABC469 A - Train Car](https://atcoder.jp/contests/abc469/tasks/abc469_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// N 両編成, 前から K 両目
+	int N, K;
+	std::cin >> N >> K;
+	
+	std::cout << (N - K + 1) << '\n';
+}
+```
+:::
+
+:::details ABC468 A - Maximal Value
+### [ABC468 A - Maximal Value](https://atcoder.jp/contests/abc468/tasks/abc468_a)
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	// 長さ N の整数列
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	int count = 0;
+
+	for (int i = 0; i < (N - 2); ++i)
+	{
+		count += ((A[i] < A[i + 1]) && (A[i + 1] > A[i + 2]));
+	}
+
+	std::cout << count << '\n';
+}
+```
+:::
+
+:::details ABC467 A - Obesity
+### [ABC467 A - Obesity](https://atcoder.jp/contests/abc467/tasks/abc467_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 身長 H cm, 体重 W kg
+	int H, W;
+	std::cin >> H >> W;
+
+	// BMI（浮動小数点数誤差を避けるために整数で計算）
+	const int bmi = (W * 10000 / (H * H));
+
+	if (25 <= bmi)
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC466 A - Compromise
+### [ABC466 A - Compromise](https://atcoder.jp/contests/abc466/tasks/abc466_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	// どの選択肢を選んでも嬉しさが負になるか
+	bool allNegative = true;
+
+	while (N--)
+	{
+		int X;
+		std::cin >> X;
+
+		if (0 <= X) // 嬉しさが 0 以上なら
+		{
+			allNegative = false;
+			break;
+		}
+	}
+
+	std::cout << (allNegative ? "Yes\n" : "No\n");
+}
+```
+:::
+
+:::details ABC465 A - Supermajority
+### [ABC465 A - Supermajority](https://atcoder.jp/contests/abc465/tasks/abc465_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	int A, B;
+	std::cin >> A >> B;
+
+	if ((B * 2) < (A * 3))
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC464 A - Decisive Battle 🟢
+### [ABC464 A - Decisive Battle](https://atcoder.jp/contests/abc464/tasks/abc464_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// E が過半数かを判定する
+	if ((S.size() / 2) < std::ranges::count(S, 'E'))
+	{
+		std::cout << "East\n";
+	}
+	else
+	{
+		std::cout << "West\n";
+	}
+}
+```
+:::
+
+:::details ABC463 A - 16:9
+### [ABC463 A - 16:9](https://atcoder.jp/contests/abc463/tasks/abc463_a)
+```cpp
+#include <iostream>
+
+int main()
+{
+	// 横 X ピクセル, 縦 Y ピクセル 
+	int X, Y;
+	std::cin >> X >> Y;
+
+	// X:Y == 16:9 なら, X*9 == Y*16
+	if (X * 9 == Y * 16)
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
+:::
+
+:::details ABC462 A - Secret Numbers
+### [ABC462 A - Secret Numbers](https://atcoder.jp/contests/abc462/tasks/abc462_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <cctype>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 各文字について
+	for (const auto& ch : S)
+	{
+		// 数字であれば出力
+		if (std::isdigit(ch))
+		{
+			std::cout << ch;
+		}
+	}
+
+	std::cout << '\n';
+}
+```
+:::
 
 :::details ABC461 A - Armor
 ### [ABC461 A - Armor](https://atcoder.jp/contests/abc461/tasks/abc461_a)
