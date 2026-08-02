@@ -5,6 +5,7 @@ published: true # falseだと下書き
 price: 1000
 chapters:
   - abc-a
+  - abc-a-300
   - abc-b
   - main-function
   - comments
