@@ -1,5 +1,5 @@
 ---
-title: "ABC A 問題 C++ 解法 ABC400～ABC499"
+title: "ABC A 問題 C++ 解法 | ABC400～499"
 free: true
 ---
 
