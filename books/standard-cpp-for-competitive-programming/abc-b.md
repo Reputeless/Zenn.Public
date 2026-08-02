@@ -1,5 +1,5 @@
 ---
-title: "ABC B 問題 C++ 解法"
+title: "ABC B 問題 C++ 解法 | ABC400～499"
 free: true
 ---
 
@@ -30,30 +30,216 @@ free: true
 :::details ABC466 B - Representative Balls
 ### [ABC466 B - Representative Balls](https://atcoder.jp/contests/abc466/tasks/abc466_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// N 個のボール, M 種類の色
+	int N, M;
+	std::cin >> N >> M;
+
+	// maxBalls[i] = 色 i のボールの大きさの最大値, -1 はボールが存在しないことを表す 
+	std::vector<int> maxBalls(M, -1);
+
+	while (N--)
+	{
+		// 色 C, 大きさ S
+		int C, S;
+		std::cin >> C >> S;
+		--C; // 0-based index に変換
+
+		// maxBalls[C] の記録を更新する
+		maxBalls[C] = std::max(maxBalls[C], S);
+	}
+
+	// 各色について
+	for (const auto& maxBall : maxBalls)
+	{
+		// 最大の大きさを出力する（ボールが存在しない場合は -1 が出力される）
+		std::cout << maxBall << ' ';
+	}
+
+	std::cout << '\n';
+}
 ```
 :::
 
 :::details ABC465 B - Parking 2
 ### [ABC465 B - Parking 2](https://atcoder.jp/contests/abc465/tasks/abc465_b)
 ```cpp
+#include <iostream>
+
+int main()
+{
+	// L 時～ R 時は X 円/時間、それ以外は Y 円/時間
+	// A 時から B 時までの料金を求める
+	int X, Y, L, R, A, B;
+	std::cin >> X >> Y >> L >> R >> A >> B;
+
+	// 料金の合計
+	int total = 0;
+
+	// 各時について
+	for (int i = A; i < B; ++i)
+	{
+		if ((L <= i) && (i < R))
+		{
+			total += X;
+		}
+		else
+		{
+			total += Y;
+		}
+	}
+
+	std::cout << total << '\n';
+}
 ```
 :::
 
 :::details ABC464 B - Crop
 ### [ABC464 B - Crop](https://atcoder.jp/contests/abc464/tasks/abc464_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	// 高さ H ピクセル, 幅 W ピクセル
+	int H, W;
+	std::cin >> H >> W;
+
+	int top = H; // 黒がある最初の行
+	int bottom = -1; // 黒がある最後の行
+	int left = W; // 黒がある最初の列
+	int right = -1; // 黒がある最後の列
+
+	std::vector<std::string> image(H, std::string(W, ' '));
+	for (int y = 0; y < H; ++y)
+	{
+		for (int x = 0; x < W; ++x)
+		{
+			std::cin >> image[y][x];
+
+			if (image[y][x] == '#') // もし黒なら
+			{
+				// それぞれの記録を更新する
+				top = std::min(top, y);
+				bottom = std::max(bottom, y);
+				left = std::min(left, x);
+				right = std::max(right, x);
+			}
+		}
+	}
+
+	// 対象範囲のみを出力する
+	for (int y = top; y <= bottom; ++y)
+	{
+		for (int x = left; x <= right; ++x)
+		{
+			std::cout << image[y][x];
+		}
+
+		std::cout << '\n';
+	}
+}
 ```
 :::
 
 :::details ABC463 B - Train Reservation
 ### [ABC463 B - Train Reservation](https://atcoder.jp/contests/abc463/tasks/abc463_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+int main()
+{
+	// N 行の座席
+	int N;
+	std::cin >> N;
+
+	// 調べる列の文字
+	char X;
+	std::cin >> X;
+	const int xIndex = (X - 'A'); // 文字を 0 から始まるインデックスに変換
+
+	std::vector<std::string> S(N);
+	for (auto& s : S)
+	{
+		std::cin >> s;
+	}
+
+	// 空席があるかどうか
+	bool found = false;
+
+	// 各行について
+	for (const auto& s : S)
+	{
+		// 指定された列の座席が空席かどうかを確認する
+		if (s[xIndex] == 'o')
+		{
+			found = true;
+			break;
+		}
+	}
+
+	std::cout << (found ? "Yes\n" : "No\n");
+}
 ```
 :::
 
 :::details ABC462 B - Gift
 ### [ABC462 B - Gift](https://atcoder.jp/contests/abc462/tasks/abc462_b)
 ```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	// N 人
+	int N;
+	std::cin >> N;
+
+	// A[i] は i 番目の人がもらったギフトの送り主一覧
+	std::vector<std::vector<int>> A(N);
+
+	// 各人について
+	for (int i = 0; i < N; ++i)
+	{
+		// K 人に送る
+		int K;
+		std::cin >> K;
+
+		while (K--)
+		{
+			// 送り先の番号 a
+			int a;
+			std::cin >> a;
+			--a; // 0-based index に変換
+			A[a].push_back(i); // a 番目の人が i 番目の人からギフトをもらったことを記録する
+		}
+	}
+
+	// 各人について
+	for (const auto& a : A)
+	{
+		// 送られたギフトの数を出力する
+		std::cout << a.size() << ' ';
+
+		// 送られたギフトの送り主の番号を出力する
+		for (const auto& sender : a)
+		{
+			std::cout << (sender + 1) << ' '; // 1-based index に変換して出力
+		}
+
+		std::cout << '\n';
+	}
+}
 ```
 :::
 
