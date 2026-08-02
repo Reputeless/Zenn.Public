@@ -12,18 +12,116 @@ free: true
 :::details ABC469 B - Isolated Seats
 ### [ABC469 B - Isolated Seats](https://atcoder.jp/contests/abc469/tasks/abc469_b)
 ```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// N 個の椅子
+	int N;
+	std::cin >> N;
+
+	// 'o' なら人が座っている、'x' なら空席
+	std::string S;
+	std::cin >> S;
+
+	// 条件を満たす座席の数
+	int count = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// 条件 1: 人が座っていない
+		const bool empty = (S[i] == 'x');
+
+		// 条件 2: 左が存在しないか空席
+		const bool leftEmpty = ((i == 0) || (S[i - 1] == 'x'));
+
+		// 条件 3: 右が存在しないか空席
+		const bool rightEmpty = ((i == (N - 1)) || (S[i + 1] == 'x'));
+		
+		if (empty && leftEmpty && rightEmpty)
+		{
+			++count;
+		}
+	}
+
+	std::cout << count << '\n';
+}
 ```
 :::
 
-:::details ABC468 B - Corridor Watch
+:::details ABC468 B - Corridor Watch 🟢
 ### [ABC468 B - Corridor Watch](https://atcoder.jp/contests/abc468/tasks/abc468_b)
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// M 個のマス, ガードマンの監視距離 D
+	int M, D;
+	std::cin >> M >> D;
+
+	// 'G' がガードマン, '.' が空きマス
+	std::string S;
+	std::cin >> S;
+
+	// guarded[i] = true ならば i 番目のマスは監視されている
+	std::vector<bool> guarded(M);
+
+	// 各マスについて
+	for (int i = 0; i < M; ++i)
+	{
+		// ガードマンがいる場合
+		if (S[i] == 'G')
+		{
+			// 前後 D マスを監視状態にする。インデックスが範囲外にならないようにする
+			for (int x = std::max(0, (i - D)); x <= std::min((M - 1), (i + D)); ++x)
+			{
+				guarded[x] = true;
+			}
+		}
+	}
+
+	// 監視されていないマスの数を数える
+	std::cout << std::ranges::count(guarded, false) << '\n';
+}
 ```
 :::
 
 :::details ABC467 B - Keep the Change
 ### [ABC467 B - Keep the Change](https://atcoder.jp/contests/abc467/tasks/abc467_b)
 ```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// N 軒の店
+	int N;
+	std::cin >> N;
+
+	// 損した金額の合計
+	int total = 0;
+
+	while (N--)
+	{
+		// A 円の商品に B 円支払い, S が "keep" のときお釣りを拒否する
+		int A, B;
+		std::string S;
+		std::cin >> A >> B >> S;
+
+		if (S == "keep")
+		{
+			// お釣りを拒否する場合、損した金額は B - A
+			total += (B - A);
+		}
+	}
+
+	std::cout << total << '\n';
+}
 ```
 :::
 
