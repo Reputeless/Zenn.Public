@@ -14,6 +14,7 @@ free: true
 std::vector<std::vector<int>> graph(V);
 
 // 各頂点の入次数を管理する配列
+// indegrees[i] は頂点 i に入ってくる辺の本数を表す
 std::vector<int> indegrees(V);
 
 // 入次数が 0 の頂点を管理するキュー
@@ -41,8 +42,7 @@ std::vector<int> result;
 - 結果として、すべての頂点が `result` に追加される
 
 ### 1.3 計算量
-- 計算量は $O(V + E)$（V: 頂点数、E: 辺数）
-- どの頂点と辺も 1 回ずつしか処理しないため
+- どの頂点と辺も 1 回ずつしか処理しないため、計算量は $O(V + E)$（V: 頂点数、E: 辺数）
 
 ### 1.4 トポロジカル順序の一意性
 - トポロジカル順序は一般に一意ではなく、複数の有効な順序が存在する
@@ -129,7 +129,7 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 
 ### 2.2 一意なトポロジカル順序であるかの判定
 - キューのサイズが 2 以上になった瞬間があれば、次に処理可能な頂点が複数存在したことを意味し、結果として複数のトポロジカル順序が成立する
-- 次のようにキューのサイズをチェックすることで判定する
+- 次のようにキューのサイズを監視し、サイズが常に 1 以下であれば、トポロジカル順序は一意に定まる
 
 ```cpp
 while (!q.empty())
@@ -149,7 +149,7 @@ while (!q.empty())
 ```
 
 ### 2.3 辞書順最小のトポロジカル順序
-- キューとして `std::priority_queue<int, std::vector<int>, std::greater<>>` を使用すると、頂点番号が小さいものから優先的に取り出すことができ、**辞書順最小**のトポロジカル順序を求めることができる
+- キューとして `std::priority_queue<int, std::vector<int>, std::greater<>>` を使用すると、頂点番号が小さいものから優先的に取り出すことができ、**辞書順最小**のトポロジカル順序が求まる
 
 ```cpp
 #include <vector>
@@ -223,9 +223,8 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 
 ## 3. 練習問題
 
-### [✅ AOJ GRL_4_B - Topological Sort](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_4_B&lang=ja)
-
-:::details コード
+:::details AOJ GRL_4_B - Topological Sort
+### [AOJ GRL_4_B - Topological Sort](https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_4_B&lang=ja)
 ```cpp
 #include <iostream>
 #include <vector>
@@ -321,10 +320,10 @@ int main()
 :::
 
 
-### [✅ JOI 本選 2007 D - 最悪の記者](https://atcoder.jp/contests/joi2007ho/tasks/joi2007ho_d)
+:::details JOI 本選 2007 D - 最悪の記者
+### [JOI 本選 2007 D - 最悪の記者](https://atcoder.jp/contests/joi2007ho/tasks/joi2007ho_d)
 - 一意なトポロジカル順序であるかの判定を行う問題
 
-:::details コード
 ```cpp
 #include <iostream>
 #include <vector>
@@ -439,10 +438,10 @@ int main()
 :::
 
 
-### [✅ ABC223D - Restricted Permutation]()
+:::details ABC223D - Restricted Permutation
+### [ABC223D - Restricted Permutation](https://atcoder.jp/contests/abc223/tasks/abc223_d)
 - 辞書順最小のトポロジカル順序を求める問題
 
-:::details コード
 ```cpp
 #include <iostream>
 #include <vector>
