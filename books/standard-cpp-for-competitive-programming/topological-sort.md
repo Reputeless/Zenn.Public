@@ -103,7 +103,8 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点を 1 つ取り出す
-		const int from = q.front(); q.pop();
+		const int from = q.front();
+		q.pop();
 
 		// トポロジカル順序に追加する
 		result.push_back(from);
@@ -144,7 +145,8 @@ while (!q.empty())
 	}
 
 	// 入次数が 0 の頂点を取り出す
-	const int from = q.front(); q.pop();
+	const int from = q.front();
+	q.pop();
 
 	// ...
 }
@@ -194,7 +196,8 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点のうち、頂点番号が小さいものから取り出す
-		const int from = q.top(); q.pop();
+		const int from = q.top();
+		q.pop();
 
 		// トポロジカル順序に追加する
 		result.push_back(from);
@@ -268,7 +271,8 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点を 1 つ取り出す
-		const int from = q.front(); q.pop();
+		const int from = q.front();
+		q.pop();
 
 		// トポロジカル順序に追加する
 		result.push_back(from);
@@ -370,7 +374,8 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph, boo
 		}
 
 		// 入次数が 0 の頂点を 1 つ取り出す
-		const int from = q.front(); q.pop();
+		const int from = q.front();
+		q.pop();
 
 		// トポロジカル順序に追加する
 		result.push_back(from);
@@ -484,7 +489,8 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点のうち、頂点番号が小さいものから取り出す
-		const int from = q.top(); q.pop();
+		const int from = q.top();
+		q.pop();
 
 		// トポロジカル順序に追加する
 		result.push_back(from);
