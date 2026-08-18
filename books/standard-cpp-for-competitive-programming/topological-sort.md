@@ -141,7 +141,7 @@ while (!q.empty())
 	}
 
 	// 入次数が 0 の頂点を取り出す
-	const int from = q.front();
+	const int current = q.front();
 	q.pop();
 
 	// ...
