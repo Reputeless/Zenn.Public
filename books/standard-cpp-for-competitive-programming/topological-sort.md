@@ -75,9 +75,9 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	// 入次数を計算する
 	for (const auto& v : graph)
 	{
-		for (const auto& to : v)
+		for (const auto& next : v)
 		{
-			++indegrees[to];
+			++indegrees[next];
 		}
 	}
 
@@ -99,19 +99,19 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点を 1 つ取り出す
-		const int from = q.front();
+		const int current = q.front();
 		q.pop();
 
 		// トポロジカル順序に追加する
-		result.push_back(from);
+		result.push_back(current);
 
 		// その頂点から出る各辺について
-		for (const auto& to : graph[from])
+		for (const auto& next : graph[current])
 		{
 			// その先の頂点の入次数を減らし、新たに 0 になったらキューに追加する
-			if (--indegrees[to] == 0)
+			if (--indegrees[next] == 0)
 			{
-				q.push(to);
+				q.push(next);
 			}
 		}
 	}
@@ -168,9 +168,9 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	// 入次数を計算する
 	for (const auto& v : graph)
 	{
-		for (const auto& to : v)
+		for (const auto& next : v)
 		{
-			++indegrees[to];
+			++indegrees[next];
 		}
 	}
 
@@ -192,19 +192,19 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点のうち、頂点番号が小さいものから取り出す
-		const int from = q.top();
+		const int current = q.top();
 		q.pop();
 
 		// トポロジカル順序に追加する
-		result.push_back(from);
+		result.push_back(current);
 
 		// その頂点から出る各辺について
-		for (const auto& to : graph[from])
+		for (const auto& next : graph[current])
 		{
 			// その先の頂点の入次数を減らし、新たに 0 になったらキューに追加する
-			if (--indegrees[to] == 0)
+			if (--indegrees[next] == 0)
 			{
-				q.push(to);
+				q.push(next);
 			}
 		}
 	}
@@ -242,9 +242,9 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	// 入次数を計算する
 	for (const auto& v : graph)
 	{
-		for (const auto& to : v)
+		for (const auto& next : v)
 		{
-			++indegrees[to];
+			++indegrees[next];
 		}
 	}
 
@@ -266,19 +266,19 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点を 1 つ取り出す
-		const int from = q.front();
+		const int current = q.front();
 		q.pop();
 
 		// トポロジカル順序に追加する
-		result.push_back(from);
+		result.push_back(current);
 
 		// その頂点から出る各辺について
-		for (const auto& to : graph[from])
+		for (const auto& next : graph[current])
 		{
 			// その先の頂点の入次数を減らし、新たに 0 になったらキューに追加する
-			if (--indegrees[to] == 0)
+			if (--indegrees[next] == 0)
 			{
-				q.push(to);
+				q.push(next);
 			}
 		}
 	}
@@ -299,7 +299,7 @@ int main()
 	int V, E;
 	std::cin >> V >> E;
 
-	// 隣接リスト表現のグラフを構築する
+	// 隣接リストを構築する
 	std::vector<std::vector<int>> graph(V);
 	for (int i = 0; i < E; ++i)
 	{
@@ -337,9 +337,9 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph, boo
 	// 入次数を計算する
 	for (const auto& v : graph)
 	{
-		for (const auto& to : v)
+		for (const auto& next : v)
 		{
-			++indegrees[to];
+			++indegrees[next];
 		}
 	}
 
@@ -369,19 +369,19 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph, boo
 		}
 
 		// 入次数が 0 の頂点を 1 つ取り出す
-		const int from = q.front();
+		const int current = q.front();
 		q.pop();
 
 		// トポロジカル順序に追加する
-		result.push_back(from);
+		result.push_back(current);
 
 		// その頂点から出る各辺について
-		for (const auto& to : graph[from])
+		for (const auto& next : graph[current])
 		{
 			// その先の頂点の入次数を減らし、新たに 0 になったらキューに追加する
-			if (--indegrees[to] == 0)
+			if (--indegrees[next] == 0)
 			{
-				q.push(to);
+				q.push(next);
 			}
 		}
 	}
@@ -402,7 +402,7 @@ int main()
 	int N, M;
 	std::cin >> N >> M;
 
-	// 隣接リスト表現のグラフを構築する
+	// 隣接リストを構築する
 	// s が t に勝ったなら、s から t に辺を張る
 	std::vector<std::vector<int>> graph(N);
 	for (int i = 0; i < M; ++i)
@@ -460,9 +460,9 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	// 入次数を計算する
 	for (const auto& v : graph)
 	{
-		for (const auto& to : v)
+		for (const auto& next : v)
 		{
-			++indegrees[to];
+			++indegrees[next];
 		}
 	}
 
@@ -484,19 +484,19 @@ std::vector<int> TopologicalSort(const std::vector<std::vector<int>>& graph)
 	while (!q.empty())
 	{
 		// 入次数が 0 の頂点のうち、頂点番号が小さいものから取り出す
-		const int from = q.top();
+		const int current = q.top();
 		q.pop();
 
 		// トポロジカル順序に追加する
-		result.push_back(from);
+		result.push_back(current);
 
 		// その頂点から出る各辺について
-		for (const auto& to : graph[from])
+		for (const auto& next : graph[current])
 		{
 			// その先の頂点の入次数を減らし、新たに 0 になったらキューに追加する
-			if (--indegrees[to] == 0)
+			if (--indegrees[next] == 0)
 			{
-				q.push(to);
+				q.push(next);
 			}
 		}
 	}
@@ -516,7 +516,7 @@ int main()
 	int N, M;
 	std::cin >> N >> M;
 
-	// 隣接リスト表現のグラフを構築する
+	// 隣接リストを構築する
 	std::vector<std::vector<int>> graph(N);
 	for (int i = 0; i < M; ++i)
 	{
