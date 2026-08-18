@@ -8,7 +8,7 @@ free: true
 ### 1.1 昇順にソートする
 - `std::sort(it1, it2)` は、イテレータ `it1` から `it2` の範囲を昇順（小さい順）に並べ替える
 - `v.begin(), v.end()` を渡せば全体がソートされる
-- `std::vector` や `std::array`、`std::string` で使うことができる
+- `std::vector` や `std::array`、`std::string` に対して使うことができる
 - 計算量は $O(N \log N)$
 
 ```cpp
@@ -386,10 +386,10 @@ int main()
 {
 	std::vector<Person> people =
 	{
-		{ "Alice", 30 },
+		{ "David", 30 },
 		{ "Bob", 25 },
 		{ "Charlie", 35 },
-		{ "David", 30 },
+		{ "Alice", 30 },
 	};
 
 	std::sort(people.begin(), people.end(), [](const auto& a, const auto& b)
@@ -462,11 +462,54 @@ int main()
 
 
 ## 3. 符号反転でソート条件を表現する
+- `std::pair` や `std::tuple` の一部の要素だけ符号を反転させれば、「1 番目は降順、2 番目は昇順」のような混在した基準を、デフォルトの昇順ソートだけで表現できる（ラムダ式を書かなくて済む）
 
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <utility>
+
+int main()
+{
+	std::vector<std::pair<int, std::string>> v =
+	{
+		{ 10, "ten" },
+		{ 2, "second" },
+		{ 1, "one" },
+		{ 2, "two" },
+		{ 1, "first" },
+		{ 5, "five" },
+	};
+
+	for (auto&& [number, word] : v)
+	{
+		number = -number; // 整数の符号を反転させる
+	}
+
+	std::sort(v.begin(), v.end()); // 昇順にソートする
+
+	for (auto&& [number, word] : v)
+	{
+		std::cout << -number << ' ' << word << '\n'; // 符号を元に戻して出力
+	}
+	std::cout << '\n';
+}
+```
+```txt:出力
+10 ten
+5 five
+2 second
+2 two
+1 first
+1 one
+```
 
 
 ## 4. ソートで解ける問題のパターン
-
+- ソートは、順番に並べて出力する以外にも、問題を解きやすい形に整える目的で使うことができる
 
 ### 4.1 並び順を正規化して比較する
 
