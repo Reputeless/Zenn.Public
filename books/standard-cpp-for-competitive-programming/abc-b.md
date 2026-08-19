@@ -1238,7 +1238,7 @@ int main()
 	}
 
 	// 時間（pair の second）の昇順でソート
-	std::ranges::sort(T, {}, [](const auto& p) { return p.second; });
+	std::ranges::sort(T, [](const auto& a, const auto& b) { return a.second < b.second; });
 
 	// 上位 3 頭の番号を出力
 	for (int i = 0; i < 3; ++i)
