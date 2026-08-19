@@ -671,31 +671,194 @@ Alice 300 75
 
 ## 5. 練習問題
 
-:::details ABC042 B - 文字列大好きいろはちゃんイージー
-### [ABC042 B - Iroha Loves Strings](https://atcoder.jp/contests/abc042/tasks/abc042_b)
-```cpp
+| 問題                                                    | 解法                     |
+| ------------------------------------------------------- | ---------------------------- |
+| **ABC432 A - Permute to Maximize**                      | ソート（数字を降順に並べて最大化）            |
+| **ABC042 B - 文字列大好きいろはちゃんイージー**            | ソート（文字列を辞書順に並べる）             |
+| **ABC088 B - Card Game for Two**                        | ソート（降順 + 順番に要素を取る）           |
+| **ABC082 B - Two Anagrams**                             | ソート（昇順・降順 + 辞書順比較）           |
+| **ABC380 A - 123233**                                   | ソート（並びを正規化して要素構成を判定）         |
+| **ABC154 C - Distinct or Not**                          | ソート（同じ値を隣接させて重複判定）           |
+| **ABC260 A - A Unique Letter**                          | ソート（同じ文字を隣接させて出現回数判定）        |
+| **ABC263 A - Full House**                               | ソート（同じ値を隣接させて個数パターン判定）       |
+| **ABC386 A - Full House 2**                             | ソート（同じ値を隣接させて複数パターン判定）       |
+| **ABC201 B - Do you know the second highest mountain?** | カスタムソート（要素の一部分だけをキーにする）      |
+| **ABC440 B - Trifecta**                                 | カスタムソート（値をキーに並べて上位を取得）       |
+| **ABC142 C - Go to School**                             | カスタムソート（元の番号を保持して値順に並べる）     |
+| **ABC323 B - Round-Robin Tournament**                   | カスタムソート（第 1 キー降順・第 2 キー昇順）       |
+| **ABC128 B - Guidebook**                                | カスタムソート（文字列昇順・数値降順の複数キー）     |
+| **ABC113 C - ID**                                       | ソート（グループごとに並べて順位を求める）        |
+| **ABC308 C - Standings**                                | カスタムソート（分数を交差積で比較 + 同率処理）    |
+| **ABC219 C - Neo-lexicographic Ordering**               | カスタムソート（独自の辞書順を比較関数で実装）      |
+| **ABC268 F - Best Concatenation**                       | カスタムソート（2 要素の順序比較から最適な並びを決める） |
 
-```
 
 :::details ABC082 B - Two Anagrams
 ### [ABC082 B - Two Anagrams](https://atcoder.jp/contests/abc082/tasks/abc082_b)
 ```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <functional>
 
+int main()
+{
+	std::string s, t;
+	std::cin >> s >> t;
+
+	// s は辞書順で最小になるようにする
+	std::sort(s.begin(), s.end());
+
+	// t は辞書順で最大になるようにする
+	std::sort(t.begin(), t.end(), std::greater{});
+
+	std::cout << ((s < t) ? "Yes\n" : "No\n");
+}
 ```
 
 :::details ABC088 B - Card Game for Two
 ### [ABC088 B - Card Game for Two](https://atcoder.jp/contests/abc088/tasks/abc088_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <functional>
 
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<int> A(N);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	// 大きいカードから順に並べる
+	std::sort(A.begin(), A.end(), std::greater{});
+
+	int alice = 0;
+	int bob = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		if ((i % 2) == 0)
+		{
+			alice += A[i];
+		}
+		else
+		{
+			bob += A[i];
+		}
+	}
+
+	std::cout << (alice - bob) << '\n';
+}
 ```
 
+:::details ABC260 A - A Unique Letter
+### [ABC260 A - A Unique Letter](https://atcoder.jp/contests/abc260/tasks/abc260_a)
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	std::sort(S.begin(), S.end());
+
+	// ありうるパターン:
+	// xxx
+	// xxy
+	// xyy
+	// xyz
+	
+	if (S[0] != S[1]) // xyy, xyz の場合
+	{
+		std::cout << S[0] << '\n';
+	}
+	else if (S[1] != S[2]) // xxy の場合
+	{
+		std::cout << S[2] << '\n';
+	}
+	else // xxx の場合
+	{
+		std::cout << "-1\n";
+	}
+}
+```
+
+:::details ABC263 A - Full House
+### [ABC263 A - Full House](https://atcoder.jp/contests/abc263/tasks/abc263_a)
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	std::vector<int> A(5);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	std::sort(A.begin(), A.end());
+
+	const bool xxxyy = ((A[0] == A[2]) && (A[3] == A[4]));
+	const bool xxyyy = ((A[0] == A[1]) && (A[2] == A[4]));
+
+	if (xxxyy || xxyyy)
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
+```
 
 :::details ABC386 A - Full House 2
 ### [ABC386 A - Full House 2](https://atcoder.jp/contests/abc386/tasks/abc386_a)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+int main()
+{
+	std::vector<int> A(4);
+	for (auto& a : A)
+	{
+		std::cin >> a;
+	}
+
+	std::sort(A.begin(), A.end());
+
+	// 1 枚追加でフルハウスを作れるパターンは
+	// xxyy
+	// xxxy
+	// xyyy
+
+	const bool xxyy = ((A[0] == A[1]) && (A[2] == A[3]) && (A[1] != A[2]));
+	const bool xxxy = ((A[0] == A[1]) && (A[1] == A[2]) && (A[2] != A[3]));
+	const bool xyyy = ((A[0] != A[1]) && (A[1] == A[2]) && (A[2] == A[3]));
+
+	if (xxyy || xxxy || xyyy)
+	{
+		std::cout << "Yes\n";
+	}
+	else
+	{
+		std::cout << "No\n";
+	}
+}
 ```
-
 
 :::details ABC380 A - 123233
 ### [ABC380 A - 123233](https://atcoder.jp/contests/abc380/tasks/abc380_a)
@@ -776,21 +939,96 @@ int main()
 ```
 :::
 
-
-
-:::details ABC102 C - Linear Approximation
-### [ABC102 C - Linear Approximation](https://atcoder.jp/contests/abc102/tasks/abc102_c)
+:::details ABC042 B - 文字列大好きいろはちゃんイージー
+### [ABC042 B - 文字列大好きいろはちゃんイージー](https://atcoder.jp/contests/abc042/tasks/abc042_b)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	int N, L;
+	std::cin >> N >> L;
+
+	std::vector<std::string> S(N);
+	for (auto& s : S)
+	{
+		std::cin >> s;
+	}
+
+	// 文字列を辞書順にソートする
+	std::sort(S.begin(), S.end());
+
+	for (const auto& s : S)
+	{
+		std::cout << s;
+	}
+	std::cout << '\n';
+}
 ```
 
 
 :::details ABC113 C - ID
 ### [ABC113 C - ID](https://atcoder.jp/contests/abc113/tasks/abc113_c)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+struct City
+{
+	int prefecture;
+	int year;
+};
+
+std::string Pad(int n)
+{
+	std::string s = std::to_string(n);
+	return (std::string(6 - s.size(), '0') + s);
+}
+
+int main()
+{
+	// N 個の県, M 個の市
+	int N, M;
+	std::cin >> N >> M;
+
+	std::vector<City> cities(M);
+	std::vector<std::vector<int>> prefectures(N);
+
+	for (auto& city : cities)
+	{
+		std::cin >> city.prefecture >> city.year;
+		--city.prefecture;
+		prefectures[city.prefecture].push_back(city.year);
+	}
+
+	// 県ごとに県内の市の誕生年をソートする
+	for (auto& prefecture : prefectures)
+	{
+		std::sort(prefecture.begin(), prefecture.end());
+	}
+
+	for (const auto& city : cities)
+	{
+		// 県番号
+		const int pID = (city.prefecture + 1);
+
+		// その市が県内で何番目に誕生したかを求める
+		const auto it = std::lower_bound(prefectures[city.prefecture].begin(), prefectures[city.prefecture].end(), city.year);
+		const int index = std::distance(prefectures[city.prefecture].begin(), it);
+
+		// 市番号
+		const int cID = (index + 1);
+
+		// 県番号と市番号をゼロ埋めして出力
+		std::cout << Pad(pID) << Pad(cID) << '\n';
+	}
+}
 ```
-
 
 :::details ABC201 B - Do you know the second highest mountain?
 ### [ABC201 B - Do you know the second highest mountain?](https://atcoder.jp/contests/abc201/tasks/abc201_b)
@@ -813,10 +1051,9 @@ int main()
 		std::cin >> name >> height;
 	}
 
-	// 高さの降順でソートする
 	std::sort(mountains.begin(), mountains.end(), [](const auto& a, const auto& b)
 		{
-			return a.second > b.second;
+			return a.second > b.second; // 高さの降順でソートする
 		});
 
 	// 2 番目に高い山の名前を出力する
@@ -825,6 +1062,53 @@ int main()
 :::
 ```
 :::
+
+
+:::details ABC323 B - Round-Robin Tournament
+### [ABC323 B - Round-Robin Tournament](https://atcoder.jp/contests/abc323/tasks/abc323_b)
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+struct Player
+{
+	int number;
+	int wins;
+};
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<Player> players(N);
+	for (int i = 0; auto& player : players)
+	{
+		std::string S;
+		std::cin >> S;
+		player.wins = std::count(S.begin(), S.end(), 'o');
+		player.number = ++i;
+	}
+
+	std::sort(players.begin(), players.end(), [](const auto& a, const auto& b)
+		{
+			if (a.wins != b.wins)
+			{
+				return a.wins > b.wins; // 勝ち数の降順でソートする
+			}
+
+			return a.number < b.number; // 勝ち数が同じなら, プレイヤー番号の昇順でソートする
+		});
+
+	for (const auto& player : players)
+	{
+		std::cout << player.number << ' ';
+	}
+	std::cout << '\n';
+}
+```
 
 
 :::details ABC440 B - Trifecta
@@ -850,10 +1134,9 @@ int main()
 		T[i] = { (i + 1), t };
 	}
 
-	// 時間の昇順でソートする
 	std::sort(T.begin(), T.end(), [](const auto& a, const auto& b)
 		{
-			return a.second < b.second;
+			return a.second < b.second; // 時間の昇順でソートする
 		});
 
 	// 上位 3 頭の番号を出力する
@@ -899,7 +1182,7 @@ int main()
 				return a.city < b.city; // 市名の昇順でソートする
 			}
 
-			return a.score > b.score; // 同じ市なら点数の降順でソートする
+			return a.score > b.score; // 同じ市なら, 点数の降順でソートする
 		});
 
 	for (const auto& restaurant : restaurants)
@@ -914,26 +1197,252 @@ int main()
 :::details ABC142 C - Go to School
 ### [ABC142 C - Go to School](https://atcoder.jp/contests/abc142/tasks/abc142_c)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
 
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	// { 出席番号, 登校時の人数 }
+	std::vector<std::pair<int, int>> students(N);
+	for (int i = 0; auto& student : students)
+	{
+		student.first = ++i;
+		std::cin >> student.second;
+	}
+
+	std::sort(students.begin(), students.end(), [](const auto& a, const auto& b)
+		{
+			return a.second < b.second; // 登校時の人数の昇順でソートする
+		});
+
+	// 登校した順に出席番号を出力する
+	for (const auto& student : students)
+	{
+		std::cout << student.first << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 
 
 :::details ABC219 C - Neo-lexicographic Ordering
 ### [ABC219 C - Neo-lexicographic Ordering](https://atcoder.jp/contests/abc219/tasks/abc219_c)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+int main()
+{
+	std::string X;
+	std::cin >> X;
+
+	// indices[c]: 文字 c が何番目に小さいか
+	std::vector<int> indices(26);
+	for (int i = 0; i < 26; ++i)
+	{
+		indices[X[i] - 'a'] = i;
+	}
+
+	int N;
+	std::cin >> N;
+
+	std::vector<std::string> names(N);
+	for (auto& name : names)
+	{
+		std::cin >> name;
+	}
+
+	// 高橋君の定めたアルファベット順の昇順でソートする
+	std::sort(names.begin(), names.end(),
+		[&](const std::string& a, const std::string& b)
+		{
+			const size_t length = std::min(a.size(), b.size());
+
+			for (size_t i = 0; i < length; ++i)
+			{
+				if (a[i] != b[i])
+				{
+					const int indexA = indices[a[i] - 'a'];
+					const int indexB = indices[b[i] - 'a'];
+					return indexA < indexB;
+				}
+			}
+
+			// 途中まで同じなら, 短い文字列を前にする
+			return a.size() < b.size();
+		});
+
+	for (const auto& name : names)
+	{
+		std::cout << name << '\n';
+	}
+}
 ```
 
 
 :::details ABC308 C - Standings
 ### [ABC308 C - Standings](https://atcoder.jp/contests/abc308/tasks/abc308_c)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
+struct Person
+{
+	long long wins;
+	long long losses;
+	int number;
+};
+
+int main()
+{
+	int N;
+	std::cin >> N;
+
+	std::vector<Person> people(N);
+	for (auto i = 0; auto& person : people)
+	{
+		std::cin >> person.wins >> person.losses;
+		person.number = ++i;
+	}
+
+	std::sort(people.begin(), people.end(),
+		[](const auto& a, const auto& b)
+		{
+			// a.wins / (a.wins + a.losses)
+			// と
+			// b.wins / (b.wins + b.losses)
+			// を、浮動小数点数を使わずに比較する
+			const long long left = a.wins * (b.wins + b.losses);
+			const long long right = b.wins * (a.wins + a.losses);
+
+			if (left != right)
+			{
+				return left > right; // 成功率の降順でソートする
+			}
+
+			return a.number < b.number; // 成功率が同じなら, 番号の昇順でソートする
+		});
+
+	for (const auto& person : people)
+	{
+		std::cout << person.number << ' ';
+	}
+	std::cout << '\n';
+}
 ```
 
 
 :::details ABC268 F - Best Concatenation
 ### [ABC268 F - Best Concatenation](https://atcoder.jp/contests/abc268/tasks/abc268_f)
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+struct Item
+{
+	std::string s;
+
+	// X の個数
+	long long xCount = 0;
+
+	// 数字の合計
+	long long digitSum = 0;
+};
+
+int main()
+{
+	// N 個の文字列
+	int N;
+	std::cin >> N;
+
+	std::vector<Item> items(N);
+	for (auto& item : items)
+	{
+		std::cin >> item.s;
+
+		for (const auto& ch : item.s)
+		{
+			if (ch == 'X')
+			{
+				++item.xCount;
+			}
+			else
+			{
+				item.digitSum += (ch - '0');
+			}
+		}
+	}
+
+	std::sort(items.begin(), items.end(),
+		[](const auto& a, const auto& b)
+		{
+			// a → b と並べた場合と
+			// b → a と並べた場合のどちらが高得点になるかを比較する
+			return (a.xCount * b.digitSum) > (b.xCount * a.digitSum);
+		});
+
+	// そこまで登場した X の個数
+	long long xCount = 0;
+
+	// 合計得点
+	long long answer = 0;
+
+	for (const auto& item : items)
+	{
+		for (const auto& ch : item.s)
+		{
+			if (ch == 'X')
+			{
+				++xCount;
+			}
+			else
+			{
+				answer += (xCount * (ch - '0'));
+			}
+		}
+	}
+
+	std::cout << answer << '\n';
+}
+```
+
+:::details 
+### []()
+```cpp
 
 ```
+
+:::details 
+### []()
+```cpp
+
+```
+
+
+
+:::details 
+### []()
+```cpp
+
+```
+
+
+
+:::details 
+### []()
+```cpp
+
+```
+
+
+
