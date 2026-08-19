@@ -440,7 +440,7 @@ Charlie 35
 ### 2.8 特定の要素だけでソートする
 - 例えば、`std::pair<int, std::string>` の整数の部分だけでソートしたい場合は、文字列の部分を無視して比較するルールにする
 - 整数が同じ場合の文字列の順序は保証されない。次の例では `1 one` と `1 first` のどちらが先に来るかは環境によって変わる
-- 元の並び順を保ちたい場合は `std::sort` の代わりに `std::stable_sort` を使う
+- 元の並び順を保ちたい場合は `std::sort` の代わりに **2.9** で説明する `std::stable_sort` を使う
 
 ```cpp
 #include <iostream>
@@ -482,12 +482,61 @@ int main()
 10 ten
 ```
 
+### 2.9 同順位の要素の並び順を保つ
+- `std::sort` では、比較上同じ順位になる要素どうしの並び順は保証されない
+- `std::stable_sort` を使うと、比較上同じ順位になる要素どうしは、ソート前の並び順が保たれる
+- 使い方は `std::sort` とほぼ同じで、第 3 引数にラムダ式を渡してカスタムソートすることもできる
+- 例えば、**2.8** のように `std::pair<int, std::string>` の整数部分だけでソートし、整数が同じ要素については元の順番を保ちたい場合に使える
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <utility>
+
+int main()
+{
+	std::vector<std::pair<int, std::string>> v =
+	{
+		{ 2, "second" },
+		{ 1, "one" },
+		{ 2, "two" },
+		{ 1, "first" },
+		{ 2, "double" },
+	};
+
+	std::stable_sort(v.begin(), v.end(), [](const auto& a, const auto& b)
+		{
+			return a.first < b.first; // 整数の昇順でソートする
+		});
+
+	for (auto&& [number, word] : v)
+	{
+		std::cout << number << ' ' << word << '\n';
+	}
+}
+```
+```txt:出力
+1 one
+1 first
+2 second
+2 two
+2 double
+```
+
+- `first` が `1` の要素は、ソート前から `"one"` → `"first"` の順なので、ソート後もその順番が保たれる
+- 同様に、`first` が `2` の要素も `"second"` → `"two"` → `"double"` の順番が保たれる
+- 同順位の要素の順番を保つ必要がない場合は、通常の `std::sort` を使えばよい
+
+
 ## 3. ソートで解ける問題のパターン
-- ソートは、順番に並べて出力する以外にも、問題を解きやすい形に整える目的で使うことができる
+- ソートは、単に値を順番に並べて出力するためだけでなく、問題を解きやすい形に整えるためにも使える
 
 ### 3.1 並び順を正規化して比較する
-- 並び順の違いを無視して、中身が同じかどうかを判定したいときは、両方をソートしてから比較する
-- ソート後の並びは中身だけで決まるため、同じ要素の集まりであれば必ず一致する
+- 並び順の違いを無視して、中身（各要素の種類と個数）が同じかどうかを判定したい場合は、両方をソートしてから比較する
+- ソートすると、同じ要素構成のデータは同じ並びになるため、そのまま `==` で比較できる
+- 文字列では、「文字を並べ替えると同じ文字列になるか」を調べる場合などに使える
 
 ```cpp
 #include <iostream>
@@ -522,7 +571,7 @@ Yes
 
 ---
 
-- `std::vector<int>` でも同様に、要素の集まりが同じかどうかを判定できる
+- `std::vector<int>` などでも同様に使える
 
 ```cpp
 #include <iostream>
@@ -552,16 +601,15 @@ Yes
 ```
 
 ### 3.2 同じ値を隣り合わせにする
-- ソートすると同じ値どうしが必ず連続して並ぶ
-- そのため、「重複があるか」「同じ値が何個あるか」を、隣り合う 2 つの要素の比較だけで調べられる
+- ソートすると、同じ値どうしは必ず連続して並ぶ
+- そのため、「重複があるか」「ある値が何個連続しているか」といったことを、隣り合う要素を見るだけで調べられる
 
 ---
 
-- 5 枚のカードの数字を std::vector<int> に格納する
-- フルハウスは「同じ数字が 3 枚 + 別の同じ数字が 2 枚」の組み合わせ
-- `std::sort` で昇順に並べると、同じ数字のカードが隣り合う
-- ソート後の並びは、フルハウスなら `x x x y y` または `x x y y y` のどちらかになる
-- その 2 パターンのどちらかに当てはまるかを調べれば、フルハウスかどうかを判定できる
+- 例えば、5 枚のカードがフルハウスかどうかを調べる場合にも使える
+	- フルハウスは「同じ数字が 3 枚 + 別の同じ数字が 2 枚」の組み合わせ
+	- 昇順にソートすると、同じ数字のカードが隣り合う
+	- ソート後の並びは `x x x y y` または `x x y y y` のどちらかになる
 
 ```cpp
 #include <iostream>
@@ -591,9 +639,109 @@ int main()
 Full House
 ```
 
+### 3.3 小さい順・大きい順に処理する
+- ソートすると、「最小のもの」「最大のもの」だけでなく、「2 番目」「上位 K 個」のような要素も簡単に取り出せる
+- 昇順にソートした配列では、先頭ほど小さく、末尾ほど大きい
+- 降順にソートしておけば、大きいものから順番に処理できる
 
-### 3.3 複数の条件で並べ替える
-- 「スコアの高い順、同点なら名前の辞書順」のようなランキングは、複数の基準を組み合わせたソートで作れる
+---
+
+- 例えば、2 人のプレイヤーが大きいカードから交互にとる場合は、先に降順にソートしておくと、先頭から順番にカードを取るだけでよい
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	std::vector<int> cards = { 3, 1, 4, 1, 5, 9 };
+
+	std::sort(cards.begin(), cards.end(), std::greater{}); // 降順にソートする
+
+	int playerA = 0;
+	int playerB = 0;
+
+	for (size_t i = 0; i < cards.size(); ++i)
+	{
+		if ((i % 2) == 0)
+		{
+			playerA += cards[i]; // A のターン
+		}
+		else
+		{
+			playerB += cards[i]; // B のターン
+		}
+	}
+
+	std::cout << "Player A: " << playerA << '\n';
+	std::cout << "Player B: " << playerB << '\n';
+}
+```
+```txt:出力
+Player A: 14
+Player B: 9
+```
+
+### 3.4 元の番号を保持してソートする
+- 値だけをソートすると、その値が元の配列の何番目にあったかわからなくなる
+- ソート後にも元の位置を使いたい場合は、元の番号もセットで持ってソートする
+- `std::pair` や自作 `struct` を使うと書きやすい
+
+---
+
+- 例えば、入力された値を小さい順に並べながら、元の番号を出力する場合を考える
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
+
+int main()
+{
+	int n;
+	std::cin >> n;
+
+	// { 元の番号, 値 }
+	std::vector<std::pair<int, int>> values(n);
+	for (int i = 0; auto& value : values)
+	{
+		value.first = ++i; // 元の番号（1-indexed）をセットする
+		std::cin >> value.second;
+	}
+
+	std::sort(values.begin(), values.end(), [](const auto& a, const auto& b)
+		{
+			return a.second < b.second; // 値の昇順でソートする
+		});
+
+	for (const auto& value : values)
+	{
+		std::cout << value.first << '\n';
+	}
+}
+```
+```txt:入力例
+6
+50 30 40 20 60 10
+```
+```txt:出力
+6
+4
+2
+3
+1
+5
+```
+
+- ソート後の結果 `10 20 30 40 50 60` に対して、その値がもともと何番目にあったかを順に出力している
+
+
+### 3.5 複数の条件で並べ替える
+- 順位表などでは、1 つの値だけでは順番が決まらないことがある
+- 例えば「得点の高い順、同点なら解答時間の短い順、それも同じなら名前の辞書順」のように、複数の条件を順番に使って並べ替える
+- このような場合は、**2.5** で説明した形で比較関数を書く
 
 ```cpp
 #include <iostream>
@@ -646,31 +794,79 @@ Carol 300 60
 Alice 300 75
 ```
 
+### 3.6 ソートして隣り合う要素を調べる
+- ソートすると、値が小さい順または大きい順に並ぶ
+- そのため、値が近い要素どうしも近い位置に並ぶ
+- ソート前では配列上の隣に意味がなくても、ソート後では隣り合う要素を調べることに意味が生まれる
+
+---
+
+- 例えば、数直線上にいくつかの点があり、最も近い 2 点の距離を求めることを考える
+- 次の状態では、どの 2 点が近いのかわかりにくい
+
+```txt
+8 1 12 5
+```
+
+- 昇順にソートすると、次のようになる
+
+```txt
+1 5 8 12
+```
+
+- 最も近い 2 点があるとき、その 2 点の間に別の点が入ることはないため、ソート後の隣り合う要素の差を調べるだけで最小距離を求められる
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits>
+
+int main()
+{
+	std::vector<int> x = { 8, 1, 12, 5 };
+
+	std::sort(x.begin(), x.end()); // 昇順にソートする
+
+	int minDistance = std::numeric_limits<int>::max();
+
+	for (size_t i = 1; i < x.size(); ++i)
+	{
+		int distance = (x[i] - x[i - 1]); // 隣り合う要素の差を計算する
+		minDistance = std::min(minDistance, distance); // 最小距離を更新する
+	}
+
+	std::cout << minDistance << '\n'; // 出力: 3
+}
+```
+
+
 ## 4. 練習問題
 
-| 問題                                                    | 解法                     |
-| ------------------------------------------------------- | ---------------------------- |
-| **ABC432 A - Permute to Maximize**                      | ソート（数字を降順に並べて最大化）                 |
-| **ABC042 B - 文字列大好きいろはちゃんイージー**            | ソート（文字列を辞書順に並べる）                  |
-| **ABC088 B - Card Game for Two**                        | ソート（降順 + 順番に要素を取る）                |
-| **ABC082 B - Two Anagrams**                             | ソート（昇順・降順 + 辞書順比較）                |
-| **ABC380 A - 123233**                                   | ソート（並びを正規化して要素構成を判定）              |
-| **ABC154 C - Distinct or Not**                          | ソート（同じ値を隣接させて重複判定）                |
-| **ABC260 A - A Unique Letter**                          | ソート（同じ文字を隣接させて出現回数判定）             |
-| **ABC263 A - Full House**                               | ソート（同じ値を隣接させて個数パターン判定）            |
-| **ABC386 A - Full House 2**                             | ソート（同じ値を隣接させて複数パターン判定）            |
-| **ABC409 B - Citation**                                 | ソート（降順に並べて順位と値の条件を判定）             |
-| **ABC201 B - Do you know the second highest mountain?** | カスタムソート（要素の一部分だけをキーにする）           |
-| **ABC440 B - Trifecta**                                 | カスタムソート（値をキーに並べて上位を取得）            |
-| **ABC142 C - Go to School**                             | カスタムソート（元の番号を保持して値順に並べる）          |
-| **ABC448 C - Except and Min**                           | ソート（元の番号を保持 + 除外後の最小値を前方探索）       |
-| **ABC323 B - Round-Robin Tournament**                   | カスタムソート（第1キー降順・第2キー昇順）            |
-| **ABC128 B - Guidebook**                                | カスタムソート（文字列昇順・数値降順の複数キー）          |
-| **ABC113 C - ID**                                       | ソート（グループごとに並べて順位を求める）             |
-| **ABC308 C - Standings**                                | カスタムソート（分数を交差積で比較 + 同率処理）         |
-| **ABC219 C - Neo-lexicographic Ordering**               | カスタムソート（独自の辞書順を比較関数で実装）           |
-| **ABC414 D - Transmission Mission**                     | ソート + 貪欲法（大きい区間から切って合計を最小化）        |
-| **ABC268 F - Best Concatenation**                       | カスタムソート + 貪欲法（2要素の順序比較から最適な並びを決める） |
+| 問題 | 解法 | 難易度 |
+| --- | --- | :---: |
+| **[ABC432 A - Permute to Maximize](https://atcoder.jp/contests/abc432/tasks/abc432_a)** | ソート（数字を降順に並べて最大化） | 1 |
+| **[ABC042 B - 文字列大好きいろはちゃんイージー](https://atcoder.jp/contests/abc042/tasks/abc042_b)** | ソート（文字列を辞書順に並べる） | 1 |
+| **[ABC088 B - Card Game for Two](https://atcoder.jp/contests/abc088/tasks/abc088_b)** | ソート（降順 + 順番に要素を取る） | 1 |
+| **[ABC082 B - Two Anagrams](https://atcoder.jp/contests/abc082/tasks/abc082_b)** | ソート（昇順・降順 + 辞書順比較） | 1 |
+| **[ABC380 A - 123233](https://atcoder.jp/contests/abc380/tasks/abc380_a)** | ソート（並びを正規化して要素構成を判定） | 1 |
+| **[ABC154 C - Distinct or Not](https://atcoder.jp/contests/abc154/tasks/abc154_c)** | ソート（同じ値を隣接させて重複判定） | 2 |
+| **[ABC260 A - A Unique Letter](https://atcoder.jp/contests/abc260/tasks/abc260_a)** | ソート（同じ文字を隣接させて出現回数判定） | 2 |
+| **[ABC263 A - Full House](https://atcoder.jp/contests/abc263/tasks/abc263_a)** | ソート（同じ値を隣接させて個数パターン判定） | 2 |
+| **[ABC386 A - Full House 2](https://atcoder.jp/contests/abc386/tasks/abc386_a)** | ソート（同じ値を隣接させて複数パターン判定） | 2 |
+| **[ABC409 B - Citation](https://atcoder.jp/contests/abc409/tasks/abc409_b)** | ソート（降順に並べて順位と値の条件を判定） | 3 |
+| **[ABC201 B - Do you know the second highest mountain?](https://atcoder.jp/contests/abc201/tasks/abc201_b)** | カスタムソート（要素の一部分だけをキーにする） | 2 |
+| **[ABC440 B - Trifecta](https://atcoder.jp/contests/abc440/tasks/abc440_b)** | カスタムソート（値をキーに並べて上位を取得） | 3 |
+| **[ABC142 C - Go to School](https://atcoder.jp/contests/abc142/tasks/abc142_c)** | カスタムソート（元の番号を保持して値順に並べる） | 3 |
+| **[ABC448 C - Except and Min](https://atcoder.jp/contests/abc448/tasks/abc448_c)** | ソート（元の番号を保持 + 除外後の最小値を前方探索） | 3 |
+| **[ABC323 B - Round-Robin Tournament](https://atcoder.jp/contests/abc323/tasks/abc323_b)** | カスタムソート（第 1 キー降順・第 2 キー昇順） | 2 |
+| **[ABC128 B - Guidebook](https://atcoder.jp/contests/abc128/tasks/abc128_b)** | カスタムソート（文字列昇順・数値降順の複数キー） | 2 |
+| **[ABC113 C - ID](https://atcoder.jp/contests/abc113/tasks/abc113_c)** | ソート（グループごとに並べて順位を求める） | 4 |
+| **[ABC308 C - Standings](https://atcoder.jp/contests/abc308/tasks/abc308_c)** | カスタムソート（分数を交差積で比較 + 同率処理） | 4 |
+| **[ABC219 C - Neo-lexicographic Ordering](https://atcoder.jp/contests/abc219/tasks/abc219_c)** | カスタムソート（独自の辞書順を比較関数で実装） | 5 |
+| **[ABC414 D - Transmission Mission](https://atcoder.jp/contests/abc414/tasks/abc414_d)** | ソート + 貪欲法（大きい区間から切って合計を最小化） | 6 |
+| **[ABC268 F - Best Concatenation](https://atcoder.jp/contests/abc268/tasks/abc268_f)** | カスタムソート + 貪欲法（2 要素の順序比較から最適な並びを決める） | 7 |
+
 
 :::details ABC432 A - Permute to Maximize
 ### [ABC432 A - Permute to Maximize](https://atcoder.jp/contests/abc432/tasks/abc432_a)
@@ -903,8 +1099,8 @@ int main()
 
 	std::sort(A.begin(), A.end());
 
-	const bool xxxyy = ((A[0] == A[2]) && (A[3] == A[4]));
-	const bool xxyyy = ((A[0] == A[1]) && (A[2] == A[4]));
+	const bool xxxyy = ((A[0] == A[2]) && (A[3] == A[4]) && (A[2] != A[3]));
+	const bool xxyyy = ((A[0] == A[1]) && (A[2] == A[4]) && (A[1] != A[2]));
 
 	if (xxxyy || xxyyy)
 	{
@@ -1042,11 +1238,10 @@ int main()
 
 	// { 番号, 時間 } の配列
 	std::vector<std::pair<int, int>> T(N);
-	for (int i = 0; i < N; ++i)
+	for (int i = 0; auto& t : T)
 	{
-		int t;
-		std::cin >> t;
-		T[i] = { (i + 1), t };
+		t.first = ++i;
+		std::cin >> t.second;
 	}
 
 	std::sort(T.begin(), T.end(), [](const auto& a, const auto& b)
