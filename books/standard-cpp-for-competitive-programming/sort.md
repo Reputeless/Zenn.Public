@@ -9,8 +9,8 @@ free: true
 - `std::sort(it1, it2)` は、イテレータ `it1` から `it2` の範囲を昇順（小さい順）に並べ替える
 - `v.begin(), v.end()` を渡せば全体がソートされる
 - `std::sort` は対象の配列を直接並べ替えるため、戻り値はない
-- `std::vector` や `std::array`、`std::string` に対して使うことができる
-- 計算量は $O(N \log N)$
+- `std::vector` や `std::array`、`std::string` などに使える。一方、`std::list` のようにランダムアクセスできないコンテナには使えない
+- 計算量は、要素の比較が $O(1)$ なら、全体として通常 $O(N \log N)$。`std::sort` 自体の比較回数は $O(N \log N)$
 
 ```cpp
 #include <iostream>
@@ -33,7 +33,7 @@ int main()
 ---
 
 - `std::string` に `std::sort` を使うと、1 文字ずつが並べ替えの対象になる
-- 文字コード（ASCII）の順のため、`'0'`～`'9'` < `'A'`～`'Z'` < `'a'`～`'z'` の順になる
+- 文字コード（一般に ASCII）順のため、`'0'`～`'9'` < `'A'`～`'Z'` < `'a'`～`'z'` の順になる
 
 ```cpp
 #include <iostream>
@@ -439,7 +439,7 @@ Charlie 35
 
 ### 2.8 特定の要素だけでソートする
 - 例えば、`std::pair<int, std::string>` の整数の部分だけでソートしたい場合は、文字列の部分を無視して比較するルールにする
-- 整数が同じ場合の文字列の順序は保証されない。次の例では `1 one` と `1 first` のどちらが先に来るかは環境によって変わる
+- 整数が同じ場合の文字列の順序は保証されない。次の例では `1 one` と `1 first` のどちらが先に来るかは規格上保証されない
 - 元の並び順を保ちたい場合は `std::sort` の代わりに **2.9** で説明する `std::stable_sort` を使う
 
 ```cpp
@@ -652,6 +652,7 @@ Full House
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 int main()
 {
@@ -851,20 +852,20 @@ int main()
 | **[ABC082 B - Two Anagrams](https://atcoder.jp/contests/abc082/tasks/abc082_b)** | ソート（昇順・降順 + 辞書順比較） | 1 |
 | **[ABC380 A - 123233](https://atcoder.jp/contests/abc380/tasks/abc380_a)** | ソート（並びを正規化して要素構成を判定） | 1 |
 | **[ABC154 C - Distinct or Not](https://atcoder.jp/contests/abc154/tasks/abc154_c)** | ソート（同じ値を隣接させて重複判定） | 2 |
-| **[ABC260 A - A Unique Letter](https://atcoder.jp/contests/abc260/tasks/abc260_a)** | ソート（同じ文字を隣接させて出現回数判定） | 2 |
+| **[ABC260 A - A Unique Letter](https://atcoder.jp/contests/abc260/tasks/abc260_a)** | ソート（同じ文字を隣接させて出現パターンを判定） | 2 |
 | **[ABC263 A - Full House](https://atcoder.jp/contests/abc263/tasks/abc263_a)** | ソート（同じ値を隣接させて個数パターン判定） | 2 |
 | **[ABC386 A - Full House 2](https://atcoder.jp/contests/abc386/tasks/abc386_a)** | ソート（同じ値を隣接させて複数パターン判定） | 2 |
 | **[ABC409 B - Citation](https://atcoder.jp/contests/abc409/tasks/abc409_b)** | ソート（降順に並べて順位と値の条件を判定） | 3 |
 | **[ABC201 B - Do you know the second highest mountain?](https://atcoder.jp/contests/abc201/tasks/abc201_b)** | カスタムソート（要素の一部分だけをキーにする） | 2 |
 | **[ABC440 B - Trifecta](https://atcoder.jp/contests/abc440/tasks/abc440_b)** | カスタムソート（値をキーに並べて上位を取得） | 3 |
 | **[ABC142 C - Go to School](https://atcoder.jp/contests/abc142/tasks/abc142_c)** | カスタムソート（元の番号を保持して値順に並べる） | 3 |
-| **[ABC448 C - Except and Min](https://atcoder.jp/contests/abc448/tasks/abc448_c)** | ソート（元の番号を保持 + 除外後の最小値を前方探索） | 3 |
+| **[ABC448 C - Except and Min](https://atcoder.jp/contests/abc448/tasks/abc448_c)** | カスタムソート（元の番号を保持 + 小さい順に除外対象を飛ばす） | 3 |
 | **[ABC323 B - Round-Robin Tournament](https://atcoder.jp/contests/abc323/tasks/abc323_b)** | カスタムソート（第 1 キー降順・第 2 キー昇順） | 2 |
 | **[ABC128 B - Guidebook](https://atcoder.jp/contests/abc128/tasks/abc128_b)** | カスタムソート（文字列昇順・数値降順の複数キー） | 2 |
-| **[ABC113 C - ID](https://atcoder.jp/contests/abc113/tasks/abc113_c)** | ソート（グループごとに並べて順位を求める） | 4 |
+| **[ABC113 C - ID](https://atcoder.jp/contests/abc113/tasks/abc113_c)** | ソート + 二分探索（グループごとに並べて順位を求める） | 4 |
 | **[ABC308 C - Standings](https://atcoder.jp/contests/abc308/tasks/abc308_c)** | カスタムソート（分数を交差積で比較 + 同率処理） | 4 |
 | **[ABC219 C - Neo-lexicographic Ordering](https://atcoder.jp/contests/abc219/tasks/abc219_c)** | カスタムソート（独自の辞書順を比較関数で実装） | 5 |
-| **[ABC414 D - Transmission Mission](https://atcoder.jp/contests/abc414/tasks/abc414_d)** | ソート + 貪欲法（大きい区間から切って合計を最小化） | 6 |
+| **[ABC414 D - Transmission Mission](https://atcoder.jp/contests/abc414/tasks/abc414_d)** | ソート + 貪欲法（大きい隙間から切って合計を最小化） | 6 |
 | **[ABC268 F - Best Concatenation](https://atcoder.jp/contests/abc268/tasks/abc268_f)** | カスタムソート + 貪欲法（2 要素の順序比較から最適な並びを決める） | 7 |
 
 
@@ -1453,6 +1454,7 @@ int main()
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <iterator>
 
 struct City
 {
@@ -1742,4 +1744,3 @@ int main()
 }
 ```
 :::
-
