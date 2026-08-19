@@ -26,6 +26,7 @@ chapters:
   - library-tuple
   - base-conversions
   - grid-bfs
+  - sort
   - topological-sort
   - union-find
   - weighted-union-find
