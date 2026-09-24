@@ -7,6 +7,191 @@ free: true
 - C++ 標準ライブラリの機能を効果的に活用した、クリーンな C++ コードによる模範解答集
 - 🟢 → C++20 の機能を使用 / 🟣 → C++23 の機能を使用
 
+## ABC470～ABC479
+
+:::details ABC476 B - Wild Card
+### [ABC476 B - Wild Card](https://atcoder.jp/contests/abc476/tasks/abc476_b)
+```cpp
+
+```
+:::
+
+:::details ABC475 B - Change
+### [ABC475 B - Change](https://atcoder.jp/contests/abc475/tasks/abc475_b)
+```cpp
+
+```
+:::
+
+:::details ABC474 B - Exit Order
+### [ABC474 B - Exit Order](https://atcoder.jp/contests/abc474/tasks/abc474_b)
+```cpp
+
+```
+:::
+
+:::details ABC473 B - Old Maid
+### [ABC473 B - Old Maid](https://atcoder.jp/contests/abc473/tasks/abc473_b)
+```cpp
+#include <iostream>
+#include <vector>
+#include <set>
+
+int main()
+{
+	// N 枚のカード
+	int N;
+	std::cin >> N;
+
+	std::set<int> set;
+
+	for (int i = 0; i < N; ++i)
+	{
+		int A;
+		std::cin >> A;
+
+		if (set.contains(A))
+		{
+			// 2 枚そろったら捨てる
+			set.erase(A);
+		}
+		else
+		{
+			set.insert(A);
+		}
+	}
+
+	int total = 0;
+
+	for (const auto& x : set)
+	{
+		total += x;
+	}
+
+	std::cout << total << '\n';
+}
+```
+:::
+
+:::details ABC472 B - Break a Stick
+### [ABC472 B - Break a Stick](https://atcoder.jp/contests/abc472/tasks/abc472_b)
+```cpp
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <numeric>
+
+int main()
+{
+	// N 個の部分
+	int N;
+	std::cin >> N;
+
+	std::vector<int> L(N);
+	for (auto& x : L)
+	{
+		std::cin >> x;
+	}
+
+	// 全体の長さ
+	const int total = std::accumulate(L.begin(), L.end(), 0);
+
+	// 左右の差の絶対値の最小値
+	int best = total;
+	
+	// 左側の長さ
+	int left = 0;
+
+	// 各部分ごとに
+	for (auto& x : L)
+	{
+		left += x;
+
+		// 右の長さ = （全体 - 左の長さ）
+		const int right = (total - left);
+
+		best = std::min(best, std::abs(left - right));
+	}
+
+	std::cout << best << '\n';
+}
+```
+:::
+
+:::details ABC471 B - Survey Tabulation
+### [ABC471 B - Survey Tabulation](https://atcoder.jp/contests/abc471/tasks/abc471_b)
+```cpp
+#include <iostream>
+#include <map>
+#include <string>
+#include <cctype>
+
+int main()
+{
+	// N 人の回答
+	int N;
+	std::cin >> N;
+
+	// 各回答の回答数
+	std::map<std::string, int> answers;
+
+	for (int i = 0; i < N; ++i)
+	{
+		std::string S;
+		std::cin >> S;
+
+		// 入力された文字列をすべて小文字にする
+		for (auto& c : S)
+		{
+			c = std::tolower(c);
+		}
+
+		++answers[S];
+	}
+
+	// 最も多い回答数を調べる
+	int max = 0;
+
+	for (const auto& [s, n] : answers)
+	{
+		max = std::max(max, n);
+	}
+
+	std::cout << max << '\n';
+}
+```
+:::
+
+:::details ABC470 B - Monocolor 🟢
+### [ABC470 B - Monocolor](https://atcoder.jp/contests/abc470/tasks/abc470_b)
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	// N 個のボール
+	int N;
+	std::cin >> N;
+	
+	// 各色の個数
+	std::vector<int> colors(N);
+
+	for (int i = 0; i < N; ++i)
+	{
+		int C;
+		std::cin >> C;
+		++colors[C - 1];
+	}
+
+	// 変更しないといけないボールの個数を出力する
+	std::cout << (N - std::ranges::max(colors)) << '\n';
+}
+```
+:::
+
+
 ## ABC460～ABC469
 
 :::details ABC469 B - Isolated Seats

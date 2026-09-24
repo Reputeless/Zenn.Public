@@ -438,41 +438,31 @@ int main()
 
 int main()
 {
-	// 4 枚のカードの整数
-	std::vector<int> C(4);
-	for (auto& c : C)
+	std::vector<int> A(4);
+	for (auto& a : A)
 	{
-		std::cin >> c;
+		std::cin >> a;
 	}
 
-	std::ranges::sort(C);
+	std::sort(A.begin(), A.end());
 
-	// ツーペアであるかを判定する
-	if ((C[0] == C[1]) && (C[2] == C[3]) && (C[0] != C[2]))
+	// 1 枚追加でフルハウスを作れるパターンは
+	// xxyy
+	// xxxy
+	// xyyy
+
+	const bool xxyy = ((A[0] == A[1]) && (A[2] == A[3]) && (A[1] != A[2]));
+	const bool xxxy = ((A[0] == A[1]) && (A[1] == A[2]) && (A[2] != A[3]));
+	const bool xyyy = ((A[0] != A[1]) && (A[1] == A[2]) && (A[2] == A[3]));
+
+	if (xxyy || xxxy || xyyy)
 	{
-		// ツーペアであればフルハウスを作れる
 		std::cout << "Yes\n";
-		return 0;
 	}
-
-	// 先頭 3 枚でスリーカードであるかを判定する
-	if ((C[0] == C[1]) && (C[1] == C[2]) && (C[3] != C[0]))
+	else
 	{
-		// スリーカードであればフルハウスを作れる
-		std::cout << "Yes\n";
-		return 0;
+		std::cout << "No\n";
 	}
-
-	// 末尾 3 枚でスリーカードであるかを判定する
-	if ((C[1] == C[2]) && (C[2] == C[3]) && (C[0] != C[3]))
-	{
-		// スリーカードであればフルハウスを作れる
-		std::cout << "Yes\n";
-		return 0;
-	}
-
-	// それ以外はフルハウスを作れない
-	std::cout << "No\n";
 }
 ```
 :::

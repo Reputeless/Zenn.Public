@@ -98,7 +98,7 @@ int main()
 
 	std::sort(v.begin(), v.end()); // 昇順にソートする
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -139,7 +139,7 @@ int main()
 
 	std::sort(v.begin(), v.end(), std::greater{}); // 降順にソートする
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -254,7 +254,7 @@ int main()
 			return a.second < b.second; // 文字列の昇順でソートする
 		});
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -302,7 +302,7 @@ int main()
 			return a.second > b.second; // 文字列の降順でソートする
 		});
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -372,7 +372,7 @@ int main()
 			return a.second > b.second; // 文字列は降順でソートする
 		});
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -466,7 +466,7 @@ int main()
 			return a.first < b.first; // 整数の昇順でソートする
 		});
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -511,7 +511,7 @@ int main()
 			return a.first < b.first; // 整数の昇順でソートする
 		});
 
-	for (auto&& [number, word] : v)
+	for (const auto& [number, word] : v)
 	{
 		std::cout << number << ' ' << word << '\n';
 	}
@@ -1207,7 +1207,7 @@ int main()
 
 	// { 山の名前, 高さ } の配列
 	std::vector<std::pair<std::string, int>> mountains(N);
-	for (auto&& [name, height] : mountains)
+	for (const auto& [name, height] : mountains)
 	{
 		std::cin >> name >> height;
 	}

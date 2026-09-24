@@ -8,6 +8,58 @@ free: true
 - **ABC300～ABC399** は次ページ
 - 🟢 → C++20 の機能を使用 / 🟣 → C++23 の機能を使用
 
+## ABC470～ABC479
+
+:::details ABC476 A - Appender
+### [ABC476 A - Appender](https://atcoder.jp/contests/abc476/tasks/abc476_a)
+```cpp
+
+```
+:::
+
+:::details ABC475 A - mnclr
+### [ABC475 A - mnclr](https://atcoder.jp/contests/abc475/tasks/abc475_a)
+```cpp
+
+```
+:::
+
+:::details ABC474 A - Not X
+### [ABC474 A - Not X](https://atcoder.jp/contests/abc474/tasks/abc474_a)
+```cpp
+
+```
+:::
+
+:::details ABC473 A - Second Half Sum
+### [ABC473 A - Second Half Sum](https://atcoder.jp/contests/abc473/tasks/abc473_a)
+```cpp
+
+```
+:::
+
+:::details ABC472 A - A
+### [ABC472 A - A](https://atcoder.jp/contests/abc472/tasks/abc472_a)
+```cpp
+
+```
+:::
+
+:::details ABC471 A - Nine or Nein
+### [ABC471 A - Nine or Nein](https://atcoder.jp/contests/abc471/tasks/abc471_a)
+```cpp
+
+```
+:::
+
+:::details ABC470 A - Fizz
+### [ABC470 A - Fizz](https://atcoder.jp/contests/abc470/tasks/abc470_a)
+```cpp
+
+```
+:::
+
+
 ## ABC460～ABC469
 
 :::details ABC469 A - Train Car
