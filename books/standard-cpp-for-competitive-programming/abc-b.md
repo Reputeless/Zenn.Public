@@ -12,21 +12,109 @@ free: true
 :::details ABC476 B - Wild Card
 ### [ABC476 B - Wild Card](https://atcoder.jp/contests/abc476/tasks/abc476_b)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	// 文字列の長さ N
+	int N;
+	std::cin >> N;
+
+	// 目標文字列 S
+	std::string S;
+	std::cin >> S;
+
+	// 現在の文字列 T
+	std::string T;
+	std::cin >> T;
+
+	for (int i = 0; i < N; ++i)
+	{
+		// '*' ならスキップ
+		if (T[i] == '*')
+		{
+			continue;
+		}
+		
+		// 英子文字が一致しないなら違反
+		if (T[i] != S[i])
+		{
+			std::cout << "No\n";
+			return 0;
+		}
+	}
+
+	std::cout << "Yes\n";
+}
 ```
 :::
 
 :::details ABC475 B - Change
 ### [ABC475 B - Change](https://atcoder.jp/contests/abc475/tasks/abc475_b)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// N 回の買い物
+	int N;
+	std::cin >> N;
+
+	// 1 円硬貨, 10 円硬貨, 100 円硬貨の枚数
+	int c1 = 0, c10 = 0, c100 = 0;
+
+	while (N--)
+	{
+		int A;
+		std::cin >> A;
+
+		// お釣りの金額（0～999）
+		const int change = ((1000 - (A % 1000)) % 1000);
+
+		// お釣りに応じて硬貨の枚数を増やす
+		c1   += (change % 10);
+		c10  += (change % 100 / 10);
+		c100 += (change / 100);
+	}
+
+	std::cout << c1 << ' ' << c10 << ' ' << c100 << '\n';
+}
 ```
 :::
 
 :::details ABC474 B - Exit Order
 ### [ABC474 B - Exit Order](https://atcoder.jp/contests/abc474/tasks/abc474_b)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// N 個の座席
+	int N;
+	std::cin >> N;
+
+	for (int i = 0; i < N; ++i)
+	{
+		int P;
+		std::cin >> P;
+	
+		// 座席番号から期待される退場グループ番号
+		const int groupExpected = ((P - 1) / 10);
+
+		// 実際の退場グループ番号
+		const int groupActual = (i / 10);
+
+		// 違反があれば No
+		if (groupExpected != groupActual)
+		{
+			std::cout << "No\n";
+			return 0;
+		}
+	}
+
+	std::cout << "Yes\n";
+}
 ```
 :::
 
