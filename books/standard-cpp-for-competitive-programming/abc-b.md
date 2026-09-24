@@ -191,9 +191,9 @@ int main()
 	int left = 0;
 
 	// 各部分ごとに
-	for (auto& x : L)
+	for (int i = 0; i < (N - 1); ++i)
 	{
-		left += x;
+		left += L[i];
 
 		// 右の長さ = （全体 - 左の長さ）
 		const int right = (total - left);
@@ -855,6 +855,7 @@ int main()
 			for (const auto& a3 : A[2])
 			{
 				// 3 つのサイコロの出た目の積が 120（4 * 5 * 6）であるか
+				// （各値が 1〜6 なので, 積 120 になる 3 値は 4,5,6 のみ）
 				if ((a1 * a2 * a3) == 120)
 				{
 					++count;
