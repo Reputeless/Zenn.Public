@@ -9,7 +9,7 @@ free: true
 
 ## ABC470～ABC479
 
-:::details ABC477 B - Standing Outliers
+:::details ABC477 B - Standing Outliers 🟢
 ### [ABC477 B - Standing Outliers](https://atcoder.jp/contests/abc477/tasks/abc477_b)
 ```cpp
 #include <iostream>
@@ -36,7 +36,7 @@ int main()
 	}
 
 	// 数直線上の順番にソートする
-	std::sort(people.begin(), people.end(), [](const auto& a, const auto& b)
+	std::ranges::sort(people, [](const auto& a, const auto& b)
 		{
 			return a.x < b.x;
 		});
@@ -66,7 +66,7 @@ int main()
 	}
 
 	// 人の番号を昇順にソートする
-	std::sort(results.begin(), results.end());
+	std::ranges::sort(results);
 
 	// 人数
 	std::cout << results.size() << '\n';
