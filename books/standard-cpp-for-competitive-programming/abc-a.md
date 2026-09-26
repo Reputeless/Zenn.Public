@@ -13,56 +13,214 @@ free: true
 :::details ABC477 A - Traffic Light
 ### [ABC477 A - Traffic Light](https://atcoder.jp/contests/abc477/tasks/abc477_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	char c;
+	std::cin >> c;
+
+	if (c == 'B')
+	{
+		std::cout << "Y\n";
+	}
+	else if (c == 'Y')
+	{
+		std::cout << "R\n";
+	}
+	else
+	{
+		std::cout << "B\n";
+	}
+}
 ```
 :::
 
 :::details ABC476 A - Appender
 ### [ABC476 A - Appender](https://atcoder.jp/contests/abc476/tasks/abc476_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	if (S.ends_with('e'))
+	{
+		S += 'r';
+	}
+	else
+	{
+		S += "er";
+	}
+
+	std::cout << S << '\n';
+}
 ```
 :::
 
 :::details ABC475 A - mnclr
 ### [ABC475 A - mnclr](https://atcoder.jp/contests/abc475/tasks/abc475_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	bool isFirst = true;
+
+	for (const auto& c : S)
+	{
+		// 最初の文字以外では, 直前に 'o' を出力する
+		if (isFirst)
+		{
+			isFirst = false;
+		}
+		else
+		{
+			std::cout << 'o';
+		}
+
+		std::cout << c;
+	}
+	std::cout << '\n';
+}
 ```
 :::
 
 :::details ABC474 A - Not X
 ### [ABC474 A - Not X](https://atcoder.jp/contests/abc474/tasks/abc474_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	int X;
+	std::cin >> X;
+
+	if (X == 1)
+	{
+		std::cout << "2\n";
+	}
+	else
+	{
+		std::cout << "1\n";
+	}
+}
 ```
 :::
 
 :::details ABC473 A - Second Half Sum
 ### [ABC473 A - Second Half Sum](https://atcoder.jp/contests/abc473/tasks/abc473_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// 長さ N の整数列
+	int N;
+	std::cin >> N;
+
+	// 後半部分の総和
+	int total = 0;
+
+	for (int i = 0; i < N; ++i)
+	{
+		int A;
+		std::cin >> A;
+
+		// 後半なら加算
+		if ((N / 2) <= i)
+		{
+			total += A;
+		}
+	}
+
+	std::cout << total << '\n';
+}
 ```
 :::
 
 :::details ABC472 A - A
 ### [ABC472 A - A](https://atcoder.jp/contests/abc472/tasks/abc472_a)
 ```cpp
+#include <iostream>
+#include <string>
 
+int main()
+{
+	std::string S;
+	std::cin >> S;
+
+	// 'A' でない要素を '.' に置き換える
+	for (auto& c : S)
+	{
+		if (c != 'A')
+		{
+			c = '.';
+		}
+	}
+
+	std::cout << S << '\n';
+}
 ```
 :::
 
 :::details ABC471 A - Nine or Nein
 ### [ABC471 A - Nine or Nein](https://atcoder.jp/contests/abc471/tasks/abc471_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	int A, B;
+	std::cin >> A >> B;
+
+	const bool a = ((A + B) == 9);
+	const bool b = ((A - B) == 9);
+	const bool c = ((A * B) == 9);
+	const bool d = ((B * 9) == A); // (A / B) == 9 だと (19 / 2) == 9 になる
+
+	if (a || b || c || d)
+	{
+		std::cout << "Nine\n";
+	}
+	else
+	{
+		std::cout << "Nein\n";
+	}
+}
 ```
 :::
 
 :::details ABC470 A - Fizz
 ### [ABC470 A - Fizz](https://atcoder.jp/contests/abc470/tasks/abc470_a)
 ```cpp
+#include <iostream>
 
+int main()
+{
+	// N 行
+	int N;
+	std::cin >> N;
+
+	for (int i = 1; i <= N; ++i)
+	{
+		if ((i % 3) == 0)
+		{
+			std::cout << "Fizz\n";
+		}
+		else
+		{
+			std::cout << i << '\n';
+		}
+	}
+}
 ```
 :::
 
