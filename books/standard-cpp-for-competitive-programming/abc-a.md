@@ -10,6 +10,13 @@ free: true
 
 ## ABC470～ABC479
 
+:::details ABC477 A - Traffic Light
+### [ABC477 A - Traffic Light](https://atcoder.jp/contests/abc477/tasks/abc477_a)
+```cpp
+
+```
+:::
+
 :::details ABC476 A - Appender
 ### [ABC476 A - Appender](https://atcoder.jp/contests/abc476/tasks/abc476_a)
 ```cpp

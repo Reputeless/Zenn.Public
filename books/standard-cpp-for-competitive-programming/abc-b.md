@@ -9,6 +9,77 @@ free: true
 
 ## ABC470～ABC479
 
+:::details ABC477 B - Standing Outliers
+### [ABC477 B - Standing Outliers](https://atcoder.jp/contests/abc477/tasks/abc477_b)
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+struct Person
+{
+	int id;
+	int x;
+};
+
+int main()
+{
+	// N 人の人, 距離 D 以上
+	int N, D;
+	std::cin >> N >> D;
+
+	std::vector<Person> people(N);
+	for (int id = 0; auto& person : people)
+	{
+		person.id = ++id;
+		std::cin >> person.x;
+	}
+
+	// 数直線上の順番にソートする
+	std::sort(people.begin(), people.end(), [](const auto& a, const auto& b)
+		{
+			return a.x < b.x;
+		});
+
+	std::vector<int> results;
+
+	for (int i = 0; i < N; ++i)
+	{
+		bool ok = true;
+
+		// 左隣と D 以上の間隔がなければ失敗
+		if ((0 < i) && ((people[i].x - people[i - 1].x) < D))
+		{
+			ok = false;
+		}
+
+		// 右隣と D 以上の間隔がなければ失敗
+		if ((i < (N - 1)) && ((people[i + 1].x - people[i].x) < D))
+		{
+			ok = false;
+		}
+
+		if (ok)
+		{
+			results.push_back(people[i].id);
+		}
+	}
+
+	// 人の番号を昇順にソートする
+	std::sort(results.begin(), results.end());
+
+	// 人数
+	std::cout << results.size() << '\n';
+
+	for (const auto& result : results)
+	{
+		std::cout << result << ' ';
+	}
+	std::cout << '\n';
+}
+```
+:::
+
 :::details ABC476 B - Wild Card
 ### [ABC476 B - Wild Card](https://atcoder.jp/contests/abc476/tasks/abc476_b)
 ```cpp
